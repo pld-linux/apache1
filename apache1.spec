@@ -40,6 +40,7 @@ Source4:	%{name}.sysconfig
 Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/apache-non-english-man-pages.tar.bz2
 # Source5-md5:	74ff6e8d8a7b365b48ed10a52fbeb84e
 Source6:	%{name}-httpd.conf
+Source7:	%{name}.monitrc
 Source8:	%{name}-mod_vhost_alias.conf
 Source9:	%{name}-mod_status.conf
 Source10:	%{name}-mod_proxy.conf
@@ -802,7 +803,7 @@ rm -f src/modules/standard/mod_rewrite.so
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig} \
+install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig,monit} \
 	$RPM_BUILD_ROOT%{_datadir}/errordocs \
 	$RPM_BUILD_ROOT/var/{log/{apache,archiv/apache},run/apache}
 
@@ -824,6 +825,7 @@ install %{SOURCE6} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 install %{SOURCE8} $RPM_BUILD_ROOT%{_sysconfdir}/mod_vhost_alias.conf
 install %{SOURCE9} $RPM_BUILD_ROOT%{_sysconfdir}/mod_status.conf
 install %{SOURCE10} $RPM_BUILD_ROOT%{_sysconfdir}/mod_proxy.conf
+install %{SOURCE7} $RPM_BUILD_ROOT/etc/monit
 
 ln -sf index.html.en $RPM_BUILD_ROOT%{_datadir}/html/index.html
 
@@ -1370,6 +1372,7 @@ fi
 
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/*
 %attr(640,root,root) %config(noreplace) /etc/logrotate.d/*
+%attr(750,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/monit/*.monitrc
 
 %dir %{_libexecdir}
 %attr(755,root,root) %{_libexecdir}/mod_access.so
