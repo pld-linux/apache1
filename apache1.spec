@@ -30,7 +30,6 @@ Version:	1.3.27
 Release:	6
 License:	Apache Group
 Group:		Networking/Daemons
-URL:		http://www.apache.org/
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
 # Source0-md5:	65b89365a65dcad71d4402b4862beeaa
 Source1:	%{name}.init
@@ -68,38 +67,39 @@ Patch20:	%{name}-configdir_skip_backups.patch
 Patch21:	%{name}-apxs-quiet.patch
 Patch22:	%{name}-db4.patch
 Patch23:	%{name}-security_htdigest_bufferoverflow.patch
+URL:		http://www.apache.org/
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
 %{?_with_rewrite_ldap:BuildRequires: openldap-devel}
-PreReq:		rc-scripts
 PreReq:		mm
 PreReq:		perl
+PreReq:		rc-scripts
+Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getent
-Requires(pre): /usr/bin/getgid
-Requires(pre): /bin/id
-Requires(pre): /usr/sbin/groupadd
-Requires(pre): /usr/sbin/useradd
-Requires(pre): /usr/sbin/usermod
-Requires(postun):      /usr/sbin/userdel
-Requires(postun):      /usr/sbin/groupdel
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/useradd
+Requires(pre):	/usr/sbin/usermod
 Requires(pre):	textutils
 Requires(post,preun):	/sbin/chkconfig
-Requires:	mailcap
+Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
 Requires:	/etc/mime.types
-Requires:	psmisc >= 20.1
-Provides:	apache = %{version}-%{release}
-Provides:	httpd
-Provides:	webserver
 Provides:	%{name}(EAPI) = %{version}
 Provides:	apache(EAPI) = %{version}
-Obsoletes:	httpd
-Obsoletes:	webserver
+Provides:	apache = %{version}-%{release}
+Provides:	httpd
+Requires:	mailcap
+Requires:	psmisc >= 20.1
+Provides:	webserver
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	apache <= 1.3.27-3
 Obsoletes:	apache-extra
 Obsoletes:	apache6
 Obsoletes:	apache-doc
+Obsoletes:	httpd
 Obsoletes:	indexhtml
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Obsoletes:	webserver
 
 %define		_sysconfdir	/etc/httpd
 %define		_includedir	%{_prefix}/include/apache
@@ -755,10 +755,12 @@ OPTIM="%{rpmcflags}" \
 %{__make} LIBS1="-lm -lcrypt -lmm -ldl"
 
 rm -f src/modules/standard/mod_auth_db.so
-%{__make} -C src/modules/standard mod_auth_db.so LIBS_SHLIB="-ldb"
+%{__make} -C src/modules/standard mod_auth_db.so \
+	LIBS_SHLIB="-ldb"
 
 rm -f src/modules/standard/mod_rewrite.so
-%{__make} -C src/modules/standard mod_rewrite.so LIBS_SHLIB="-ldb %{?_with_rewrite_ldap:-lldap -llber}"
+%{__make} -C src/modules/standard mod_rewrite.so \
+	LIBS_SHLIB="-ldb %{?_with_rewrite_ldap:-lldap -llber}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -766,7 +768,8 @@ install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig} \
 	$RPM_BUILD_ROOT{%{_datadir}/errordocs,%{webappsdir}} \
 	$RPM_BUILD_ROOT/var/{log/{httpd,archiv/httpd},run/apache}
 
-%{__make} install-quiet root="$RPM_BUILD_ROOT"
+%{__make} install-quiet \
+	root=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_datadir}/html/manual $RPM_BUILD_ROOT%{_datadir}
 
@@ -779,8 +782,7 @@ touch $RPM_BUILD_ROOT/var/log/httpd/{access,error,agent,referer}_log
 
 install errordocs/* $RPM_BUILD_ROOT%{_datadir}/errordocs
 
-install %{SOURCE6} $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
-
+install %{SOURCE6}  $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
 install %{SOURCE8}  $RPM_BUILD_ROOT%{_sysconfdir}/mod_vhost_alias.conf
 install %{SOURCE9}  $RPM_BUILD_ROOT%{_sysconfdir}/mod_status.conf
 install %{SOURCE10} $RPM_BUILD_ROOT%{_sysconfdir}/mod_proxy.conf
