@@ -88,7 +88,7 @@ URL:		http://www.apache.org/
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
 %{?with_rewrite_ldap:BuildRequires:	openldap-devel}
-BuildRequires:	rpmbuild(macros) >= 1.159
+BuildRequires:	rpmbuild(macros) >= 1.177
 BuildRequires:	rpm-perlprov
 PreReq:		mm
 PreReq:		perl-base
@@ -1260,19 +1260,20 @@ if [ "$1" = "2" ]; then
 fi
 
 %triggerpostun -- %{name} <= 1.3.31-5
-echo "WARNING!!!"
-echo "Since that version autoindex module has been separated to package %{name}-mod_autoindex"
-echo "If you want to have the same functionality do:"
-echo "poldek --upgrade %{name}-mod_autoindex"
-echo
+%banner %{name} -e -a <<EOF
+WARNING!!!
+ Since that version autoindex module has been separated to package %{name}-mod_autoindex
+ If you want to have the same functionality do:
+poldek --upgrade %{name}-mod_autoindex
+
+EOF
 
 %triggerpostun -- %{name} < 1.3.33-3.4
-echo "WARNING!!!"
-echo "Since that version following modules have been separated to subpackages"
-echo "If you want to have the same functionality do:"
-echo "poldek --upgrade %{name}-MODULENAME"
-echo
-cat <<EOF
+%banner %{name} -e -a <<EOF
+WARNING!!!
+ Since that version following modules have been separated to subpackages
+ If you want to have the same functionality do:
+ poldek --upgrade %{name}-MODULENAME
 	mod_asis
 	mod_cern_meta
 	mod_cgi
