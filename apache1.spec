@@ -1,5 +1,4 @@
 # TODO
-# - separate package for /errordocs
 # - documentroot and cgi-dir out of /home/services
 #
 # Conditional build:
@@ -323,12 +322,17 @@ Podrêcznik do Apache'a 1.3.x.
 
 %package errordocs
 Summary:	Apache 1.3.x HTTP error documents
+Summary(pl):	Dokumenty opisuj±ce b³êdy HTTP dla Apache'a 1.3.x
 Group:		Applications/WWW
 Requires:	%{name}-mod_include = %{version}-%{release}
 
 %description errordocs
 Apache 1.3.x HTTP error documents. Currently in English and Polish
 only.
+
+%description errordocs -l pl
+Dokumenty opisuj±ce b³êdy HTTP dla Apache'a 1.3.x. Aktualnie tylko po
+angielsku i polsku.
 
 %package devel
 Summary:	Module development tools for the Apache web server
