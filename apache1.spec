@@ -421,16 +421,6 @@ allowed access to the server, while the Order directive sets the
 default access state, and configures how the Allow and Deny directives
 interact with each other.
 
-Both host-based access restrictions and password-based authentication
-may be implemented simultaneously. In that case, the Satisfy directive
-is used to determine how the two sets of restrictions interact.
-
-In general, access restriction directives apply to all access methods
-(GET, PUT, POST, etc). This is the desired behavior in most cases.
-However, it is possible to restrict some methods, while leaving other
-methods unrestricted, by enclosing the directives in a <Limit>
-section.
-
 %package mod_alias
 Summary:	Mapping different parts of the host filesystem in the document tree, and URL redirection
 Group:		Networking/Daemons
