@@ -27,7 +27,7 @@ Summary(uk):	îÁÊĞÏĞÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·şÎñ³ÌĞò¡£
 Name:		apache1
 Version:	1.3.33
-Release:	1.75
+Release:	1.83
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -109,6 +109,7 @@ Provides:	group(http)
 Provides:	httpd
 Provides:	user(http)
 Provides:	webserver = apache
+%{?with_ipv6:Provides:	apache(ipv6)}
 Obsoletes:	apache < 2.0.0
 Obsoletes:	apache-extra
 Obsoletes:	apache6
@@ -856,6 +857,7 @@ touch $RPM_BUILD_ROOT/var/log/apache/{access,error,agent,referer}_log
 
 install errordocs/* $RPM_BUILD_ROOT%{_datadir}/errordocs
 
+mv $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf conf/apache.conf.dist
 install %{SOURCE7} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 
 CFG="$RPM_BUILD_ROOT%{_sysconfdir}/conf.d/"
@@ -913,6 +915,7 @@ perl -p -i -e 's/^if ...O ne "MSWin32"./if (0)/' $RPM_BUILD_ROOT%{apxs}
 mv $RPM_BUILD_ROOT%{_sysconfdir}/modules/* $RPM_BUILD_ROOT%{_libexecdir}
 rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/modules
 ln -s %{_libexecdir} $RPM_BUILD_ROOT%{_sysconfdir}/modules
+ln -s /var/log/apache $RPM_BUILD_ROOT%{_sysconfdir}/logs
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -1318,12 +1321,13 @@ sed -i -e '
 %files
 %defattr(644,root,root,755)
 %doc ABOUT_APACHE src/CHANGES README
-%doc conf/mime.types
+%doc conf/mime.types conf/apache.conf.dist
 
 %attr(754,root,root) /etc/rc.d/init.d/apache
 
 %attr(750,root,root) %dir %{_sysconfdir}
 %{_sysconfdir}/modules
+%{_sysconfdir}/logs
 %attr(750,root,root) %dir %{_sysconfdir}/conf.d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_common.conf
