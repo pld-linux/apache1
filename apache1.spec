@@ -431,7 +431,7 @@ dyrektywy Allow i Deny wp³ywaj± na siebie nawzajem.
 
 %package mod_actions
 Summary:	Apache module for run CGI whenever a file of a certain type is requested
-Summary(pl):	Modu³ dla apache do uruchamiania skryptów cgi
+Summary(pl):	Modu³ dla Apache'a do uruchamiania skryptów cgi
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_actions) = %{version}-%{release}
@@ -443,8 +443,9 @@ scripts whenever a file of a certain type is requested. This makes it
 much easier to execute scripts that process files.
 
 %description mod_actions -l pl
-Ten modu³ pozwala na uruchamianie skryptów w momencie gdy nadchodzi
-¿±danie pobrania pliku okre¶lonego typu.
+Ten modu³ pozwala na uruchamianie skryptów CGI w momencie gdy
+nadchodzi ¿±danie pobrania pliku okre¶lonego typu. Znacznie u³atwia to
+wykonywanie skryptów przetwarzaj±cych pliki.
 
 %package mod_alias
 Summary:	Mapping different parts of the host filesystem in the document tree, and URL redirection
@@ -521,7 +522,7 @@ typie MIME httpd/send-as-is.
 
 %package mod_auth
 Summary:	Apache module with user authentication using textual files
-Summary(pl):	Modu³ autentykacji u¿ytkownika przy u¿yciu plików tekstowych dla Apache
+Summary(pl):	Modu³ uwierzytelniania u¿ytkownika przy u¿yciu plików tekstowych dla Apache
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Requires:	htpasswd
@@ -533,7 +534,7 @@ This package contains mod_auth module. It provides for user
 authentication using textual files.
 
 %description mod_auth -l pl
-Ten pakiet zawiera modu³ mod_auth. S³u¿y on do autentykacji przy
+Ten pakiet zawiera modu³ mod_auth. S³u¿y on do uwierzytelniania przy
 u¿yciu plików tekstowych.
 
 %package mod_auth_anon
@@ -558,12 +559,20 @@ independent and it allows users to share URLs.
 
 %description mod_auth_anon -l pl
 Ten modu³ oferuje anonimow± autoryzacjê u¿ytkownia podobnie do
-anonimowych serwerów FTP (u¿ytkownik ,,anonymous'' oraz has³o w
-postaci adresu pocztowego u¿ytkownika).
+anonimowych serwerów FTP (u¿ytkownik "anonymous" oraz has³o w
+postaci adresu pocztowego u¿ytkownika). Podawane adresy mog± byæ
+logowane. W po³±czeniu z innymi (opartymi o bazy danych) metodami
+kontroli dostêpu umo¿liwia efektywne ¶ledzenie u¿ytkowników i
+dostosowywanie w zale¿no¶ci od profilu u¿ytkownika, jednocze¶nie
+zachowuj±c stronê otwart± dla "niezarejestrowanych" u¿ytkowników.
+Jedn± z zalet u¿ywania ¶ledzenia u¿ytkowników opartego o
+uwierzytelnienie nad ciasteczkami i ¶miesznymi prze-/przyrostkami
+URL-i jest ca³kowita niezale¿no¶æ od przegl±darki i umo¿liwienie
+u¿ytkownikom wspó³dzielenia URL-i.
 
 %package mod_auth_db
 Summary:	Apache module with user authentication which uses Berkeley DB files
-Summary(pl):	Modu³ apache z mechanizmem autentykacji u¿ywaj±cym plików Berkeley DB
+Summary(pl):	Modu³ Apache'a z mechanizmem uwierzytelniania u¿ywaj±cym plików Berkeley DB
 Group:		Networking/Daemons
 Requires(triggerpostun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
@@ -572,17 +581,15 @@ Obsoletes:	apache-mod_auth_db < 2.0.0
 
 %description mod_auth_db
 This package contains mod_auth_db module. It provides for user
-authentication using Berkeley DB files. It is an alternative to DBM
-files for those systems which support DB and not DBM. It is only
-available in Apache 1.1 and later.
+authentication using Berkeley DB files.
 
 %description mod_auth_db -l pl
-Ten pakiet zawiera modu³ mod_auth_db. Modu³ ten s³u¿y do autentykacji
-ale jako plików danych u¿ywa Berkeley DB.
+Ten pakiet zawiera modu³ mod_auth_db. Modu³ ten s³u¿y do
+uwierzytelniania, ale jako plików danych u¿ywa Berkeley DB.
 
 %package mod_auth_digest
 Summary:	Apache user authentication module using MD5 Digest Authentication
-Summary(pl):	Modu³ apache do autoryzacji MD5
+Summary(pl):	Modu³ Apache'a do uwierzytelniania metod± MD5 Digest Authentication
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Obsoletes:	%{name}-mod_digest
@@ -594,7 +601,7 @@ This package contains mod_digest module. It provides user
 authentication using MD5 Digest Authentication.
 
 %description mod_auth_digest -l pl
-Modu³ ten dostarcza metodê autoryzacji bazuj±c± na MD5 Digest
+Modu³ ten dostarcza metodê uwierzytelniania przy u¿yciu MD5 Digest
 Authentication.
 
 %package mod_autoindex
@@ -614,6 +621,7 @@ Ten pakiet dostarcza modu³ autoindex, który generuje indeks plików.
 
 %package mod_cern_meta
 Summary:	Support for HTTP header metafiles
+Summary(pl):	Obs³uga metaplików nag³ówków HTTP
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_cern_meta) = %{version}-%{release}
@@ -627,14 +635,24 @@ header, as well as providing other curiosities. There are many ways to
 manage meta information, this one was chosen because there is already
 a large number of CERN users who can exploit this module.
 
+%description mod_cern_meta -l pl
+Modu³ emuluj±cy semantykê metaplików CERN HTTPD. Metapliki to nag³ówki
+HTTP, które mog± byæ wysy³ane oprócz normalnego zestawu nag³ówków dla
+ka¿dego przetwarzanego pliku. Zachowuj± siê bardziej jak pliki .asis
+Apache'a i mog± dawaæ brutalny sposób wp³ywania na nag³ówek Expires:,
+a tak¿e dostarczaæ inne ciekawostki. Jest wiele sposobów zarz±dzania
+metainformacjami, ta zosta³a wybrana poniewa¿ istnieje ju¿ wielu
+u¿ytkowników CERN wykorzystuj±cych ten modu³.
+
 %package mod_cgi
 Summary:	Invoking CGI scripts
+Summary(pl):	Wywo³ywanie skryptów CGI
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_cgi) = %{version}-%{release}
 
 %description mod_cgi
-Any file that has the mime type application/x-httpd-cgi or handler
+Any file that has the MIME type application/x-httpd-cgi or handler
 cgi-script (Apache 1.1 or later) will be treated as a CGI script, and
 run by the server, with its output being returned to the client. Files
 acquire this type either by having a name containing an extension
@@ -678,9 +696,9 @@ standard.
 %description mod_digest -l pl
 Modu³ ten dostarcza metodê autoryzacji bazuj±c± na MD5 Digest
 Authentication. Implementuje on jedynie starsz± wersjê specyfikacji
-autentykacji MD5, i mo¿e nie dzia³aæ z nowoczesnymi przegl±darkami.
-Sprawd¼ mod_auth_digest je¶li potrzebujesz implementacji najnowszej
-wersji standardu.
+uwierzytelniania MD5, i mo¿e nie dzia³aæ z nowoczesnymi
+przegl±darkami. Lepiej u¿yæ modu³u mod_auth_digest implementuj±cego
+najnowsz± wersjê standardu.
 
 %package mod_dir
 Summary:	Apache module for "trailing slash" redirects and serving directory index files
