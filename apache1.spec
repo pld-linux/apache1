@@ -1273,8 +1273,6 @@ echo "If you want to have the same functionality do:"
 echo "poldek --upgrade %{name}-MODULENAME"
 echo
 cat <<EOF
-	mod_access
-	mod_alias
 	mod_asis
 	mod_cern_meta
 	mod_cgi
