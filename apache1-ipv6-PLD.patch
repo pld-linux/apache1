@@ -3677,7 +3677,7 @@ diff -Nur apache_1.3.26.orig/src/support/logresolve.c apache_1.3.26/src/support/
      return NULL;
  }
  
-@@ -2606,9 +2651,12 @@
+@@ -2606,9 +2651,11 @@
      return NULL;
  }
  
@@ -3689,7 +3689,7 @@ diff -Nur apache_1.3.26.orig/src/support/logresolve.c apache_1.3.26/src/support/
 +    struct addrinfo hints, *res;
 +    int error;
      char *ports, *endptr;
-     long port;
+-    long port;
      
 @@ -2617,37 +2665,82 @@
          return err;
