@@ -27,7 +27,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.29
-Release:	3
+Release:	3.1
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -87,6 +87,7 @@ Requires(postun):	/usr/sbin/userdel
 Requires:	/etc/mime.types
 Requires:	mailcap
 Requires:	psmisc >= 20.1
+Requires:	%{name}-apxs = %{version}
 Provides:	%{name}(EAPI) = %{version}
 Provides:	apache(EAPI) = %{version}
 Provides:	apache = %{version}-%{release}
@@ -97,15 +98,14 @@ Obsoletes:	apache < 2.0.0
 Obsoletes:	apache-extra
 Obsoletes:	apache6
 Obsoletes:	apache-doc
-Obsoletes:	httpd
 Obsoletes:	indexhtml
 Obsoletes:	webserver
 
-%define		_sysconfdir	/etc/httpd
-%define		_includedir	%{_prefix}/include/apache
-%define		_libexecdir	%{_prefix}/lib/apache
-%define		apxs		/usr/sbin/apxs
-%define		httpdir		/home/services/httpd
+%define		_sysconfdir	/etc/apache
+%define		_includedir	%{_prefix}/include/apache1
+%define		_libexecdir	%{_prefix}/lib/apache1
+%define		apxs		/usr/sbin/apxs1
+%define		httpdir		/home/services/apache
 %define		_datadir	%{httpdir}
 %define		webappsdir	%{httpdir}/apps
 
@@ -245,6 +245,13 @@ wykonywane jako taki sam u¿ytkownik jak serwer WWW.
 ÓÉÓÔÅÍÎÏ§ ÂÅÚÐÅËÉ, ËÏÔÒ¦ ÐÏÒÏÄÖÅÎ¦ ×ÉËÏÒÉÓÔÁÎÎÑÍ ÔÁËÉÈ ÐÒÏÇÒÁÍ,
 ÎÁÓÔ¦ÊÌÉ×Ï ÒÁÄÉÍÏ ÎÅ ×ÉËÏÒÉÓÔÏ×Õ×ÁÔÉ ÃØÏÇÏ ÐÁËÅÔÕ...
 
+%package apxs
+Summary:        APache eXtenSion tool
+Group:          Development/Tools
+
+%description apxs
+APache eXtenSion tool
+
 %package index
 Summary:        Apache index.html* files
 Summary(pl):    Pliki Apache index.html*
@@ -279,7 +286,7 @@ Summary(sv):	Huvudfiler för webbservern Apache
 Summary(uk):	úÁÓÏÂÉ ÓÔ×ÏÒÅÎÎÑ ÍÏÄÕÌ¦× ÄÌÑ web server'Õ Apache
 Summary(zh_CN):	ÓÃÓÚ Apache Web ·þÎñ³ÌÐòµÄ¿ª·¢¹¤¾ß¡£
 Group:		Networking/Utilities
-Requires:	%{name}(EAPI) = %{version}
+Requires:       %{name}-apxs = %{version}
 Provides:	%{name}(EAPI)-devel = %{version}
 Provides:	apache(EAPI)-devel = %{version}
 Provides:	apache-devel = %{version}-%{release}
@@ -341,7 +348,7 @@ Paketet apache-devel innehåller huvudfilerna för Apache.
 Summary:	Apache module for run CGI whenever a file of a certain type is requested
 Summary(pl):	Modu³ dla apache do uruchamiania skryptów cgi
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_actions = %{version}-%{release}
 Obsoletes:	apache-mod_actions < 2.0.0
@@ -359,7 +366,7 @@ Ten modu³ pozwala na uruchamianie skryptów w momencie gdy nadchodzi
 Summary:	Apache module with user authentication using textual files
 Summary(pl):	Modu³ autentykacji u¿ytkownika przy u¿yciu plików tekstowych dla Apache
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_auth = %{version}-%{release}
 Obsoletes:	apache-mod_auth < 2.0.0
@@ -376,7 +383,7 @@ u¿yciu plików tekstowych.
 Summary:	Apache module with "anonymous" user access authentication
 Summary(pl):	Modu³ apache oferuj±cy anonimow± autoryzacjê u¿ytkownia
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_auth_anon = %{version}-%{release}
 Obsoletes:	apache-mod_auth_anon < 2.0.0
@@ -402,9 +409,9 @@ postaci adresu pocztowego u¿ytkownika).
 Summary:	Apache module with user authentication which uses Berkeley DB files
 Summary(pl):	Modu³ apache z mechanizmem autentykacji u¿ywaj±cym plików Berkeley DB
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
-Requires:	%{_sbindir}/apxs
+Requires:	%{apxs}
 Provides:	apache-mod_auth_db = %{version}-%{release}
 Obsoletes:	apache-mod_auth_db < 2.0.0
 
@@ -422,7 +429,7 @@ ale jako plików danych u¿ywa Berkeley DB.
 Summary:	Apache user authentication module using MD5 Digest Authentication
 Summary(pl):	Modu³ apache do autoryzacji MD5
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_auth_digest = %{version}-%{release}
 Obsoletes:	%{name}-mod_digest
@@ -440,7 +447,7 @@ Authentication.
 Summary:	Apache module - authentication variables for arbitrary directives
 Summary(pl):	Modu³ apache do definiowania zmiennych
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_define = %{version}-%{release}
 Obsoletes:	apache-mod_define < 2.0.0
@@ -456,7 +463,7 @@ Modu³ ten umo¿liwia definicjê zmiennych i dyrektyw.
 Summary:	Older version of apache user authentication module using MD5 Digest Authentication
 Summary(pl):	Starsza wersja modu³u apache do autoryzacji MD5
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_digest = %{version}-%{release}
 Obsoletes:	apache-mod_digest < 2.0.0
@@ -480,7 +487,7 @@ wersji standardu.
 Summary:	Apache module for "trailing slash" redirects and serving directory index files
 Summary(pl):	Modu³ oferuj±cy przekierowania i serwowanie indeksu katalogu.
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_dir = %{version}-%{release}
 Obsoletes:	apache-mod_dir < 2.0.0
@@ -496,7 +503,7 @@ Modu³ oferuj±cy przekierowania i serwowanie indeksu katalogu.
 Summary:	Apache module which generates Expires HTTP headers
 Summary(pl):	Modu³ generuj±cy nag³ówki HTTP Expires
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_expires = %{version}-%{release}
 Obsoletes:	apache-mod_expires < 2.0.0
@@ -516,7 +523,7 @@ wa¿no¶ci mo¿e byæ ustalana w zale¿no¶ci od czasu modyfikacji plików
 Summary:	Apache module allows for the customization of HTTP response headers
 Summary(pl):	Modu³ pozwalaj±cy na modyfikacjê nag³ówków HTTP
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_headers = %{version}-%{release}
 Obsoletes:	apache-mod_headers < 2.0.0
@@ -534,7 +541,7 @@ wysy³anych do przegl±darki.
 Summary:	Apache module for mmap()ing statically configured list files
 Summary(pl):	Modu³ s³u¿±cy do mmap()owania plików.
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_mmap_static = %{version}-%{release}
 Obsoletes:	apache-mod_mmap_static < 2.0.0
@@ -552,7 +559,7 @@ Modu³ umo¿liwia mmap()owanie statycznie skonfigurowanych plików
 Summary:	Apache module with imap-file handler
 Summary(pl):	Modu³ z obs³ug± imap-file
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_imap = %{version}-%{release}
 Obsoletes:	apache-mod_imap < 2.0.0
@@ -569,7 +576,7 @@ Modu³ umozliwiaj±cy obs³ugê plików .map (imap-file handler)
 Summary:	Apache module with comprehensive overview of the server configuration
 Summary(pl):	Modu³ dostarczaj±cy informacji na temat serwera.
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_info = %{version}-%{release}
 Obsoletes:	apache-mod_info < 2.0.0
@@ -588,7 +595,7 @@ Summary:	Apache module with Web proxy
 Summary(pl):	Modu³ dodaj±cy obs³ugê serwera proxy
 Group:		Networking/Daemons
 Requires(post,preun):	%{name}(EAPI) = %{version}
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires(post,preun):	grep
 Requires(preun):	fileutils
 Requires:	%{name}(EAPI) = %{version}
@@ -610,7 +617,7 @@ HTTP/1.0.
 Summary:	Apache module with rule-based engine for rewrite requested URLs on the fly
 Summary(pl):	Modu³ do ,,przepisywania'' adresów URL w locie
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_rewrite = %{version}-%{release}
 Obsoletes:	apache-mod_rewrite < 2.0.0
@@ -627,7 +634,7 @@ Summary:	Server status report module for apache
 Summary(pl):	Modu³ dostarczaj±cy informacje statystyczne o serwerze.
 Group:		Networking/Daemons
 Requires(post,preun):	%{name}(EAPI) = %{version}
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires(post,preun):	grep
 Requires(preun):	fileutils
 Requires:	%{name}(EAPI) = %{version}
@@ -649,7 +656,7 @@ pracy serwera apache (w postaci strony HTML).
 Summary:	Apache module which provides a magic token for each request
 Summary(pl):	Modu³ nadaj±cy ka¿demu ¿±daniu unikalny token
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_unique_id = %{version}-%{release}
 Obsoletes:	apache-mod_unique_id < 2.0.0
@@ -673,7 +680,7 @@ UNIQUE_ID.
 Summary:	Apache module for user tracking using cookies
 Summary(pl):	Modu³ s³u¿±cy do ¶ledzenia u¿ytkowników przy u¿yciu ciasteczek
 Group:		Networking/Daemons
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_usertrack = %{version}-%{release}
 Obsoletes:	apache-mod_usertrack < 2.0.0
@@ -693,7 +700,7 @@ Summary:	Apache module for dynamically configured mass virtual hosting
 Summary(pl):	Modu³ dodaj±cy obs³ugê hostów wirtualnych.
 Group:		Networking/Daemons
 Requires(post,preun):	%{name}(EAPI) = %{version}
-Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	%{apxs}
 Requires(post,preun):	grep
 Requires(preun):	fileutils
 Requires:	%{name}(EAPI) = %{version}
@@ -747,7 +754,7 @@ OPTIM="%{rpmcflags} -DHARD_SERVER_LIMIT=2048" \
 	--manualdir=%{_datadir}/html/manual \
 	--localstatedir=/var \
 	--runtimedir=/var/run \
-	--logfiledir=/var/log/httpd \
+	--logfiledir=/var/log/apache \
 	--with-layout=PLD \
 	--without-confadjust \
 	--enable-module=all \
@@ -762,6 +769,7 @@ OPTIM="%{rpmcflags} -DHARD_SERVER_LIMIT=2048" \
 	--suexec-docroot=%{_datadir} \
 	--disable-rule=WANTHSREGEX \
 	--enable-rule=EAPI \
+	--target=apache \
 	%{?with_ipv6:--enable-rule=INET6}
 
 %{__make} LIBS1="-lm -lcrypt -lmm -ldl"
@@ -778,7 +786,7 @@ rm -f src/modules/standard/mod_rewrite.so
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig} \
 	$RPM_BUILD_ROOT{%{_datadir}/errordocs,%{webappsdir}} \
-	$RPM_BUILD_ROOT/var/{log/{httpd,archiv/httpd},run/apache}
+	$RPM_BUILD_ROOT/var/{log/{apache,archiv/apache},run/apache}
 
 %{__make} install-quiet \
 	root="$RPM_BUILD_ROOT"
@@ -786,20 +794,25 @@ install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig} \
 mv -f $RPM_BUILD_ROOT%{_datadir}/html/manual $RPM_BUILD_ROOT%{_datadir}
 
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/apache
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/httpd
+install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/apache
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/apache
 bzip2 -dc %{SOURCE5} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
-touch $RPM_BUILD_ROOT/var/log/httpd/{access,error,agent,referer}_log
+touch $RPM_BUILD_ROOT/var/log/apache/{access,error,agent,referer}_log
 
 install errordocs/* $RPM_BUILD_ROOT%{_datadir}/errordocs
 
-install %{SOURCE6}  $RPM_BUILD_ROOT%{_sysconfdir}/httpd.conf
+install %{SOURCE6}  $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 install %{SOURCE8}  $RPM_BUILD_ROOT%{_sysconfdir}/mod_vhost_alias.conf
 install %{SOURCE9}  $RPM_BUILD_ROOT%{_sysconfdir}/mod_status.conf
 install %{SOURCE10} $RPM_BUILD_ROOT%{_sysconfdir}/mod_proxy.conf
 
 ln -sf index.html.en $RPM_BUILD_ROOT%{_datadir}/html/index.html
+
+mv $RPM_BUILD_ROOT%{_sbindir}/apxs $RPM_BUILD_ROOT%{apxs}
+mv $RPM_BUILD_ROOT%{_mandir}/man8/apxs.8 $RPM_BUILD_ROOT%{_mandir}/man8/apxs1.8
+
+perl -p -i -e 's/^if ...O ne "MSWin32"./if (0)/' $RPM_BUILD_ROOT%{apxs}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -828,7 +841,7 @@ else
 fi
 
 %post
-/sbin/chkconfig --add httpd
+/sbin/chkconfig --add apache
 %{apxs} -e -a -n access %{_libexecdir}/mod_access.so 1>&2
 %{apxs} -e -a -n alias %{_libexecdir}/mod_alias.so 1>&2
 %{apxs} -e -a -n asis %{_libexecdir}/mod_asis.so 1>&2
@@ -847,11 +860,11 @@ fi
 %{apxs} -e -a -n speling %{_libexecdir}/mod_speling.so 1>&2
 %{apxs} -e -a -n userdir %{_libexecdir}/mod_userdir.so 1>&2
 umask 137
-touch /var/log/httpd/{access,error,agent,referer}_log
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+touch /var/log/apache/{access,error,agent,referer}_log
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun
@@ -873,10 +886,10 @@ if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n setenvif %{_libexecdir}/mod_setenvif.so 1>&2
 	%{apxs} -e -A -n speling %{_libexecdir}/mod_speling.so 1>&2
 	%{apxs} -e -A -n userdir %{_libexecdir}/mod_userdir.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd stop 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache stop 1>&2
 	fi
-	/sbin/chkconfig --del httpd
+	/sbin/chkconfig --del apache
 fi
 
 %postun
@@ -896,7 +909,7 @@ if [ -z "`id -u http 2>/dev/null`" ]; then
 	echo "Adding user http UID=51."
 	/usr/sbin/useradd -u 51 -r -d %{httpdir} -s /bin/false -c "HTTP User" -g http http 1>&2
 fi
-/sbin/chkconfig --add httpd
+/sbin/chkconfig --add apache
 %{apxs} -e -a -n access %{_libexecdir}/mod_access.so 1>&2
 %{apxs} -e -a -n alias %{_libexecdir}/mod_alias.so 1>&2
 %{apxs} -e -a -n asis %{_libexecdir}/mod_asis.so 1>&2
@@ -917,17 +930,17 @@ fi
 
 %post mod_actions
 %{apxs} -e -a -n actions %{_libexecdir}/mod_actions.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_actions
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n actions %{_libexecdir}/mod_actions.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -936,17 +949,17 @@ fi
 
 %post mod_auth
 %{apxs} -e -a -n auth %{_libexecdir}/mod_auth.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_auth
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n auth %{_libexecdir}/mod_auth.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -955,17 +968,17 @@ fi
 
 %post mod_auth_anon
 %{apxs} -e -a -n auth_anon %{_libexecdir}/mod_auth_anon.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_auth_anon
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n auth_anon %{_libexecdir}/mod_auth_anon.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -974,17 +987,17 @@ fi
 
 %post mod_auth_db
 %{apxs} -e -a -n auth_db %{_libexecdir}/mod_auth_db.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_auth_db
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n auth_db %{_libexecdir}/mod_auth_db.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -996,17 +1009,17 @@ fi
 
 %post mod_auth_digest
 %{apxs} -e -a -n auth_digest %{_libexecdir}/mod_auth_digest.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_auth_digest
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n auth_digest %{_libexecdir}/mod_auth_digest.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -1015,17 +1028,17 @@ fi
 
 %post mod_define
 %{apxs} -e -a -n define %{_libexecdir}/mod_define.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_define
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n define %{_libexecdir}/mod_define.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -1034,17 +1047,17 @@ fi
 
 %post mod_digest
 %{apxs} -e -a -n digest %{_libexecdir}/mod_digest.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_digest
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n digest %{_libexecdir}/mod_digest.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -1053,17 +1066,17 @@ fi
 
 %post mod_dir
 %{apxs} -e -a -n dir %{_libexecdir}/mod_dir.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_dir
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n dir %{_libexecdir}/mod_dir.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -1072,17 +1085,17 @@ fi
 
 %post mod_expires
 %{apxs} -e -a -n expires %{_libexecdir}/mod_expires.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_expires
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n expires %{_libexecdir}/mod_expires.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -1091,17 +1104,17 @@ fi
 
 %post mod_headers
 %{apxs} -e -a -n headers %{_libexecdir}/mod_headers.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_headers
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n headers %{_libexecdir}/mod_headers.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -1110,17 +1123,17 @@ fi
 
 %post mod_mmap_static
 %{apxs} -e -a -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_mmap_static
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -1129,17 +1142,17 @@ fi
 
 %post mod_imap
 %{apxs} -e -a -n imap %{_libexecdir}/mod_imap.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_imap
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n imap %{_libexecdir}/mod_imap.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -1148,17 +1161,17 @@ fi
 
 %post mod_info
 %{apxs} -e -a -n info %{_libexecdir}/mod_info.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_info
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n info %{_libexecdir}/mod_info.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -1167,46 +1180,46 @@ fi
 
 %post mod_proxy
 %{apxs} -e -a -n proxy %{_libexecdir}/libproxy.so 1>&2
-if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_proxy.conf" /etc/httpd/httpd.conf; then
-	echo "Include /etc/httpd/mod_proxy.conf" >> /etc/httpd/httpd.conf
+if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_proxy.conf" /etc/apache/apache.conf; then
+	echo "Include /etc/apache/mod_proxy.conf" >> /etc/apache/apache.conf
 fi
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_proxy
 if [ "$1" = "0" ]; then
 	umask 027
 	%{apxs} -e -A -n proxy %{_libexecdir}/libproxy.so 1>&2
-	grep -v "^Include.*mod_proxy.conf" /etc/httpd/httpd.conf > \
-		/etc/httpd/httpd.conf.tmp
-	mv -f /etc/httpd/httpd.conf.tmp /etc/httpd/httpd.conf
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	grep -v "^Include.*mod_proxy.conf" /etc/apache/apache.conf > \
+		/etc/apache/apache.conf.tmp
+	mv -f /etc/apache/apache.conf.tmp /etc/apache/apache.conf
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
 %triggerpostun mod_proxy -- apache-mod_proxy < 2.0.0
 %{apxs} -e -a -n proxy %{_libexecdir}/libproxy.so 1>&2
-if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_proxy.conf" /etc/httpd/httpd.conf; then
-	echo "Include /etc/httpd/mod_proxy.conf" >> /etc/httpd/httpd.conf
+if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_proxy.conf" /etc/apache/apache.conf; then
+	echo "Include /etc/apache/mod_proxy.conf" >> /etc/apache/apache.conf
 fi
 
 %post mod_rewrite
 %{apxs} -e -a -n rewrite %{_libexecdir}/mod_rewrite.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_rewrite
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n rewrite %{_libexecdir}/mod_rewrite.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -1215,46 +1228,46 @@ fi
 
 %post mod_status
 %{apxs} -e -a -n status %{_libexecdir}/mod_status.so 1>&2
-if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_status.conf" /etc/httpd/httpd.conf; then
-	echo "Include /etc/httpd/mod_status.conf" >> /etc/httpd/httpd.conf
+if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_status.conf" /etc/apache/apache.conf; then
+	echo "Include /etc/apache/mod_status.conf" >> /etc/apache/apache.conf
 fi
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_status
 if [ "$1" = "0" ]; then
 	umask 027
 	%{apxs} -e -A -n status %{_libexecdir}/mod_status.so 1>&2
-	grep -v "^Include.*mod_status.conf" /etc/httpd/httpd.conf > \
-		/etc/httpd/httpd.conf.tmp
-	mv -f /etc/httpd/httpd.conf.tmp /etc/httpd/httpd.conf
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	grep -v "^Include.*mod_status.conf" /etc/apache/apache.conf > \
+		/etc/apache/apache.conf.tmp
+	mv -f /etc/apache/apache.conf.tmp /etc/apache/apache.conf
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
 %triggerpostun mod_status -- apache-mod_status < 2.0.0
 %{apxs} -e -a -n status %{_libexecdir}/mod_status.so 1>&2
-if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_status.conf" /etc/httpd/httpd.conf; then
-	echo "Include /etc/httpd/mod_status.conf" >> /etc/httpd/httpd.conf
+if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_status.conf" /etc/apache/apache.conf; then
+	echo "Include /etc/apache/mod_status.conf" >> /etc/apache/apache.conf
 fi
 
 %post mod_unique_id
 %{apxs} -e -a -n unique_id %{_libexecdir}/mod_unique_id.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_unique_id
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n unique_id %{_libexecdir}/mod_unique_id.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -1263,17 +1276,17 @@ fi
 
 %post mod_usertrack
 %{apxs} -e -a -n usertrack %{_libexecdir}/mod_usertrack.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_usertrack
 if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n usertrack %{_libexecdir}/mod_usertrack.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
@@ -1282,31 +1295,31 @@ fi
 
 %post mod_vhost_alias
 %{apxs} -e -a -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
-if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_vhost_alias.conf" /etc/httpd/httpd.conf; then
-	echo "Include /etc/httpd/mod_vhost_alias.conf" >> /etc/httpd/httpd.conf
+if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_vhost_alias.conf" /etc/apache/apache.conf; then
+	echo "Include /etc/apache/mod_vhost_alias.conf" >> /etc/apache/apache.conf
 fi
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
 fi
 
 %preun mod_vhost_alias
 if [ "$1" = "0" ]; then
 	umask 027
 	%{apxs} -e -A -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
-	grep -v "^Include.*mod_vhost_alias.conf" /etc/httpd/httpd.conf > \
-		/etc/httpd/httpd.conf.tmp
-	mv -f /etc/httpd/httpd.conf.tmp /etc/httpd/httpd.conf
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
+	grep -v "^Include.*mod_vhost_alias.conf" /etc/apache/apache.conf > \
+		/etc/apache/apache.conf.tmp
+	mv -f /etc/apache/apache.conf.tmp /etc/apache/apache.conf
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
 %triggerpostun mod_vhost_alias -- apache-mod_vhost_alias < 2.0.0
 %{apxs} -e -a -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
-if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_vhost_alias.conf" /etc/httpd/httpd.conf; then
-	echo "Include /etc/httpd/mod_vhost_alias.conf" >> /etc/httpd/httpd.conf
+if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_vhost_alias.conf" /etc/apache/apache.conf; then
+	echo "Include /etc/apache/mod_vhost_alias.conf" >> /etc/apache/apache.conf
 fi
 
 %files
@@ -1314,10 +1327,10 @@ fi
 %doc ABOUT_APACHE src/CHANGES README
 %doc conf/mime.types
 
-%attr(754,root,root) /etc/rc.d/init.d/httpd
+%attr(754,root,root) /etc/rc.d/init.d/apache
 
 %attr(750,root,root) %dir %{_sysconfdir}
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/httpd.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %{_sysconfdir}/magic
 
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/*
@@ -1347,22 +1360,21 @@ fi
 
 %attr(755,root,root) %{_sbindir}/ab
 %attr(755,root,root) %{_sbindir}/apachectl
-%attr(755,root,root) %{_sbindir}/apxs
-%attr(755,root,root) %{_sbindir}/httpd
+%attr(755,root,root) %{_sbindir}/apache
 %attr(755,root,root) %{_sbindir}/logresolve
 %attr(755,root,root) %{_sbindir}/rotatelogs
 
 %dir %attr(1773,root,http) /var/run/apache
 
 %{_mandir}/man1/htdigest.1*
-%{_mandir}/man8/*
+%{_mandir}/man8/*[a-z].8*
 %lang(hu) %{_mandir}/hu/man8/*
 %lang(ko) %{_mandir}/ko/man8/*
 %lang(pl) %{_mandir}/pl/man8/*
 
-%attr(750,root,root) %dir /var/log/httpd
-%attr(750,root,root) %dir /var/log/archiv/httpd
-%attr(640,root,root) %ghost /var/log/httpd/*
+%attr(750,root,root) %dir /var/log/apache
+%attr(750,root,root) %dir /var/log/archiv/apache
+%attr(640,root,root) %ghost /var/log/apache/*
 
 %dir %{_datadir}
 %dir %{_datadir}/manual
@@ -1578,6 +1590,11 @@ fi
 %{_datadir}/icons/small/*.png
 %attr(755,root,root) %{_datadir}/cgi-bin
 %dir %{webappsdir}
+
+%files apxs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{apxs}
+%{_mandir}/man8/apxs1*
 
 %files index
 %defattr(644,root,root,755)
