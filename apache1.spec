@@ -72,7 +72,13 @@ PreReq:		rc-scripts
 PreReq:		mm
 PreReq:		perl
 Requires(pre):	/usr/bin/getent
-Requires(pre):	user-http
+Requires(pre): /usr/bin/getgid
+Requires(pre): /bin/id
+Requires(pre): /usr/sbin/groupadd
+Requires(pre): /usr/sbin/useradd
+Requires(pre): /usr/sbin/usermod
+Requires(postun):      /usr/sbin/userdel
+Requires(postun):      /usr/sbin/groupdel
 Requires(pre):	textutils
 Requires(post,preun):	/sbin/chkconfig
 Requires:	mailcap
@@ -782,8 +788,26 @@ ln -sf index.html.en $RPM_BUILD_ROOT%{_datadir}/html/index.html
 rm -rf $RPM_BUILD_ROOT
 
 %pre
-if [ "`getent passwd http | cut -d: -f6`" = "/home/httpd" ]; then
-	/usr/sbin/usermod -d %{httpdir} http
+if [ -n "`getgid http`" ]; then
+       if [ "`getgid http`" != "51" ]; then
+               echo "Error: group http doesn't have gid=51. Correct this before installing apache." 1>&2
+               exit 1
+       fi
+else
+       echo "Adding group http GID=51."
+       /usr/sbin/groupadd -g 51 -r -f http
+fi
+if [ -n "`id -u http 2>/dev/null`" ]; then
+       if [ "`id -u http`" != "51" ]; then
+               echo "Error: user http doesn't have uid=51. Correct this before installing apache." 1>&2
+               exit 1
+       fi
+       if [ "`getent passwd http | cut -d: -f6`" = "/home/httpd" ]; then
+               /usr/sbin/usermod -d %{httpdir} http
+       fi
+else
+       echo "Adding user http UID=51."
+       /usr/sbin/useradd -u 51 -r -d %{httpdir} -s /bin/false -c "HTTP User" -g http http 1>&2
 fi
 
 %post
@@ -836,6 +860,14 @@ if [ "$1" = "0" ]; then
 		/etc/rc.d/init.d/httpd stop 1>&2
 	fi
 	/sbin/chkconfig --del httpd
+fi
+
+%postun
+if [ "$1" = "0" ]; then
+       echo "Removing user http."
+       /usr/sbin/userdel http
+       echo "Removing group http."
+       /usr/sbin/groupdel http
 fi
 
 %triggerpostun -- apache <= 1.3.27-3
