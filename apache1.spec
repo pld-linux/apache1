@@ -31,7 +31,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.33
-Release:	4
+Release:	4.2
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -101,8 +101,6 @@ Requires:	%{name}-mod_access = %{version}-%{release}
 Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	%{name}-mod_log_config = %{version}-%{release}
 Requires:	%{name}-mod_mime = %{version}-%{release}
-# for errordocs
-Requires:	%{name}-mod_include = %{version}-%{release}
 %endif
 Requires(pre):	/usr/bin/getent
 Requires(pre):	/usr/bin/getgid
@@ -319,6 +317,18 @@ Apache 1.3.x manual.
 
 %description doc -l pl
 Podrêcznik do Apache'a 1.3.x.
+
+%description doc -l pl
+Podrêcznik do Apache'a 1.3.x.
+
+%package errordocs
+Summary:	Apache 1.3.x HTTP error documents
+Group:		Applications/WWW
+Requires:	%{name}-mod_include = %{version}-%{release}
+
+%description errordocs
+Apache 1.3.x HTTP error documents. Currently in English and Polish
+only.
 
 %package devel
 Summary:	Module development tools for the Apache web server
@@ -1473,6 +1483,20 @@ WARNING!!!
 	mod_userdir
 EOF
 
+%post errordocs
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun errordocs
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
 %post mod_access
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
@@ -2031,7 +2055,6 @@ sed -i -e '
 %attr(750,root,root) %dir %{_sysconfdir}/conf.d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_common.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_errordocs.conf
 
 %attr(640,root,root) %{_sysconfdir}/magic
 
@@ -2057,7 +2080,6 @@ sed -i -e '
 %dir %{_datadir}
 %attr(755,root,root) %dir %{_datadir}/html
 
-%{_datadir}/errordocs
 %dir %{_datadir}/icons
 %{_datadir}/icons/*.gif
 %{_datadir}/icons/*.png
@@ -2387,6 +2409,11 @@ sed -i -e '
 %{manualdir}/mod/mod_usertrack.html
 # mod_vhost_alias
 %{manualdir}/mod/mod_vhost_alias.html
+
+%files errordocs
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_errordocs.conf
+%{_datadir}/errordocs
 
 %files suexec
 %defattr(644,root,root,755)
