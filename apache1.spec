@@ -27,7 +27,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.31
-Release:	5.2
+Release:	5.9
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -959,6 +959,14 @@ fi
 %{apxs} -e -a -n setenvif %{_libexecdir}/mod_setenvif.so 1>&2
 %{apxs} -e -a -n speling %{_libexecdir}/mod_speling.so 1>&2
 %{apxs} -e -a -n userdir %{_libexecdir}/mod_userdir.so 1>&2
+
+%triggerpostun  -- %{name} <= 1.3.31-5
+echo "WARNING!!!"
+echo "Since that version autoindex module has been separated to package %{name}-mod_autoindex"
+echo "If you want to have the same functionality do:"
+echo "poldek --upgrade %{name}-mod_autoindex"
+echo
+
 
 %post mod_actions
 %{apxs} -e -a -n actions %{_libexecdir}/mod_actions.so 1>&2
