@@ -72,6 +72,7 @@ BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
 %{?with_rewrite_ldap:BuildRequires:	openldap-devel}
 BuildRequires:	rpmbuild(macros) >= 1.159
+BuildRequires:	rpm-perlprov
 PreReq:		mm
 PreReq:		perl-base
 PreReq:		rc-scripts
@@ -1799,6 +1800,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libexecdir}/mod_auth.so
 %attr(755,root,root) %{_bindir}/htpasswd
+%{_mandir}/man1/htpasswd.1*
 
 %files mod_auth_anon
 %defattr(644,root,root,755)
@@ -1809,7 +1811,6 @@ fi
 %attr(755,root,root) %{_libexecdir}/mod_auth_db.so
 %attr(755,root,root) %{_bindir}/dbmmanage
 %{_mandir}/man1/dbmmanage.1*
-%{_mandir}/man1/htpasswd.1*
 
 %files mod_auth_digest
 %defattr(644,root,root,755)
