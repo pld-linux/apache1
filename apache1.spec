@@ -1599,7 +1599,7 @@ fi
 %lang(de_LU) %{_datadir}/html/index.html.lb.utf8
 %lang(nl) %{_datadir}/html/index.html.nl
 %lang(nn) %{_datadir}/html/index.html.nn
-%lang(no) %{_datadir}/html/index.html.no
+%lang(nb) %{_datadir}/html/index.html.no
 %lang(pl) %{_datadir}/html/index.html.po.iso-pl
 %lang(pt) %{_datadir}/html/index.html.pt
 %lang(pt_BR) %{_datadir}/html/index.html.pt-br
