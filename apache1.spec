@@ -26,12 +26,12 @@ Summary(tr):	Lider WWW tarayýcý
 Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
-Version:	1.3.31
-Release:	5.9
+Version:	1.3.32
+Release:	1
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
-# Source0-md5:	bd548a06ac48dda496b4e613572bb020
+# Source0-md5:	45164531fb57bfa18af4b9efd0850dd3
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
 Source3:	apache-icons.tar.gz
@@ -1496,6 +1496,7 @@ fi
 %lang(es) %{_datadir}/html/index.html.es
 %lang(fr) %{_datadir}/html/index.html.fr
 %lang(he) %{_datadir}/html/index.html.he.iso8859-8
+%lang(hu) %{_datadir}/html/index.html.hu
 %lang(it) %{_datadir}/html/index.html.it
 %lang(ja) %{_datadir}/html/index.html.ja.jis
 %lang(ko) %{_datadir}/html/index.html.kr.iso-kr
@@ -1533,10 +1534,6 @@ fi
 %{manualdir}/bind.html.en
 %lang(fr) %{manualdir}/bind.html.fr
 %lang(ja) %{manualdir}/bind.html.ja.jis
-%{manualdir}/cgi_path.html.html
-%{manualdir}/cgi_path.html.en
-%lang(fr) %{manualdir}/cgi_path.html.fr
-%lang(ja) %{manualdir}/cgi_path.html.ja.jis
 %{manualdir}/configuring.html.html
 %{manualdir}/configuring.html.en
 %lang(fr) %{manualdir}/configuring.html.fr
@@ -1551,6 +1548,7 @@ fi
 %{manualdir}/dns-caveats.html.html
 %{manualdir}/dns-caveats.html.en
 %lang(fr) %{manualdir}/dns-caveats.html.fr
+%lang(ja) %{manualdir}/dns-caveats.html.ja.jis
 %{manualdir}/dso.html
 %{manualdir}/env.html.html
 %{manualdir}/env.html.en
@@ -1572,6 +1570,7 @@ fi
 %{manualdir}/invoking.html.html
 %{manualdir}/invoking.html.en
 %lang(fr) %{manualdir}/invoking.html.fr
+%lang(ja) %{manualdir}/invoking.html.ja.jis
 %{manualdir}/keepalive.html.html
 %{manualdir}/keepalive.html.en
 %lang(ja) %{manualdir}/keepalive.html.ja.jis
