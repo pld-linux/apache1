@@ -27,7 +27,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.29
-Release:	1
+Release:	2
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -66,6 +66,7 @@ Patch19:	%{name}-PLD-nov6.patch
 Patch20:	%{name}-configdir_skip_backups.patch
 Patch21:	%{name}-apxs-quiet.patch
 Patch22:	%{name}-db4.patch
+Patch23:	%{name}-CAN-2003-0020.patch
 URL:		http://www.apache.org/
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
@@ -732,6 +733,7 @@ wirtualnych.
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p0
 
 %build
 OPTIM="%{rpmcflags} -DHARD_SERVER_LIMIT=2048" \
