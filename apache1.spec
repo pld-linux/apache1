@@ -29,7 +29,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.33
-Release:	2.4
+Release:	2.6
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -656,7 +656,6 @@ Modu³ umo¿liwia mmap()owanie statycznie skonfigurowanych plików
 Summary:	Apache module with Web proxy
 Summary(pl):	Modu³ dodaj±cy obs³ugê serwera proxy
 Group:		Networking/Daemons
-Requires(post,preun):	%{name}(EAPI) = %{version}-%{release}
 Requires(triggerpostun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache-mod_proxy = %{version}-%{release}
@@ -692,7 +691,6 @@ Modu³ oferuj±cy mo¿liwo¶æ ,,przepisywania'' adresów URL w locie.
 Summary:	Server status report module for apache
 Summary(pl):	Modu³ dostarczaj±cy informacje statystyczne o serwerze.
 Group:		Networking/Daemons
-Requires(post,preun):	%{name}(EAPI) = %{version}-%{release}
 Requires(triggerpostun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache-mod_status = %{version}-%{release}
@@ -754,7 +752,6 @@ wiele plików logów.
 Summary:	Apache module for dynamically configured mass virtual hosting
 Summary(pl):	Modu³ dodaj±cy obs³ugê hostów wirtualnych.
 Group:		Networking/Daemons
-Requires(post,preun):	%{name}(EAPI) = %{version}-%{release}
 Requires(triggerpostun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache-mod_vhost_alias = %{version}-%{release}
@@ -1007,7 +1004,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_actions
+%postun mod_actions
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1021,7 +1018,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_auth
+%postun mod_auth
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1035,7 +1032,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_auth_anon
+%postun mod_auth_anon
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1049,7 +1046,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_auth_db
+%postun mod_auth_db
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1068,7 +1065,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%preun mod_auth_digest
+%postun mod_auth_digest
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1080,7 +1077,7 @@ if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 fi
 
-%preun mod_autoindex
+%postun mod_autoindex
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1100,7 +1097,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_define
+%postun mod_define
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1114,7 +1111,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_digest
+%postun mod_digest
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1128,7 +1125,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_dir
+%postun mod_dir
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1142,7 +1139,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_expires
+%postun mod_expires
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1156,7 +1153,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_headers
+%postun mod_headers
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1170,7 +1167,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_imap
+%postun mod_imap
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1184,7 +1181,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_info
+%postun mod_info
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1198,7 +1195,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_log_forensic
+%postun mod_log_forensic
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1212,7 +1209,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_mmap_static
+%postun mod_mmap_static
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1226,7 +1223,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_proxy
+%postun mod_proxy
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1246,7 +1243,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_rewrite
+%postun mod_rewrite
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1260,7 +1257,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_status
+%postun mod_status
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1280,7 +1277,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_unique_id
+%postun mod_unique_id
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1294,7 +1291,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_usertrack
+%postun mod_usertrack
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1308,7 +1305,7 @@ else
 	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
-%preun mod_vhost_alias
+%postun mod_vhost_alias
 if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
