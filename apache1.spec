@@ -27,7 +27,7 @@ Summary(uk):	îÁÊĞÏĞÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·şÎñ³ÌĞò¡£
 Name:		apache1
 Version:	1.3.31
-Release:	3
+Release:	4
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -97,7 +97,6 @@ Provides:	webserver
 Obsoletes:	apache < 2.0.0
 Obsoletes:	apache-extra
 Obsoletes:	apache6
-Obsoletes:	webserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/apache
