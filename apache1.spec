@@ -959,7 +959,7 @@ fi
 %{apxs} -e -a -n speling %{_libexecdir}/mod_speling.so 1>&2
 %{apxs} -e -a -n userdir %{_libexecdir}/mod_userdir.so 1>&2
 
-%triggerpostun  -- %{name} <= 1.3.31-5
+%triggerpostun -- %{name} <= 1.3.31-5
 echo "WARNING!!!"
 echo "Since that version autoindex module has been separated to package %{name}-mod_autoindex"
 echo "If you want to have the same functionality do:"
