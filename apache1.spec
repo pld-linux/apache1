@@ -27,7 +27,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.33
-Release:	1.74
+Release:	1.75
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1336,6 +1336,7 @@ sed -i -e '
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_env.conf
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_include.conf
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_agent.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_config.conf
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_referer.conf
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_mime.conf
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_mime_magic.conf
