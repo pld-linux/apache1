@@ -244,6 +244,18 @@ wykonywane jako taki sam u©ytkownik jak serwer WWW.
 системно╖ безпеки, котр╕ породжен╕ використанням таких програм,
 наст╕йливо радимо не використовувати цього пакету...
 
+%package index
+Summary:        Apache index.html* files
+Summary(pl):    Pliki Apache index.html*
+Group:          Documentation
+Requires:       %{name} = %{version}
+
+%description index
+Apache index.html* files.
+
+%description index -l pl
+Pliki Apache index.html*.
+
 %package devel
 Summary:	Module development tools for the Apache web server
 Summary(cs):	HlaviХkovИ soubory pro Apache Web server
@@ -1554,6 +1566,19 @@ fi
 %{_datadir}/manual/vhosts/virtual-host.html
 
 %attr(755,root,root) %dir %{_datadir}/html
+
+%{_datadir}/errordocs
+%dir %{_datadir}/icons
+%{_datadir}/icons/*.gif
+%{_datadir}/icons/*.png
+%dir %{_datadir}/icons/small
+%{_datadir}/icons/small/*.gif
+%{_datadir}/icons/small/*.png
+%attr(755,root,root) %{_datadir}/cgi-bin
+%dir %{webappsdir}
+
+%files index
+%defattr(644,root,root,755)
 %config(noreplace,missingok) %{_datadir}/html/index.html
 # note: html extensions are not the same as (g)libc locale names
 %lang(ca) %{_datadir}/html/index.html.ca
@@ -1585,17 +1610,7 @@ fi
 %lang(ru) %{_datadir}/html/index.html.ru.utf8
 %lang(sv) %{_datadir}/html/index.html.se
 %lang(zh_TW) %{_datadir}/html/index.html.zh-tw.big5
-
 %{_datadir}/html/*.gif
-%{_datadir}/errordocs
-%dir %{_datadir}/icons
-%{_datadir}/icons/*.gif
-%{_datadir}/icons/*.png
-%dir %{_datadir}/icons/small
-%{_datadir}/icons/small/*.gif
-%{_datadir}/icons/small/*.png
-%attr(755,root,root) %{_datadir}/cgi-bin
-%dir %{webappsdir}
 
 %files suexec
 %defattr(644,root,root,755)
