@@ -11,17 +11,17 @@ diff -urN apache_1.3.14.orig/config.layout apache_1.3.14/config.layout
 +    exec_prefix:   $prefix
 +    bindir:        $prefix/bin
 +    sbindir:       $prefix/sbin
-+    libexecdir:    $prefix/lib/apache
++    libexecdir:    $prefix/lib/apache1
 +    mandir:        $prefix/share/man
-+    sysconfdir:    /etc/httpd
-+    datadir:       /home/services/httpd
++    sysconfdir:    /etc/apache
++    datadir:       /home/services/apache
 +    iconsdir:      $datadir/icons
 +    htdocsdir:     $datadir/html
 +    cgidir:        $datadir/cgi-bin
-+    includedir:    $prefix/include/apache
++    includedir:    $prefix/include/apache1
 +    localstatedir: /var
 +    runtimedir:    $localstatedir/run
-+    logfiledir:    $localstatedir/log/httpd
++    logfiledir:    $localstatedir/log/apache
 +    proxycachedir: $localstatedir/cache/www/apache
 +</Layout>     
 diff -urN apache_1.3.14.orig/src/main/http_main.c apache_1.3.14/src/main/http_main.c
