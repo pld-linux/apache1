@@ -772,6 +772,7 @@ Group:          Networking/Utilities
 Provides:       htpasswd
 Obsoletes:      htpasswd-apache2
 Obsoletes:      htpasswd-thttpd
+Obsoletes:      htpasswd-mini_httpd
 
 %description -n htpasswd-%{name}
 htpasswd from Apache1
