@@ -27,7 +27,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.27
-Release:	5
+Release:	6
 License:	Apache Group 
 Group:		Networking/Daemons
 URL:		http://www.apache.org/
@@ -64,6 +64,7 @@ Patch19:	%{name}-PLD-nov6.patch
 Patch20:	%{name}-configdir_skip_backups.patch
 Patch21:	%{name}-apxs-quiet.patch
 Patch22:	%{name}-db4.patch
+Patch23:	%{name}-security_htdigest_bufferoverflow.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
@@ -717,6 +718,7 @@ wirtualnych.
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+%patch23 -p1
 
 %build
 OPTIM="%{rpmcflags}" \
