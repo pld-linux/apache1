@@ -1114,8 +1114,6 @@ install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig,monit} \
 %{__make} -j1 install-quiet \
 	root=$RPM_BUILD_ROOT
 
-#mv -f $RPM_BUILD_ROOT%{_datadir}/html/manual $RPM_BUILD_ROOT%{_datadir}
-
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/apache1
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/apache
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/apache1
@@ -1186,8 +1184,7 @@ rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/modules
 ln -s %{_libexecdir} $RPM_BUILD_ROOT%{_sysconfdir}/modules
 ln -s /var/log/apache $RPM_BUILD_ROOT%{_sysconfdir}/logs
 
-#htpasswd
-ln -sf ln -sf %{_bindir}/htpasswd $RPM_BUILD_ROOT%{_sbindir}/
+ln -sf %{_bindir}/htpasswd $RPM_BUILD_ROOT%{_sbindir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
