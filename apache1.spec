@@ -1447,9 +1447,9 @@ fi
 
 %{_mandir}/man8/apache.8*
 
-%attr(750,root,root) %dir /var/log/apache
-%attr(750,root,root) %dir /var/log/archiv/apache
-%attr(640,root,root) %ghost /var/log/apache/*
+%attr(750,root,logs) %dir /var/log/apache
+%attr(750,root,logs) %dir /var/log/archiv/apache
+%attr(640,root,logs) %ghost /var/log/apache/*
 
 %dir %{_datadir}
 %attr(755,root,root) %dir %{_datadir}/html
