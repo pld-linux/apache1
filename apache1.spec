@@ -1047,14 +1047,12 @@ fi
 %{apxs} -e -a -n auth_db %{_libexecdir}/mod_auth_db.so 1>&2
 
 %post mod_autoindex
-if [ "$1" = "0" ]; then
-	if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_autoindex.conf" /etc/apache/apache.conf; then
-		echo "Include /etc/apache/mod_autoindex.conf" >> /etc/apache/apache.conf
-	fi
-	%{apxs} -e -a -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
-	if [ -f /var/lock/subsys/apache ]; then
-		/etc/rc.d/init.d/apache restart 1>&2
-	fi
+if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_autoindex.conf" /etc/apache/apache.conf; then
+	echo "Include /etc/apache/mod_autoindex.conf" >> /etc/apache/apache.conf
+fi
+%{apxs} -e -a -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 fi
 
 %preun mod_autoindex
