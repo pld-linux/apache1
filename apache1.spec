@@ -95,6 +95,8 @@ PreReq:		perl-base
 PreReq:		rc-scripts
 Requires(pre):	/bin/id
 %if %{without minimal}
+# essental modules (maybe remove these in future if all Requires in
+# place for other packages).
 Requires:	%{name}-mod_access = %{version}-%{release}
 Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	%{name}-mod_log_config = %{version}-%{release}
