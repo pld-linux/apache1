@@ -35,7 +35,7 @@ Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
 Source3:	apache-icons.tar.gz
-# Source3-md5: 2b085cbc19fd28536dc883f0b864cd83
+# Source3-md5:	2b085cbc19fd28536dc883f0b864cd83
 Source4:	%{name}.sysconfig
 Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/apache-non-english-man-pages.tar.bz2
 # Source5-md5:	74ff6e8d8a7b365b48ed10a52fbeb84e
@@ -69,7 +69,7 @@ Patch22:	%{name}-db4.patch
 URL:		http://www.apache.org/
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
-%{?_with_rewrite_ldap:BuildRequires: openldap-devel}
+%{?_with_rewrite_ldap:BuildRequires:	openldap-devel}
 PreReq:		mm
 PreReq:		perl
 PreReq:		rc-scripts
@@ -792,25 +792,25 @@ rm -rf $RPM_BUILD_ROOT
 
 %pre
 if [ -n "`getgid http`" ]; then
-       if [ "`getgid http`" != "51" ]; then
-               echo "Error: group http doesn't have gid=51. Correct this before installing apache." 1>&2
-               exit 1
-       fi
+	if [ "`getgid http`" != "51" ]; then
+		echo "Error: group http doesn't have gid=51. Correct this before installing apache." 1>&2
+		exit 1
+	fi
 else
-       echo "Adding group http GID=51."
-       /usr/sbin/groupadd -g 51 -r -f http
+	echo "Adding group http GID=51."
+	/usr/sbin/groupadd -g 51 -r -f http
 fi
 if [ -n "`id -u http 2>/dev/null`" ]; then
-       if [ "`id -u http`" != "51" ]; then
-               echo "Error: user http doesn't have uid=51. Correct this before installing apache." 1>&2
-               exit 1
-       fi
-       if [ "`getent passwd http | cut -d: -f6`" = "/home/httpd" ]; then
-               /usr/sbin/usermod -d %{httpdir} http
-       fi
+	if [ "`id -u http`" != "51" ]; then
+		echo "Error: user http doesn't have uid=51. Correct this before installing apache." 1>&2
+		exit 1
+	fi
+	if [ "`getent passwd http | cut -d: -f6`" = "/home/httpd" ]; then
+		/usr/sbin/usermod -d %{httpdir} http
+	fi
 else
-       echo "Adding user http UID=51."
-       /usr/sbin/useradd -u 51 -r -d %{httpdir} -s /bin/false -c "HTTP User" -g http http 1>&2
+	echo "Adding user http UID=51."
+	/usr/sbin/useradd -u 51 -r -d %{httpdir} -s /bin/false -c "HTTP User" -g http http 1>&2
 fi
 
 %post
@@ -867,10 +867,10 @@ fi
 
 %postun
 if [ "$1" = "0" ]; then
-       echo "Removing user http."
-       /usr/sbin/userdel http
-       echo "Removing group http."
-       /usr/sbin/groupdel http
+	echo "Removing user http."
+	/usr/sbin/userdel http
+	echo "Removing group http."
+	/usr/sbin/groupdel http
 fi
 
 %triggerpostun -- apache <= 1.3.27-3
