@@ -402,6 +402,7 @@ Paketet apache-devel innehåller huvudfilerna för Apache.
 
 %package mod_access
 Summary:	Access control based on client hostname or IP address
+Summary(pl):	Kontrola dostêpu w oparciu o nazwê hosta lub adres IP klienta
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_access) = %{version}-%{release}
@@ -416,6 +417,17 @@ and Deny directives are used to specify which clients are or are not
 allowed access to the server, while the Order directive sets the
 default access state, and configures how the Allow and Deny directives
 interact with each other.
+
+%description mod_access -l pl
+Dyrektyw dostarczanych przez mod_access mo¿na u¿ywaæ w sekcjach
+<Directory>, <Files> i <Location>, a tak¿e plikach .htaccess w celu
+kontrolowania dostêpu do poszczególnych czê¶ci serwera. Dostêp mo¿e
+byæ kontrolowany w oparciu o nazwê hosta lub adres IP klienta albo
+inn± charakterystykê ¿±dania klienta wychwycon± przez zmienne
+¶rodowiskowe. Dyrektywy Allow i Deny s± u¿ywane w celu okre¶lenia
+którzy klienci maj± dostêp do serwera, a którzy go nie maj±, natomiast
+dyrektywa Order ustawia stan domy¶lny i okre¶la sposób, w jaki
+dyrektywy Allow i Deny wp³ywaj± na siebie nawzajem.
 
 %package mod_actions
 Summary:	Apache module for run CGI whenever a file of a certain type is requested
@@ -436,6 +448,7 @@ Ten modu³ pozwala na uruchamianie skryptów w momencie gdy nadchodzi
 
 %package mod_alias
 Summary:	Mapping different parts of the host filesystem in the document tree, and URL redirection
+Summary(pl):	Odwzorowywanie czê¶ci systemu plików w drzewie dokumentów oraz przekierowywanie URL-i
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_alias) = %{version}-%{release}
@@ -458,8 +471,27 @@ moved to a new location.
 A more powerful and flexible set of directives for manipulating URLs
 is contained in the mod_rewrite module.
 
+%description mod_alias -l pl
+Ten modu³ umo¿liwia odwzorowywanie ró¿nych czê¶ci systemu plików
+serwera w drzewie dokumentów oraz przekierowywanie URL-i. Dyrektywy
+obs³ugiwane przez ten modu³ umo¿liwiaj± manipulowanie i kontrolê URL-i
+podczas przychodzenia ¿±dañ do serwera. Dyrektywy Alias i ScriptAlias
+s³u¿± do odwzorowywania pomiêdzy URL-ami i ¶cie¿kami w systemie
+plików. Pozwala to na udostêpnianie tre¶ci nie umieszczonej
+bezpo¶rednio wewn±trz DocumentRoota jako czê¶ci drzewa dokumentów WWW.
+Dyrektywa ScriptAlias ponadto oznacza katalog docelowy jako
+zawieraj±cy wy³±cznie skrypty CGI.
+
+Dyrektywy Redirect s³u¿± do instruowania klientów o konieczno¶ci
+wys³ania nowego ¿±dania z innym URL-em. S± one zwykle u¿ywane w
+sytuacji, kiedy zasoby zosta³y przeniesione w nowe miejsce.
+
+Potê¿niejszy i bardziej elastyczny zbiór dyrektyw do manipulowania
+URL-ami znajduje siê w module mod_rewrite.
+
 %package mod_asis
 Summary:	Sending files which contain their own HTTP headers
+Summary(pl):	Wysy³anie plików zawieraj±cych w³asne nag³ówki HTTP
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_asis) = %{version}-%{release}
@@ -473,7 +505,19 @@ redirects and other special HTTP responses, without requiring a
 cgi-script or an nph script.
 
 For historical reasons, this module will also process any file with
-the mime type httpd/send-as-is.
+the MIME type httpd/send-as-is.
+
+%description mod_asis -l pl
+Ten modu³ dostarcza funkcjê obs³ugi send-as-is powoduj±c±, ¿e Apache
+wysy³a dokument bez dodawania wiêkszo¶ci zwykle stosowanych nag³ówków
+HTTP.
+
+Mo¿e on s³u¿yæ do wysy³ania z serwera dowolnego rodzaju danych,
+w³±cznie z przekierowaniami i innymi specjalnymi odpowiedziami HTTP
+bez u¿ycia skryptu CGI czy nph.
+
+Ze wzglêdów historycznych ten modu³ przetwarza tak¿e wszelkie pliki o
+typie MIME httpd/send-as-is.
 
 %package mod_auth
 Summary:	Apache module with user authentication using textual files
