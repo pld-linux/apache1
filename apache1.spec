@@ -1578,8 +1578,6 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-# XXXXXXXXXXXXXXXXXXX
-
 %post mod_log_agent
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
@@ -1906,7 +1904,7 @@ sed -i -e '
 %files index
 %defattr(644,root,root,755)
 %config(noreplace,missingok) %{_datadir}/html/index.html
-# note: html extensions are not the same as (g)libc locale names
+# NOTE: html extensions are not the same as (g)libc locale names
 %lang(ca) %{_datadir}/html/index.html.ca
 %lang(cs) %{_datadir}/html/index.html.cz
 %lang(de) %{_datadir}/html/index.html.de
