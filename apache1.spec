@@ -412,7 +412,7 @@ Obsoletes:	apache-mod_auth_anon < 2.0.0
 %description mod_auth_anon
 This package contains mod_auth_anon module. It allows "anonymous" user
 access to authenticated areas. It does access control in a manner
-similar to anonymous-ftp sites; i.e. have a 'magic' user id
+similar to anonymous FTP sites; i.e. have a 'magic' user id
 'anonymous' and the email address as a password. These email addresses
 can be logged. Combined with other (database) access control methods,
 this allows for effective user tracking and customization according to
@@ -423,7 +423,7 @@ independent and it allows users to share URLs.
 
 %description mod_auth_anon -l pl
 Ten modu³ oferuje anonimow± autoryzacjê u¿ytkownia podobnie do
-anonimowych serwerów ftp (u¿ytkownik ,,anonymous'' oraz has³o w
+anonimowych serwerów FTP (u¿ytkownik ,,anonymous'' oraz has³o w
 postaci adresu pocztowego u¿ytkownika).
 
 %package mod_auth_db
