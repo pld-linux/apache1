@@ -6,26 +6,26 @@
  #
  # Copyright 1999-2004 The Apache Software Foundation
  #
-@@ -220,15 +220,15 @@
+@@ -220,15 +220,14 @@
  ##  Initial DSO support check
  ##
  if (not -x "$CFG_SBINDIR/$CFG_TARGET") {
 -    print STDERR "apxs:Error: $CFG_SBINDIR/$CFG_TARGET not found or not executable\n";
 -    exit(1);
-+    print STDERR "apxs:Warning: $CFG_SBINDIR/$CFG_TARGET not found or not executable\n";
-+    print STDERR "apxs:Warning: Continuing anyway...\n";
++    print STDERR "apxs:Note: $CFG_SBINDIR/$CFG_TARGET not found or not executable\n";
  }
- if (not grep(/mod_so/, `$CFG_SBINDIR/$CFG_TARGET -l`)) {
+-if (not grep(/mod_so/, `$CFG_SBINDIR/$CFG_TARGET -l`)) {
 -    print STDERR "apxs:Error: Sorry, no DSO support for Apache available\n";
 -    print STDERR "apxs:Error: under your platform. Make sure the Apache\n";
 -    print STDERR "apxs:Error: module mod_so is compiled into your server\n";
 -    print STDERR "apxs:Error: binary `$CFG_SBINDIR/$CFG_TARGET'.\n";
 -    exit(1);
++else { if (not grep(/mod_so/, `$CFG_SBINDIR/$CFG_TARGET -l`)) {
 +    print STDERR "apxs:Warning: Sorry, no DSO support for Apache available\n";
 +    print STDERR "apxs:Warning: under your platform. Make sure the Apache\n";
 +    print STDERR "apxs:Warning: module mod_so is compiled into your server\n";
 +    print STDERR "apxs:Warning: binary `$CFG_SBINDIR/$CFG_TARGET'.\n";
-+    print STDERR "apxs:Warning: Continuing anyway...\n";
++    print STDERR "apxs:Warning: Continuing anyway...\n"; }
  }
  
  ##
