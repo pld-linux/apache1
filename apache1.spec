@@ -1,7 +1,7 @@
 #
 # Conditional build:
-# _with_rewrite_ldap	- enable ldap map support for mod_rewrite (alpha)
-# _without_ipv6		- disable IPv6 support
+%bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
+%bcond_without	ipv6		# disable IPv6 support
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	The most widely used Web server on the Internet
@@ -70,7 +70,7 @@ Patch23:	%{name}-CAN-2003-0020.patch
 URL:		http://www.apache.org/
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
-%{?_with_rewrite_ldap:BuildRequires:	openldap-devel}
+%{?with_rewrite_ldap:BuildRequires:	openldap-devel}
 PreReq:		mm
 PreReq:		perl-base
 PreReq:		rc-scripts
@@ -719,17 +719,17 @@ wirtualnych.
 %patch6 -p0
 %patch7 -p1
 %patch8 -p1
-%{!?_without_ipv6:%patch9 -p1}
+%{?with_ipv6:%patch9 -p1}
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%{?_with_rewrite_ldap:%patch13 -p1}
+%{?with_rewrite_ldap:%patch13 -p1}
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
-%{?_without_ipv6:%patch19 -p1}
+%{!?with_ipv6:%patch19 -p1}
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
@@ -762,7 +762,7 @@ OPTIM="%{rpmcflags} -DHARD_SERVER_LIMIT=2048" \
 	--suexec-docroot=%{_datadir} \
 	--disable-rule=WANTHSREGEX \
 	--enable-rule=EAPI \
-	%{!?_without_ipv6:--enable-rule=INET6}
+	%{?with_ipv6:--enable-rule=INET6}
 
 %{__make} LIBS1="-lm -lcrypt -lmm -ldl"
 
@@ -772,7 +772,7 @@ rm -f src/modules/standard/mod_auth_db.so
 
 rm -f src/modules/standard/mod_rewrite.so
 %{__make} -C src/modules/standard mod_rewrite.so \
-	LIBS_SHLIB="-ldb %{?_with_rewrite_ldap:-lldap -llber}"
+	LIBS_SHLIB="-ldb %{?with_rewrite_ldap:-lldap -llber}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
