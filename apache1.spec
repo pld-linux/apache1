@@ -1,6 +1,6 @@
 #
 # Conditional build:
-# mod_rewrite_ldap	- enable ldap map supoort for mod_rewrite (alpha)
+# _with_rewrite_ldap	- enable ldap map support for mod_rewrite (alpha)
 # _without_ipv6		- disable IPv6 support
 #
 %include	/usr/lib/rpm/macros.perl
@@ -63,17 +63,21 @@ Patch18:	%{name}-EAPI-missing_files.patch
 Patch19:	%{name}-PLD-nov6.patch
 Patch20:	%{name}-configdir_skip_backups.patch
 Patch21:	%{name}-apxs-quiet.patch
+Patch22:	%{name}-db4.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-BuildRequires:	db3-devel
+BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.1.3
-%{?mod_rewrite_ldap:BuildRequires: openldap-devel}
+%{?_with_rewrite_ldap:BuildRequires: openldap-devel}
 PreReq:		rc-scripts
 PreReq:		mm
 PreReq:		perl
-Requires(pre):	sh-utils
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/getent
+Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
+Requires(pre):	/usr/sbin/usermod
+Requires(pre):	textutils
 Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/userdel
 Requires(postun):	/usr/sbin/groupdel
@@ -84,6 +88,7 @@ Provides:	apache = %{version}-%{release}
 Provides:	httpd
 Provides:	webserver
 Provides:	%{name}(EAPI) = %{version}
+Provides:	apache(EAPI) = %{version}
 Obsoletes:	httpd
 Obsoletes:	webserver
 Obsoletes:	apache <= 1.3.27-3
@@ -94,9 +99,11 @@ Obsoletes:	indexhtml
 
 %define		_sysconfdir	/etc/httpd
 %define		_includedir	%{_prefix}/include/apache
-%define		_datadir	/home/httpd
 %define		_libexecdir	%{_prefix}/lib/apache
 %define		apxs		/usr/sbin/apxs
+%define		httpdir		/home/services/httpd
+%define		_datadir	%{httpdir}
+%define		webappsdir	%{httpdir}/apps
 
 %description
 Apache is a powerful, full-featured, efficient and freely-available
@@ -184,8 +191,6 @@ webbserver. Apache är också den populäraste webbservern på Internet.
 Apache serbest daðýtýlan ve çok kullanýlan yetenekli bir web
 sunucusudur.
 
-%description -l uk
-
 %description -l zh_CN
 Apache ÊÇ¹¦ÄÜÇ¿¾¢ÆëÈ«¡¢¸ßÐ§ÇÒÃâ·ÑÌá¹©µÄ Web ·þÎñ³ÌÐò£¬ Í¬Ê±Ò²ÊÇ
 Internet ÉÏ×îÁ÷ÐÐµÄ Web ·þÎñ³ÌÐò¡£
@@ -199,6 +204,8 @@ Summary(ru):	Apache suEXEC CGI wrapper
 Summary(uk):	Apache suEXEC CGI wrapper
 Group:		Development/Tools
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-suexec = %{version}-%{release}
+Obsoletes:	apache-suexec <= 1.3.27-3
 
 %description suexec
 The suEXEC feature provides Apache users the ability to run CGI and
@@ -258,6 +265,9 @@ Summary(zh_CN):	ÓÃÓÚ Apache Web ·þÎñ³ÌÐòµÄ¿ª·¢¹¤¾ß¡£
 Group:		Networking/Utilities
 Requires:	%{name}(EAPI) = %{version}
 Provides:	%{name}(EAPI)-devel = %{version}
+Provides:	apache(EAPI)-devel = %{version}
+Provides:	apache-devel = %{version}-%{release}
+Obsoletes:	apache-devel <= 1.3.27-3
 
 %description devel
 The apache-devel package contains header files for Apache.
@@ -315,9 +325,10 @@ Paketet apache-devel innehåller huvudfilerna för Apache.
 Summary:	Apache module for run CGI whenever a file of a certain type is requested
 Summary(pl):	Modu³ dla apache do uruchamiania skryptów cgi
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_actions = %{version}-%{release}
+Obsoletes:	apache-mod_actions <= 1.3.27-3
 
 %description mod_actions
 This package contains mod_actions module. This module lets you run CGI
@@ -332,9 +343,10 @@ Ten modu³ pozwala na uruchamianie skryptów w momencie gdy nadchodzi
 Summary:	Apache module with user authentication using textual files
 Summary(pl):	Modu³ autentykacji u¿ytkownika przy u¿yciu plików tekstowych dla Apache
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_auth = %{version}-%{release}
+Obsoletes:	apache-mod_auth <= 1.3.27-3
 
 %description mod_auth
 This package contains mod_auth module. It provides for user
@@ -348,9 +360,10 @@ u¿yciu plików tekstowych.
 Summary:	Apache module with "anonymous" user access authentication
 Summary(pl):	Modu³ apache oferuj±cy anonimow± autoryzacjê u¿ytkownia
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_auth_anon = %{version}-%{release}
+Obsoletes:	apache-mod_auth_anon <= 1.3.27-3
 
 %description mod_auth_anon
 This package contains mod_auth_anon module. It allows "anonymous" user
@@ -373,9 +386,11 @@ postaci adresu pocztowego u¿ytkownika).
 Summary:	Apache module with user authentication which uses Berkeley DB files
 Summary(pl):	Modu³ apache z mechanizmem autentykacji u¿ywaj±cym plików Berkeley DB
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Requires:	%{_sbindir}/apxs
+Provides:	apache-mod_auth_db = %{version}-%{release}
+Obsoletes:	apache-mod_auth_db <= 1.3.27-3
 
 %description mod_auth_db
 This package contains mod_auth_db module. It provides for user
@@ -391,10 +406,11 @@ ale jako plików danych u¿ywa Berkeley DB.
 Summary:	Apache user authentication module using MD5 Digest Authentication
 Summary(pl):	Modu³ apache do autoryzacji MD5
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_auth_digest = %{version}-%{release}
 Obsoletes:	%{name}-mod_digest
+Obsoletes:	apache-mod_auth_digest <= 1.3.27-3
 
 %description mod_auth_digest
 This package contains mod_digest module. It provides user
@@ -408,9 +424,10 @@ Authentication.
 Summary:	Apache module - authentication variables for arbitrary directives
 Summary(pl):	Modu³ apache do definiowania zmiennych
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_define = %{version}-%{release}
+Obsoletes:	apache-mod_define <= 1.3.27-3
 
 %description mod_define
 It provides the definition variables for arbitrary directives, i.e.
@@ -423,9 +440,10 @@ Modu³ ten umo¿liwia definicjê zmiennych i dyrektyw.
 Summary:	Older version of apache user authentication module using MD5 Digest Authentication
 Summary(pl):	Starsza wersja modu³u apache do autoryzacji MD5
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_digest = %{version}-%{release}
+Obsoletes:	apache-mod_digest <= 1.3.27-3
 
 %description mod_digest
 This package contains mod_digest module. It provides user
@@ -446,9 +464,10 @@ wersji standardu.
 Summary:	Apache module for "trailing slash" redirects and serving directory index files
 Summary(pl):	Modu³ oferuj±cy przekierowania i serwowanie indeksu katalogu.
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_dir = %{version}-%{release}
+Obsoletes:	apache-mod_dir <= 1.3.27-3
 
 %description mod_dir
 This package contains mod_dir which provides "trailing slash"
@@ -457,13 +476,34 @@ redirects and serving directory index files.
 %description mod_dir -l pl
 Modu³ oferuj±cy przekierowania i serwowanie indeksu katalogu.
 
+%package mod_expires
+Summary:	Apache module which generates Expires HTTP headers
+Summary(pl):	Modu³ generuj±cy nag³ówki HTTP Expires
+Group:		Networking/Daemons
+Requires(post,preun):	%{_sbindir}/apxs
+Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_expires = %{version}-%{release}
+Obsoletes:	apache-mod_expires <= 1.3.27-3
+
+%description mod_expires
+This module controls the setting of the Expires HTTP header in server
+responses. The expiration date can set to be relative to either the
+time the source file was last modified, or to the time of the client
+access.
+
+%description mod_expires -l pl
+Modu³ kontroluje ustawianie nag³ówka HTTP Expires. Data wyga¶niêcia
+wa¿no¶ci mo¿e byæ ustalana w zale¿no¶ci od czasu modyfikacji plików
+¼ród³owych lub odwo³ania klienta.
+
 %package mod_headers
 Summary:	Apache module allows for the customization of HTTP response headers
 Summary(pl):	Modu³ pozwalaj±cy na modyfikacjê nag³ówków HTTP
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_headers = %{version}-%{release}
+Obsoletes:	apache-mod_headers <= 1.3.27-3
 
 %description mod_headers
 This package contains mod_headers module. The module allows for the
@@ -478,9 +518,10 @@ wysy³anych do przegl±darki.
 Summary:	Apache module for mmap()ing statically configured list files
 Summary(pl):	Modu³ s³u¿±cy do mmap()owania plików.
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_mmap_static = %{version}-%{release}
+Obsoletes:	apache-mod_mmap_static <= 1.3.27-3
 
 %description mod_mmap_static
 This package contains mod_mmap_static module. It provides mmap()ing of
@@ -495,9 +536,10 @@ Modu³ umo¿liwia mmap()owanie statycznie skonfigurowanych plików
 Summary:	Apache module with imap-file handler
 Summary(pl):	Modu³ z obs³ug± imap-file
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_imap = %{version}-%{release}
+Obsoletes:	apache-mod_imap <= 1.3.27-3
 
 %description mod_imap
 This package contains mod_imap module. It provides for .map files,
@@ -511,9 +553,10 @@ Modu³ umozliwiaj±cy obs³ugê plików .map (imap-file handler)
 Summary:	Apache module with comprehensive overview of the server configuration
 Summary(pl):	Modu³ dostarczaj±cy informacji na temat serwera.
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_info = %{version}-%{release}
+Obsoletes:	apache-mod_info <= 1.3.27-3
 
 %description mod_info
 This package contains mod_info module. It provides a comprehensive
@@ -528,9 +571,13 @@ modu³ach itp.
 Summary:	Apache module with Web proxy
 Summary(pl):	Modu³ dodaj±cy obs³ugê serwera proxy
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{name}(EAPI) = %{version}
+Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	grep
+Requires(preun):	fileutils
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_proxy = %{version}-%{release}
+Obsoletes:	apache-mod_proxy <= 1.3.27-3
 
 %description mod_proxy
 This package contains module with implementation a proxy/cache for
@@ -547,9 +594,10 @@ HTTP/1.0.
 Summary:	Apache module with rule-based engine for rewrite requested URLs on the fly
 Summary(pl):	Modu³ do ,,przepisywania'' adresów URL w locie
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_rewrite = %{version}-%{release}
+Obsoletes:	apache-mod_rewrite <= 1.3.27-3
 
 %description mod_rewrite
 This package contains It provides a rule-based rewriting engine to
@@ -562,9 +610,13 @@ Modu³ oferuj±cy mo¿liwo¶æ ,,przepisywania'' adresów URL w locie.
 Summary:	Server status report module for apache
 Summary(pl):	Modu³ dostarczaj±cy informacje statystyczne o serwerze.
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{name}(EAPI) = %{version}
+Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	grep
+Requires(preun):	fileutils
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_status = %{version}-%{release}
+Obsoletes:	apache-mod_status <= 1.3.27-3
 
 %description mod_status
 The Status module allows a server administrator to find out how well
@@ -577,45 +629,14 @@ browser).
 Modu³ pozwala administratorowi na przegl±danie statystyk dotycz±cych
 pracy serwera apache (w postaci strony HTML).
 
-%package mod_usertrack
-Summary:	Apache module for user tracking using cookies
-Summary(pl):	Modu³ s³u¿±cy do ¶ledzenia ,,ciasteczek''.
-Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
-Requires:	%{name}(EAPI) = %{version}
-
-%description mod_usertrack
-This package contains the user tracking module which did its own
-logging using CookieLog directory. This module allow multiple log
-files.
-
-%description mod_usertrack -l pl
-Modu³ pozwalaj±cy na ¶ledzenie ,,ciasteczek''.
-
-%package mod_vhost_alias
-Summary:	Apache module for dynamically configured mass virtual hosting
-Summary(pl):	Modu³ dodaj±cy obs³ugê hostów wirtualnych.
-Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
-Requires:	%{name}(EAPI) = %{version}
-
-%description mod_vhost_alias
-This package contains the mod_vhost_alias. It provides support for
-dynamically configured mass virtual hosting.
-
-%description mod_vhost_alias -l pl
-Modu³ umo¿liwia na dynamiczne konfigurowanie masowej ilo¶ci serwerów
-wirtualnych.
-
 %package mod_unique_id
 Summary:	Apache module which provides a magic token for each request
 Summary(pl):	Modu³ nadaj±cy ka¿demu ¿±daniu unikalny token
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_unique_id = %{version}-%{release}
+Obsoletes:	apache-mod_unique_id <= 1.3.27-3
 
 %description mod_unique_id
 This package contains the mod_unique_id. This module provides a magic
@@ -632,24 +653,44 @@ Modu³ nadaje przy ka¿dym ¿±daniu token unikalny w ramach wszystkich
 maszyn. Modu³ ustawia przy ka¿dym ¿±daniu zmienn± ¶rodowiskow±
 UNIQUE_ID.
 
-%package mod_expires
-Summary:	Apache module which generates Expires HTTP headers
-Summary(pl):	Modu³ generuj±cy nag³ówki HTTP Expires
+%package mod_usertrack
+Summary:	Apache module for user tracking using cookies
+Summary(pl):	Modu³ s³u¿±cy do ¶ledzenia u¿ytkowników przy u¿yciu ciasteczek
 Group:		Networking/Daemons
-Prereq:		%{_sbindir}/apxs
-Prereq:		perl
+Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_usertrack = %{version}-%{release}
+Obsoletes:	apache-mod_usertrack <= 1.3.27-3
 
-%description mod_expires
-This module controls the setting of the Expires HTTP header in server
-responses. The expiration date can set to be relative to either the
-time the source file was last modified, or to the time of the client
-access.
+%description mod_usertrack
+This package contains the user tracking module which did its own
+logging using CookieLog directory. This module allow multiple log
+files.
 
-%description mod_expires -l pl
-Modu³ kontroluje ustawianie nag³ówka HTTP Expires. Data wyga¶niêcia
-wa¿no¶ci mo¿e byæ ustalana w zale¿no¶ci od czasu modyfikacji plików
-¼ród³owych lub odwo³ania klienta.
+%description mod_usertrack -l pl
+Modu³ pozwalaj±cy na ¶ledzenie u¿ytkowników przy pomocy ciasteczek.
+Modu³ ma w³asne logowanie przy u¿yciu katalogu CookieLog; pozwala na
+wiele plików logów.
+
+%package mod_vhost_alias
+Summary:	Apache module for dynamically configured mass virtual hosting
+Summary(pl):	Modu³ dodaj±cy obs³ugê hostów wirtualnych.
+Group:		Networking/Daemons
+Requires(post,preun):	%{name}(EAPI) = %{version}
+Requires(post,preun):	%{_sbindir}/apxs
+Requires(post,preun):	grep
+Requires(preun):	fileutils
+Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_vhost_alias = %{version}-%{release}
+Obsoletes:	apache-mod_vhost_alias <= 1.3.27-3
+
+%description mod_vhost_alias
+This package contains the mod_vhost_alias. It provides support for
+dynamically configured mass virtual hosting.
+
+%description mod_vhost_alias -l pl
+Modu³ umo¿liwia na dynamiczne konfigurowanie masowej ilo¶ci serwerów
+wirtualnych.
 
 %prep
 %setup -q -n apache_%{version} -a3
@@ -666,7 +707,7 @@ wa¿no¶ci mo¿e byæ ustalana w zale¿no¶ci od czasu modyfikacji plików
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%{?mod_rewrite_ldap:%patch13 -p1}
+%{?_with_rewrite_ldap:%patch13 -p1}
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
@@ -675,6 +716,7 @@ wa¿no¶ci mo¿e byæ ustalana w zale¿no¶ci od czasu modyfikacji plików
 %{?_without_ipv6:%patch19 -p1}
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
 
 %build
 OPTIM="%{rpmcflags}" \
@@ -711,12 +753,12 @@ rm -f src/modules/standard/mod_auth_db.so
 %{__make} -C src/modules/standard mod_auth_db.so LIBS_SHLIB="-ldb"
 
 rm -f src/modules/standard/mod_rewrite.so
-%{__make} -C src/modules/standard mod_rewrite.so LIBS_SHLIB="-ldb %{?mod_rewrite_ldap:-lldap -llber}"
+%{__make} -C src/modules/standard mod_rewrite.so LIBS_SHLIB="-ldb %{?_with_rewrite_ldap:-lldap -llber}"
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig} \
-	$RPM_BUILD_ROOT%{_datadir}/errordocs \
+	$RPM_BUILD_ROOT{%{_datadir}/errordocs,%{webappsdir}} \
 	$RPM_BUILD_ROOT/var/{log/{httpd,archiv/httpd},run/apache}
 
 %{__make} install-quiet root="$RPM_BUILD_ROOT"
@@ -758,9 +800,12 @@ if [ -n "`id -u http 2>/dev/null`" ]; then
 		echo "Error: user http doesn't have uid=51. Correct this before installing apache." 1>&2
 		exit 1
 	fi
+	if [ "`getent passwd http | cut -d: -f6`" = "/home/httpd" ]; then
+		/usr/sbin/usermod -d %{httpdir} http
+	fi
 else
 	echo "Adding user http UID=51."
-	/usr/sbin/useradd -u 51 -r -d /home/httpd -s /bin/false -c "HTTP User" -g http http 1>&2
+	/usr/sbin/useradd -u 51 -r -d %{httpdir} -s /bin/false -c "HTTP User" -g http http 1>&2
 fi
 
 %post
@@ -823,6 +868,34 @@ if [ "$1" = "0" ]; then
 	/usr/sbin/groupdel http
 fi
 
+%triggerpostun -- apache <= 1.3.27-3
+if [ -z "`getgid http`" ]; then
+	echo "Adding group http GID=51."
+	/usr/sbin/groupadd -g 51 -r -f http
+fi
+if [ -z "`id -u http 2>/dev/null`" ]; then
+	echo "Adding user http UID=51."
+	/usr/sbin/useradd -u 51 -r -d %{httpdir} -s /bin/false -c "HTTP User" -g http http 1>&2
+fi
+/sbin/chkconfig --add httpd
+%{apxs} -e -a -n access %{_libexecdir}/mod_access.so 1>&2
+%{apxs} -e -a -n alias %{_libexecdir}/mod_alias.so 1>&2
+%{apxs} -e -a -n asis %{_libexecdir}/mod_asis.so 1>&2
+%{apxs} -e -a -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
+%{apxs} -e -a -n cern_meta %{_libexecdir}/mod_cern_meta.so 1>&2
+%{apxs} -e -a -n cgi %{_libexecdir}/mod_cgi.so 1>&2
+%{apxs} -e -a -n env %{_libexecdir}/mod_env.so 1>&2
+%{apxs} -e -a -n include %{_libexecdir}/mod_include.so 1>&2
+%{apxs} -e -a -n log_agent %{_libexecdir}/mod_log_agent.so 1>&2
+%{apxs} -e -a -n log_config %{_libexecdir}/mod_log_config.so 1>&2
+%{apxs} -e -a -n log_referer %{_libexecdir}/mod_log_referer.so 1>&2
+%{apxs} -e -a -n mime_magic %{_libexecdir}/mod_mime_magic.so 1>&2
+%{apxs} -e -a -n mime %{_libexecdir}/mod_mime.so 1>&2
+%{apxs} -e -a -n negotiation %{_libexecdir}/mod_negotiation.so 1>&2
+%{apxs} -e -a -n setenvif %{_libexecdir}/mod_setenvif.so 1>&2
+%{apxs} -e -a -n speling %{_libexecdir}/mod_speling.so 1>&2
+%{apxs} -e -a -n userdir %{_libexecdir}/mod_userdir.so 1>&2
+
 %post mod_actions
 %{apxs} -e -a -n actions %{_libexecdir}/mod_actions.so 1>&2
 if [ -f /var/lock/subsys/httpd ]; then
@@ -838,6 +911,9 @@ if [ "$1" = "0" ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
 fi
+
+%triggerpostun mod_actions -- apache-mod_actions <= 1.3.27-3
+%{apxs} -e -a -n actions %{_libexecdir}/mod_actions.so 1>&2
 
 %post mod_auth
 %{apxs} -e -a -n auth %{_libexecdir}/mod_auth.so 1>&2
@@ -855,6 +931,9 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
+%triggerpostun mod_auth -- apache-mod_auth <= 1.3.27-3
+%{apxs} -e -a -n auth %{_libexecdir}/mod_auth.so 1>&2
+
 %post mod_auth_anon
 %{apxs} -e -a -n auth_anon %{_libexecdir}/mod_auth_anon.so 1>&2
 if [ -f /var/lock/subsys/httpd ]; then
@@ -870,6 +949,9 @@ if [ "$1" = "0" ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
 fi
+
+%triggerpostun mod_auth_anon -- apache-mod_auth_anon <= 1.3.27-3
+%{apxs} -e -a -n auth_anon %{_libexecdir}/mod_auth_anon.so 1>&2
 
 %post mod_auth_db
 %{apxs} -e -a -n auth_db %{_libexecdir}/mod_auth_db.so 1>&2
@@ -887,6 +969,12 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
+%triggerpostun mod_auth_db -- apache-mod_auth_db <= 1.3.20-2
+%{apxs} -e -A -n auth_dbm %{_libexecdir}/mod_auth_dbm.so 1>&2
+
+%triggerpostun mod_auth_db -- apache-mod_auth_db <= 1.3.27-3
+%{apxs} -e -a -n auth_db %{_libexecdir}/mod_auth_db.so 1>&2
+
 %post mod_auth_digest
 %{apxs} -e -a -n auth_digest %{_libexecdir}/mod_auth_digest.so 1>&2
 if [ -f /var/lock/subsys/httpd ]; then
@@ -903,8 +991,8 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_auth_db -- apache-mod_auth_db <= 1.3.20-2
-%{apxs} -e -A -n auth_dbm %{_libexecdir}/mod_auth_dbm.so 1>&2
+%triggerpostun mod_auth_digest -- apache-mod_auth_digest <= 1.3.27-3
+%{apxs} -e -a -n auth_digest %{_libexecdir}/mod_auth_digest.so 1>&2
 
 %post mod_define
 %{apxs} -e -a -n define %{_libexecdir}/mod_define.so 1>&2
@@ -922,6 +1010,9 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
+%triggerpostun mod_define -- apache-mod_define <= 1.3.27-3
+%{apxs} -e -a -n define %{_libexecdir}/mod_define.so 1>&2
+
 %post mod_digest
 %{apxs} -e -a -n digest %{_libexecdir}/mod_digest.so 1>&2
 if [ -f /var/lock/subsys/httpd ]; then
@@ -937,6 +1028,9 @@ if [ "$1" = "0" ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
 fi
+
+%triggerpostun mod_digest -- apache-mod_digest <= 1.3.27-3
+%{apxs} -e -a -n digest %{_libexecdir}/mod_digest.so 1>&2
 
 %post mod_dir
 %{apxs} -e -a -n dir %{_libexecdir}/mod_dir.so 1>&2
@@ -954,6 +1048,9 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
+%triggerpostun mod_dir -- apache-mod_dir <= 1.3.27-3
+%{apxs} -e -a -n dir %{_libexecdir}/mod_dir.so 1>&2
+
 %post mod_expires
 %{apxs} -e -a -n expires %{_libexecdir}/mod_expires.so 1>&2
 if [ -f /var/lock/subsys/httpd ]; then
@@ -969,6 +1066,9 @@ if [ "$1" = "0" ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
 fi
+
+%triggerpostun mod_expires -- apache-mod_expires <= 1.3.27-3
+%{apxs} -e -a -n expires %{_libexecdir}/mod_expires.so 1>&2
 
 %post mod_headers
 %{apxs} -e -a -n headers %{_libexecdir}/mod_headers.so 1>&2
@@ -986,6 +1086,9 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
+%triggerpostun mod_headers -- apache-mod_headers <= 1.3.27-3
+%{apxs} -e -a -n headers %{_libexecdir}/mod_headers.so 1>&2
+
 %post mod_mmap_static
 %{apxs} -e -a -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
 if [ -f /var/lock/subsys/httpd ]; then
@@ -1001,6 +1104,9 @@ if [ "$1" = "0" ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
 fi
+
+%triggerpostun mod_mmap_static -- apache-mod_mmap_static <= 1.3.27-3
+%{apxs} -e -a -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
 
 %post mod_imap
 %{apxs} -e -a -n imap %{_libexecdir}/mod_imap.so 1>&2
@@ -1018,6 +1124,9 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
+%triggerpostun mod_imap -- apache-mod_imap <= 1.3.27-3
+%{apxs} -e -a -n imap %{_libexecdir}/mod_imap.so 1>&2
+
 %post mod_info
 %{apxs} -e -a -n info %{_libexecdir}/mod_info.so 1>&2
 if [ -f /var/lock/subsys/httpd ]; then
@@ -1034,6 +1143,9 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
+%triggerpostun mod_info -- apache-mod_info <= 1.3.27-3
+%{apxs} -e -a -n info %{_libexecdir}/mod_info.so 1>&2
+
 %post mod_proxy
 %{apxs} -e -a -n proxy %{_libexecdir}/libproxy.so 1>&2
 if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_proxy.conf" /etc/httpd/httpd.conf; then
@@ -1047,6 +1159,7 @@ fi
 
 %preun mod_proxy
 if [ "$1" = "0" ]; then
+	umask 027
 	%{apxs} -e -A -n proxy %{_libexecdir}/libproxy.so 1>&2
 	grep -v "^Include.*mod_proxy.conf" /etc/httpd/httpd.conf > \
 		/etc/httpd/httpd.conf.tmp
@@ -1054,6 +1167,12 @@ if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/httpd ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
+fi
+
+%triggerpostun mod_proxy -- apache-mod_proxy <= 1.3.27-3
+%{apxs} -e -a -n proxy %{_libexecdir}/libproxy.so 1>&2
+if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_proxy.conf" /etc/httpd/httpd.conf; then
+	echo "Include /etc/httpd/mod_proxy.conf" >> /etc/httpd/httpd.conf
 fi
 
 %post mod_rewrite
@@ -1072,6 +1191,9 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
+%triggerpostun mod_rewrite -- apache-mod_rewrite <= 1.3.27-3
+%{apxs} -e -a -n rewrite %{_libexecdir}/mod_rewrite.so 1>&2
+
 %post mod_status
 %{apxs} -e -a -n status %{_libexecdir}/mod_status.so 1>&2
 if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_status.conf" /etc/httpd/httpd.conf; then
@@ -1085,6 +1207,7 @@ fi
 
 %preun mod_status
 if [ "$1" = "0" ]; then
+	umask 027
 	%{apxs} -e -A -n status %{_libexecdir}/mod_status.so 1>&2
 	grep -v "^Include.*mod_status.conf" /etc/httpd/httpd.conf > \
 		/etc/httpd/httpd.conf.tmp
@@ -1094,20 +1217,10 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%post mod_usertrack
-%{apxs} -e -a -n usertrack %{_libexecdir}/mod_usertrack.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
-else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
-fi
-
-%preun mod_usertrack
-if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n usertrack %{_libexecdir}/mod_usertrack.so 1>&2
-	if [ -f /var/lock/subsys/httpd ]; then
-		/etc/rc.d/init.d/httpd restart 1>&2
-	fi
+%triggerpostun mod_status -- apache-mod_status <= 1.3.27-3
+%{apxs} -e -a -n status %{_libexecdir}/mod_status.so 1>&2
+if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_status.conf" /etc/httpd/httpd.conf; then
+	echo "Include /etc/httpd/mod_status.conf" >> /etc/httpd/httpd.conf
 fi
 
 %post mod_unique_id
@@ -1126,6 +1239,28 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
+%triggerpostun mod_unique_id -- apache-mod_unique_id <= 1.3.27-3
+%{apxs} -e -a -n unique_id %{_libexecdir}/mod_unique_id.so 1>&2
+
+%post mod_usertrack
+%{apxs} -e -a -n usertrack %{_libexecdir}/mod_usertrack.so 1>&2
+if [ -f /var/lock/subsys/httpd ]; then
+	/etc/rc.d/init.d/httpd restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+fi
+
+%preun mod_usertrack
+if [ "$1" = "0" ]; then
+	%{apxs} -e -A -n usertrack %{_libexecdir}/mod_usertrack.so 1>&2
+	if [ -f /var/lock/subsys/httpd ]; then
+		/etc/rc.d/init.d/httpd restart 1>&2
+	fi
+fi
+
+%triggerpostun mod_usertrack -- apache-mod_usertrack <= 1.3.27-3
+%{apxs} -e -a -n usertrack %{_libexecdir}/mod_usertrack.so 1>&2
+
 %post mod_vhost_alias
 %{apxs} -e -a -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
 if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_vhost_alias.conf" /etc/httpd/httpd.conf; then
@@ -1139,6 +1274,7 @@ fi
 
 %preun mod_vhost_alias
 if [ "$1" = "0" ]; then
+	umask 027
 	%{apxs} -e -A -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
 	grep -v "^Include.*mod_vhost_alias.conf" /etc/httpd/httpd.conf > \
 		/etc/httpd/httpd.conf.tmp
@@ -1146,6 +1282,12 @@ if [ "$1" = "0" ]; then
 	if [ -f /var/lock/subsys/httpd ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
+fi
+
+%triggerpostun mod_vhost_alias -- apache-mod_vhost_alias <= 1.3.27-3
+%{apxs} -e -a -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
+if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_vhost_alias.conf" /etc/httpd/httpd.conf; then
+	echo "Include /etc/httpd/mod_vhost_alias.conf" >> /etc/httpd/httpd.conf
 fi
 
 %files
@@ -1442,6 +1584,7 @@ fi
 %{_datadir}/icons/small/*.gif
 %{_datadir}/icons/small/*.png
 %attr(755,root,root) %{_datadir}/cgi-bin
+%dir %{webappsdir}
 
 %files suexec
 %defattr(644,root,root,755)
@@ -1553,18 +1696,18 @@ fi
 %attr(755,root,root) %{_libexecdir}/mod_status.so
 %{_datadir}/manual/mod/mod_status.html
 
-%files mod_usertrack
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libexecdir}/mod_usertrack.so
-%{_datadir}/manual/mod/mod_cookies.html
-%{_datadir}/manual/mod/mod_usertrack.html
-
 %files mod_unique_id
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libexecdir}/mod_unique_id.so
 %{_datadir}/manual/mod/mod_unique_id.html.html
 %{_datadir}/manual/mod/mod_unique_id.html.en
 %lang(ja) %{_datadir}/manual/mod/mod_unique_id.html.ja.jis
+
+%files mod_usertrack
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libexecdir}/mod_usertrack.so
+%{_datadir}/manual/mod/mod_cookies.html
+%{_datadir}/manual/mod/mod_usertrack.html
 
 %files mod_vhost_alias
 %defattr(644,root,root,755)

@@ -14,7 +14,7 @@ diff -urN apache_1.3.14.orig/config.layout apache_1.3.14/config.layout
 +    libexecdir:    $prefix/lib/apache
 +    mandir:        $prefix/share/man
 +    sysconfdir:    /etc/httpd
-+    datadir:       /home/httpd
++    datadir:       /home/services/httpd
 +    iconsdir:      $datadir/icons
 +    htdocsdir:     $datadir/html
 +    cgidir:        $datadir/cgi-bin
