@@ -69,6 +69,7 @@ URL:		http://www.apache.org/
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
 %{?with_rewrite_ldap:BuildRequires:	openldap-devel}
+BuildRequires:	rpmbuild(macros) >= 1.159
 PreReq:		mm
 PreReq:		perl-base
 PreReq:		rc-scripts
@@ -83,13 +84,15 @@ Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
 Requires:	/etc/mime.types
+Requires:	%{name}-apxs = %{version}-%{release}
 Requires:	mailcap
 Requires:	psmisc >= 20.1
-Requires:	%{name}-apxs = %{version}-%{release}
 Provides:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(EAPI) = %{version}-%{release}
 Provides:	apache = %{version}-%{release}
+Provides:	group(http)
 Provides:	httpd
+Provides:	user(http)
 Provides:	webserver
 Obsoletes:	apache < 2.0.0
 Obsoletes:	apache-extra
@@ -934,10 +937,8 @@ fi
 
 %postun
 if [ "$1" = "0" ]; then
-	echo "Removing user http."
-	/usr/sbin/userdel http
-	echo "Removing group http."
-	/usr/sbin/groupdel http
+	%userremove http
+	%groupremove http
 fi
 
 %triggerpostun -- apache < 2.0.0
