@@ -72,7 +72,7 @@ BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
 %{?_with_rewrite_ldap:BuildRequires:	openldap-devel}
 PreReq:		mm
-PreReq:		perl
+PreReq:		perl-base
 PreReq:		rc-scripts
 Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getent
