@@ -662,9 +662,20 @@ are of type application/x-httpd-cgi by virtue of an AddType directive,
 will still not be executed by the server unless Options ExecCGI is
 enabled. See the Options directive for more details.
 
+%description mod_cgi -l pl
+Ten modu³ powoduje, ¿e dowolny plik o typie MIME
+application/x-httpd-cgi albo procedurze obs³ugi cgi-script (w Apache'u
+1.1 lub nowszym) bêdzie traktowany jako skrypt CGI i uruchamiany przez
+serwer, a jego wyj¶cie bêdzie zwracane klientowi. Pliki uzyskuj± ten
+typ przez posiadanie nazwy zawieraj±cej rozszerzenie okre¶lone
+dyrektyw± AddType lub bêd±c w katalogu ScriptAlias. Pliki nie bêd±ce w
+katalogu ScriptAlias, ale maj±ce typ application/x-httpd-cgi dziêki
+dyrektywie AddType nie bêd± jednak wykonywane, chyba ¿e w³±czona
+zostanie opcja ExecCGI - wiêcej szczegó³ów w dyrektywie Options.
+
 %package mod_define
-Summary:	Apache module - authentication variables for arbitrary directives
-Summary(pl):	Modu³ apache do definiowania zmiennych
+Summary:	Apache module - definition variables for arbitrary directives
+Summary(pl):	Modu³ Apache'a do definiowania zmiennych
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_define) = %{version}-%{release}
@@ -675,7 +686,8 @@ It provides the definition variables for arbitrary directives, i.e.
 variables which can be expanded on any(!) directive line.
 
 %description mod_define -l pl
-Modu³ ten umo¿liwia definicjê zmiennych i dyrektyw.
+Modu³ ten umo¿liwia definicjê zmiennych dla dowolnych dyrektyw, tzn.
+zmiennych, które mog± byæ rozwijane w dowolnej linii dyrektywy.
 
 %package mod_digest
 Summary:	Older version of apache user authentication module using MD5 Digest Authentication
@@ -702,7 +714,7 @@ najnowsz± wersjê standardu.
 
 %package mod_dir
 Summary:	Apache module for "trailing slash" redirects and serving directory index files
-Summary(pl):	Modu³ oferuj±cy przekierowania i serwowanie indeksu katalogu.
+Summary(pl):	Modu³ oferuj±cy przekierowania i serwowanie indeksu katalogu
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_dir) = %{version}-%{release}
@@ -713,10 +725,12 @@ This package contains mod_dir which provides "trailing slash"
 redirects and serving directory index files.
 
 %description mod_dir -l pl
-Modu³ oferuj±cy przekierowania i serwowanie indeksu katalogu.
+Modu³ oferuj±cy przekierowania o "koñcowy slash" oraz przekierowania i
+udostêpnianie indeksu katalogu.
 
 %package mod_env
 Summary:	Passing of environments to CGI scripts
+Summary(pl):	Przekazywanie ¶rodowiska do skryptów CGI
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_env) = %{version}-%{release}
@@ -727,6 +741,12 @@ provided to CGI scripts and SSI pages. Environment variables may be
 passed from the shell which invoked the httpd process. Alternatively,
 environment variables may be set or unset within the configuration
 process.
+
+%description mod_env -l pl
+Ten modu³ pozwala na kontrolê ¶rodowiska udostêpnianego skryptom CGI i
+stronom SSI. Zmienne ¶rodowiskowe mog± byæ przekazywane z pow³oki w
+czasie uruchamiania procesu httpd, albo - alternatywnie - ustawiane i
+usuwane w procesie konfiguracji.
 
 %package mod_expires
 Summary:	Apache module which generates Expires HTTP headers
@@ -762,11 +782,12 @@ replaced or removed.
 
 %description mod_headers -l pl
 Modu³ pozwalaj±cy na ³±czenie, usuwania, zamianê nag³ówków HTTP
-wysy³anych do przegl±darki.
+wysy³anych do przegl±darki. Nag³ówki mog± byæ ³±czone, zastêpowane
+lub usuwane.
 
 %package mod_imap
 Summary:	Apache module with imap-file handler
-Summary(pl):	Modu³ z obs³ug± imap-file
+Summary(pl):	Modu³ Apache'a z obs³ug± imap-file
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_imap) = %{version}-%{release}
@@ -778,10 +799,12 @@ replacing the functionality of the imagemap CGI program. Any directory
 or document type configured to use the handler imap-file.
 
 %description mod_imap -l pl
-Modu³ umozliwiaj±cy obs³ugê plików .map (imap-file handler)
+Modu³ umo¿liwiaj±cy obs³ugê plików .map, zastêpuj±cy funkcjonalno¶æ
+programu CGI imagemap.
 
 %package mod_include
 Summary:	Server-parsed documents
+Summary(pl):	Dokumenty przetwarzane po stronie serwera
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_include) = %{version}-%{release}
@@ -793,9 +816,16 @@ formated SGML comments, referred to as elements. These elements allow
 conditional text, the inclusion other files or programs, as well as
 the setting and printing of environment variables.
 
+%description mod_include -l pl
+Ten modu³ dostarcza procedurê obs³ugi przetwarzaj±c± pliki przed
+wys³aniem ich do klienta. Przetwarzanie jest sterowane specjalnie
+sformatowanymi komentarzami SGML, nazywanymi elementami. Elementy te
+pozwalaj± na tekst warunkowy, do³±czanie innych plików lub programów,
+a tak¿e ustawianie i wypisywanie zmiennych ¶rodowiskowych.
+
 %package mod_info
 Summary:	Apache module with comprehensive overview of the server configuration
-Summary(pl):	Modu³ dostarczaj±cy informacji na temat serwera.
+Summary(pl):	Modu³ dostarczaj±cy informacji na temat serwera
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_info) = %{version}-%{release}
@@ -807,11 +837,13 @@ overview of the server configuration including all installed modules
 and directives in the configuration files.
 
 %description mod_info -l pl
-Modu³ dostarczaj±cy informacji o konfiguracji serwera, zainstalowanych
-modu³ach itp.
+Modu³ dostarczaj±cy wyczerpuj±cych informacji o konfiguracji serwera,
+w tym zainstalowanych modu³ach oraz dyrektywach w plikach
+konfiguracyjnych.
 
 %package mod_log_agent
 Summary:	Logging of User Agents
+Summary(pl):	Logowanie nazw klientów (User Agent)
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_agent) = %{version}-%{release}
@@ -820,8 +852,13 @@ Provides:	apache(mod_log_agent) = %{version}-%{release}
 This module is provided strictly for compatibility with NCSA httpd,
 and is deprecated. We recommend you use mod_log_config instead.
 
+%description mod_log_agent -l pl
+Ten modu³ jest dostarczony wy³±cznie dla kompatybilno¶ci z NCSA httpd
+i jest niezalecany. Zamiast niego lepiej u¿ywaæ mod_log_config.
+
 %package mod_log_config
 Summary:	User-configurable logging replacement for mod_log_common
+Summary(pl):	Konfigurowalny loguj±cy zamiennik dla mod_log_common
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_config) = %{version}-%{release}
@@ -838,6 +875,20 @@ log file, LogFormat to set a custom format, and CustomLog to define a
 log file and format in one step. The TransferLog and CustomLog
 directives can be used multiple times in each server to cause each
 request to be logged to multiple files.
+
+%description mod_log_config -l pl
+Ten modu³ umo¿liwia elastyczne logowanie ¿±dañ klientów. Logi s±
+zapisywane w konfigurowalnym formacie i mog± byæ zapisywane
+bezpo¶rednio do pliku lub przekazywane do zewnêtrznego programu.
+Dostêpne jest logowanie warunkowe polegaj±ce na w³±czeniu lub
+wy³±czeniu poszczególnych ¿±dañ z logowania na podstawie
+charakterystyki ¿±dania.
+
+Ten modu³ udostêpnia trzy dyrektywy: TransferLog tworz±cy plik logu,
+LogFormat ustawiaj±cy w³asny format logowania i CustomLog okre¶laj±cy
+plik logu i format jednocze¶nie. Dyrektywy TransferLog i CustomLog
+mog± byæ u¿ywane wielokrotnie w ka¿dym serwerze powoduj±c logowanie
+ka¿dego ¿±dania do wielu plików.
 
 %package mod_log_forensic
 Summary:	Apache module for forensic logging of the requests
@@ -857,6 +908,7 @@ Logowanie jest wykonywane przed i po przetworzeniu ¿±dania.
 
 %package mod_log_referer
 Summary:	User-configurable logging replacement for mod_log_common
+Summary(pl):	Konfigurowalny loguj±cy zamiennik dla mod_log_common
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_referer) = %{version}-%{release}
@@ -865,8 +917,13 @@ Provides:	apache(mod_log_referer) = %{version}-%{release}
 This module is provided strictly for compatibility with NCSA httpd,
 and is deprecated. We recommend you use mod_log_config instead.
 
+%description mod_log_referer -l pl
+Ten modu³ jest dostarczony wy³±cznie dla kompatybilno¶ci z NCSA httpd
+i jest niezalecany. Zamiast niego lepiej u¿ywaæ mod_log_config.
+
 %package mod_mime
 Summary:	Determining document types using file extensions
+Summary(pl):	Okre¶lanie typów dokumentów przy u¿yciu rozszerzeñ plików
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_mime) = %{version}-%{release}
@@ -878,8 +935,17 @@ document and is returned to the browser or used in content-negotiation
 within the server. In addition, a "handler" can be set for a document,
 which determines how the document will be processed within the server.
 
+%description mod_mime -l pl
+Ten modu³ s³u¿y do okre¶lania ró¿nych fragmentów metainformacji
+dotycz±cych dokumentów. Informacja ta odnoszi siê do zawarto¶ci
+dokumentu i jest zwracana przegl±darce albo u¿ywana przy negocjacji
+tre¶ci wewn±trz serwera. Ponadto dla dokumentu mo¿na ustawiæ
+procedurê obs³ugi, okre¶laj±c± w jaki sposób dokument bêdzie
+przetwarzany wewn±trz serwera.
+
 %package mod_mime_magic
 Summary:	Determining document types using "magic numbers"
+Summary(pl):	Okre¶lanie typów dokumentów przy u¿yciu "liczb magicznych"
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_mime_magic) = %{version}-%{release}
@@ -897,9 +963,22 @@ Unix, which uses "magic numbers" and other hints from a file's
 contents to figure out what the contents are. This module is active
 only if the magic file is specified by the MimeMagicFile directive.
 
+%description mod_mime_magic -l pl
+Ten modu³ okre¶la typ MIME plików w ten sam sposób, co polecenie
+file(1): sprawdza pierwsze kilka bajtów pliku. Ma byæ "drug± lini±
+obrony" dla przypadków, których nie mo¿e rozwi±zaæ mod_mime. Aby
+mieæ pewno¶æ, ¿e mod_mime dostaje pierwsz± próbê okre¶lenia typu
+MIME, nale¿y upewniæ siê, ¿e mod_mime_magic jest umieszczony w
+konfiguracji przed mod_mime.
+
+Ten modu³ wywodzi siê z wolnodostêpnej wersji polecenia file(1) dla
+uniksów, u¿ywaj±cej "liczb magicznych" i innych podpowiedzi z
+zawarto¶ci plików w celu rozpoznania zawarto¶ci. Modu³ jest aktywny
+tylko je¶li plik magic zosta³ okre¶lony dyrektyw± MimeMagicFile.
+
 %package mod_mmap_static
 Summary:	Apache module for mmap()ing statically configured list files
-Summary(pl):	Modu³ s³u¿±cy do mmap()owania plików.
+Summary(pl):	Modu³ s³u¿±cy do mmap()owania plików
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_mmap_static) = %{version}-%{release}
@@ -912,7 +991,7 @@ files.
 
 %description mod_mmap_static -l pl
 Modu³ umo¿liwia mmap()owanie statycznie skonfigurowanych plików
-(czêsto u¿ywanych ale nie ulegaj±cych zmianom).
+(czêsto u¿ywanych, ale nie ulegaj±cych zmianom).
 
 %package mod_negotiation
 Summary:	Content negotiation
