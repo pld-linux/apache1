@@ -85,9 +85,9 @@ Requires(postun):	/usr/sbin/userdel
 Requires:	/etc/mime.types
 Requires:	mailcap
 Requires:	psmisc >= 20.1
-Requires:	%{name}-apxs = %{version}
-Provides:	%{name}(EAPI) = %{version}
-Provides:	apache(EAPI) = %{version}
+Requires:	%{name}-apxs = %{version}-%{release}
+Provides:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(EAPI) = %{version}-%{release}
 Provides:	apache = %{version}-%{release}
 Provides:	httpd
 Provides:	webserver
