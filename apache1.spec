@@ -394,7 +394,6 @@ Paketet apache-devel innehåller huvudfilerna för Apache.
 %description devel -l uk
 ğÁËÅÔ apache-devel Í¦ÓÔÉÔØ ÈÅÄÅÒÉ ÄÌÑ Web Server'Á.
 
-# XXXXXXXXXXXXXXXXX
 %package mod_access
 Summary:	Access control based on client hostname or IP address
 Group:		Networking/Daemons
@@ -411,6 +410,23 @@ and Deny directives are used to specify which clients are or are not
 allowed access to the server, while the Order directive sets the
 default access state, and configures how the Allow and Deny directives
 interact with each other.
+
+%package mod_actions
+Summary:	Apache module for run CGI whenever a file of a certain type is requested
+Summary(pl):	Modu³ dla apache do uruchamiania skryptów cgi
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_actions) = %{version}-%{release}
+Obsoletes:	apache-mod_actions < 2.0.0
+
+%description mod_actions
+This package contains mod_actions module. This module lets you run CGI
+scripts whenever a file of a certain type is requested. This makes it
+much easier to execute scripts that process files.
+
+%description mod_actions -l pl
+Ten modu³ pozwala na uruchamianie skryptów w momencie gdy nadchodzi
+¿±danie pobrania pliku okre¶lonego typu.
 
 %package mod_alias
 Summary:	Mapping different parts of the host filesystem in the document tree, and URL redirection
@@ -452,209 +468,6 @@ cgi-script or an nph script.
 
 For historical reasons, this module will also process any file with
 the mime type httpd/send-as-is.
-
-%package mod_cern_meta
-Summary:	Support for HTTP header metafiles
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_cern_meta) = %{version}-%{release}
-
-%description mod_cern_meta
-Emulate the CERN HTTPD Meta file semantics. Meta files are HTTP
-headers that can be output in addition to the normal range of headers
-for each file accessed. They appear rather like the Apache .asis
-files, and are able to provide a crude way of influencing the Expires:
-header, as well as providing other curiosities. There are many ways to
-manage meta information, this one was chosen because there is already
-a large number of CERN users who can exploit this module.
-
-%package mod_cgi
-Summary:	Invoking CGI scripts
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_cgi) = %{version}-%{release}
-
-%description mod_cgi
-Any file that has the mime type application/x-httpd-cgi or handler
-cgi-script (Apache 1.1 or later) will be treated as a CGI script, and
-run by the server, with its output being returned to the client. Files
-acquire this type either by having a name containing an extension
-defined by the AddType directive, or by being in a ScriptAlias
-directory. Files that are not in a ScriptAlias directory, but which
-are of type application/x-httpd-cgi by virtue of an AddType directive,
-will still not be executed by the server unless Options ExecCGI is
-enabled. See the Options directive for more details.
-
-%package mod_env
-Summary:	Passing of environments to CGI scripts
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_env) = %{version}-%{release}
-
-%description mod_env
-This module allows for control of the environment that will be
-provided to CGI scripts and SSI pages. Environment variables may be
-passed from the shell which invoked the httpd process. Alternatively,
-environment variables may be set or unset within the configuration
-process.
-
-%package mod_include
-Summary:	Server-parsed documents
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_include) = %{version}-%{release}
-
-%description mod_include
-This module provides a handler which will process files before they
-are sent to the client. The processing is controlled by specially
-formated SGML comments, referred to as elements. These elements allow
-conditional text, the inclusion other files or programs, as well as
-the setting and printing of environment variables.
-
-%package mod_log_agent
-Summary:	Logging of User Agents
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_log_agent) = %{version}-%{release}
-
-%description mod_log_agent
-This module is provided strictly for compatibility with NCSA httpd,
-and is deprecated. We recommend you use mod_log_config instead.
-
-%package mod_log_config
-Summary:	User-configurable logging replacement for mod_log_common
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_log_config) = %{version}-%{release}
-
-%description mod_log_config
-This module provides for flexible logging of client requests. Logs are
-written in a customizable format, and may be written directly to a
-file, or to an external program. Conditional logging is provided so
-that individual requests may be included or excluded from the logs
-based on characteristics of the request.
-
-Three directives are provided by this module: TransferLog to create a
-log file, LogFormat to set a custom format, and CustomLog to define a
-log file and format in one step. The TransferLog and CustomLog
-directives can be used multiple times in each server to cause each
-request to be logged to multiple files.
-
-%package mod_log_referer
-Summary:	User-configurable logging replacement for mod_log_common
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_log_referer) = %{version}-%{release}
-
-%description mod_log_referer
-This module is provided strictly for compatibility with NCSA httpd,
-and is deprecated. We recommend you use mod_log_config instead.
-
-%package mod_mime
-Summary:	Determining document types using file extensions
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_mime) = %{version}-%{release}
-
-%description mod_mime
-This module is used to determine various bits of "meta information"
-about documents. This information relates to the content of the
-document and is returned to the browser or used in content-negotiation
-within the server. In addition, a "handler" can be set for a document,
-which determines how the document will be processed within the server.
-
-%package mod_mime_magic
-Summary:	Determining document types using "magic numbers"
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_mime_magic) = %{version}-%{release}
-
-%description mod_mime_magic
-This module determines the MIME type of files in the same way the Unix
-file(1) command works: it looks at the first few bytes of the file. It
-is intended as a "second line of defense" for cases that mod_mime
-can't resolve. To assure that mod_mime gets first try at determining a
-file's MIME type, be sure to list mod_mime_magic before mod_mime in
-the configuration.
-
-This module is derived from a free version of the file(1) command for
-Unix, which uses "magic numbers" and other hints from a file's
-contents to figure out what the contents are. This module is active
-only if the magic file is specified by the MimeMagicFile directive.
-
-%package mod_negotiation
-Summary:	Content negotiation
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_negotiation) = %{version}-%{release}
-
-%description mod_negotiation
-Content negotiation, or more accurately content selection, is the
-selection of the document that best matches the clients capabilities,
-from one of several available documents. There are two implementations
-of this. 
-- A type map (a file with the handler type-map) which explicitly lists
-  the files containing the variants.
-- A MultiViews search (enabled by the MultiViews Option, where the
-  server does an implicit filename pattern match, and choose from
-  amongst the results.
-
-%package mod_setenvif
-Summary:	Set environment variables based on client information
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_setenvif) = %{version}-%{release}
-
-%description mod_setenvif
-The mod_setenvif module allows you to set environment variables
-according to whether different aspects of the request match regular
-expressions you specify. These environment variables can be used by
-other parts of the server to make decisions about actions to be taken.
-
-%package mod_speling
-Summary:	Automatically correct minor typos in URLs
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_speling) = %{version}-%{release}
-
-%description mod_speling
-Requests to documents sometimes cannot be served by the core apache
-server because the request was misspelled or miscapitalized. This
-module addresses this problem by trying to find a matching document,
-even after all other modules gave up. It does its work by comparing
-each document name in the requested directory against the requested
-document name without regard to case, and allowing up to one
-misspelling (character insertion / omission / transposition or wrong
-character). A list is built with all document names which were matched
-using this strategy.
-
-%package mod_userdir
-Summary:	User home directories
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_userdir) = %{version}-%{release}
-
-%description mod_userdir
-This module provides for user-specific directories.
-
-# XXXXXXXXXXXXXXXXX
-
-%package mod_actions
-Summary:	Apache module for run CGI whenever a file of a certain type is requested
-Summary(pl):	Modu³ dla apache do uruchamiania skryptów cgi
-Group:		Networking/Daemons
-Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(mod_actions) = %{version}-%{release}
-Obsoletes:	apache-mod_actions < 2.0.0
-
-%description mod_actions
-This package contains mod_actions module. This module lets you run CGI
-scripts whenever a file of a certain type is requested. This makes it
-much easier to execute scripts that process files.
-
-%description mod_actions -l pl
-Ten modu³ pozwala na uruchamianie skryptów w momencie gdy nadchodzi
-¿±danie pobrania pliku okre¶lonego typu.
 
 %package mod_auth
 Summary:	Apache module with user authentication using textual files
@@ -749,6 +562,38 @@ generation index of files.
 %description mod_autoindex -l pl
 Ten pakiet dostarcza modu³ autoindex, który generuje indeks plików.
 
+%package mod_cern_meta
+Summary:	Support for HTTP header metafiles
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_cern_meta) = %{version}-%{release}
+
+%description mod_cern_meta
+Emulate the CERN HTTPD Meta file semantics. Meta files are HTTP
+headers that can be output in addition to the normal range of headers
+for each file accessed. They appear rather like the Apache .asis
+files, and are able to provide a crude way of influencing the Expires:
+header, as well as providing other curiosities. There are many ways to
+manage meta information, this one was chosen because there is already
+a large number of CERN users who can exploit this module.
+
+%package mod_cgi
+Summary:	Invoking CGI scripts
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_cgi) = %{version}-%{release}
+
+%description mod_cgi
+Any file that has the mime type application/x-httpd-cgi or handler
+cgi-script (Apache 1.1 or later) will be treated as a CGI script, and
+run by the server, with its output being returned to the client. Files
+acquire this type either by having a name containing an extension
+defined by the AddType directive, or by being in a ScriptAlias
+directory. Files that are not in a ScriptAlias directory, but which
+are of type application/x-httpd-cgi by virtue of an AddType directive,
+will still not be executed by the server unless Options ExecCGI is
+enabled. See the Options directive for more details.
+
 %package mod_define
 Summary:	Apache module - authentication variables for arbitrary directives
 Summary(pl):	Modu³ apache do definiowania zmiennych
@@ -802,6 +647,19 @@ redirects and serving directory index files.
 %description mod_dir -l pl
 Modu³ oferuj±cy przekierowania i serwowanie indeksu katalogu.
 
+%package mod_env
+Summary:	Passing of environments to CGI scripts
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_env) = %{version}-%{release}
+
+%description mod_env
+This module allows for control of the environment that will be
+provided to CGI scripts and SSI pages. Environment variables may be
+passed from the shell which invoked the httpd process. Alternatively,
+environment variables may be set or unset within the configuration
+process.
+
 %package mod_expires
 Summary:	Apache module which generates Expires HTTP headers
 Summary(pl):	Modu³ generuj±cy nag³ówki HTTP Expires
@@ -854,6 +712,19 @@ or document type configured to use the handler imap-file.
 %description mod_imap -l pl
 Modu³ umozliwiaj±cy obs³ugê plików .map (imap-file handler)
 
+%package mod_include
+Summary:	Server-parsed documents
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_include) = %{version}-%{release}
+
+%description mod_include
+This module provides a handler which will process files before they
+are sent to the client. The processing is controlled by specially
+formated SGML comments, referred to as elements. These elements allow
+conditional text, the inclusion other files or programs, as well as
+the setting and printing of environment variables.
+
 %package mod_info
 Summary:	Apache module with comprehensive overview of the server configuration
 Summary(pl):	Modu³ dostarczaj±cy informacji na temat serwera.
@@ -871,6 +742,35 @@ and directives in the configuration files.
 Modu³ dostarczaj±cy informacji o konfiguracji serwera, zainstalowanych
 modu³ach itp.
 
+%package mod_log_agent
+Summary:	Logging of User Agents
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_log_agent) = %{version}-%{release}
+
+%description mod_log_agent
+This module is provided strictly for compatibility with NCSA httpd,
+and is deprecated. We recommend you use mod_log_config instead.
+
+%package mod_log_config
+Summary:	User-configurable logging replacement for mod_log_common
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_log_config) = %{version}-%{release}
+
+%description mod_log_config
+This module provides for flexible logging of client requests. Logs are
+written in a customizable format, and may be written directly to a
+file, or to an external program. Conditional logging is provided so
+that individual requests may be included or excluded from the logs
+based on characteristics of the request.
+
+Three directives are provided by this module: TransferLog to create a
+log file, LogFormat to set a custom format, and CustomLog to define a
+log file and format in one step. The TransferLog and CustomLog
+directives can be used multiple times in each server to cause each
+request to be logged to multiple files.
+
 %package mod_log_forensic
 Summary:	Apache module for forensic logging of the requests
 Summary:	Modu³ Apache'a do logowania ¿±dañ w celu pó¼niejszej analizy
@@ -886,6 +786,48 @@ is done before and after processing a request.
 %description mod_log_forensic -l pl
 Ten modu³ pozwala na logowanie ¿±dañ w celu pó¼niejszej analizy.
 Logowanie jest wykonywane przed i po przetworzeniu ¿±dania.
+
+%package mod_log_referer
+Summary:	User-configurable logging replacement for mod_log_common
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_log_referer) = %{version}-%{release}
+
+%description mod_log_referer
+This module is provided strictly for compatibility with NCSA httpd,
+and is deprecated. We recommend you use mod_log_config instead.
+
+%package mod_mime
+Summary:	Determining document types using file extensions
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_mime) = %{version}-%{release}
+
+%description mod_mime
+This module is used to determine various bits of "meta information"
+about documents. This information relates to the content of the
+document and is returned to the browser or used in content-negotiation
+within the server. In addition, a "handler" can be set for a document,
+which determines how the document will be processed within the server.
+
+%package mod_mime_magic
+Summary:	Determining document types using "magic numbers"
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_mime_magic) = %{version}-%{release}
+
+%description mod_mime_magic
+This module determines the MIME type of files in the same way the Unix
+file(1) command works: it looks at the first few bytes of the file. It
+is intended as a "second line of defense" for cases that mod_mime
+can't resolve. To assure that mod_mime gets first try at determining a
+file's MIME type, be sure to list mod_mime_magic before mod_mime in
+the configuration.
+
+This module is derived from a free version of the file(1) command for
+Unix, which uses "magic numbers" and other hints from a file's
+contents to figure out what the contents are. This module is active
+only if the magic file is specified by the MimeMagicFile directive.
 
 %package mod_mmap_static
 Summary:	Apache module for mmap()ing statically configured list files
@@ -903,6 +845,23 @@ files.
 %description mod_mmap_static -l pl
 Modu³ umo¿liwia mmap()owanie statycznie skonfigurowanych plików
 (czêsto u¿ywanych ale nie ulegaj±cych zmianom).
+
+%package mod_negotiation
+Summary:	Content negotiation
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_negotiation) = %{version}-%{release}
+
+%description mod_negotiation
+Content negotiation, or more accurately content selection, is the
+selection of the document that best matches the clients capabilities,
+from one of several available documents. There are two implementations
+of this.
+- A type map (a file with the handler type-map) which explicitly lists
+  the files containing the variants.
+- A MultiViews search (enabled by the MultiViews Option, where the
+  server does an implicit filename pattern match, and choose from
+  amongst the results.
 
 %package mod_proxy
 Summary:	Apache module with Web proxy
@@ -938,6 +897,35 @@ rewrite requested URLs on the fly.
 
 %description mod_rewrite -l pl
 Modu³ oferuj±cy mo¿liwo¶æ ,,przepisywania'' adresów URL w locie.
+
+%package mod_setenvif
+Summary:	Set environment variables based on client information
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_setenvif) = %{version}-%{release}
+
+%description mod_setenvif
+The mod_setenvif module allows you to set environment variables
+according to whether different aspects of the request match regular
+expressions you specify. These environment variables can be used by
+other parts of the server to make decisions about actions to be taken.
+
+%package mod_speling
+Summary:	Automatically correct minor typos in URLs
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_speling) = %{version}-%{release}
+
+%description mod_speling
+Requests to documents sometimes cannot be served by the core apache
+server because the request was misspelled or miscapitalized. This
+module addresses this problem by trying to find a matching document,
+even after all other modules gave up. It does its work by comparing
+each document name in the requested directory against the requested
+document name without regard to case, and allowing up to one
+misspelling (character insertion / omission / transposition or wrong
+character). A list is built with all document names which were matched
+using this strategy.
 
 %package mod_status
 Summary:	Server status report module for apache
@@ -981,6 +969,15 @@ Modu³ nadaje przy ka¿dym ¿±daniu token unikalny w ramach wszystkich
 ¿±dañ, nawet w ramach poprawnie skonfigurowanego klastra z wielu
 maszyn. Modu³ ustawia przy ka¿dym ¿±daniu zmienn± ¶rodowiskow±
 UNIQUE_ID.
+
+%package mod_userdir
+Summary:	User home directories
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_userdir) = %{version}-%{release}
+
+%description mod_userdir
+This module provides for user-specific directories.
 
 %package mod_usertrack
 Summary:	Apache module for user tracking using cookies
