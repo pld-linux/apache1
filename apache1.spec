@@ -29,7 +29,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.33
-Release:	3.3
+Release:	3.4
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -770,9 +770,7 @@ wirtualnych.
 Summary:        Apache1 htpasswd utility
 Group:          Networking/Utilities
 Provides:       htpasswd
-Obsoletes:      htpasswd-apache
-Obsoletes:      htpasswd-thttpd
-Obsoletes:      htpasswd-mini_httpd
+Obsoletes:      htpasswd
 
 %description -n htpasswd-%{name}
 htpasswd from Apache1
