@@ -468,7 +468,6 @@ Summary(pl):	Modu³ apache do wy¶wietlania indeksu plików
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Obsoletes:	Apache-Gallery
 
 %description mod_autoindex
 This package contains mod_autoindex module. It provides 
