@@ -26,12 +26,12 @@ Summary(tr):	Lider WWW tarayýcý
 Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
-Version:	1.3.27
-Release:	6
+Version:	1.3.28
+Release:	0.1
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
-# Source0-md5:	65b89365a65dcad71d4402b4862beeaa
+# Source0-md5:	2cdece7b4881d541e072de6a2b65db77
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
 Source3:	apache-icons.tar.gz
@@ -703,11 +703,11 @@ wirtualnych.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p0
-%patch6 -p0
-%patch7 -p1
-%patch8 -p1
-%{!?_without_ipv6:%patch9 -p1}
+#%patch5 -p0
+#%patch6 -p0
+#%patch7 -p1
+#%patch8 -p1
+#%{!?_without_ipv6:%patch9 -p1}
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -721,7 +721,7 @@ wirtualnych.
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
-%patch23 -p1
+#%patch23 -p1
 
 %build
 OPTIM="%{rpmcflags}" \
