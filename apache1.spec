@@ -27,7 +27,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.33
-Release:	1.88
+Release:	1.90
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -864,18 +864,25 @@ install %{SOURCE7} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 CFG="$RPM_BUILD_ROOT%{_sysconfdir}/conf.d/"
 
 echo "LoadModule access_module      modules/mod_access.so" > $CFG/01_mod_access.conf
-install %{SOURCE8}	$CFG/10_common.conf
-echo "LoadModule asis_module        modules/mod_asis.so" > $CFG/11_mod_asis.conf
-echo "LoadModule cgi_module         modules/mod_cgi.so" > $CFG/12_mod_cgi.conf
-echo "LoadModule env_module         modules/mod_env.so" > $CFG/13_mod_env.conf
-echo "LoadModule include_module     modules/mod_include.so" > $CFG/14_mod_include.conf
-echo "LoadModule log_agent_module   modules/mod_log_agent.so" > $CFG/15_mod_log_agent.conf
-echo "LoadModule log_referer_module modules/mod_log_referer.so" > $CFG/16_mod_log_referer.conf
-echo "LoadModule speling_module     modules/mod_speling.so" > $CFG/17_mod_speling.conf
+install %{SOURCE17}	$CFG/02_mod_alias.conf
+echo "LoadModule asis_module        modules/mod_asis.so" > $CFG/03_mod_asis.conf
+install %{SOURCE21} $CFG/04_mod_cern_meta.conf
+echo "LoadModule cgi_module         modules/mod_cgi.so" > $CFG/05_mod_cgi.conf
+echo "LoadModule env_module         modules/mod_env.so" > $CFG/06_mod_env.conf
+echo "LoadModule include_module     modules/mod_include.so" > $CFG/07_mod_include.conf
+echo "LoadModule log_agent_module   modules/mod_log_agent.so" > $CFG/08_mod_log_agent.conf
+install %{SOURCE14} $CFG/09_mod_log_config.conf
+echo "LoadModule log_referer_module modules/mod_log_referer.so" > $CFG/10_mod_log_referer.conf
+install %{SOURCE16}	$CFG/11_mod_mime_magic.conf
+install %{SOURCE19}	$CFG/12_mod_mime.conf
+install %{SOURCE18} $CFG/13_mod_negotiation.conf
+install %{SOURCE22}	$CFG/14_mod_setenvif.conf
+echo "LoadModule speling_module     modules/mod_speling.so" > $CFG/15_mod_speling.conf
+install %{SOURCE15}	$CFG/16_mod_userdir.conf
+
+install %{SOURCE8}	$CFG/20_common.conf
+
 install %{SOURCE23}	$CFG/20_mod_vhost_alias.conf
-install %{SOURCE16}	$CFG/23_mod_mime_magic.conf
-install %{SOURCE19}	$CFG/24_mod_mime.conf
-# mod_status needs mod_mime (SetHandler)
 install %{SOURCE9}	$CFG/25_mod_status.conf
 install %{SOURCE10}	$CFG/30_mod_proxy.conf
 install %{SOURCE20}	$CFG/50_mod_actions.conf
@@ -885,12 +892,6 @@ echo "LoadModule auth_db_module	modules/mod_auth_db.so" > $CFG/53_mod_auth_db.co
 echo "LoadModule auth_digest_module	modules/mod_auth_digest.so" > $CFG/54_mod_auth_digest.conf
 install %{SOURCE11}	$CFG/57_mod_autoindex.conf
 install %{SOURCE12}	$CFG/59_mod_dir.conf
-install %{SOURCE17}	$CFG/60_mod_alias.conf
-install %{SOURCE21} $CFG/61_mod_cern_meta.conf
-install %{SOURCE14} $CFG/62_mod_log_config.conf
-install %{SOURCE18} $CFG/64_mod_negotiation.conf
-install %{SOURCE22}	$CFG/65_mod_setenvif.conf
-install %{SOURCE15}	$CFG/66_mod_userdir.conf
 echo "LoadModule expires_module	modules/mod_expires.so" > $CFG/67_mod_expires.conf
 echo "LoadModule headers_module	modules/mod_headers.so" > $CFG/68_mod_headers.conf
 echo "LoadModule imap_module	modules/mod_imap.so" > $CFG/69_mod_imap.conf
