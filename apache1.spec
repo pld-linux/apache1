@@ -1,24 +1,11 @@
 # TODO
-# - split *all* modules to subpackages:
-#mod_access
-#mod_alias
-#mod_asis
-#mod_cern_meta
-#mod_cgi
-#mod_env
-#mod_include
-#mod_log_agent
-#mod_log_config
-#mod_log_referer
-#mod_mime
-#mod_mime_magic
-#mod_negotiation
-#mod_setenvif
-#mod_speling
-#mod_userdir
+# - separate package for /errordocs
+# - documentroot and cgi-dir out of /home/services
+#
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
 %bcond_without	ipv6		# disable IPv6 support
+%bcond_with	minimal		# minimal apache, without any modules
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	The most widely used Web server on the Internet
@@ -44,7 +31,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.33
-Release:	3.4
+Release:	3.7
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -107,6 +94,10 @@ PreReq:		mm
 PreReq:		perl-base
 PreReq:		rc-scripts
 Requires(pre):	/bin/id
+%if %{without minimal}
+Requires:	%{name}-mod_access = %{version}-%{release}
+Requires:	%{name}-mod_alias = %{version}-%{release}
+%endif
 Requires(pre):	/usr/bin/getent
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
@@ -1281,7 +1272,7 @@ echo "If you want to have the same functionality do:"
 echo "poldek --upgrade %{name}-mod_autoindex"
 echo
 
-%triggerpostun -- %{name} <= 1.3.33-3.4
+%triggerpostun -- %{name} < 1.3.33-3.4
 echo "WARNING!!!"
 echo "Since that version following modules have been separated to subpackages"
 echo "If you want to have the same functionality do:"
