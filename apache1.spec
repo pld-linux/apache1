@@ -97,6 +97,7 @@ Requires(pre):	/bin/id
 %if %{without minimal}
 Requires:	%{name}-mod_access = %{version}-%{release}
 Requires:	%{name}-mod_alias = %{version}-%{release}
+Requires:	%{name}-mod_log_config = %{version}-%{release}
 %endif
 Requires(pre):	/usr/bin/getent
 Requires(pre):	/usr/bin/getgid
