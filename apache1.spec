@@ -27,7 +27,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.29
-Release:	3.1
+Release:	4
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -808,9 +808,9 @@ install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig} \
 
 mv -f $RPM_BUILD_ROOT%{_datadir}/html/manual $RPM_BUILD_ROOT%{_datadir}
 
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/apache
+install %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/apache1
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/apache
-install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/apache
+install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/apache1
 bzip2 -dc %{SOURCE5} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 touch $RPM_BUILD_ROOT/var/log/apache/{access,error,agent,referer}_log
