@@ -27,7 +27,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.27
-Release:	4
+Release:	5
 License:	Apache Group 
 Group:		Networking/Daemons
 URL:		http://www.apache.org/
@@ -66,7 +66,7 @@ Patch21:	%{name}-apxs-quiet.patch
 Patch22:	%{name}-db4.patch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildRequires:	db-devel >= 4.1
-BuildRequires:	mm-devel >= 1.1.3
+BuildRequires:	mm-devel >= 1.3.0
 %{?_with_rewrite_ldap:BuildRequires: openldap-devel}
 PreReq:		rc-scripts
 PreReq:		mm
