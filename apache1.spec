@@ -31,7 +31,7 @@ Release:	1
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
-# Source0-md5:	e97fe9bf51dc2c9c233d53f63b1347e3
+# Source0-md5:	bd548a06ac48dda496b4e613572bb020
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
 Source3:	apache-icons.tar.gz
