@@ -27,7 +27,7 @@ Summary(uk):	îÁÊĞÏĞÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·şÎñ³ÌĞò¡£
 Name:		apache1
 Version:	1.3.28
-Release:	1
+Release:	2
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -92,7 +92,7 @@ Provides:	apache = %{version}-%{release}
 Provides:	httpd
 Provides:	webserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Obsoletes:	apache <= 1.3.27-3
+Obsoletes:	apache < 2.0.0
 Obsoletes:	apache-extra
 Obsoletes:	apache6
 Obsoletes:	apache-doc
@@ -873,7 +873,7 @@ if [ "$1" = "0" ]; then
 	/usr/sbin/groupdel http
 fi
 
-%triggerpostun -- apache <= 1.3.27-3
+%triggerpostun -- apache < 2.0.0
 if [ -z "`getgid http`" ]; then
 	echo "Adding group http GID=51."
 	/usr/sbin/groupadd -g 51 -r -f http
