@@ -252,6 +252,13 @@ Group:          Development/Tools
 %description apxs
 APache eXtenSion tool
 
+%package tools
+Summary:        Apache tools
+Group:          Development/Tools
+
+%description tools
+Apache tools
+
 %package index
 Summary:        Apache index.html* files
 Summary(pl):    Pliki Apache index.html*
@@ -1358,19 +1365,11 @@ fi
 %attr(755,root,root) %{_bindir}/checkgid
 %attr(755,root,root) %{_bindir}/htdigest
 
-%attr(755,root,root) %{_sbindir}/ab
-%attr(755,root,root) %{_sbindir}/apachectl
 %attr(755,root,root) %{_sbindir}/apache
-%attr(755,root,root) %{_sbindir}/logresolve
-%attr(755,root,root) %{_sbindir}/rotatelogs
 
 %dir %attr(1773,root,http) /var/run/apache
 
-%{_mandir}/man1/htdigest.1*
-%{_mandir}/man8/*[a-z].8*
-%lang(hu) %{_mandir}/hu/man8/*
-%lang(ko) %{_mandir}/ko/man8/*
-%lang(pl) %{_mandir}/pl/man8/*
+%{_mandir}/man8/apache.8*
 
 %attr(750,root,root) %dir /var/log/apache
 %attr(750,root,root) %dir /var/log/archiv/apache
@@ -1595,6 +1594,20 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{apxs}
 %{_mandir}/man8/apxs1*
+
+%files tools
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_sbindir}/ab
+%attr(755,root,root) %{_sbindir}/apachectl
+%attr(755,root,root) %{_sbindir}/logresolve
+%attr(755,root,root) %{_sbindir}/rotatelogs
+%{_mandir}/man1/htdigest.1*
+%{_mandir}/man8/ab*
+%{_mandir}/man8/apachectl*
+%{_mandir}/man8/[l-z]*
+%lang(hu) %{_mandir}/hu/man8/*
+%lang(ko) %{_mandir}/ko/man8/*
+%lang(pl) %{_mandir}/pl/man8/*
 
 %files index
 %defattr(644,root,root,755)
