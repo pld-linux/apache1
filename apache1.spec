@@ -27,7 +27,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.33
-Release:	1
+Release:	1.74
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -39,12 +39,25 @@ Source3:	apache-icons.tar.gz
 Source4:	%{name}.sysconfig
 Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/apache-non-english-man-pages.tar.bz2
 # Source5-md5:	74ff6e8d8a7b365b48ed10a52fbeb84e
-Source6:	%{name}-httpd.conf
-Source7:	%{name}.monitrc
-Source8:	%{name}-mod_vhost_alias.conf
+Source6:	%{name}.monitrc
+Source7:	%{name}-httpd.conf
+Source8:	%{name}-common.conf
 Source9:	%{name}-mod_status.conf
 Source10:	%{name}-mod_proxy.conf
 Source11:	%{name}-mod_autoindex.conf
+Source12:	%{name}-mod_dir.conf
+Source13:	%{name}-mod_info.conf
+Source14:	%{name}-mod_log_config.conf
+Source15:	%{name}-mod_userdir.conf
+Source16:	%{name}-mod_mime_magic.conf
+Source17:	%{name}-mod_alias.conf
+Source18:	%{name}-mod_negotiation.conf
+Source19:	%{name}-mod_mime.conf
+Source20:	%{name}-mod_actions.conf
+Source21:	%{name}-mod_cern_meta.conf
+Source22:	%{name}-mod_setenvif.conf
+Source23:	%{name}-mod_vhost_alias.conf
+Source24:	%{name}-errordocs.conf
 Patch0:		%{name}-PLD.patch
 Patch1:		%{name}-suexec.patch
 Patch2:		%{name}-errordocs.patch
@@ -86,6 +99,7 @@ Requires(pre):	textutils
 Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
+Requires(triggerpostun):	sed >= 4.0
 Requires:	/etc/mime.types
 Requires:	%{name}-apxs = %{version}-%{release}
 Requires:	mailcap
@@ -103,9 +117,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_sysconfdir	/etc/apache
 %define		_includedir	%{_prefix}/include/apache1
 %define		_libexecdir	%{_prefix}/%{_lib}/apache1
+%define		_datadir	%{httpdir}
 %define		apxs		/usr/sbin/apxs1
 %define		httpdir		/home/services/apache
-%define		_datadir	%{httpdir}
 %define		manualdir	%{_prefix}/share/apache1-manual
 
 %description
@@ -471,7 +485,7 @@ Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
 
 %description mod_autoindex
-This package contains mod_autoindex module. It provides 
+This package contains mod_autoindex module. It provides
 generation index of files.
 
 %description mod_autoindex -l pl
@@ -779,14 +793,17 @@ wirtualnych.
 %build
 OPTIM="%{rpmcflags} -DHARD_SERVER_LIMIT=2048" \
 ./configure \
-	--prefix=%{_prefix} \
-	--sysconfdir=%{_sysconfdir} \
-	--includedir=%{_includedir} \
+	--prefix=%{_sysconfdir} \
+	--exec-prefix=%{_libexecdir} \
+	--bindir=%{_bindir} \
 	--sbindir=%{_sbindir} \
-	--libexecdir=%{_libexecdir} \
+	--sysconfdir=%{_sysconfdir} \
 	--datadir=%{_datadir} \
-	--manualdir=%{manualdir} \
+	--includedir=%{_includedir} \
+	--libexecdir=%{_sysconfdir}/modules \
 	--localstatedir=/var \
+	--mandir=%{_mandir} \
+	--manualdir=%{manualdir} \
 	--runtimedir=/var/run \
 	--logfiledir=/var/log/apache \
 	--with-layout=PLD \
@@ -821,6 +838,8 @@ rm -f src/modules/standard/mod_rewrite.so
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig,monit} \
 	$RPM_BUILD_ROOT%{_datadir}/errordocs \
+	$RPM_BUILD_ROOT%{_sysconfdir}/conf.d \
+	$RPM_BUILD_ROOT%{_libexecdir} \
 	$RPM_BUILD_ROOT/var/{log/{apache,archiv/apache},run/apache}
 
 %{__make} install-quiet \
@@ -837,12 +856,52 @@ touch $RPM_BUILD_ROOT/var/log/apache/{access,error,agent,referer}_log
 
 install errordocs/* $RPM_BUILD_ROOT%{_datadir}/errordocs
 
-install %{SOURCE6} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
-install %{SOURCE8} $RPM_BUILD_ROOT%{_sysconfdir}/mod_vhost_alias.conf
-install %{SOURCE9} $RPM_BUILD_ROOT%{_sysconfdir}/mod_status.conf
-install %{SOURCE10} $RPM_BUILD_ROOT%{_sysconfdir}/mod_proxy.conf
-install %{SOURCE11} $RPM_BUILD_ROOT%{_sysconfdir}/mod_autoindex.conf
-install %{SOURCE7} $RPM_BUILD_ROOT/etc/monit
+install %{SOURCE7} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+
+CFG="$RPM_BUILD_ROOT%{_sysconfdir}/conf.d/"
+
+echo "LoadModule access_module      modules/mod_access.so" > $CFG/01_mod_access.conf
+install %{SOURCE8}	$CFG/10_common.conf
+echo "LoadModule asis_module        modules/mod_asis.so" > $CFG/11_mod_asis.conf
+echo "LoadModule cgi_module         modules/mod_cgi.so" > $CFG/12_mod_cgi.conf
+echo "LoadModule env_module         modules/mod_env.so" > $CFG/13_mod_env.conf
+echo "LoadModule include_module     modules/mod_include.so" > $CFG/14_mod_include.conf
+echo "LoadModule log_agent_module   modules/mod_log_agent.so" > $CFG/15_mod_log_agent.conf
+echo "LoadModule log_referer_module modules/mod_log_referer.so" > $CFG/16_mod_log_referer.conf
+echo "LoadModule speling_module     modules/mod_speling.so" > $CFG/17_mod_speling.conf
+install %{SOURCE23}	$CFG/20_mod_vhost_alias.conf
+install %{SOURCE19}	$CFG/24_mod_mime.conf
+# mod_status needs mod_mime (SetHandler)
+install %{SOURCE9}	$CFG/25_mod_status.conf
+install %{SOURCE10}	$CFG/30_mod_proxy.conf
+install %{SOURCE20}	$CFG/50_mod_actions.conf
+echo "LoadModule auth_module	modules/mod_auth.so" > $CFG/51_mod_auth.conf
+echo "LoadModule auth_anon_module	modules/mod_auth_anon.so" > $CFG/52_mod_auth_anon.conf
+echo "LoadModule auth_db_module	modules/mod_auth_db.so" > $CFG/53_mod_auth_db.conf
+echo "LoadModule auth_digest_module	modules/mod_auth_digest.so" > $CFG/54_mod_auth_digest.conf
+install %{SOURCE11}	$CFG/57_mod_autoindex.conf
+install %{SOURCE12}	$CFG/59_mod_dir.conf
+install %{SOURCE17}	$CFG/60_mod_alias.conf
+install %{SOURCE21} $CFG/61_mod_cern_meta.conf
+install %{SOURCE14} $CFG/62_mod_log_config.conf
+install %{SOURCE18} $CFG/64_mod_negotiation.conf
+install %{SOURCE22}	$CFG/65_mod_setenvif.conf
+install %{SOURCE15}	$CFG/66_mod_userdir.conf
+echo "LoadModule expires_module	modules/mod_expires.so" > $CFG/67_mod_expires.conf
+echo "LoadModule headers_module	modules/mod_headers.so" > $CFG/68_mod_headers.conf
+echo "LoadModule imap_module	modules/mod_imap.so" > $CFG/69_mod_imap.conf
+echo "LoadModule rewrite_module	modules/mod_rewrite.so" > $CFG/70_mod_rewrite.conf
+echo "LoadModule usertrack_module	modules/mod_usertrack.so" > $CFG/71_mod_usertrack.conf
+echo "LoadModule unique_id_module	modules/mod_unique_id.so" > $CFG/72_mod_unique_id.conf
+echo "LoadModule define_module	modules/mod_define.so" > $CFG/73_mod_define.conf
+echo "LoadModule digest_module	modules/mod_digest.so" > $CFG/74_mod_digest.conf
+echo "LoadModule log_forensic_module	modules/mod_log_forensic.so" > $CFG/75_mod_log_forensic.conf
+echo "LoadModule mmap_static_module	modules/mod_mmap_static.so" > $CFG/76_mod_mmap_static.conf
+install %{SOURCE13} $CFG/77_mod_info.conf
+install %{SOURCE16}	$CFG/78_mod_mime_magic.conf
+install %{SOURCE24}	$CFG/80_errordocs.conf
+
+install %{SOURCE6} $RPM_BUILD_ROOT/etc/monit
 
 ln -sf index.html.en $RPM_BUILD_ROOT%{_datadir}/html/index.html
 
@@ -850,6 +909,10 @@ mv $RPM_BUILD_ROOT%{_sbindir}/apxs $RPM_BUILD_ROOT%{apxs}
 mv $RPM_BUILD_ROOT%{_mandir}/man8/apxs.8 $RPM_BUILD_ROOT%{_mandir}/man8/apxs1.8
 
 perl -p -i -e 's/^if ...O ne "MSWin32"./if (0)/' $RPM_BUILD_ROOT%{apxs}
+
+mv $RPM_BUILD_ROOT%{_sysconfdir}/modules/* $RPM_BUILD_ROOT%{_libexecdir}
+rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/modules
+ln -s %{_libexecdir} $RPM_BUILD_ROOT%{_sysconfdir}/modules
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -879,22 +942,6 @@ fi
 
 %post
 /sbin/chkconfig --add apache
-%{apxs} -e -a -n access %{_libexecdir}/mod_access.so 1>&2
-%{apxs} -e -a -n alias %{_libexecdir}/mod_alias.so 1>&2
-%{apxs} -e -a -n asis %{_libexecdir}/mod_asis.so 1>&2
-%{apxs} -e -a -n cern_meta %{_libexecdir}/mod_cern_meta.so 1>&2
-%{apxs} -e -a -n cgi %{_libexecdir}/mod_cgi.so 1>&2
-%{apxs} -e -a -n env %{_libexecdir}/mod_env.so 1>&2
-%{apxs} -e -a -n include %{_libexecdir}/mod_include.so 1>&2
-%{apxs} -e -a -n log_agent %{_libexecdir}/mod_log_agent.so 1>&2
-%{apxs} -e -a -n log_config %{_libexecdir}/mod_log_config.so 1>&2
-%{apxs} -e -a -n log_referer %{_libexecdir}/mod_log_referer.so 1>&2
-%{apxs} -e -a -n mime_magic %{_libexecdir}/mod_mime_magic.so 1>&2
-%{apxs} -e -a -n mime %{_libexecdir}/mod_mime.so 1>&2
-%{apxs} -e -a -n negotiation %{_libexecdir}/mod_negotiation.so 1>&2
-%{apxs} -e -a -n setenvif %{_libexecdir}/mod_setenvif.so 1>&2
-%{apxs} -e -a -n speling %{_libexecdir}/mod_speling.so 1>&2
-%{apxs} -e -a -n userdir %{_libexecdir}/mod_userdir.so 1>&2
 umask 137
 touch /var/log/apache/{access,error,agent,referer}_log
 if [ -f /var/lock/subsys/apache ]; then
@@ -905,22 +952,6 @@ fi
 
 %preun
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n access %{_libexecdir}/mod_access.so 1>&2
-	%{apxs} -e -A -n alias %{_libexecdir}/mod_alias.so 1>&2
-	%{apxs} -e -A -n asis %{_libexecdir}/mod_asis.so 1>&2
-	%{apxs} -e -A -n cern_meta %{_libexecdir}/mod_cern_meta.so 1>&2
-	%{apxs} -e -A -n cgi %{_libexecdir}/mod_cgi.so 1>&2
-	%{apxs} -e -A -n env %{_libexecdir}/mod_env.so 1>&2
-	%{apxs} -e -A -n include %{_libexecdir}/mod_include.so 1>&2
-	%{apxs} -e -A -n log_agent %{_libexecdir}/mod_log_agent.so 1>&2
-	%{apxs} -e -A -n log_config %{_libexecdir}/mod_log_config.so 1>&2
-	%{apxs} -e -A -n log_referer %{_libexecdir}/mod_log_referer.so 1>&2
-	%{apxs} -e -A -n mime %{_libexecdir}/mod_mime.so 1>&2
-	%{apxs} -e -A -n mime_magic %{_libexecdir}/mod_mime_magic.so 1>&2
-	%{apxs} -e -A -n negotiation %{_libexecdir}/mod_negotiation.so 1>&2
-	%{apxs} -e -A -n setenvif %{_libexecdir}/mod_setenvif.so 1>&2
-	%{apxs} -e -A -n speling %{_libexecdir}/mod_speling.so 1>&2
-	%{apxs} -e -A -n userdir %{_libexecdir}/mod_userdir.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache stop 1>&2
 	fi
@@ -943,22 +974,18 @@ if [ -z "`id -u http 2>/dev/null`" ]; then
 	/usr/sbin/useradd -u 51 -r -d %{httpdir} -s /bin/false -c "HTTP User" -g http http 1>&2
 fi
 /sbin/chkconfig --add apache
-%{apxs} -e -a -n access %{_libexecdir}/mod_access.so 1>&2
-%{apxs} -e -a -n alias %{_libexecdir}/mod_alias.so 1>&2
-%{apxs} -e -a -n asis %{_libexecdir}/mod_asis.so 1>&2
-%{apxs} -e -a -n cern_meta %{_libexecdir}/mod_cern_meta.so 1>&2
-%{apxs} -e -a -n cgi %{_libexecdir}/mod_cgi.so 1>&2
-%{apxs} -e -a -n env %{_libexecdir}/mod_env.so 1>&2
-%{apxs} -e -a -n include %{_libexecdir}/mod_include.so 1>&2
-%{apxs} -e -a -n log_agent %{_libexecdir}/mod_log_agent.so 1>&2
-%{apxs} -e -a -n log_config %{_libexecdir}/mod_log_config.so 1>&2
-%{apxs} -e -a -n log_referer %{_libexecdir}/mod_log_referer.so 1>&2
-%{apxs} -e -a -n mime_magic %{_libexecdir}/mod_mime_magic.so 1>&2
-%{apxs} -e -a -n mime %{_libexecdir}/mod_mime.so 1>&2
-%{apxs} -e -a -n negotiation %{_libexecdir}/mod_negotiation.so 1>&2
-%{apxs} -e -a -n setenvif %{_libexecdir}/mod_setenvif.so 1>&2
-%{apxs} -e -a -n speling %{_libexecdir}/mod_speling.so 1>&2
-%{apxs} -e -a -n userdir %{_libexecdir}/mod_userdir.so 1>&2
+
+%triggerpostun -- apache1 < 1.3.33-2
+# upgrading from older version
+if [ "$1" = "2" ]; then
+	sed -i -e '
+		# get apxs over confusion of changed ServerRoot
+		s,^\(LoadModule .*\) lib/apache1/,\1 modules/,
+
+		# update ServerRoot
+		s,^ServerRoot.*,ServerRoot "/etc/apache",
+	' /etc/apache/apache.conf
+fi
 
 %triggerpostun -- %{name} <= 1.3.31-5
 echo "WARNING!!!"
@@ -967,9 +994,7 @@ echo "If you want to have the same functionality do:"
 echo "poldek --upgrade %{name}-mod_autoindex"
 echo
 
-
 %post mod_actions
-%{apxs} -e -a -n actions %{_libexecdir}/mod_actions.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -978,17 +1003,12 @@ fi
 
 %preun mod_actions
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n actions %{_libexecdir}/mod_actions.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_actions -- apache-mod_actions < 2.0.0
-%{apxs} -e -a -n actions %{_libexecdir}/mod_actions.so 1>&2
-
 %post mod_auth
-%{apxs} -e -a -n auth %{_libexecdir}/mod_auth.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -997,17 +1017,12 @@ fi
 
 %preun mod_auth
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n auth %{_libexecdir}/mod_auth.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_auth -- apache-mod_auth < 2.0.0
-%{apxs} -e -a -n auth %{_libexecdir}/mod_auth.so 1>&2
-
 %post mod_auth_anon
-%{apxs} -e -a -n auth_anon %{_libexecdir}/mod_auth_anon.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1016,17 +1031,12 @@ fi
 
 %preun mod_auth_anon
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n auth_anon %{_libexecdir}/mod_auth_anon.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_auth_anon -- apache-mod_auth_anon < 2.0.0
-%{apxs} -e -a -n auth_anon %{_libexecdir}/mod_auth_anon.so 1>&2
-
 %post mod_auth_db
-%{apxs} -e -a -n auth_db %{_libexecdir}/mod_auth_db.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1035,7 +1045,6 @@ fi
 
 %preun mod_auth_db
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n auth_db %{_libexecdir}/mod_auth_db.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
@@ -1044,33 +1053,26 @@ fi
 %triggerpostun mod_auth_db -- apache-mod_auth_db <= 1.3.20-2
 %{apxs} -e -A -n auth_dbm %{_libexecdir}/mod_auth_dbm.so 1>&2
 
-%triggerpostun mod_auth_db -- apache-mod_auth_db < 2.0.0
-%{apxs} -e -a -n auth_db %{_libexecdir}/mod_auth_db.so 1>&2
-
 %post mod_autoindex
-if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_autoindex.conf" /etc/apache/apache.conf; then
-	echo "Include /etc/apache/mod_autoindex.conf" >> /etc/apache/apache.conf
-fi
-%{apxs} -e -a -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 fi
 
 %preun mod_autoindex
 if [ "$1" = "0" ]; then
-	umask 027
-	%{apxs} -e -A -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
-	grep -v "^Include.*mod_autoindex.conf" /etc/apache/apache.conf > \
-		/etc/apache/apache.conf.tmp
-	mv -f /etc/apache/apache.conf.tmp /etc/apache/apache.conf
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
+%triggerpostun mod_autoindex -- apache1-mod_autoindex < 1.3.33-2
+%{apxs} -e -A -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
+sed -i -e '
+	s,^Include.*mod_autoindex.conf,Include %{_sysconfdir}/conf.d/*_mod_autoindex.conf,
+' /etc/apache/apache.conf
+
 %post mod_auth_digest
 if [ "$1" = "0" ]; then
-	%{apxs} -e -a -n auth_digest %{_libexecdir}/mod_auth_digest.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	else
@@ -1080,17 +1082,12 @@ fi
 
 %preun mod_auth_digest
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n auth_digest %{_libexecdir}/mod_auth_digest.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_auth_digest -- apache-mod_auth_digest < 2.0.0
-%{apxs} -e -a -n auth_digest %{_libexecdir}/mod_auth_digest.so 1>&2
-
 %post mod_define
-%{apxs} -e -a -n define %{_libexecdir}/mod_define.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1099,17 +1096,12 @@ fi
 
 %preun mod_define
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n define %{_libexecdir}/mod_define.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_define -- apache-mod_define < 2.0.0
-%{apxs} -e -a -n define %{_libexecdir}/mod_define.so 1>&2
-
 %post mod_digest
-%{apxs} -e -a -n digest %{_libexecdir}/mod_digest.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1118,17 +1110,12 @@ fi
 
 %preun mod_digest
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n digest %{_libexecdir}/mod_digest.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_digest -- apache-mod_digest < 2.0.0
-%{apxs} -e -a -n digest %{_libexecdir}/mod_digest.so 1>&2
-
 %post mod_dir
-%{apxs} -e -a -n dir %{_libexecdir}/mod_dir.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1137,17 +1124,12 @@ fi
 
 %preun mod_dir
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n dir %{_libexecdir}/mod_dir.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_dir -- apache-mod_dir < 2.0.0
-%{apxs} -e -a -n dir %{_libexecdir}/mod_dir.so 1>&2
-
 %post mod_expires
-%{apxs} -e -a -n expires %{_libexecdir}/mod_expires.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1156,17 +1138,12 @@ fi
 
 %preun mod_expires
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n expires %{_libexecdir}/mod_expires.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_expires -- apache-mod_expires < 2.0.0
-%{apxs} -e -a -n expires %{_libexecdir}/mod_expires.so 1>&2
-
 %post mod_headers
-%{apxs} -e -a -n headers %{_libexecdir}/mod_headers.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1175,17 +1152,12 @@ fi
 
 %preun mod_headers
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n headers %{_libexecdir}/mod_headers.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_headers -- apache-mod_headers < 2.0.0
-%{apxs} -e -a -n headers %{_libexecdir}/mod_headers.so 1>&2
-
 %post mod_imap
-%{apxs} -e -a -n imap %{_libexecdir}/mod_imap.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1194,17 +1166,12 @@ fi
 
 %preun mod_imap
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n imap %{_libexecdir}/mod_imap.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_imap -- apache-mod_imap < 2.0.0
-%{apxs} -e -a -n imap %{_libexecdir}/mod_imap.so 1>&2
-
 %post mod_info
-%{apxs} -e -a -n info %{_libexecdir}/mod_info.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1213,36 +1180,26 @@ fi
 
 %preun mod_info
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n info %{_libexecdir}/mod_info.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_info -- apache-mod_info < 2.0.0
-%{apxs} -e -a -n info %{_libexecdir}/mod_info.so 1>&2
-
 %post mod_log_forensic
-%{apxs} -e -a -n log_forensic %{_libexecdir}/mod_log_forensic.so 1>&2
-if [ -f /var/lock/subsys/httpd ]; then
-	/etc/rc.d/init.d/httpd restart 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
 else
-	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache HTTP daemon."
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
 fi
 
 %preun mod_log_forensic
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n log_forensic %{_libexecdir}/mod_log_forensic.so 1>&2
 	if [ -f /var/lock/subsys/httpd ]; then
 		/etc/rc.d/init.d/httpd restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_log_forensic -- apache-mod_log_forensic < 2.0.0
-%{apxs} -e -a -n log_forensic %{_libexecdir}/mod_log_forensic.so 1>&2
-
 %post mod_mmap_static
-%{apxs} -e -a -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1251,20 +1208,12 @@ fi
 
 %preun mod_mmap_static
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_mmap_static -- apache-mod_mmap_static < 2.0.0
-%{apxs} -e -a -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
-
 %post mod_proxy
-%{apxs} -e -a -n proxy %{_libexecdir}/libproxy.so 1>&2
-if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_proxy.conf" /etc/apache/apache.conf; then
-	echo "Include /etc/apache/mod_proxy.conf" >> /etc/apache/apache.conf
-fi
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1273,24 +1222,18 @@ fi
 
 %preun mod_proxy
 if [ "$1" = "0" ]; then
-	umask 027
-	%{apxs} -e -A -n proxy %{_libexecdir}/libproxy.so 1>&2
-	grep -v "^Include.*mod_proxy.conf" /etc/apache/apache.conf > \
-		/etc/apache/apache.conf.tmp
-	mv -f /etc/apache/apache.conf.tmp /etc/apache/apache.conf
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_proxy -- apache-mod_proxy < 2.0.0
-%{apxs} -e -a -n proxy %{_libexecdir}/libproxy.so 1>&2
-if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_proxy.conf" /etc/apache/apache.conf; then
-	echo "Include /etc/apache/mod_proxy.conf" >> /etc/apache/apache.conf
-fi
+%triggerpostun mod_proxy -- apache1-mod_proxy < 1.3.33-2
+%{apxs} -e -A -n proxy %{_libexecdir}/libproxy.so 1>&2
+sed -i -e '
+	s,^Include.*mod_proxy.conf,Include %{_sysconfdir}/conf.d/*_mod_proxy.conf,
+' /etc/apache/apache.conf
 
 %post mod_rewrite
-%{apxs} -e -a -n rewrite %{_libexecdir}/mod_rewrite.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1299,20 +1242,12 @@ fi
 
 %preun mod_rewrite
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n rewrite %{_libexecdir}/mod_rewrite.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_rewrite -- apache-mod_rewrite < 2.0.0
-%{apxs} -e -a -n rewrite %{_libexecdir}/mod_rewrite.so 1>&2
-
 %post mod_status
-%{apxs} -e -a -n status %{_libexecdir}/mod_status.so 1>&2
-if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_status.conf" /etc/apache/apache.conf; then
-	echo "Include /etc/apache/mod_status.conf" >> /etc/apache/apache.conf
-fi
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1321,24 +1256,18 @@ fi
 
 %preun mod_status
 if [ "$1" = "0" ]; then
-	umask 027
-	%{apxs} -e -A -n status %{_libexecdir}/mod_status.so 1>&2
-	grep -v "^Include.*mod_status.conf" /etc/apache/apache.conf > \
-		/etc/apache/apache.conf.tmp
-	mv -f /etc/apache/apache.conf.tmp /etc/apache/apache.conf
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_status -- apache-mod_status < 2.0.0
-%{apxs} -e -a -n status %{_libexecdir}/mod_status.so 1>&2
-if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_status.conf" /etc/apache/apache.conf; then
-	echo "Include /etc/apache/mod_status.conf" >> /etc/apache/apache.conf
-fi
+%triggerpostun mod_status -- apache1-mod_status < 1.3.33-2
+%{apxs} -e -A -n status %{_libexecdir}/mod_status.so 1>&2
+sed -i -e '
+	s,^Include.*mod_status.conf,Include %{_sysconfdir}/conf.d/*_mod_status.conf,
+' /etc/apache/apache.conf
 
 %post mod_unique_id
-%{apxs} -e -a -n unique_id %{_libexecdir}/mod_unique_id.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1347,17 +1276,12 @@ fi
 
 %preun mod_unique_id
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n unique_id %{_libexecdir}/mod_unique_id.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_unique_id -- apache-mod_unique_id < 2.0.0
-%{apxs} -e -a -n unique_id %{_libexecdir}/mod_unique_id.so 1>&2
-
 %post mod_usertrack
-%{apxs} -e -a -n usertrack %{_libexecdir}/mod_usertrack.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1366,20 +1290,12 @@ fi
 
 %preun mod_usertrack
 if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n usertrack %{_libexecdir}/mod_usertrack.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_usertrack -- apache-mod_usertrack < 2.0.0
-%{apxs} -e -a -n usertrack %{_libexecdir}/mod_usertrack.so 1>&2
-
 %post mod_vhost_alias
-%{apxs} -e -a -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
-if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_vhost_alias.conf" /etc/apache/apache.conf; then
-	echo "Include /etc/apache/mod_vhost_alias.conf" >> /etc/apache/apache.conf
-fi
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
 else
@@ -1388,21 +1304,16 @@ fi
 
 %preun mod_vhost_alias
 if [ "$1" = "0" ]; then
-	umask 027
-	%{apxs} -e -A -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
-	grep -v "^Include.*mod_vhost_alias.conf" /etc/apache/apache.conf > \
-		/etc/apache/apache.conf.tmp
-	mv -f /etc/apache/apache.conf.tmp /etc/apache/apache.conf
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
-%triggerpostun mod_vhost_alias -- apache-mod_vhost_alias < 2.0.0
-%{apxs} -e -a -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
-if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_vhost_alias.conf" /etc/apache/apache.conf; then
-	echo "Include /etc/apache/mod_vhost_alias.conf" >> /etc/apache/apache.conf
-fi
+%triggerpostun mod_vhost_alias -- apache1-mod_vhost_alias < 1.3.33-2
+%{apxs} -e -A -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
+sed -i -e '
+	s,^Include.*mod_vhost_alias.conf,Include %{_sysconfdir}/conf.d/*_mod_vhost_alias.conf,
+' /etc/apache/apache.conf
 
 %files
 %defattr(644,root,root,755)
@@ -1412,7 +1323,27 @@ fi
 %attr(754,root,root) /etc/rc.d/init.d/apache
 
 %attr(750,root,root) %dir %{_sysconfdir}
+%{_sysconfdir}/modules
+%attr(750,root,root) %dir %{_sysconfdir}/conf.d
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/apache.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_common.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_errordocs.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_access.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_alias.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_asis.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_cern_meta.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_cgi.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_env.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_include.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_agent.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_referer.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_mime.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_mime_magic.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_negotiation.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_setenvif.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_speling.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_userdir.conf
+
 %attr(640,root,root) %{_sysconfdir}/magic
 
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/*
@@ -1794,93 +1725,111 @@ fi
 
 %files mod_actions
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_actions.conf
 %attr(755,root,root) %{_libexecdir}/mod_actions.so
 
 %files mod_auth
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_auth.conf
 %attr(755,root,root) %{_libexecdir}/mod_auth.so
+# FIXME apache2 puts in sbin
 %attr(755,root,root) %{_bindir}/htpasswd
 %{_mandir}/man1/htpasswd.1*
 
 %files mod_auth_anon
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_auth_anon.conf
 %attr(755,root,root) %{_libexecdir}/mod_auth_anon.so
 
 %files mod_auth_db
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_auth_db.conf
 %attr(755,root,root) %{_libexecdir}/mod_auth_db.so
 %attr(755,root,root) %{_bindir}/dbmmanage
 %{_mandir}/man1/dbmmanage.1*
 
 %files mod_auth_digest
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_auth_digest.conf
 %attr(755,root,root) %{_libexecdir}/mod_auth_digest.so
 
 %files mod_autoindex
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mod_autoindex.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_autoindex.conf
 %attr(755,root,root) %{_libexecdir}/mod_autoindex.so
 
 %files mod_define
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_define.conf
 %attr(755,root,root) %{_libexecdir}/mod_define.so
 
 %files mod_digest
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_digest.conf
 %attr(755,root,root) %{_libexecdir}/mod_digest.so
 
 %files mod_dir
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_dir.conf
 %attr(755,root,root) %{_libexecdir}/mod_dir.so
 
 %files mod_expires
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_expires.conf
 %attr(755,root,root) %{_libexecdir}/mod_expires.so
 
 %files mod_headers
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_headers.conf
 %attr(755,root,root) %{_libexecdir}/mod_headers.so
 
 %files mod_imap
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_imap.conf
 %attr(755,root,root) %{_libexecdir}/mod_imap.so
 
 %files mod_info
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_info.conf
 %attr(755,root,root) %{_libexecdir}/mod_info.so
 
 %files mod_log_forensic
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_forensic.conf
 %attr(755,root,root) %{_libexecdir}/mod_log_forensic.so
 
 %files mod_mmap_static
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_mmap_static.conf
 %attr(755,root,root) %{_libexecdir}/mod_mmap_static.so
 
 %files mod_proxy
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mod_proxy.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_proxy.conf
 %attr(755,root,root) %{_libexecdir}/libproxy.so
 %dir %attr(770,root,http) /var/cache/apache
 
 %files mod_rewrite
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_rewrite.conf
 %attr(755,root,root) %{_libexecdir}/mod_rewrite.so
 
 %files mod_status
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mod_status.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_status.conf
 %attr(755,root,root) %{_libexecdir}/mod_status.so
 
 %files mod_unique_id
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_unique_id.conf
 %attr(755,root,root) %{_libexecdir}/mod_unique_id.so
 
 %files mod_usertrack
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_usertrack.conf
 %attr(755,root,root) %{_libexecdir}/mod_usertrack.so
 
 %files mod_vhost_alias
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mod_vhost_alias.conf
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_vhost_alias.conf
 %attr(755,root,root) %{_libexecdir}/mod_vhost_alias.so
