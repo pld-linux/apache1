@@ -14,7 +14,7 @@ Summary(id):	Web server yang paling banyak digunakan di Internet
 Summary(is):	Vinsælasti vefþjónninn á Netinu
 Summary(it):	Il web server più diffuso su Internet
 Summary(ja):	¥¤¥ó¥¿¡¼¥Í¥Ã¥È¾å¤ÇºÇ¤â°ìÈÌÅª¤Ë»ÈÍÑ¤µ¤ì¤Æ¤¤¤ë Web ¥µ¡¼¥Ð¡¼
-Summary(no):	Den mest utbredte web-tjeneren på Internett
+Summary(nb):	Den mest utbredte web-tjeneren på Internett
 Summary(pl):	Serwer WWW (World Wide Web)
 Summary(pt):	O servidor Web mais largamente utilizado em toda a Internet
 Summary(pt_BR):	Servidor HTTPD para prover serviços WWW
@@ -158,7 +158,7 @@ Apache ¤Ï¶¯ÎÏ¤Ç½¼¼Â¤·¤¿µ¡Ç½¤ò»ý¤ÄÌµ½þ¤Î Web ¥µ¡¼¥Ð¡¼
 ¤Ç¤¹¡£¤Þ¤¿¡¢apache ¤Ï¥¤¥ó¥¿¡¼¥Í¥Ã¥È¾å¤ÇºÇ¤â°ìÈÌÅª¤Ë»ÈÍÑ ¤µ¤ì¤Æ¤¤¤ë Web
 ¥µ¡¼¥Ð¡¼¤Ç¤¹¡£
 
-%description -l no
+%description -l nb
 Apache er en kraftig, funksjonsrik, effektiv og fritt tilgjengelig
 web-tjener. Apache er også den mest populære web-tjeneren på Internet.
 
@@ -268,7 +268,7 @@ Summary(id):	File header untuk Apache Web server
 Summary(is):	Hausaskrár með Apache vefþjóninum
 Summary(it):	File include per il web server Apache
 Summary(ja):	Apache Web ¥µ¡¼¥Ð¡¼ÍÑ¤Î³«È¯¥Ä¡¼¥ë
-Summary(no):	Headerfiler for webtjeneren Apache
+Summary(nb):	Headerfiler for webtjeneren Apache
 Summary(pl):	Pliki nag³ówkowe do tworzenai modu³ów rozszerzeñ do serwera www Apache
 Summary(pt):	Ficheiros de inclusão para o servidor Web Apache
 Summary(pt_BR):	Arquivos de inclusão do Apache para desenvolvimento de módulos
@@ -313,7 +313,7 @@ Apache-devel pakkinn inniheldur frumkóða Apache vefþjónsins.
 %description devel -l it
 Il pacchetto apache-devel contiene i file header per Apache.
 
-%description devel -l no
+%description devel -l nb
 Apache-devel pakken inneholder headerfiler for Apache.
 
 %description devel -l pl
