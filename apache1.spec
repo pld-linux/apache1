@@ -28,7 +28,7 @@ Summary(zh_CN):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.27
 Release:	6
-License:	Apache Group 
+License:	Apache Group
 Group:		Networking/Daemons
 URL:		http://www.apache.org/
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -65,7 +65,6 @@ Patch20:	%{name}-configdir_skip_backups.patch
 Patch21:	%{name}-apxs-quiet.patch
 Patch22:	%{name}-db4.patch
 Patch23:	%{name}-security_htdigest_bufferoverflow.patch
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
 %{?_with_rewrite_ldap:BuildRequires: openldap-devel}
@@ -97,6 +96,7 @@ Obsoletes:	apache-extra
 Obsoletes:	apache6
 Obsoletes:	apache-doc
 Obsoletes:	indexhtml
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/httpd
 %define		_includedir	%{_prefix}/include/apache
