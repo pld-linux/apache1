@@ -101,7 +101,7 @@ Obsoletes:	webserver
 
 %define		_sysconfdir	/etc/apache
 %define		_includedir	%{_prefix}/include/apache1
-%define		_libexecdir	%{_prefix}/lib/apache1
+%define		_libexecdir	%{_prefix}/%{_lib}/apache1
 %define		apxs		/usr/sbin/apxs1
 %define		httpdir		/home/services/apache
 %define		_datadir	%{httpdir}
