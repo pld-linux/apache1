@@ -27,7 +27,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.31
-Release:	4
+Release:	5
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -88,12 +88,10 @@ Requires:	%{name}-apxs = %{version}-%{release}
 Requires:	mailcap
 Requires:	psmisc >= 20.1
 Provides:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache(EAPI) = %{version}-%{release}
-Provides:	apache = %{version}-%{release}
 Provides:	group(http)
 Provides:	httpd
 Provides:	user(http)
-Provides:	webserver
+Provides:	webserver = apache
 Obsoletes:	apache < 2.0.0
 Obsoletes:	apache-extra
 Obsoletes:	apache6
@@ -206,7 +204,6 @@ Summary(ru):	Apache suEXEC CGI wrapper
 Summary(uk):	Apache suEXEC CGI wrapper
 Group:		Development/Tools
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-suexec = %{version}-%{release}
 Obsoletes:	apache-suexec < 2.0.0
 
 %description suexec
@@ -315,7 +312,6 @@ Group:		Networking/Utilities
 Requires:	%{name}-apxs = %{version}-%{release}
 Provides:	%{name}(EAPI)-devel = %{version}-%{release}
 Provides:	apache(EAPI)-devel = %{version}-%{release}
-Provides:	apache-devel = %{version}-%{release}
 Obsoletes:	apache-devel < 2.0.0
 
 %description devel
@@ -376,7 +372,6 @@ Summary(pl):	Modu³ dla apache do uruchamiania skryptów cgi
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_actions = %{version}-%{release}
 Obsoletes:	apache-mod_actions < 2.0.0
 
 %description mod_actions
@@ -394,7 +389,6 @@ Summary(pl):	Modu³ autentykacji u¿ytkownika przy u¿yciu plików tekstowych dla Ap
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_auth = %{version}-%{release}
 Obsoletes:	apache-mod_auth < 2.0.0
 
 %description mod_auth
@@ -411,7 +405,6 @@ Summary(pl):	Modu³ apache oferuj±cy anonimow± autoryzacjê u¿ytkownia
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_auth_anon = %{version}-%{release}
 Obsoletes:	apache-mod_auth_anon < 2.0.0
 
 %description mod_auth_anon
@@ -438,7 +431,6 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Requires:	%{apxs}
-Provides:	apache-mod_auth_db = %{version}-%{release}
 Obsoletes:	apache-mod_auth_db < 2.0.0
 
 %description mod_auth_db
@@ -457,7 +449,6 @@ Summary(pl):	Modu³ apache do autoryzacji MD5
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_auth_digest = %{version}-%{release}
 Obsoletes:	%{name}-mod_digest
 Obsoletes:	apache-mod_auth_digest < 2.0.0
 
@@ -475,7 +466,6 @@ Summary(pl):	Modu³ apache do definiowania zmiennych
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_define = %{version}-%{release}
 Obsoletes:	apache-mod_define < 2.0.0
 
 %description mod_define
@@ -491,7 +481,6 @@ Summary(pl):	Starsza wersja modu³u apache do autoryzacji MD5
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_digest = %{version}-%{release}
 Obsoletes:	apache-mod_digest < 2.0.0
 
 %description mod_digest
@@ -515,7 +504,6 @@ Summary(pl):	Modu³ oferuj±cy przekierowania i serwowanie indeksu katalogu.
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_dir = %{version}-%{release}
 Obsoletes:	apache-mod_dir < 2.0.0
 
 %description mod_dir
@@ -531,7 +519,6 @@ Summary(pl):	Modu³ generuj±cy nag³ówki HTTP Expires
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_expires = %{version}-%{release}
 Obsoletes:	apache-mod_expires < 2.0.0
 
 %description mod_expires
@@ -551,7 +538,6 @@ Summary(pl):	Modu³ pozwalaj±cy na modyfikacjê nag³ówków HTTP
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_headers = %{version}-%{release}
 Obsoletes:	apache-mod_headers < 2.0.0
 
 %description mod_headers
@@ -569,7 +555,6 @@ Summary(pl):	Modu³ z obs³ug± imap-file
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_imap = %{version}-%{release}
 Obsoletes:	apache-mod_imap < 2.0.0
 
 %description mod_imap
@@ -586,7 +571,6 @@ Summary(pl):	Modu³ dostarczaj±cy informacji na temat serwera.
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_info = %{version}-%{release}
 Obsoletes:	apache-mod_info < 2.0.0
 
 %description mod_info
@@ -604,7 +588,6 @@ Summary:	Modu³ Apache'a do logowania ¿±dañ w celu pó¼niejszej analizy
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_log_forensic = %{version}-%{release}
 Obsoletes:	apache-mod_log_forensic < 2.0.0
 
 %description mod_log_forensic
@@ -621,7 +604,6 @@ Summary(pl):	Modu³ s³u¿±cy do mmap()owania plików.
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_mmap_static = %{version}-%{release}
 Obsoletes:	apache-mod_mmap_static < 2.0.0
 
 %description mod_mmap_static
@@ -642,7 +624,6 @@ Requires(post,preun):	%{apxs}
 Requires(post,preun):	grep
 Requires(preun):	fileutils
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_proxy = %{version}-%{release}
 Obsoletes:	apache-mod_proxy < 2.0.0
 
 %description mod_proxy
@@ -662,7 +643,6 @@ Summary(pl):	Modu³ do ,,przepisywania'' adresów URL w locie
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_rewrite = %{version}-%{release}
 Obsoletes:	apache-mod_rewrite < 2.0.0
 
 %description mod_rewrite
@@ -681,7 +661,6 @@ Requires(post,preun):	%{apxs}
 Requires(post,preun):	grep
 Requires(preun):	fileutils
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_status = %{version}-%{release}
 Obsoletes:	apache-mod_status < 2.0.0
 
 %description mod_status
@@ -701,7 +680,6 @@ Summary(pl):	Modu³ nadaj±cy ka¿demu ¿±daniu unikalny token
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_unique_id = %{version}-%{release}
 Obsoletes:	apache-mod_unique_id < 2.0.0
 
 %description mod_unique_id
@@ -725,7 +703,6 @@ Summary(pl):	Modu³ s³u¿±cy do ¶ledzenia u¿ytkowników przy u¿yciu ciasteczek
 Group:		Networking/Daemons
 Requires(post,preun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_usertrack = %{version}-%{release}
 Obsoletes:	apache-mod_usertrack < 2.0.0
 
 %description mod_usertrack
@@ -747,7 +724,6 @@ Requires(post,preun):	%{apxs}
 Requires(post,preun):	grep
 Requires(preun):	fileutils
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Provides:	apache-mod_vhost_alias = %{version}-%{release}
 Obsoletes:	apache-mod_vhost_alias < 2.0.0
 
 %description mod_vhost_alias
