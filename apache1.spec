@@ -208,7 +208,7 @@ Summary(uk):	Apache suEXEC CGI wrapper
 Group:		Development/Tools
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-suexec = %{version}-%{release}
-Obsoletes:	apache-suexec <= 1.3.27-3
+Obsoletes:	apache-suexec <= 2.0.0
 
 %description suexec
 The suEXEC feature provides Apache users the ability to run CGI and
@@ -270,7 +270,7 @@ Requires:	%{name}(EAPI) = %{version}
 Provides:	%{name}(EAPI)-devel = %{version}
 Provides:	apache(EAPI)-devel = %{version}
 Provides:	apache-devel = %{version}-%{release}
-Obsoletes:	apache-devel <= 1.3.27-3
+Obsoletes:	apache-devel <= 2.0.0
 
 %description devel
 The apache-devel package contains header files for Apache.
@@ -331,7 +331,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_actions = %{version}-%{release}
-Obsoletes:	apache-mod_actions <= 1.3.27-3
+Obsoletes:	apache-mod_actions <= 2.0.0
 
 %description mod_actions
 This package contains mod_actions module. This module lets you run CGI
@@ -349,7 +349,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_auth = %{version}-%{release}
-Obsoletes:	apache-mod_auth <= 1.3.27-3
+Obsoletes:	apache-mod_auth <= 2.0.0
 
 %description mod_auth
 This package contains mod_auth module. It provides for user
@@ -366,7 +366,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_auth_anon = %{version}-%{release}
-Obsoletes:	apache-mod_auth_anon <= 1.3.27-3
+Obsoletes:	apache-mod_auth_anon <= 2.0.0
 
 %description mod_auth_anon
 This package contains mod_auth_anon module. It allows "anonymous" user
@@ -393,7 +393,7 @@ Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Requires:	%{_sbindir}/apxs
 Provides:	apache-mod_auth_db = %{version}-%{release}
-Obsoletes:	apache-mod_auth_db <= 1.3.27-3
+Obsoletes:	apache-mod_auth_db <= 2.0.0
 
 %description mod_auth_db
 This package contains mod_auth_db module. It provides for user
@@ -413,7 +413,7 @@ Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_auth_digest = %{version}-%{release}
 Obsoletes:	%{name}-mod_digest
-Obsoletes:	apache-mod_auth_digest <= 1.3.27-3
+Obsoletes:	apache-mod_auth_digest <= 2.0.0
 
 %description mod_auth_digest
 This package contains mod_digest module. It provides user
@@ -430,7 +430,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_define = %{version}-%{release}
-Obsoletes:	apache-mod_define <= 1.3.27-3
+Obsoletes:	apache-mod_define <= 2.0.0
 
 %description mod_define
 It provides the definition variables for arbitrary directives, i.e.
@@ -446,7 +446,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_digest = %{version}-%{release}
-Obsoletes:	apache-mod_digest <= 1.3.27-3
+Obsoletes:	apache-mod_digest <= 2.0.0
 
 %description mod_digest
 This package contains mod_digest module. It provides user
@@ -470,7 +470,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_dir = %{version}-%{release}
-Obsoletes:	apache-mod_dir <= 1.3.27-3
+Obsoletes:	apache-mod_dir <= 2.0.0
 
 %description mod_dir
 This package contains mod_dir which provides "trailing slash"
@@ -486,7 +486,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_expires = %{version}-%{release}
-Obsoletes:	apache-mod_expires <= 1.3.27-3
+Obsoletes:	apache-mod_expires <= 2.0.0
 
 %description mod_expires
 This module controls the setting of the Expires HTTP header in server
@@ -506,7 +506,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_headers = %{version}-%{release}
-Obsoletes:	apache-mod_headers <= 1.3.27-3
+Obsoletes:	apache-mod_headers <= 2.0.0
 
 %description mod_headers
 This package contains mod_headers module. The module allows for the
@@ -524,7 +524,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_mmap_static = %{version}-%{release}
-Obsoletes:	apache-mod_mmap_static <= 1.3.27-3
+Obsoletes:	apache-mod_mmap_static <= 2.0.0
 
 %description mod_mmap_static
 This package contains mod_mmap_static module. It provides mmap()ing of
@@ -542,7 +542,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_imap = %{version}-%{release}
-Obsoletes:	apache-mod_imap <= 1.3.27-3
+Obsoletes:	apache-mod_imap <= 2.0.0
 
 %description mod_imap
 This package contains mod_imap module. It provides for .map files,
@@ -559,7 +559,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_info = %{version}-%{release}
-Obsoletes:	apache-mod_info <= 1.3.27-3
+Obsoletes:	apache-mod_info <= 2.0.0
 
 %description mod_info
 This package contains mod_info module. It provides a comprehensive
@@ -580,7 +580,7 @@ Requires(post,preun):	grep
 Requires(preun):	fileutils
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_proxy = %{version}-%{release}
-Obsoletes:	apache-mod_proxy <= 1.3.27-3
+Obsoletes:	apache-mod_proxy <= 2.0.0
 
 %description mod_proxy
 This package contains module with implementation a proxy/cache for
@@ -600,7 +600,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_rewrite = %{version}-%{release}
-Obsoletes:	apache-mod_rewrite <= 1.3.27-3
+Obsoletes:	apache-mod_rewrite <= 2.0.0
 
 %description mod_rewrite
 This package contains It provides a rule-based rewriting engine to
@@ -619,7 +619,7 @@ Requires(post,preun):	grep
 Requires(preun):	fileutils
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_status = %{version}-%{release}
-Obsoletes:	apache-mod_status <= 1.3.27-3
+Obsoletes:	apache-mod_status <= 2.0.0
 
 %description mod_status
 The Status module allows a server administrator to find out how well
@@ -639,7 +639,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_unique_id = %{version}-%{release}
-Obsoletes:	apache-mod_unique_id <= 1.3.27-3
+Obsoletes:	apache-mod_unique_id <= 2.0.0
 
 %description mod_unique_id
 This package contains the mod_unique_id. This module provides a magic
@@ -663,7 +663,7 @@ Group:		Networking/Daemons
 Requires(post,preun):	%{_sbindir}/apxs
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_usertrack = %{version}-%{release}
-Obsoletes:	apache-mod_usertrack <= 1.3.27-3
+Obsoletes:	apache-mod_usertrack <= 2.0.0
 
 %description mod_usertrack
 This package contains the user tracking module which did its own
@@ -685,7 +685,7 @@ Requires(post,preun):	grep
 Requires(preun):	fileutils
 Requires:	%{name}(EAPI) = %{version}
 Provides:	apache-mod_vhost_alias = %{version}-%{release}
-Obsoletes:	apache-mod_vhost_alias <= 1.3.27-3
+Obsoletes:	apache-mod_vhost_alias <= 2.0.0
 
 %description mod_vhost_alias
 This package contains the mod_vhost_alias. It provides support for
@@ -917,7 +917,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_actions -- apache-mod_actions <= 1.3.27-3
+%triggerpostun mod_actions -- apache-mod_actions <= 2.0.0
 %{apxs} -e -a -n actions %{_libexecdir}/mod_actions.so 1>&2
 
 %post mod_auth
@@ -936,7 +936,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_auth -- apache-mod_auth <= 1.3.27-3
+%triggerpostun mod_auth -- apache-mod_auth <= 2.0.0
 %{apxs} -e -a -n auth %{_libexecdir}/mod_auth.so 1>&2
 
 %post mod_auth_anon
@@ -955,7 +955,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_auth_anon -- apache-mod_auth_anon <= 1.3.27-3
+%triggerpostun mod_auth_anon -- apache-mod_auth_anon <= 2.0.0
 %{apxs} -e -a -n auth_anon %{_libexecdir}/mod_auth_anon.so 1>&2
 
 %post mod_auth_db
@@ -977,7 +977,7 @@ fi
 %triggerpostun mod_auth_db -- apache-mod_auth_db <= 1.3.20-2
 %{apxs} -e -A -n auth_dbm %{_libexecdir}/mod_auth_dbm.so 1>&2
 
-%triggerpostun mod_auth_db -- apache-mod_auth_db <= 1.3.27-3
+%triggerpostun mod_auth_db -- apache-mod_auth_db <= 2.0.0
 %{apxs} -e -a -n auth_db %{_libexecdir}/mod_auth_db.so 1>&2
 
 %post mod_auth_digest
@@ -996,7 +996,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_auth_digest -- apache-mod_auth_digest <= 1.3.27-3
+%triggerpostun mod_auth_digest -- apache-mod_auth_digest <= 2.0.0
 %{apxs} -e -a -n auth_digest %{_libexecdir}/mod_auth_digest.so 1>&2
 
 %post mod_define
@@ -1015,7 +1015,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_define -- apache-mod_define <= 1.3.27-3
+%triggerpostun mod_define -- apache-mod_define <= 2.0.0
 %{apxs} -e -a -n define %{_libexecdir}/mod_define.so 1>&2
 
 %post mod_digest
@@ -1034,7 +1034,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_digest -- apache-mod_digest <= 1.3.27-3
+%triggerpostun mod_digest -- apache-mod_digest <= 2.0.0
 %{apxs} -e -a -n digest %{_libexecdir}/mod_digest.so 1>&2
 
 %post mod_dir
@@ -1053,7 +1053,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_dir -- apache-mod_dir <= 1.3.27-3
+%triggerpostun mod_dir -- apache-mod_dir <= 2.0.0
 %{apxs} -e -a -n dir %{_libexecdir}/mod_dir.so 1>&2
 
 %post mod_expires
@@ -1072,7 +1072,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_expires -- apache-mod_expires <= 1.3.27-3
+%triggerpostun mod_expires -- apache-mod_expires <= 2.0.0
 %{apxs} -e -a -n expires %{_libexecdir}/mod_expires.so 1>&2
 
 %post mod_headers
@@ -1091,7 +1091,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_headers -- apache-mod_headers <= 1.3.27-3
+%triggerpostun mod_headers -- apache-mod_headers <= 2.0.0
 %{apxs} -e -a -n headers %{_libexecdir}/mod_headers.so 1>&2
 
 %post mod_mmap_static
@@ -1110,7 +1110,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_mmap_static -- apache-mod_mmap_static <= 1.3.27-3
+%triggerpostun mod_mmap_static -- apache-mod_mmap_static <= 2.0.0
 %{apxs} -e -a -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
 
 %post mod_imap
@@ -1129,7 +1129,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_imap -- apache-mod_imap <= 1.3.27-3
+%triggerpostun mod_imap -- apache-mod_imap <= 2.0.0
 %{apxs} -e -a -n imap %{_libexecdir}/mod_imap.so 1>&2
 
 %post mod_info
@@ -1148,7 +1148,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_info -- apache-mod_info <= 1.3.27-3
+%triggerpostun mod_info -- apache-mod_info <= 2.0.0
 %{apxs} -e -a -n info %{_libexecdir}/mod_info.so 1>&2
 
 %post mod_proxy
@@ -1174,7 +1174,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_proxy -- apache-mod_proxy <= 1.3.27-3
+%triggerpostun mod_proxy -- apache-mod_proxy <= 2.0.0
 %{apxs} -e -a -n proxy %{_libexecdir}/libproxy.so 1>&2
 if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_proxy.conf" /etc/httpd/httpd.conf; then
 	echo "Include /etc/httpd/mod_proxy.conf" >> /etc/httpd/httpd.conf
@@ -1196,7 +1196,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_rewrite -- apache-mod_rewrite <= 1.3.27-3
+%triggerpostun mod_rewrite -- apache-mod_rewrite <= 2.0.0
 %{apxs} -e -a -n rewrite %{_libexecdir}/mod_rewrite.so 1>&2
 
 %post mod_status
@@ -1222,7 +1222,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_status -- apache-mod_status <= 1.3.27-3
+%triggerpostun mod_status -- apache-mod_status <= 2.0.0
 %{apxs} -e -a -n status %{_libexecdir}/mod_status.so 1>&2
 if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_status.conf" /etc/httpd/httpd.conf; then
 	echo "Include /etc/httpd/mod_status.conf" >> /etc/httpd/httpd.conf
@@ -1244,7 +1244,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_unique_id -- apache-mod_unique_id <= 1.3.27-3
+%triggerpostun mod_unique_id -- apache-mod_unique_id <= 2.0.0
 %{apxs} -e -a -n unique_id %{_libexecdir}/mod_unique_id.so 1>&2
 
 %post mod_usertrack
@@ -1263,7 +1263,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_usertrack -- apache-mod_usertrack <= 1.3.27-3
+%triggerpostun mod_usertrack -- apache-mod_usertrack <= 2.0.0
 %{apxs} -e -a -n usertrack %{_libexecdir}/mod_usertrack.so 1>&2
 
 %post mod_vhost_alias
@@ -1289,7 +1289,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_vhost_alias -- apache-mod_vhost_alias <= 1.3.27-3
+%triggerpostun mod_vhost_alias -- apache-mod_vhost_alias <= 2.0.0
 %{apxs} -e -a -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
 if [ -f /etc/httpd/httpd.conf ] && ! grep -q "^Include.*mod_vhost_alias.conf" /etc/httpd/httpd.conf; then
 	echo "Include /etc/httpd/mod_vhost_alias.conf" >> /etc/httpd/httpd.conf
