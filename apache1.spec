@@ -1,5 +1,21 @@
 # TODO
-# - split *all* modules to subpackages?
+# - split *all* modules to subpackages:
+#mod_access
+#mod_alias
+#mod_asis
+#mod_cern_meta
+#mod_cgi
+#mod_env
+#mod_include
+#mod_log_agent
+#mod_log_config
+#mod_log_referer
+#mod_mime
+#mod_mime_magic
+#mod_negotiation
+#mod_setenvif
+#mod_speling
+#mod_userdir
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
 %bcond_without	ipv6		# disable IPv6 support
@@ -386,6 +402,154 @@ Paketet apache-devel innehÂller huvudfilerna fˆr Apache.
 
 %description devel -l uk
 ¡À≈‘ apache-devel Õ¶”‘…‘ÿ »≈ƒ≈“… ƒÃ— Web Server'¡.
+
+# XXXXXXXXXXXXXXXXX
+%package mod_access
+Summary:	Access control based on client hostname or IP address
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_access) = %{version}-%{release}
+
+%description mod_access
+This module provides access control based on client hostname, IP
+address, or other characteristics of the client request.
+
+%package mod_alias
+Summary:	Mapping different parts of the host filesystem in the document tree, and URL redirection
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_alias) = %{version}-%{release}
+
+%description mod_alias
+Mapping different parts of the host filesystem in the document tree,
+and URL redirection
+
+%package mod_asis
+Summary:	Sending files which contain their own HTTP headers
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_asis) = %{version}-%{release}
+
+%description mod_asis
+Sending files which contain their own HTTP headers
+
+%package mod_cern_meta
+Summary:	Support for HTTP header metafiles
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_cern_meta) = %{version}-%{release}
+
+%description mod_cern_meta
+Support for HTTP header metafiles
+
+%package mod_cgi
+Summary:	Invoking CGI scripts
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_cgi) = %{version}-%{release}
+
+%description mod_cgi
+Invoking CGI scripts
+
+%package mod_env
+Summary:	Passing of environments to CGI scripts
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_env) = %{version}-%{release}
+
+%description mod_env
+Passing of environments to CGI scripts
+
+%package mod_include
+Summary:	Server-parsed documents
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_include) = %{version}-%{release}
+
+%description mod_include
+Server-parsed documents
+
+%package mod_log_agent
+Summary:	Logging of User Agents
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_log_agent) = %{version}-%{release}
+
+%description mod_log_agent
+Logging of User Agents
+
+%package mod_log_config
+Summary:	User-configurable logging replacement for mod_log_common
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_log_config) = %{version}-%{release}
+
+%description mod_log_config
+User-configurable logging replacement for mod_log_common
+
+%package mod_log_referer
+Summary:	User-configurable logging replacement for mod_log_common
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_log_referer) = %{version}-%{release}
+
+%description mod_log_referer
+Logging of document references
+
+%package mod_mime
+Summary:	Determining document types using file extensions
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_mime) = %{version}-%{release}
+
+%description mod_mime
+Determining document types using file extensions
+
+%package mod_mime_magic
+Summary:	Determining document types using "magic numbers"
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_mime_magic) = %{version}-%{release}
+
+%description mod_mime_magic
+Determining document types using "magic numbers"
+
+%package mod_negotiation
+Summary:	Content negotiation
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_negotiation) = %{version}-%{release}
+
+%description mod_negotiation
+Content negotiation
+
+%package mod_setenvif
+Summary:	Set environment variables based on client information
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_setenvif) = %{version}-%{release}
+
+%description mod_setenvif
+Set environment variables based on client information
+
+%package mod_speling
+Summary:	Automatically correct minor typos in URLs
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_speling) = %{version}-%{release}
+
+%description mod_speling
+Automatically correct minor typos in URLs
+
+%package mod_userdir
+Summary:	User home directories
+Group:		Networking/Daemons
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_userdir) = %{version}-%{release}
+
+%description mod_userdir
+User home directories
+# XXXXXXXXXXXXXXXXX
 
 %package mod_actions
 Summary:	Apache module for run CGI whenever a file of a certain type is requested
