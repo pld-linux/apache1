@@ -1281,6 +1281,31 @@ echo "If you want to have the same functionality do:"
 echo "poldek --upgrade %{name}-mod_autoindex"
 echo
 
+%triggerpostun -- %{name} <= 1.3.33-3.4
+echo "WARNING!!!"
+echo "Since that version following modules have been separated to subpackages"
+echo "If you want to have the same functionality do:"
+echo "poldek --upgrade %{name}-MODULENAME"
+echo
+cat <<EOF
+	mod_access
+	mod_alias
+	mod_asis
+	mod_cern_meta
+	mod_cgi
+	mod_env
+	mod_include
+	mod_log_agent
+	mod_log_config
+	mod_log_referer
+	mod_mime
+	mod_mime_magic
+	mod_negotiation
+	mod_setenvif
+	mod_speling
+	mod_userdir
+EOF
+
 # XXXXXXXXXXXXXXXXXXX
 %post mod_access
 if [ -f /var/lock/subsys/apache ]; then
