@@ -995,6 +995,7 @@ Modu³ umo¿liwia mmap()owanie statycznie skonfigurowanych plików
 
 %package mod_negotiation
 Summary:	Content negotiation
+Summary(pl):	Negocjacja tre¶ci
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_negotiation) = %{version}-%{release}
@@ -1009,6 +1010,15 @@ of this.
 - A MultiViews search (enabled by the MultiViews Option, where the
   server does an implicit filename pattern match, and choose from
   amongst the results.
+
+%description mod_negotiation -l pl
+Negocjacja tre¶ci, albo bardziej precyzyjnie wybór tre¶ci, to wybór
+dokumentu najbardziej pasuj±cego do mo¿liwo¶ci klienta spo¶ród ró¿nych
+dostêpnych dokumentów. S± dwie ró¿ne implementacje.
+- Odwzorowanie typów (plik z obs³ug± type-map) wypisuj±cy explicite
+  pliki zawieraj±ce warianty.
+- Wyszukiwanie MultiViews (w³±czane opcj± MultiViews, kiedy serwer
+  dopasowuje implicite wzorzec nazwy pliku i wybiera spo¶ród wyników).
 
 %package mod_proxy
 Summary:	Apache module with Web proxy
@@ -1028,7 +1038,8 @@ other proxy modules for these and other protocols.
 %description mod_proxy -l pl
 Modu³ zawiera implementacjê serwera proxy/cache dla Apache.
 Iplementacja zawiera obs³ugê FTP, CONNECT (dla SSL), HTTP/0.9 i
-HTTP/1.0.
+HTTP/1.0. Ten modu³ mo¿e byæ skonfigurowany tak, aby ³±czy³ siê z
+innymi modu³ami proxy dla tych i innych protoko³ów.
 
 %package mod_rewrite
 Summary:	Apache module with rule-based engine for rewrite requested URLs on the fly
@@ -1047,6 +1058,7 @@ Modu³ oferuj±cy mo¿liwo¶æ ,,przepisywania'' adresów URL w locie.
 
 %package mod_setenvif
 Summary:	Set environment variables based on client information
+Summary(pl):	Ustawianie zmiennych ¶rodowiskowych w oparciu o informacje o kliencie
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_setenvif) = %{version}-%{release}
@@ -1057,14 +1069,21 @@ according to whether different aspects of the request match regular
 expressions you specify. These environment variables can be used by
 other parts of the server to make decisions about actions to be taken.
 
+%description mod_setenvif -l pl
+Modu³ mod_setenvif pozwala na ustawianie zmiennych ¶rodowiskowych w
+zale¿no¶ci od ró¿nych aspektów ¿±dania pasuj±cych do podanych wyra¿eñ
+regularnych. Te zmienne ¶rodowiskowe mog± byæ u¿ywane przez inne
+czê¶ci serwera do podejmowania decyzji o podejmowanych akcjach.
+
 %package mod_speling
 Summary:	Automatically correct minor typos in URLs
+Summary(pl):	Automatyczne poprawianie pomniejszych literówek w URL-ach
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_speling) = %{version}-%{release}
 
 %description mod_speling
-Requests to documents sometimes cannot be served by the core apache
+Requests to documents sometimes cannot be served by the core Apache
 server because the request was misspelled or miscapitalized. This
 module addresses this problem by trying to find a matching document,
 even after all other modules gave up. It does its work by comparing
@@ -1074,9 +1093,20 @@ misspelling (character insertion / omission / transposition or wrong
 character). A list is built with all document names which were matched
 using this strategy.
 
+%description mod_speling -l pl
+Czasami ¿±dania dokumentów nie mog± byæ wykonane przez sam serwer
+Apache, poniewa¿ ¿±danie zosta³o napisane z b³êdem w znakach lub
+wielko¶ci liter. Ten modu³ próbuje rozwi±zaæ ten problem próbuj±c
+znale¼æ pasuj±cy dokument, nawet je¶li inne modu³y siê podda³y.
+Dzia³a on poprzez porównywanie nazwy ka¿dego dokumentu w ¿±danym
+katalogu z ¿±dan± nazw± dokumentu bez zwracania uwagi na wielko¶æ
+liter i pozwalaj±c na jeden b³±d (dodany, pominiêty, przestawiony lub
+z³y znak). Tworzona jest lista dla wszystkich nazw dokumentów
+pasuj±cych dla tej strategii.
+
 %package mod_status
 Summary:	Server status report module for apache
-Summary(pl):	Modu³ dostarczaj±cy informacje statystyczne o serwerze.
+Summary(pl):	Modu³ dostarczaj±cy informacje statystyczne o serwerze
 Group:		Networking/Daemons
 Requires(triggerpostun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
@@ -1092,7 +1122,9 @@ browser).
 
 %description mod_status -l pl
 Modu³ pozwala administratorowi na przegl±danie statystyk dotycz±cych
-pracy serwera apache (w postaci strony HTML).
+pracy serwera apache (w postaci strony HTML). Strona ta mo¿e siê
+automatycznie od¶wie¿aæ (o ile jest to obs³ugiwane przez
+przegl±darkê).
 
 %package mod_unique_id
 Summary:	Apache module which provides a magic token for each request
@@ -1119,12 +1151,16 @@ UNIQUE_ID.
 
 %package mod_userdir
 Summary:	User home directories
+Summary(pl):	Katalogi domowe u¿ytkowników
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_userdir) = %{version}-%{release}
 
 %description mod_userdir
 This module provides for user-specific directories.
+
+%description mod_userdir -l pl
+Ten modu³ dostarcza obs³ugê katalogów specyficznych dla uzytkownika.
 
 %package mod_usertrack
 Summary:	Apache module for user tracking using cookies
@@ -1146,7 +1182,7 @@ wiele plików logów.
 
 %package mod_vhost_alias
 Summary:	Apache module for dynamically configured mass virtual hosting
-Summary(pl):	Modu³ dodaj±cy obs³ugê hostów wirtualnych.
+Summary(pl):	Modu³ dodaj±cy obs³ugê hostów wirtualnych
 Group:		Networking/Daemons
 Requires(triggerpostun):	%{apxs}
 Requires:	%{name}(EAPI) = %{version}-%{release}
