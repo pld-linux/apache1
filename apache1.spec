@@ -411,8 +411,25 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_access) = %{version}-%{release}
 
 %description mod_access
-This module provides access control based on client hostname, IP
-address, or other characteristics of the client request.
+The directives provided by mod_access are used in <Directory>,
+<Files>, and <Location> sections as well as .htaccess files to control
+access to particular parts of the server. Access can be controlled
+based on the client hostname, IP address, or other characteristics of
+the client request, as captured in environment variables. The Allow
+and Deny directives are used to specify which clients are or are not
+allowed access to the server, while the Order directive sets the
+default access state, and configures how the Allow and Deny directives
+interact with each other.
+
+Both host-based access restrictions and password-based authentication
+may be implemented simultaneously. In that case, the Satisfy directive
+is used to determine how the two sets of restrictions interact.
+
+In general, access restriction directives apply to all access methods
+(GET, PUT, POST, etc). This is the desired behavior in most cases.
+However, it is possible to restrict some methods, while leaving other
+methods unrestricted, by enclosing the directives in a <Limit>
+section.
 
 %package mod_alias
 Summary:	Mapping different parts of the host filesystem in the document tree, and URL redirection
@@ -421,8 +438,22 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_alias) = %{version}-%{release}
 
 %description mod_alias
-Mapping different parts of the host filesystem in the document tree,
-and URL redirection
+This module provides for mapping different parts of the host
+filesystem in the document tree, and for URL redirection.
+The directives contained in this module allow for manipulation and
+control of URLs as requests arrive at the server. The Alias and
+ScriptAlias directives are used to map between URLs and filesystem
+paths. This allows for content which is not directly under the
+DocumentRoot to be served as part of the web document tree. The
+ScriptAlias directive has the additional effect of marking the target
+directory as containing only CGI scripts.
+
+The Redirect directives are used to instruct clients to make a new
+request with a different URL. They are often used when a resource has
+moved to a new location.
+
+A more powerful and flexible set of directives for manipulating URLs
+is contained in the mod_rewrite module.
 
 %package mod_asis
 Summary:	Sending files which contain their own HTTP headers
@@ -431,7 +462,15 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_asis) = %{version}-%{release}
 
 %description mod_asis
-Sending files which contain their own HTTP headers
+This module provides the handler send-as-is which causes Apache to
+send the document without adding most of the usual HTTP headers.
+
+This can be used to send any kind of data from the server, including
+redirects and other special HTTP responses, without requiring a
+cgi-script or an nph script.
+
+For historical reasons, this module will also process any file with
+the mime type httpd/send-as-is.
 
 %package mod_cern_meta
 Summary:	Support for HTTP header metafiles
@@ -440,7 +479,13 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_cern_meta) = %{version}-%{release}
 
 %description mod_cern_meta
-Support for HTTP header metafiles
+Emulate the CERN HTTPD Meta file semantics. Meta files are HTTP
+headers that can be output in addition to the normal range of headers
+for each file accessed. They appear rather like the Apache .asis
+files, and are able to provide a crude way of influencing the Expires:
+header, as well as providing other curiosities. There are many ways to
+manage meta information, this one was chosen because there is already
+a large number of CERN users who can exploit this module.
 
 %package mod_cgi
 Summary:	Invoking CGI scripts
@@ -449,7 +494,15 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_cgi) = %{version}-%{release}
 
 %description mod_cgi
-Invoking CGI scripts
+Any file that has the mime type application/x-httpd-cgi or handler
+cgi-script (Apache 1.1 or later) will be treated as a CGI script, and
+run by the server, with its output being returned to the client. Files
+acquire this type either by having a name containing an extension
+defined by the AddType directive, or by being in a ScriptAlias
+directory. Files that are not in a ScriptAlias directory, but which
+are of type application/x-httpd-cgi by virtue of an AddType directive,
+will still not be executed by the server unless Options ExecCGI is
+enabled. See the Options directive for more details.
 
 %package mod_env
 Summary:	Passing of environments to CGI scripts
@@ -458,7 +511,11 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_env) = %{version}-%{release}
 
 %description mod_env
-Passing of environments to CGI scripts
+This module allows for control of the environment that will be
+provided to CGI scripts and SSI pages. Environment variables may be
+passed from the shell which invoked the httpd process. Alternatively,
+environment variables may be set or unset within the configuration
+process.
 
 %package mod_include
 Summary:	Server-parsed documents
@@ -467,7 +524,11 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_include) = %{version}-%{release}
 
 %description mod_include
-Server-parsed documents
+This module provides a handler which will process files before they
+are sent to the client. The processing is controlled by specially
+formated SGML comments, referred to as elements. These elements allow
+conditional text, the inclusion other files or programs, as well as
+the setting and printing of environment variables.
 
 %package mod_log_agent
 Summary:	Logging of User Agents
@@ -476,7 +537,8 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_agent) = %{version}-%{release}
 
 %description mod_log_agent
-Logging of User Agents
+This module is provided strictly for compatibility with NCSA httpd,
+and is deprecated. We recommend you use mod_log_config instead.
 
 %package mod_log_config
 Summary:	User-configurable logging replacement for mod_log_common
@@ -485,7 +547,17 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_config) = %{version}-%{release}
 
 %description mod_log_config
-User-configurable logging replacement for mod_log_common
+This module provides for flexible logging of client requests. Logs are
+written in a customizable format, and may be written directly to a
+file, or to an external program. Conditional logging is provided so
+that individual requests may be included or excluded from the logs
+based on characteristics of the request.
+
+Three directives are provided by this module: TransferLog to create a
+log file, LogFormat to set a custom format, and CustomLog to define a
+log file and format in one step. The TransferLog and CustomLog
+directives can be used multiple times in each server to cause each
+request to be logged to multiple files.
 
 %package mod_log_referer
 Summary:	User-configurable logging replacement for mod_log_common
@@ -494,7 +566,8 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_referer) = %{version}-%{release}
 
 %description mod_log_referer
-Logging of document references
+This module is provided strictly for compatibility with NCSA httpd,
+and is deprecated. We recommend you use mod_log_config instead.
 
 %package mod_mime
 Summary:	Determining document types using file extensions
@@ -503,7 +576,11 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_mime) = %{version}-%{release}
 
 %description mod_mime
-Determining document types using file extensions
+This module is used to determine various bits of "meta information"
+about documents. This information relates to the content of the
+document and is returned to the browser or used in content-negotiation
+within the server. In addition, a "handler" can be set for a document,
+which determines how the document will be processed within the server.
 
 %package mod_mime_magic
 Summary:	Determining document types using "magic numbers"
@@ -512,7 +589,17 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_mime_magic) = %{version}-%{release}
 
 %description mod_mime_magic
-Determining document types using "magic numbers"
+This module determines the MIME type of files in the same way the Unix
+file(1) command works: it looks at the first few bytes of the file. It
+is intended as a "second line of defense" for cases that mod_mime
+can't resolve. To assure that mod_mime gets first try at determining a
+file's MIME type, be sure to list mod_mime_magic before mod_mime in
+the configuration.
+
+This module is derived from a free version of the file(1) command for
+Unix, which uses "magic numbers" and other hints from a file's
+contents to figure out what the contents are. This module is active
+only if the magic file is specified by the MimeMagicFile directive.
 
 %package mod_negotiation
 Summary:	Content negotiation
@@ -521,7 +608,15 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_negotiation) = %{version}-%{release}
 
 %description mod_negotiation
-Content negotiation
+Content negotiation, or more accurately content selection, is the
+selection of the document that best matches the clients capabilities,
+from one of several available documents. There are two implementations
+of this. 
+- A type map (a file with the handler type-map) which explicitly lists
+  the files containing the variants.
+- A MultiViews search (enabled by the MultiViews Option, where the
+  server does an implicit filename pattern match, and choose from
+  amongst the results.
 
 %package mod_setenvif
 Summary:	Set environment variables based on client information
@@ -530,7 +625,10 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_setenvif) = %{version}-%{release}
 
 %description mod_setenvif
-Set environment variables based on client information
+The mod_setenvif module allows you to set environment variables
+according to whether different aspects of the request match regular
+expressions you specify. These environment variables can be used by
+other parts of the server to make decisions about actions to be taken.
 
 %package mod_speling
 Summary:	Automatically correct minor typos in URLs
@@ -539,7 +637,15 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_speling) = %{version}-%{release}
 
 %description mod_speling
-Automatically correct minor typos in URLs
+Requests to documents sometimes cannot be served by the core apache
+server because the request was misspelled or miscapitalized. This
+module addresses this problem by trying to find a matching document,
+even after all other modules gave up. It does its work by comparing
+each document name in the requested directory against the requested
+document name without regard to case, and allowing up to one
+misspelling (character insertion / omission / transposition or wrong
+character). A list is built with all document names which were matched
+using this strategy.
 
 %package mod_userdir
 Summary:	User home directories
@@ -548,7 +654,8 @@ Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_userdir) = %{version}-%{release}
 
 %description mod_userdir
-User home directories
+This module provides for user-specific directories.
+
 # XXXXXXXXXXXXXXXXX
 
 %package mod_actions
