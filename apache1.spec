@@ -35,6 +35,7 @@ Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
 Source3:	apache-icons.tar.gz
+# Source3-md5: 2b085cbc19fd28536dc883f0b864cd83
 Source4:	%{name}.sysconfig
 Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/apache-non-english-man-pages.tar.bz2
 Source6:	%{name}-httpd.conf
