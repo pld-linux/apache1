@@ -1616,22 +1616,6 @@ sed -i -e '
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_common.conf
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_errordocs.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_access.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_alias.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_asis.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_cern_meta.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_cgi.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_env.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_include.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_agent.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_config.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_referer.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_mime.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_mime_magic.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_negotiation.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_setenvif.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_speling.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_userdir.conf
 
 %attr(640,root,root) %{_sysconfdir}/magic
 
@@ -1640,22 +1624,6 @@ sed -i -e '
 %attr(750,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/monit/*.monitrc
 
 %dir %{_libexecdir}
-%attr(755,root,root) %{_libexecdir}/mod_access.so
-%attr(755,root,root) %{_libexecdir}/mod_alias.so
-%attr(755,root,root) %{_libexecdir}/mod_asis.so
-%attr(755,root,root) %{_libexecdir}/mod_cern_meta.so
-%attr(755,root,root) %{_libexecdir}/mod_cgi.so
-%attr(755,root,root) %{_libexecdir}/mod_env.so
-%attr(755,root,root) %{_libexecdir}/mod_include.so
-%attr(755,root,root) %{_libexecdir}/mod_log_agent.so
-%attr(755,root,root) %{_libexecdir}/mod_log_config.so
-%attr(755,root,root) %{_libexecdir}/mod_log_referer.so
-%attr(755,root,root) %{_libexecdir}/mod_mime.so
-%attr(755,root,root) %{_libexecdir}/mod_mime_magic.so
-%attr(755,root,root) %{_libexecdir}/mod_negotiation.so
-%attr(755,root,root) %{_libexecdir}/mod_setenvif.so
-%attr(755,root,root) %{_libexecdir}/mod_speling.so
-%attr(755,root,root) %{_libexecdir}/mod_userdir.so
 
 %attr(755,root,root) %{_bindir}/checkgid
 %attr(755,root,root) %{_bindir}/htdigest
@@ -2011,6 +1979,88 @@ sed -i -e '
 %files devel
 %defattr(644,root,root,755)
 %{_includedir}
+
+# XXXXXXXXXXXXXXXXXX
+%files mod_access
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_access.conf
+%attr(755,root,root) %{_libexecdir}/mod_access.so
+
+%files mod_alias
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_alias.conf
+%attr(755,root,root) %{_libexecdir}/mod_alias.so
+
+%files mod_asis
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_asis.conf
+%attr(755,root,root) %{_libexecdir}/mod_asis.so
+
+%files mod_cern_meta
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_cern_meta.conf
+%attr(755,root,root) %{_libexecdir}/mod_cern_meta.so
+
+%files mod_cgi
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_cgi.conf
+%attr(755,root,root) %{_libexecdir}/mod_cgi.so
+
+%files mod_env
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_env.conf
+%attr(755,root,root) %{_libexecdir}/mod_env.so
+
+%files mod_include
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_include.conf
+%attr(755,root,root) %{_libexecdir}/mod_include.so
+
+%files mod_log_agent
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_agent.conf
+%attr(755,root,root) %{_libexecdir}/mod_log_agent.so
+
+%files mod_log_config
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_config.conf
+%attr(755,root,root) %{_libexecdir}/mod_log_config.so
+
+%files mod_log_referer
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_referer.conf
+%attr(755,root,root) %{_libexecdir}/mod_log_referer.so
+
+%files mod_mime
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_mime.conf
+%attr(755,root,root) %{_libexecdir}/mod_mime.so
+
+%files mod_mime_magic
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_mime_magic.conf
+%attr(755,root,root) %{_libexecdir}/mod_mime_magic.so
+
+%files mod_negotiation
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_negotiation.conf
+%attr(755,root,root) %{_libexecdir}/mod_negotiation.so
+
+%files mod_setenvif
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_setenvif.conf
+%attr(755,root,root) %{_libexecdir}/mod_setenvif.so
+
+%files mod_speling
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_speling.conf
+%attr(755,root,root) %{_libexecdir}/mod_speling.so
+
+%files mod_userdir
+%defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_userdir.conf
+%attr(755,root,root) %{_libexecdir}/mod_userdir.so
+# XXXXXXXXXXXXXXXXXX
 
 %files mod_actions
 %defattr(644,root,root,755)
