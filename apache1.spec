@@ -27,7 +27,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.28
-Release:	0.1
+Release:	0.2
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -703,10 +703,10 @@ wirtualnych.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-#%patch5 -p0
-#%patch6 -p0
-#%patch7 -p1
-#%patch8 -p1
+%patch5 -p0
+%patch6 -p0
+%patch7 -p1
+%patch8 -p1
 #%{!?_without_ipv6:%patch9 -p1}
 %patch10 -p1
 %patch11 -p1
