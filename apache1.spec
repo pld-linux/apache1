@@ -85,12 +85,12 @@ Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
 Requires:	/etc/mime.types
+Requires:	mailcap
+Requires:	psmisc >= 20.1
 Provides:	%{name}(EAPI) = %{version}
 Provides:	apache(EAPI) = %{version}
 Provides:	apache = %{version}-%{release}
 Provides:	httpd
-Requires:	mailcap
-Requires:	psmisc >= 20.1
 Provides:	webserver
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	apache <= 1.3.27-3
