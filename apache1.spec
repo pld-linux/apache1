@@ -27,7 +27,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.28
-Release:	0.2
+Release:	0.3
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -707,7 +707,7 @@ wirtualnych.
 %patch6 -p0
 %patch7 -p1
 %patch8 -p1
-#%{!?_without_ipv6:%patch9 -p1}
+%{!?_without_ipv6:%patch9 -p1}
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
@@ -1377,7 +1377,7 @@ fi
 %{_datadir}/manual/configuring.html.en
 %lang(fr) %{_datadir}/manual/configuring.html.fr
 %lang(ja) %{_datadir}/manual/configuring.html.ja.jis
-%{_datadir}/manual/content-negotiation.html
+#%{_datadir}/manual/content-negotiation.html
 %{_datadir}/manual/custom-error.html.html
 %{_datadir}/manual/custom-error.html.en
 %lang(fr) %{_datadir}/manual/custom-error.html.fr
@@ -1483,7 +1483,7 @@ fi
 %lang(ja) %{_datadir}/manual/mod/mod_env.html.ja.jis
 %{_datadir}/manual/mod/mod_include.html
 %{_datadir}/manual/mod/mod_log_agent.html
-%{_datadir}/manual/mod/mod_log_config.html
+#%{_datadir}/manual/mod/mod_log_config.html
 %{_datadir}/manual/mod/mod_log_referer.html
 %{_datadir}/manual/mod/mod_mime.html.html
 %{_datadir}/manual/mod/mod_mime.html.en
@@ -1580,7 +1580,7 @@ fi
 %lang(ru) %{_datadir}/html/index.html.ru.ucs4
 %lang(ru) %{_datadir}/html/index.html.ru.utf8
 %lang(sv) %{_datadir}/html/index.html.se
-%lang(zh_TW) %{_datadir}/html/index.html.zh
+#%lang(zh_TW) %{_datadir}/html/index.html.zh
 
 %{_datadir}/html/*.gif
 %{_datadir}/errordocs
