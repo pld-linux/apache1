@@ -32,12 +32,14 @@ License:	Apache Group
 Group:		Networking/Daemons
 URL:		http://www.apache.org/
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
+# Source0-md5:	65b89365a65dcad71d4402b4862beeaa
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
 Source3:	apache-icons.tar.gz
 # Source3-md5: 2b085cbc19fd28536dc883f0b864cd83
 Source4:	%{name}.sysconfig
 Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/apache-non-english-man-pages.tar.bz2
+# Source5-md5:	74ff6e8d8a7b365b48ed10a52fbeb84e
 Source6:	%{name}-httpd.conf
 Source8:	%{name}-mod_vhost_alias.conf
 Source9:	%{name}-mod_status.conf
