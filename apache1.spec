@@ -27,7 +27,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.31
-Release:	5
+Release:	5.1
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -461,6 +461,21 @@ authentication using MD5 Digest Authentication.
 Modu³ ten dostarcza metodê autoryzacji bazuj±c± na MD5 Digest
 Authentication.
 
+%package mod_autoindex
+Summary:	Apache module - display index of files
+Summary(pl):	Modu³ apache do wy¶wietlania indeksu plików
+Group:		Networking/Daemons
+Requires(post,preun):	%{apxs}
+Requires:	%{name}(EAPI) = %{version}-%{release}
+Obsoletes:	Apache-Gallery
+
+%description mod_autoindex
+This package contains mod_autoindex module. It provides 
+generation index of files.
+
+%description mod_autoindex -l pl
+Ten pakiet dostarcza modu³ autoindex, który generuje indeks plików.
+
 %package mod_define
 Summary:	Apache module - authentication variables for arbitrary directives
 Summary(pl):	Modu³ apache do definiowania zmiennych
@@ -865,7 +880,6 @@ fi
 %{apxs} -e -a -n access %{_libexecdir}/mod_access.so 1>&2
 %{apxs} -e -a -n alias %{_libexecdir}/mod_alias.so 1>&2
 %{apxs} -e -a -n asis %{_libexecdir}/mod_asis.so 1>&2
-%{apxs} -e -a -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
 %{apxs} -e -a -n cern_meta %{_libexecdir}/mod_cern_meta.so 1>&2
 %{apxs} -e -a -n cgi %{_libexecdir}/mod_cgi.so 1>&2
 %{apxs} -e -a -n env %{_libexecdir}/mod_env.so 1>&2
@@ -892,7 +906,6 @@ if [ "$1" = "0" ]; then
 	%{apxs} -e -A -n access %{_libexecdir}/mod_access.so 1>&2
 	%{apxs} -e -A -n alias %{_libexecdir}/mod_alias.so 1>&2
 	%{apxs} -e -A -n asis %{_libexecdir}/mod_asis.so 1>&2
-	%{apxs} -e -A -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
 	%{apxs} -e -A -n cern_meta %{_libexecdir}/mod_cern_meta.so 1>&2
 	%{apxs} -e -A -n cgi %{_libexecdir}/mod_cgi.so 1>&2
 	%{apxs} -e -A -n env %{_libexecdir}/mod_env.so 1>&2
@@ -931,7 +944,6 @@ fi
 %{apxs} -e -a -n access %{_libexecdir}/mod_access.so 1>&2
 %{apxs} -e -a -n alias %{_libexecdir}/mod_alias.so 1>&2
 %{apxs} -e -a -n asis %{_libexecdir}/mod_asis.so 1>&2
-%{apxs} -e -a -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
 %{apxs} -e -a -n cern_meta %{_libexecdir}/mod_cern_meta.so 1>&2
 %{apxs} -e -a -n cgi %{_libexecdir}/mod_cgi.so 1>&2
 %{apxs} -e -a -n env %{_libexecdir}/mod_env.so 1>&2
@@ -1024,6 +1036,22 @@ fi
 
 %triggerpostun mod_auth_db -- apache-mod_auth_db < 2.0.0
 %{apxs} -e -a -n auth_db %{_libexecdir}/mod_auth_db.so 1>&2
+
+%post mod_autoindex
+if [ "$1" = "0" ]; then
+	%{apxs} -e -a -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%preun mod_autoindex
+if [ "$1" = "0" ]; then
+	%{apxs} -e -A -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
 
 %post mod_auth_digest
 %{apxs} -e -a -n auth_digest %{_libexecdir}/mod_auth_digest.so 1>&2
@@ -1378,7 +1406,6 @@ fi
 %attr(755,root,root) %{_libexecdir}/mod_access.so
 %attr(755,root,root) %{_libexecdir}/mod_alias.so
 %attr(755,root,root) %{_libexecdir}/mod_asis.so
-%attr(755,root,root) %{_libexecdir}/mod_autoindex.so
 %attr(755,root,root) %{_libexecdir}/mod_cern_meta.so
 %attr(755,root,root) %{_libexecdir}/mod_cgi.so
 %attr(755,root,root) %{_libexecdir}/mod_env.so
@@ -1772,6 +1799,10 @@ fi
 %files mod_auth_digest
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libexecdir}/mod_auth_digest.so
+
+%files mod_autoindex
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libexecdir}/mod_autoindex.so
 
 %files mod_define
 %defattr(644,root,root,755)
