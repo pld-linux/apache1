@@ -27,7 +27,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.33
-Release:	1.86
+Release:	1.88
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -873,6 +873,7 @@ echo "LoadModule log_agent_module   modules/mod_log_agent.so" > $CFG/15_mod_log_
 echo "LoadModule log_referer_module modules/mod_log_referer.so" > $CFG/16_mod_log_referer.conf
 echo "LoadModule speling_module     modules/mod_speling.so" > $CFG/17_mod_speling.conf
 install %{SOURCE23}	$CFG/20_mod_vhost_alias.conf
+install %{SOURCE16}	$CFG/23_mod_mime_magic.conf
 install %{SOURCE19}	$CFG/24_mod_mime.conf
 # mod_status needs mod_mime (SetHandler)
 install %{SOURCE9}	$CFG/25_mod_status.conf
@@ -901,7 +902,6 @@ echo "LoadModule digest_module	modules/mod_digest.so" > $CFG/74_mod_digest.conf
 echo "LoadModule log_forensic_module	modules/mod_log_forensic.so" > $CFG/75_mod_log_forensic.conf
 echo "LoadModule mmap_static_module	modules/mod_mmap_static.so" > $CFG/76_mod_mmap_static.conf
 install %{SOURCE13} $CFG/77_mod_info.conf
-install %{SOURCE16}	$CFG/78_mod_mime_magic.conf
 install %{SOURCE24}	$CFG/80_errordocs.conf
 
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/monit
