@@ -31,7 +31,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.33
-Release:	3.7
+Release:	3.11
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -98,6 +98,9 @@ Requires(pre):	/bin/id
 Requires:	%{name}-mod_access = %{version}-%{release}
 Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	%{name}-mod_log_config = %{version}-%{release}
+Requires:	%{name}-mod_mime = %{version}-%{release}
+# for errordocs
+Requires:	%{name}-mod_include = %{version}-%{release}
 %endif
 Requires(pre):	/usr/bin/getent
 Requires(pre):	/usr/bin/getgid
@@ -2215,6 +2218,7 @@ sed -i -e '
 %{_includedir}
 
 %files -n htpasswd-%{name}
+%defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/htpasswd
 %{_sbindir}/htpasswd
 %{_mandir}/man1/htpasswd.1*
