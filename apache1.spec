@@ -1,6 +1,6 @@
 # TODO
 # - split *all* modules to subpackages?
-#
+# - polish description and summary at package htpasswd
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
 %bcond_without	ipv6		# disable IPv6 support
@@ -29,7 +29,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.33
-Release:	3.2
+Release:	3.3
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -410,6 +410,7 @@ Summary:	Apache module with user authentication using textual files
 Summary(pl):	Modu≥ autentykacji uøytkownika przy uøyciu plikÛw tekstowych dla Apache
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
+Requires:	htpasswd
 Provides:	apache(mod_auth) = %{version}-%{release}
 Obsoletes:	apache-mod_auth < 2.0.0
 
@@ -765,6 +766,31 @@ dynamically configured mass virtual hosting.
 Modu≥ umoøliwia na dynamiczne konfigurowanie masowej ilo∂ci serwerÛw
 wirtualnych.
 
+%package -n htpasswd-%{name}
+Summary:        Apache1 htpasswd utility
+Group:          Networking/Utilities
+Provides:       htpasswd
+Obsoletes:      htpasswd-apache2
+Obsoletes:      htpasswd-thttpd
+
+%description -n htpasswd-%{name}
+htpasswd from Apache1
+
+Usage:
+        htpasswd [-cmdpsD] passwordfile username
+        htpasswd -b[cmdpsD] passwordfile username password
+
+        htpasswd -n[mdps] username
+        htpasswd -nb[mdps] username password
+ -c  Create a new file.
+ -n  Don't update file; display results on stdout.
+ -m  Force MD5 encryption of the password.
+ -d  Force CRYPT encryption of the password (default).
+ -p  Do not encrypt the password (plaintext).
+ -s  Force SHA encryption of the password.
+ -b  Use the password from the command line rather than prompting for it.
+ -D  Delete the specified user.
+
 %prep
 %setup -q -n apache_%{version} -a3
 %patch0 -p1
@@ -916,6 +942,9 @@ mv $RPM_BUILD_ROOT%{_sysconfdir}/modules/* $RPM_BUILD_ROOT%{_libexecdir}
 rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/modules
 ln -s %{_libexecdir} $RPM_BUILD_ROOT%{_sysconfdir}/modules
 ln -s /var/log/apache $RPM_BUILD_ROOT%{_sysconfdir}/logs
+
+#htpasswd
+ln -sf ln -sf %{_bindir}/htpasswd $RPM_BUILD_ROOT%{_sbindir}/
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -1737,8 +1766,10 @@ sed -i -e '
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_auth.conf
 %attr(755,root,root) %{_libexecdir}/mod_auth.so
-# FIXME apache2 puts in sbin
+
+%files -n htpasswd-%{name}
 %attr(755,root,root) %{_bindir}/htpasswd
+%{_sbindir}/htpasswd
 %{_mandir}/man1/htpasswd.1*
 
 %files mod_auth_anon
