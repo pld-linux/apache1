@@ -220,7 +220,7 @@ Summary:	Apache suexec wrapper
 Summary(pl):	Suexec wrapper do serwera WWW Apache
 Summary(ru):	Apache suEXEC CGI wrapper
 Summary(uk):	Apache suEXEC CGI wrapper
-Group:		Development/Tools
+Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Obsoletes:	apache-suexec < 2.0.0
 
