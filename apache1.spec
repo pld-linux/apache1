@@ -1281,6 +1281,232 @@ echo "If you want to have the same functionality do:"
 echo "poldek --upgrade %{name}-mod_autoindex"
 echo
 
+# XXXXXXXXXXXXXXXXXXX
+%post mod_access
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_access
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_alias
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_alias
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_asis
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_asis
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_cern_meta
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_cern_meta
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_cgi
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_cgi
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_env
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_env
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_include
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_include
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_log_agent
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_log_agent
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_log_config
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_log_config
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_log_referer
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_log_referer
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_mime
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_mime
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_mime_magic
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_mime_magic
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_negotiation
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_negotiation
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_setenvif
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_setenvif
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_speling
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_speling
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%post mod_userdir
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache HTTP daemon."
+fi
+
+%postun mod_userdir
+if [ "$1" = "0" ]; then
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+# XXXXXXXXXXXXXXXXXXX
+
 %post mod_actions
 if [ -f /var/lock/subsys/apache ]; then
 	/etc/rc.d/init.d/apache restart 1>&2
