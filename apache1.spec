@@ -27,7 +27,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.33
-Release:	1.83
+Release:	1.86
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -330,6 +330,7 @@ Group:		Networking/Utilities
 Requires:	%{name}-apxs = %{version}-%{release}
 Provides:	%{name}(EAPI)-devel = %{version}-%{release}
 Provides:	apache(EAPI)-devel = %{version}-%{release}
+%{?with_ipv6:Provides:	apache(ipv6)-devel}
 Obsoletes:	apache-devel < 2.0.0
 
 %description devel
@@ -978,7 +979,7 @@ if [ -z "`id -u http 2>/dev/null`" ]; then
 fi
 /sbin/chkconfig --add apache
 
-%triggerpostun -- apache1 < 1.3.33-2
+%triggerpostun -- apache1 < 1.3.33-1.85
 # upgrading from older version
 if [ "$1" = "2" ]; then
 	sed -i -e '
@@ -1068,7 +1069,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_autoindex -- apache1-mod_autoindex < 1.3.33-2
+%triggerpostun mod_autoindex -- apache1-mod_autoindex < 1.3.33-1.85
 %{apxs} -e -A -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
 sed -i -e '
 	s,^Include.*mod_autoindex.conf,Include %{_sysconfdir}/conf.d/*_mod_autoindex.conf,
@@ -1230,7 +1231,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_proxy -- apache1-mod_proxy < 1.3.33-2
+%triggerpostun mod_proxy -- apache1-mod_proxy < 1.3.33-1.85
 %{apxs} -e -A -n proxy %{_libexecdir}/libproxy.so 1>&2
 sed -i -e '
 	s,^Include.*mod_proxy.conf,Include %{_sysconfdir}/conf.d/*_mod_proxy.conf,
@@ -1264,7 +1265,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_status -- apache1-mod_status < 1.3.33-2
+%triggerpostun mod_status -- apache1-mod_status < 1.3.33-1.85
 %{apxs} -e -A -n status %{_libexecdir}/mod_status.so 1>&2
 sed -i -e '
 	s,^Include.*mod_status.conf,Include %{_sysconfdir}/conf.d/*_mod_status.conf,
@@ -1312,7 +1313,7 @@ if [ "$1" = "0" ]; then
 	fi
 fi
 
-%triggerpostun mod_vhost_alias -- apache1-mod_vhost_alias < 1.3.33-2
+%triggerpostun mod_vhost_alias -- apache1-mod_vhost_alias < 1.3.33-1.85
 %{apxs} -e -A -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
 sed -i -e '
 	s,^Include.*mod_vhost_alias.conf,Include %{_sysconfdir}/conf.d/*_mod_vhost_alias.conf,
