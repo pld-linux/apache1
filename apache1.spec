@@ -246,24 +246,32 @@ wykonywane jako taki sam u©ytkownik jak serwer WWW.
 наст╕йливо радимо не використовувати цього пакету...
 
 %package apxs
-Summary:        APache eXtenSion tool
-Group:          Development/Tools
+Summary:	APache eXtenSion tool
+Summary(pl):	NarzЙdzie do rozszerzania Apache'a
+Group:		Development/Tools
 
 %description apxs
-APache eXtenSion tool
+APache eXtenSion tool.
+
+%description apxs -l pl
+NarzЙdzie do rozszerzania Apache'a.
 
 %package tools
-Summary:        Apache tools
-Group:          Development/Tools
+Summary:	Apache tools
+Summary(pl):	NarzЙdzia Apache'a
+Group:		Development/Tools
 
 %description tools
-Apache tools
+Apache tools.
+
+%description tools -l pl
+NarzЙdzia Apache'a.
 
 %package index
-Summary:        Apache index.html* files
-Summary(pl):    Pliki Apache index.html*
-Group:          Documentation
-Requires:       %{name} = %{version}
+Summary:	Apache index.html* files
+Summary(pl):	Pliki Apache index.html*
+Group:		Documentation
+Requires:	%{name} = %{version}
 
 %description index
 Apache index.html* files.
@@ -293,7 +301,7 @@ Summary(sv):	Huvudfiler fЖr webbservern Apache
 Summary(uk):	Засоби створення модул╕в для web server'у Apache
 Summary(zh_CN):	сцсз Apache Web ╥ЧнЯЁлпР╣д©╙╥╒╧╓╬ъ║ё
 Group:		Networking/Utilities
-Requires:       %{name}-apxs = %{version}
+Requires:	%{name}-apxs = %{version}
 Provides:	%{name}(EAPI)-devel = %{version}
 Provides:	apache(EAPI)-devel = %{version}
 Provides:	apache-devel = %{version}-%{release}
