@@ -317,9 +317,6 @@ Apache 1.3.x manual.
 %description doc -l pl
 Podrêcznik do Apache'a 1.3.x.
 
-%description doc -l pl
-Podrêcznik do Apache'a 1.3.x.
-
 %package errordocs
 Summary:	Apache 1.3.x HTTP error documents
 Summary(pl):	Dokumenty opisuj±ce b³êdy HTTP dla Apache'a 1.3.x
