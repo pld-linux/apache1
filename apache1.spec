@@ -27,7 +27,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.31
-Release:	5.1
+Release:	5.2
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -44,6 +44,7 @@ Source7:	%{name}.monitrc
 Source8:	%{name}-mod_vhost_alias.conf
 Source9:	%{name}-mod_status.conf
 Source10:	%{name}-mod_proxy.conf
+Source11:	%{name}-mod_autoindex.conf
 Patch0:		%{name}-PLD.patch
 Patch1:		%{name}-suexec.patch
 Patch2:		%{name}-errordocs.patch
@@ -840,6 +841,7 @@ install %{SOURCE6} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 install %{SOURCE8} $RPM_BUILD_ROOT%{_sysconfdir}/mod_vhost_alias.conf
 install %{SOURCE9} $RPM_BUILD_ROOT%{_sysconfdir}/mod_status.conf
 install %{SOURCE10} $RPM_BUILD_ROOT%{_sysconfdir}/mod_proxy.conf
+install %{SOURCE11} $RPM_BUILD_ROOT%{_sysconfdir}/mod_autoindex.conf
 install %{SOURCE7} $RPM_BUILD_ROOT/etc/monit
 
 ln -sf index.html.en $RPM_BUILD_ROOT%{_datadir}/html/index.html
@@ -1039,6 +1041,9 @@ fi
 
 %post mod_autoindex
 if [ "$1" = "0" ]; then
+	if [ -f /etc/apache/apache.conf ] && ! grep -q "^Include.*mod_autoindex.conf" /etc/apache/apache.conf; then
+		echo "Include /etc/apache/mod_autoindex.conf" >> /etc/apache/apache.conf
+	fi
 	%{apxs} -e -a -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
@@ -1047,18 +1052,24 @@ fi
 
 %preun mod_autoindex
 if [ "$1" = "0" ]; then
+	umask 027
 	%{apxs} -e -A -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
+	grep -v "^Include.*mod_autoindex.conf" /etc/apache/apache.conf > \
+		/etc/apache/apache.conf.tmp
+	mv -f /etc/apache/apache.conf.tmp /etc/apache/apache.conf
 	if [ -f /var/lock/subsys/apache ]; then
 		/etc/rc.d/init.d/apache restart 1>&2
 	fi
 fi
 
 %post mod_auth_digest
-%{apxs} -e -a -n auth_digest %{_libexecdir}/mod_auth_digest.so 1>&2
-if [ -f /var/lock/subsys/apache ]; then
-	/etc/rc.d/init.d/apache restart 1>&2
-else
-	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
+if [ "$1" = "0" ]; then
+	%{apxs} -e -a -n auth_digest %{_libexecdir}/mod_auth_digest.so 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	else
+		echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
+	fi
 fi
 
 %preun mod_auth_digest
@@ -1802,6 +1813,7 @@ fi
 
 %files mod_autoindex
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mod_autoindex.conf
 %attr(755,root,root) %{_libexecdir}/mod_autoindex.so
 
 %files mod_define
@@ -1865,5 +1877,5 @@ fi
 
 %files mod_vhost_alias
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libexecdir}/mod_vhost_alias.so
 %attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/mod_vhost_alias.conf
+%attr(755,root,root) %{_libexecdir}/mod_vhost_alias.so
