@@ -1,6 +1,5 @@
 # TODO
 # - split *all* modules to subpackages?
-# - polish description and summary at package htpasswd
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
 %bcond_without	ipv6		# disable IPv6 support
@@ -767,28 +766,24 @@ Modu³ umo¿liwia na dynamiczne konfigurowanie masowej ilo¶ci serwerów
 wirtualnych.
 
 %package -n htpasswd-%{name}
-Summary:        Apache1 htpasswd utility
-Group:          Networking/Utilities
-Provides:       htpasswd
-Obsoletes:      htpasswd
+Summary:	Apache 1.x htpasswd utility
+Summary(pl):	Narzêdzie htpasswd z Apache'a 1.x
+Group:		Networking/Utilities
+Provides:	htpasswd
+Obsoletes:	htpasswd
 
 %description -n htpasswd-%{name}
-htpasswd from Apache1
+htpasswd is used to create and update the flat-files used to store
+usernames and password for basic authentication of HTTP users. This
+package contains htpasswd from Apache 1.x; this version supports
+plaintext passwords and CRYPT (default), MD5 and SHA1 encryptions.
 
-Usage:
-        htpasswd [-cmdpsD] passwordfile username
-        htpasswd -b[cmdpsD] passwordfile username password
-
-        htpasswd -n[mdps] username
-        htpasswd -nb[mdps] username password
- -c  Create a new file.
- -n  Don't update file; display results on stdout.
- -m  Force MD5 encryption of the password.
- -d  Force CRYPT encryption of the password (default).
- -p  Do not encrypt the password (plaintext).
- -s  Force SHA encryption of the password.
- -b  Use the password from the command line rather than prompting for it.
- -D  Delete the specified user.
+%description -n htpasswd-%{name} -l pl
+htpasswd s³u¿y do tworzenia i uaktualniania p³askich plików s³u¿±cych
+do przechowywania nazw u¿ytkowników i hase³ do uwierzytelnienia basic
+u¿ytkowników HTTP. Ten pakiet zawiera htpasswd z Apache'a 1.x; ta
+wersja obs³uguje has³a zapisane czystym tekstem oraz zakodowane
+algorytmami CRYPT (domy¶lnym), MD5 i SHA1.
 
 %prep
 %setup -q -n apache_%{version} -a3
