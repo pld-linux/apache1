@@ -26,8 +26,8 @@ Summary(tr):	Lider WWW tarayýcý
 Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
-Version:	1.3.29
-Release:	5
+Version:	1.3.31
+Release:	1
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -45,28 +45,26 @@ Source9:	%{name}-mod_status.conf
 Source10:	%{name}-mod_proxy.conf
 Patch0:		%{name}-PLD.patch
 Patch1:		%{name}-suexec.patch
-Patch2:		%{name}-htdocs.patch
-Patch3:		%{name}-errordocs.patch
-Patch4:		%{name}-apxs.patch
-Patch5:		%{name}-mod_ssl-addon.patch
-Patch6:		%{name}-mod_ssl-eapi.patch
-Patch7:		%{name}-EAPI_MM_CORE_PATH-correction.patch
-Patch8:		%{name}-EAPI_MM=SYSTEM.patch
-Patch9:		%{name}-ipv6-PLD.patch
-Patch10:	%{name}-modules_symbols.patch
-Patch11:	%{name}-apxs_force_rm_cp.patch
-Patch12:	%{name}-db3.patch
-Patch13:	%{name}-lookup_map_ldap.patch
-Patch14:	%{name}-man.patch
-Patch15:	%{name}-fpic.patch
-Patch16:	%{name}-buff.patch
-Patch17:	%{name}-mkstemp.patch
-Patch18:	%{name}-EAPI-missing_files.patch
-Patch19:	%{name}-PLD-nov6.patch
-Patch20:	%{name}-configdir_skip_backups.patch
-Patch21:	%{name}-apxs-quiet.patch
-Patch22:	%{name}-db4.patch
-Patch23:	%{name}-CAN-2003-0020.patch
+Patch2:		%{name}-errordocs.patch
+Patch3:		%{name}-apxs.patch
+Patch4:		%{name}-mod_ssl-addon.patch
+Patch5:		%{name}-mod_ssl-eapi.patch
+Patch6:		%{name}-EAPI_MM_CORE_PATH-correction.patch
+Patch7:		%{name}-EAPI_MM=SYSTEM.patch
+Patch8:		%{name}-ipv6-PLD.patch
+Patch9:		%{name}-modules_symbols.patch
+Patch10:	%{name}-apxs_force_rm_cp.patch
+Patch11:	%{name}-db3.patch
+Patch12:	%{name}-lookup_map_ldap.patch
+Patch13:	%{name}-man.patch
+Patch14:	%{name}-fpic.patch
+Patch15:	%{name}-buff.patch
+Patch16:	%{name}-mkstemp.patch
+Patch17:	%{name}-EAPI-missing_files.patch
+Patch18:	%{name}-PLD-nov6.patch
+Patch19:	%{name}-configdir_skip_backups.patch
+Patch20:	%{name}-apxs-quiet.patch
+Patch21:	%{name}-db4.patch
 URL:		http://www.apache.org/
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
@@ -552,24 +550,6 @@ replaced or removed.
 Modu³ pozwalaj±cy na ³±czenie, usuwania, zamianê nag³ówków HTTP
 wysy³anych do przegl±darki.
 
-%package mod_mmap_static
-Summary:	Apache module for mmap()ing statically configured list files
-Summary(pl):	Modu³ s³u¿±cy do mmap()owania plików.
-Group:		Networking/Daemons
-Requires(post,preun):	%{apxs}
-Requires:	%{name}(EAPI) = %{version}
-Provides:	apache-mod_mmap_static = %{version}-%{release}
-Obsoletes:	apache-mod_mmap_static < 2.0.0
-
-%description mod_mmap_static
-This package contains mod_mmap_static module. It provides mmap()ing of
-a statically configured list of frequently requested but not changed
-files.
-
-%description mod_mmap_static -l pl
-Modu³ umo¿liwia mmap()owanie statycznie skonfigurowanych plików
-(czêsto u¿ywanych ale nie ulegaj±cych zmianom).
-
 %package mod_imap
 Summary:	Apache module with imap-file handler
 Summary(pl):	Modu³ z obs³ug± imap-file
@@ -604,6 +584,41 @@ and directives in the configuration files.
 %description mod_info -l pl
 Modu³ dostarczaj±cy informacji o konfiguracji serwera, zainstalowanych
 modu³ach itp.
+
+%package mod_log_forensic
+Summary:	Apache module for forensic logging of the requests
+Summary:	Modu³ Apache'a do logowania ¿±dañ w celu pó¼niejszej analizy
+Group:		Networking/Daemons
+Requires(post,preun):	%{apxs}
+Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_log_forensic = %{version}-%{release}
+Obsoletes:	apache-mod_log_forensic < 2.0.0
+
+%description mod_log_forensic
+This module provides for forensic logging of client requests. Logging
+is done before and after processing a request.
+
+%description mod_log_forensic -l pl
+Ten modu³ pozwala na logowanie ¿±dañ w celu pó¼niejszej analizy.
+Logowanie jest wykonywane przed i po przetworzeniu ¿±dania.
+
+%package mod_mmap_static
+Summary:	Apache module for mmap()ing statically configured list files
+Summary(pl):	Modu³ s³u¿±cy do mmap()owania plików.
+Group:		Networking/Daemons
+Requires(post,preun):	%{apxs}
+Requires:	%{name}(EAPI) = %{version}
+Provides:	apache-mod_mmap_static = %{version}-%{release}
+Obsoletes:	apache-mod_mmap_static < 2.0.0
+
+%description mod_mmap_static
+This package contains mod_mmap_static module. It provides mmap()ing of
+a statically configured list of frequently requested but not changed
+files.
+
+%description mod_mmap_static -l pl
+Modu³ umo¿liwia mmap()owanie statycznie skonfigurowanych plików
+(czêsto u¿ywanych ale nie ulegaj±cych zmianom).
 
 %package mod_proxy
 Summary:	Apache module with Web proxy
@@ -736,26 +751,24 @@ wirtualnych.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+%patch4 -p0
 %patch5 -p0
-%patch6 -p0
+%patch6 -p1
 %patch7 -p1
-%patch8 -p1
-%{?with_ipv6:%patch9 -p1}
+%{?with_ipv6:%patch8 -p1}
+%patch9 -p1
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%{?with_rewrite_ldap:%patch13 -p1}
+%{?with_rewrite_ldap:%patch12 -p1}
+%patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
-%patch18 -p1
-%{!?with_ipv6:%patch19 -p1}
+%{!?with_ipv6:%patch18 -p1}
+%patch19 -p1
 %patch20 -p1
 %patch21 -p1
-%patch22 -p1
-%patch23 -p0
 
 %build
 OPTIM="%{rpmcflags} -DHARD_SERVER_LIMIT=2048" \
@@ -817,9 +830,9 @@ touch $RPM_BUILD_ROOT/var/log/apache/{access,error,agent,referer}_log
 
 install errordocs/* $RPM_BUILD_ROOT%{_datadir}/errordocs
 
-install %{SOURCE6}  $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
-install %{SOURCE8}  $RPM_BUILD_ROOT%{_sysconfdir}/mod_vhost_alias.conf
-install %{SOURCE9}  $RPM_BUILD_ROOT%{_sysconfdir}/mod_status.conf
+install %{SOURCE6} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+install %{SOURCE8} $RPM_BUILD_ROOT%{_sysconfdir}/mod_vhost_alias.conf
+install %{SOURCE9} $RPM_BUILD_ROOT%{_sysconfdir}/mod_status.conf
 install %{SOURCE10} $RPM_BUILD_ROOT%{_sysconfdir}/mod_proxy.conf
 
 ln -sf index.html.en $RPM_BUILD_ROOT%{_datadir}/html/index.html
@@ -1136,25 +1149,6 @@ fi
 %triggerpostun mod_headers -- apache-mod_headers < 2.0.0
 %{apxs} -e -a -n headers %{_libexecdir}/mod_headers.so 1>&2
 
-%post mod_mmap_static
-%{apxs} -e -a -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
-if [ -f /var/lock/subsys/apache ]; then
-	/etc/rc.d/init.d/apache restart 1>&2
-else
-	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
-fi
-
-%preun mod_mmap_static
-if [ "$1" = "0" ]; then
-	%{apxs} -e -A -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
-	if [ -f /var/lock/subsys/apache ]; then
-		/etc/rc.d/init.d/apache restart 1>&2
-	fi
-fi
-
-%triggerpostun mod_mmap_static -- apache-mod_mmap_static < 2.0.0
-%{apxs} -e -a -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
-
 %post mod_imap
 %{apxs} -e -a -n imap %{_libexecdir}/mod_imap.so 1>&2
 if [ -f /var/lock/subsys/apache ]; then
@@ -1192,6 +1186,44 @@ fi
 
 %triggerpostun mod_info -- apache-mod_info < 2.0.0
 %{apxs} -e -a -n info %{_libexecdir}/mod_info.so 1>&2
+
+%post mod_log_forensic
+%{apxs} -e -a -n log_forensic %{_libexecdir}/mod_log_forensic.so 1>&2
+if [ -f /var/lock/subsys/httpd ]; then
+	/etc/rc.d/init.d/httpd restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/httpd start\" to start apache http daemon."
+fi
+
+%preun mod_log_forensic
+if [ "$1" = "0" ]; then
+	%{apxs} -e -A -n log_forensic %{_libexecdir}/mod_log_forensic.so 1>&2
+	if [ -f /var/lock/subsys/httpd ]; then
+		/etc/rc.d/init.d/httpd restart 1>&2
+	fi
+fi
+
+%triggerpostun mod_log_forensic -- apache-mod_log_forensic < 2.0.0
+%{apxs} -e -a -n log_forensic %{_libexecdir}/mod_log_forensic.so 1>&2
+
+%post mod_mmap_static
+%{apxs} -e -a -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
+if [ -f /var/lock/subsys/apache ]; then
+	/etc/rc.d/init.d/apache restart 1>&2
+else
+	echo "Run \"/etc/rc.d/init.d/apache start\" to start apache http daemon."
+fi
+
+%preun mod_mmap_static
+if [ "$1" = "0" ]; then
+	%{apxs} -e -A -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
+	if [ -f /var/lock/subsys/apache ]; then
+		/etc/rc.d/init.d/apache restart 1>&2
+	fi
+fi
+
+%triggerpostun mod_mmap_static -- apache-mod_mmap_static < 2.0.0
+%{apxs} -e -a -n mmap_static %{_libexecdir}/mod_mmap_static.so 1>&2
 
 %post mod_proxy
 %{apxs} -e -a -n proxy %{_libexecdir}/libproxy.so 1>&2
@@ -1393,8 +1425,6 @@ fi
 %{_datadir}/manual/images/pixel.gif
 %{_datadir}/manual/images/sub.gif
 %{_datadir}/manual/misc
-%dir %{_datadir}/manual/search
-%attr(755,root,root) %{_datadir}/manual/search/manual-index.cgi
 %{_datadir}/manual/LICENSE
 %{_datadir}/manual/bind.html.html
 %{_datadir}/manual/bind.html.en
@@ -1442,7 +1472,9 @@ fi
 %{_datadir}/manual/keepalive.html.html
 %{_datadir}/manual/keepalive.html.en
 %lang(ja) %{_datadir}/manual/keepalive.html.ja.jis
-%{_datadir}/manual/location.html
+%{_datadir}/manual/location.html.html
+%{_datadir}/manual/location.html.en
+%lang(ja) %{_datadir}/manual/location.html.ja.jis
 %{_datadir}/manual/logs.html
 %{_datadir}/manual/multilogs.html
 %{_datadir}/manual/new_features_1_3.html.html
@@ -1508,7 +1540,9 @@ fi
 %{_datadir}/manual/mod/mod_asis.html.html
 %{_datadir}/manual/mod/mod_asis.html.en
 %lang(ja) %{_datadir}/manual/mod/mod_asis.html.ja.jis
-%{_datadir}/manual/mod/mod_autoindex.html
+%{_datadir}/manual/mod/mod_autoindex.html.html
+%{_datadir}/manual/mod/mod_autoindex.html.en
+%lang(ja) %{_datadir}/manual/mod/mod_autoindex.html.ja.jis
 %{_datadir}/manual/mod/mod_cern_meta.html
 %{_datadir}/manual/mod/mod_cgi.html.html
 %{_datadir}/manual/mod/mod_cgi.html.en
@@ -1727,11 +1761,6 @@ fi
 %attr(755,root,root) %{_libexecdir}/mod_headers.so
 %{_datadir}/manual/mod/mod_headers.html
 
-%files mod_mmap_static
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libexecdir}/mod_mmap_static.so
-%{_datadir}/manual/mod/mod_mmap_static.html
-
 %files mod_imap
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libexecdir}/mod_imap.so
@@ -1743,6 +1772,17 @@ fi
 %{_datadir}/manual/mod/mod_info.html.html
 %{_datadir}/manual/mod/mod_info.html.en
 %lang(ja) %{_datadir}/manual/mod/mod_info.html.ja.jis
+
+%files mod_log_forensic
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libexecdir}/mod_log_forensic.so
+%{_datadir}/manual/mod/mod_log_forensic.html.html
+%{_datadir}/manual/mod/mod_log_forensic.html.en
+
+%files mod_mmap_static
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libexecdir}/mod_mmap_static.so
+%{_datadir}/manual/mod/mod_mmap_static.html
 
 %files mod_proxy
 %defattr(644,root,root,755)
