@@ -1,3 +1,5 @@
+# TODO
+# - split *all* modules to subpackages?
 #
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
@@ -861,7 +863,7 @@ install errordocs/* $RPM_BUILD_ROOT%{_datadir}/errordocs
 mv $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf conf/apache.conf.dist
 install %{SOURCE7} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 
-CFG="$RPM_BUILD_ROOT%{_sysconfdir}/conf.d/"
+CFG="$RPM_BUILD_ROOT%{_sysconfdir}/conf.d"
 
 echo "LoadModule access_module      modules/mod_access.so" > $CFG/01_mod_access.conf
 install %{SOURCE17}	$CFG/02_mod_alias.conf
