@@ -2074,8 +2074,8 @@ sed -i -e '
 
 %{_mandir}/man8/apache.8*
 
-%attr(750,root,logs) %dir /var/log/apache
-%attr(750,root,logs) %dir /var/log/archiv/apache
+%attr(2750,root,logs) %dir /var/log/apache
+%attr(2750,root,logs) %dir /var/log/archiv/apache
 %attr(640,root,logs) %ghost /var/log/apache/*
 
 %dir %{_datadir}
