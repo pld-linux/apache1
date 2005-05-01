@@ -1,0 +1,4 @@
+- rel 0.3
+  ToDo:
+- small fixes in: mod_usertrack (ipv6), mod_status (ssl_addon)
+- check commented files
