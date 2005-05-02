@@ -467,14 +467,14 @@ Provides:	apache(mod_alias) = %{version}-%{release}
 
 %description mod_alias
 This module provides for mapping different parts of the host
-filesystem in the document tree, and for URL redirection.
-The directives contained in this module allow for manipulation and
-control of URLs as requests arrive at the server. The Alias and
-ScriptAlias directives are used to map between URLs and filesystem
-paths. This allows for content which is not directly under the
-DocumentRoot to be served as part of the web document tree. The
-ScriptAlias directive has the additional effect of marking the target
-directory as containing only CGI scripts.
+filesystem in the document tree, and for URL redirection. The
+directives contained in this module allow for manipulation and control
+of URLs as requests arrive at the server. The Alias and ScriptAlias
+directives are used to map between URLs and filesystem paths. This
+allows for content which is not directly under the DocumentRoot to be
+served as part of the web document tree. The ScriptAlias directive has
+the additional effect of marking the target directory as containing
+only CGI scripts.
 
 The Redirect directives are used to instruct clients to make a new
 request with a different URL. They are often used when a resource has
@@ -570,16 +570,15 @@ independent and it allows users to share URLs.
 
 %description mod_auth_anon -l pl
 Ten modu³ oferuje anonimow± autoryzacjê u¿ytkownia podobnie do
-anonimowych serwerów FTP (u¿ytkownik "anonymous" oraz has³o w
-postaci adresu pocztowego u¿ytkownika). Podawane adresy mog± byæ
-logowane. W po³±czeniu z innymi (opartymi o bazy danych) metodami
-kontroli dostêpu umo¿liwia efektywne ¶ledzenie u¿ytkowników i
-dostosowywanie w zale¿no¶ci od profilu u¿ytkownika, jednocze¶nie
-zachowuj±c stronê otwart± dla "niezarejestrowanych" u¿ytkowników.
-Jedn± z zalet u¿ywania ¶ledzenia u¿ytkowników opartego o
-uwierzytelnienie nad ciasteczkami i ¶miesznymi prze-/przyrostkami
-URL-i jest ca³kowita niezale¿no¶æ od przegl±darki i umo¿liwienie
-u¿ytkownikom wspó³dzielenia URL-i.
+anonimowych serwerów FTP (u¿ytkownik "anonymous" oraz has³o w postaci
+adresu pocztowego u¿ytkownika). Podawane adresy mog± byæ logowane. W
+po³±czeniu z innymi (opartymi o bazy danych) metodami kontroli dostêpu
+umo¿liwia efektywne ¶ledzenie u¿ytkowników i dostosowywanie w
+zale¿no¶ci od profilu u¿ytkownika, jednocze¶nie zachowuj±c stronê
+otwart± dla "niezarejestrowanych" u¿ytkowników. Jedn± z zalet u¿ywania
+¶ledzenia u¿ytkowników opartego o uwierzytelnienie nad ciasteczkami i
+¶miesznymi prze-/przyrostkami URL-i jest ca³kowita niezale¿no¶æ od
+przegl±darki i umo¿liwienie u¿ytkownikom wspó³dzielenia URL-i.
 
 %package mod_auth_db
 Summary:	Apache module with user authentication which uses Berkeley DB files
@@ -624,8 +623,8 @@ Provides:	apache(mod_autoindex) = %{version}-%{release}
 Requires:	%{name}(EAPI) = %{version}-%{release}
 
 %description mod_autoindex
-This package contains mod_autoindex module. It provides
-generation index of files.
+This package contains mod_autoindex module. It provides generation
+index of files.
 
 %description mod_autoindex -l pl
 Ten pakiet dostarcza modu³ autoindex, który generuje indeks plików.
@@ -793,8 +792,8 @@ replaced or removed.
 
 %description mod_headers -l pl
 Modu³ pozwalaj±cy na ³±czenie, usuwania, zamianê nag³ówków HTTP
-wysy³anych do przegl±darki. Nag³ówki mog± byæ ³±czone, zastêpowane
-lub usuwane.
+wysy³anych do przegl±darki. Nag³ówki mog± byæ ³±czone, zastêpowane lub
+usuwane.
 
 %package mod_imap
 Summary:	Apache module with imap-file handler
@@ -950,9 +949,9 @@ which determines how the document will be processed within the server.
 Ten modu³ s³u¿y do okre¶lania ró¿nych fragmentów metainformacji
 dotycz±cych dokumentów. Informacja ta odnoszi siê do zawarto¶ci
 dokumentu i jest zwracana przegl±darce albo u¿ywana przy negocjacji
-tre¶ci wewn±trz serwera. Ponadto dla dokumentu mo¿na ustawiæ
-procedurê obs³ugi, okre¶laj±c± w jaki sposób dokument bêdzie
-przetwarzany wewn±trz serwera.
+tre¶ci wewn±trz serwera. Ponadto dla dokumentu mo¿na ustawiæ procedurê
+obs³ugi, okre¶laj±c± w jaki sposób dokument bêdzie przetwarzany
+wewn±trz serwera.
 
 %package mod_mime_magic
 Summary:	Determining document types using "magic numbers"
@@ -977,10 +976,10 @@ only if the magic file is specified by the MimeMagicFile directive.
 %description mod_mime_magic -l pl
 Ten modu³ okre¶la typ MIME plików w ten sam sposób, co polecenie
 file(1): sprawdza pierwsze kilka bajtów pliku. Ma byæ "drug± lini±
-obrony" dla przypadków, których nie mo¿e rozwi±zaæ mod_mime. Aby
-mieæ pewno¶æ, ¿e mod_mime dostaje pierwsz± próbê okre¶lenia typu
-MIME, nale¿y upewniæ siê, ¿e mod_mime_magic jest umieszczony w
-konfiguracji przed mod_mime.
+obrony" dla przypadków, których nie mo¿e rozwi±zaæ mod_mime. Aby mieæ
+pewno¶æ, ¿e mod_mime dostaje pierwsz± próbê okre¶lenia typu MIME,
+nale¿y upewniæ siê, ¿e mod_mime_magic jest umieszczony w konfiguracji
+przed mod_mime.
 
 Ten modu³ wywodzi siê z wolnodostêpnej wersji polecenia file(1) dla
 uniksów, u¿ywaj±cej "liczb magicznych" i innych podpowiedzi z
@@ -1108,12 +1107,12 @@ using this strategy.
 Czasami ¿±dania dokumentów nie mog± byæ wykonane przez sam serwer
 Apache, poniewa¿ ¿±danie zosta³o napisane z b³êdem w znakach lub
 wielko¶ci liter. Ten modu³ próbuje rozwi±zaæ ten problem próbuj±c
-znale¼æ pasuj±cy dokument, nawet je¶li inne modu³y siê podda³y.
-Dzia³a on poprzez porównywanie nazwy ka¿dego dokumentu w ¿±danym
-katalogu z ¿±dan± nazw± dokumentu bez zwracania uwagi na wielko¶æ
-liter i pozwalaj±c na jeden b³±d (dodany, pominiêty, przestawiony lub
-z³y znak). Tworzona jest lista dla wszystkich nazw dokumentów
-pasuj±cych dla tej strategii.
+znale¼æ pasuj±cy dokument, nawet je¶li inne modu³y siê podda³y. Dzia³a
+on poprzez porównywanie nazwy ka¿dego dokumentu w ¿±danym katalogu z
+¿±dan± nazw± dokumentu bez zwracania uwagi na wielko¶æ liter i
+pozwalaj±c na jeden b³±d (dodany, pominiêty, przestawiony lub z³y
+znak). Tworzona jest lista dla wszystkich nazw dokumentów pasuj±cych
+dla tej strategii.
 
 %package mod_status
 Summary:	Server status report module for apache
@@ -2034,14 +2033,14 @@ sed -i -e '
 %{_sysconfdir}/modules
 %{_sysconfdir}/logs
 %attr(750,root,root) %dir %{_sysconfdir}/conf.d
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/apache.conf
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_common.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_common.conf
 
 %attr(640,root,root) %{_sysconfdir}/magic
 
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/sysconfig/*
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) /etc/logrotate.d/*
-%attr(750,root,root) %config(noreplace) %verify(not md5 size mtime) /etc/monit/*.monitrc
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/*
+%attr(750,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/monit/*.monitrc
 
 %dir %{_libexecdir}
 
@@ -2393,7 +2392,7 @@ sed -i -e '
 
 %files errordocs
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_errordocs.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_errordocs.conf
 %{_datadir}/errordocs
 
 %files suexec
@@ -2412,188 +2411,188 @@ sed -i -e '
 
 %files mod_access
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_access.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_access.conf
 %attr(755,root,root) %{_libexecdir}/mod_access.so
 
 %files mod_actions
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_actions.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_actions.conf
 %attr(755,root,root) %{_libexecdir}/mod_actions.so
 
 %files mod_alias
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_alias.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_alias.conf
 %attr(755,root,root) %{_libexecdir}/mod_alias.so
 
 %files mod_asis
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_asis.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_asis.conf
 %attr(755,root,root) %{_libexecdir}/mod_asis.so
 
 %files mod_auth
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_auth.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_auth.conf
 %attr(755,root,root) %{_libexecdir}/mod_auth.so
 
 %files mod_auth_anon
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_auth_anon.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_auth_anon.conf
 %attr(755,root,root) %{_libexecdir}/mod_auth_anon.so
 
 %files mod_auth_db
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_auth_db.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_auth_db.conf
 %attr(755,root,root) %{_libexecdir}/mod_auth_db.so
 %attr(755,root,root) %{_bindir}/dbmmanage
 %{_mandir}/man1/dbmmanage.1*
 
 %files mod_auth_digest
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_auth_digest.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_auth_digest.conf
 %attr(755,root,root) %{_libexecdir}/mod_auth_digest.so
 
 %files mod_autoindex
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_autoindex.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_autoindex.conf
 %attr(755,root,root) %{_libexecdir}/mod_autoindex.so
 
 %files mod_cern_meta
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_cern_meta.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_cern_meta.conf
 %attr(755,root,root) %{_libexecdir}/mod_cern_meta.so
 
 %files mod_cgi
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_cgi.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_cgi.conf
 %attr(755,root,root) %{_libexecdir}/mod_cgi.so
 
 %files mod_define
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_define.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_define.conf
 %attr(755,root,root) %{_libexecdir}/mod_define.so
 
 %files mod_digest
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_digest.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_digest.conf
 %attr(755,root,root) %{_libexecdir}/mod_digest.so
 
 %files mod_dir
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_dir.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_dir.conf
 %attr(755,root,root) %{_libexecdir}/mod_dir.so
 
 %files mod_env
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_env.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_env.conf
 %attr(755,root,root) %{_libexecdir}/mod_env.so
 
 %files mod_expires
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_expires.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_expires.conf
 %attr(755,root,root) %{_libexecdir}/mod_expires.so
 
 %files mod_headers
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_headers.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_headers.conf
 %attr(755,root,root) %{_libexecdir}/mod_headers.so
 
 %files mod_imap
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_imap.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_imap.conf
 %attr(755,root,root) %{_libexecdir}/mod_imap.so
 
 %files mod_include
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_include.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_include.conf
 %attr(755,root,root) %{_libexecdir}/mod_include.so
 
 %files mod_info
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_info.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_info.conf
 %attr(755,root,root) %{_libexecdir}/mod_info.so
 
 %files mod_log_agent
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_agent.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_log_agent.conf
 %attr(755,root,root) %{_libexecdir}/mod_log_agent.so
 
 %files mod_log_config
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_config.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_log_config.conf
 %attr(755,root,root) %{_libexecdir}/mod_log_config.so
 
 %files mod_log_forensic
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_forensic.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_log_forensic.conf
 %attr(755,root,root) %{_libexecdir}/mod_log_forensic.so
 
 %files mod_log_referer
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_log_referer.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_log_referer.conf
 %attr(755,root,root) %{_libexecdir}/mod_log_referer.so
 
 %files mod_mime
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_mime.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_mime.conf
 %attr(755,root,root) %{_libexecdir}/mod_mime.so
 
 %files mod_mime_magic
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_mime_magic.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_mime_magic.conf
 %attr(755,root,root) %{_libexecdir}/mod_mime_magic.so
 
 %files mod_mmap_static
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_mmap_static.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_mmap_static.conf
 %attr(755,root,root) %{_libexecdir}/mod_mmap_static.so
 
 %files mod_negotiation
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_negotiation.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_negotiation.conf
 %attr(755,root,root) %{_libexecdir}/mod_negotiation.so
 
 %files mod_proxy
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_proxy.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_proxy.conf
 %attr(755,root,root) %{_libexecdir}/libproxy.so
 %dir %attr(770,root,http) /var/cache/apache
 
 %files mod_rewrite
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_rewrite.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_rewrite.conf
 %attr(755,root,root) %{_libexecdir}/mod_rewrite.so
 
 %files mod_setenvif
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_setenvif.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_setenvif.conf
 %attr(755,root,root) %{_libexecdir}/mod_setenvif.so
 
 %files mod_speling
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_speling.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_speling.conf
 %attr(755,root,root) %{_libexecdir}/mod_speling.so
 
 %files mod_status
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_status.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_status.conf
 %attr(755,root,root) %{_libexecdir}/mod_status.so
 
 %files mod_unique_id
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_unique_id.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_unique_id.conf
 %attr(755,root,root) %{_libexecdir}/mod_unique_id.so
 
 %files mod_userdir
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_userdir.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_userdir.conf
 %attr(755,root,root) %{_libexecdir}/mod_userdir.so
 
 %files mod_usertrack
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_usertrack.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_usertrack.conf
 %attr(755,root,root) %{_libexecdir}/mod_usertrack.so
 
 %files mod_vhost_alias
 %defattr(644,root,root,755)
-%attr(640,root,root) %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/conf.d/*_mod_vhost_alias.conf
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_vhost_alias.conf
 %attr(755,root,root) %{_libexecdir}/mod_vhost_alias.so
