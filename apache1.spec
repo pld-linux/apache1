@@ -1379,6 +1379,21 @@ ln -s /var/log/apache $RPM_BUILD_ROOT%{_sysconfdir}/logs
 
 ln -sf %{_bindir}/htpasswd $RPM_BUILD_ROOT%{_sbindir}
 
+# Not packaged.
+rm -f $RPM_BUILD_ROOT%{_sysconfdir}/*.default
+rm -f $RPM_BUILD_ROOT%{_sysconfdir}/{access,srm}.conf
+rm -f $RPM_BUILD_ROOT%{_sysconfdir}/mime.types
+rm -f $RPM_BUILD_ROOT%{_libexecdir}/*.exp
+rm -f $RPM_BUILD_ROOT%{_libexecdir}/mod_{auth_dbm,example}.so
+rm -f $RPM_BUILD_ROOT%{_datadir}/icons{,/small}/README*
+rm -f $RPM_BUILD_ROOT%{_mandir}/README*
+
+# Not for our os or for older apache
+rm -f $RPM_BUILD_ROOT/usr/share/apache1-manual/{cygwin,ebcdic,install-tpf,man-template}.html \
+rm -f $RPM_BUILD_ROOT/usr/share/apache1-manual/mod/mod_{auth_dbm,browser,dld,example,isapi,log_common}.html \
+rm -f $RPM_BUILD_ROOT/usr/share/apache1-manual/{mpeix,netware,new_features_1_[0-2],readme-tpf,suexec_1_2,unixware,vhosts/details_1_2}.html \
+rm -f $RPM_BUILD_ROOT/usr/share/apache1-manual/{win_{compiling,service}.html*,windows.html*}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
