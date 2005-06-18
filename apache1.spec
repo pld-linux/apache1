@@ -30,7 +30,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.33
-Release:	6
+Release:	6.3
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1322,7 +1322,7 @@ install %{SOURCE7} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 CFG="$RPM_BUILD_ROOT%{_sysconfdir}/conf.d"
 
 echo "LoadModule access_module      modules/mod_access.so" > $CFG/01_mod_access.conf
-install %{SOURCE17}	$CFG/02_mod_alias.conf
+echo "LoadModule alias_module       modules/mod_alias.so" > $CFG/02_mod_alias.conf
 echo "LoadModule asis_module        modules/mod_asis.so" > $CFG/03_mod_asis.conf
 install %{SOURCE21} $CFG/04_mod_cern_meta.conf
 echo "LoadModule cgi_module         modules/mod_cgi.so" > $CFG/05_mod_cgi.conf
@@ -1362,6 +1362,7 @@ echo "LoadModule log_forensic_module	modules/mod_log_forensic.so" > $CFG/75_mod_
 echo "LoadModule mmap_static_module	modules/mod_mmap_static.so" > $CFG/76_mod_mmap_static.conf
 install %{SOURCE13} $CFG/77_mod_info.conf
 install %{SOURCE24}	$CFG/80_errordocs.conf
+install %{SOURCE17}	$CFG/80_mod_alias.conf
 
 install %{SOURCE6} $RPM_BUILD_ROOT/etc/monit
 
