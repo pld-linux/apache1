@@ -6,3 +6,8 @@ SERVICE_RUN_NICE_LEVEL="+5"
 # Cmdline options
 HTTPD_OPTS=""
 
+# Skip apache restarts invoked from rpm installs.
+# Enable this if you run a production server and don't want rpm upgrade restart
+# your webserver like 20 times. But you should be aware of that then you need
+# to restart by hand the webserver.
+RPM_SKIP_AUTO_RESTART=no
