@@ -30,7 +30,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.33
-Release:	6.3
+Release:	6.9
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1309,7 +1309,7 @@ install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig,monit} \
 
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/apache1
 install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/apache
-install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/apache1
+install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/apache
 bzip2 -dc %{SOURCE5} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
 touch $RPM_BUILD_ROOT/var/log/apache/{access,error,agent,referer}_log
@@ -1478,6 +1478,13 @@ WARNING!!!
 	mod_speling
 	mod_userdir
 EOF
+
+%triggerpostun -- %{name} < 1.3.33-6.7
+# update /etc/sysconfig/apache1 -> apache rename
+if [ -f /etc/sysconfig/apache1.rpmsave ]; then
+	cp -f /etc/sysconfig/apache{,.rpmnew}
+	mv -f /etc/sysconfig/apache{1.rpmsave,}
+fi
 
 %post errordocs
 if [ -f /var/lock/subsys/apache ]; then
@@ -2054,7 +2061,7 @@ sed -i -e '
 
 %attr(640,root,root) %{_sysconfdir}/magic
 
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/apache
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/*
 %attr(750,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/monit/*.monitrc
 
