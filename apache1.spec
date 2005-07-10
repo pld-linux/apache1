@@ -1447,18 +1447,19 @@ fi
 %triggerpostun -- %{name} <= 1.3.31-5
 %banner %{name} -e -a <<EOF
 WARNING!!!
- Since that version autoindex module has been separated to package %{name}-mod_autoindex
- If you want to have the same functionality do:
-poldek --upgrade %{name}-mod_autoindex
+ Since 1.3.31-5 version autoindex module has been separated to package %{name}-mod_autoindex
+ If you need previous functionality please run:
+poldek -Uv %{name}-mod_autoindex
 
 EOF
 
 %triggerpostun -- %{name} < 1.3.33-3.4
 %banner %{name} -e -a <<EOF
 WARNING!!!
- Since that version following modules have been separated to subpackages
- If you want to have the same functionality do:
- poldek --upgrade %{name}-MODULENAME
+ Since 1.3.33-3.4 version following modules have been separated to subpackages
+ If you need previous functionality please run:
+ poldek -Uv %{name}-MODULENAME
+ where MODULENAME is one (or all) of:
 	mod_asis
 	mod_cern_meta
 	mod_cgi
