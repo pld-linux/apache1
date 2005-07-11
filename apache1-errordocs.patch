@@ -260,7 +260,7 @@ diff -Nru apache_1.3.9/errordocs/410.shtml apache_1.3.9.new/errordocs/410.shtml
 +<STRONG>
 +<!--#echo var="REQUEST_URI"--> 
 +</STRONG>
-+jest ju¿ nie dostêpny na tym serwerze. Proszê usun±æ wszystkie 
++nie jest ju¿ dostêpny na tym serwerze. Proszê usun±æ wszystkie 
 +odwo³ania do tego URL.
 +</TD></TR>
 +</TABLE>
