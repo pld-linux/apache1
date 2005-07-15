@@ -30,7 +30,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.33
-Release:	6.17
+Release:	6.20
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1828,8 +1828,6 @@ sed -i -e '
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_common.conf
 
-%attr(640,root,root) %{_sysconfdir}/magic
-
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/apache
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/*
 %attr(750,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/monit/*.monitrc
@@ -2330,6 +2328,7 @@ sed -i -e '
 
 %files mod_mime_magic
 %defattr(644,root,root,755)
+%attr(640,root,root) %{_sysconfdir}/magic
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_mime_magic.conf
 %attr(755,root,root) %{_libexecdir}/mod_mime_magic.so
 
