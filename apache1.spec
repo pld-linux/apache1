@@ -1,5 +1,5 @@
 # TODO
-# - documentroot and cgi-dir out of /home/services
+# - move DocumentRoot and cgi-dir out of /home/services
 #
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
@@ -30,7 +30,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.33
-Release:	7
+Release:	7.9
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -88,6 +88,7 @@ BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
 %{?with_rewrite_ldap:BuildRequires:	openldap-devel}
 BuildRequires:	rpmbuild(macros) >= 1.228
+BuildRequires:	rpm-build >= 4.4.0
 BuildRequires:	rpm-perlprov
 PreReq:		mm
 PreReq:		perl-base
@@ -125,6 +126,8 @@ Provides:	apache = %{version}-%{release}
 Obsoletes:	apache < 2.0.0
 Obsoletes:	apache-extra
 Obsoletes:	apache6
+# for the posttrans scriptlet, conflicts because in vserver environment rpm package is not installed.
+Conflicts:	rpm < 4.4.2-0.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/apache
@@ -1402,7 +1405,6 @@ rm -rf $RPM_BUILD_ROOT
 %groupadd -g 51 -r -f http
 %useradd -u 51 -r -d %{httpdir} -s /bin/false -c "HTTP User" -g http http
 
-# this should be in trigger instead...
 if [ "`getent passwd http | cut -d: -f6`" = "/home/httpd" ]; then
 	/usr/sbin/usermod -d %{httpdir} http
 fi
@@ -1411,7 +1413,6 @@ fi
 /sbin/chkconfig --add apache
 umask 137
 touch /var/log/apache/{access,error,agent,referer}_log
-%service apache restart
 
 %preun
 if [ "$1" = "0" ]; then
@@ -1483,88 +1484,8 @@ if [ -f /etc/sysconfig/apache1.rpmsave ]; then
 	mv -f /etc/sysconfig/apache{1.rpmsave,}
 fi
 
-%post errordocs
-%service apache restart
-
-%postun errordocs
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_access
-%service apache restart
-
-%postun mod_access
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_actions
-%service apache restart
-
-%postun mod_actions
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_alias
-%service apache restart
-
-%postun mod_alias
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_asis
-%service apache restart
-
-%postun mod_asis
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_auth
-%service apache restart
-
-%postun mod_auth
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_auth_anon
-%service apache restart
-
-%postun mod_auth_anon
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_auth_db
-%service apache restart
-
-%postun mod_auth_db
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
 %triggerpostun mod_auth_db -- apache-mod_auth_db <= 1.3.20-2
 %{apxs} -e -A -n auth_dbm %{_libexecdir}/mod_auth_dbm.so 1>&2
-
-%post mod_auth_digest
-%service apache restart
-
-%postun mod_auth_digest
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_autoindex
-%service apache restart
-
-%postun mod_autoindex
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
 
 %triggerpostun mod_autoindex -- apache1-mod_autoindex < 1.3.33-1.85
 %{apxs} -e -A -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
@@ -1572,203 +1493,11 @@ sed -i -e '
 	s,^Include.*mod_autoindex.conf,Include %{_sysconfdir}/conf.d/*_mod_autoindex.conf,
 ' /etc/apache/apache.conf
 
-%post mod_cern_meta
-%service apache restart
-
-%postun mod_cern_meta
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_cgi
-%service apache restart
-
-%postun mod_cgi
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_define
-%service apache restart
-
-%postun mod_define
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_digest
-%service apache restart
-
-%postun mod_digest
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_dir
-%service apache restart
-
-%postun mod_dir
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_env
-%service apache restart
-
-%postun mod_env
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_expires
-%service apache restart
-
-%postun mod_expires
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_headers
-%service apache restart
-
-%postun mod_headers
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_imap
-%service apache restart
-
-%postun mod_imap
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_include
-%service apache restart
-
-%postun mod_include
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_info
-%service apache restart
-
-%postun mod_info
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_log_agent
-%service apache restart
-
-%postun mod_log_agent
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_log_config
-%service apache restart
-
-%postun mod_log_config
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_log_forensic
-%service apache restart
-
-%postun mod_log_forensic
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_log_referer
-%service apache restart
-
-%postun mod_log_referer
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_mime
-%service apache restart
-
-%postun mod_mime
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_mime_magic
-%service apache restart
-
-%postun mod_mime_magic
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_mmap_static
-%service apache restart
-
-%postun mod_mmap_static
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_negotiation
-%service apache restart
-
-%postun mod_negotiation
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_proxy
-%service apache restart
-
-%postun mod_proxy
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
 %triggerpostun mod_proxy -- apache1-mod_proxy < 1.3.33-1.85
 %{apxs} -e -A -n proxy %{_libexecdir}/libproxy.so 1>&2
 sed -i -e '
 	s,^Include.*mod_proxy.conf,Include %{_sysconfdir}/conf.d/*_mod_proxy.conf,
 ' /etc/apache/apache.conf
-
-%post mod_rewrite
-%service apache restart
-
-%postun mod_rewrite
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_setenvif
-%service apache restart
-
-%postun mod_setenvif
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_speling
-%service apache restart
-
-%postun mod_speling
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_status
-%service apache restart
-
-%postun mod_status
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
 
 %triggerpostun mod_status -- apache1-mod_status < 1.3.33-1.85
 %{apxs} -e -A -n status %{_libexecdir}/mod_status.so 1>&2
@@ -1776,43 +1505,268 @@ sed -i -e '
 	s,^Include.*mod_status.conf,Include %{_sysconfdir}/conf.d/*_mod_status.conf,
 ' /etc/apache/apache.conf
 
-%post mod_unique_id
-%service apache restart
-
-%postun mod_unique_id
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_userdir
-%service apache restart
-
-%postun mod_userdir
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_usertrack
-%service apache restart
-
-%postun mod_usertrack
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
-%post mod_vhost_alias
-%service apache restart
-
-%postun mod_vhost_alias
-if [ "$1" = "0" ]; then
-	%service -q apache restart
-fi
-
 %triggerpostun mod_vhost_alias -- apache1-mod_vhost_alias < 1.3.33-1.85
 %{apxs} -e -A -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
 sed -i -e '
 	s,^Include.*mod_vhost_alias.conf,Include %{_sysconfdir}/conf.d/*_mod_vhost_alias.conf,
 ' /etc/apache/apache.conf
+
+%posttrans
+# minimizing apache restarts logics. we restart webserver:
+#
+# 1. at the end of transaction. (posttrans, feature from rpm 4.4.2)
+# 2. first install of module (post: $1 = 1)
+# 2. uninstall of module (postun: $1 == 0)
+#
+# the strict internal deps between apache modules and
+# main package are very important for all this to work.
+
+# restart webserver at the end of transaction
+%service -q apache restart
+
+# macro called at module post scriptlet
+%define	module_post \
+if [ "$1" = "1" ]; then \
+	%service -q apache restart \
+fi
+
+# macro called at module postun scriptlet
+%define	module_postun \
+if [ "$1" = "0" ]; then \
+	%service -q apache restart \
+fi
+
+%post errordocs
+if [ "$1" = "1" ]; then
+	%service -q apache reload
+fi
+
+%postun errordocs
+if [ "$1" = "0" ]; then
+	%service -q apache reload
+fi
+
+%post mod_access
+%module_post
+
+%postun mod_access
+%module_postun
+
+%post mod_actions
+%module_post
+
+%postun mod_actions
+%module_postun
+
+%post mod_alias
+%module_post
+
+%postun mod_alias
+%module_postun
+
+%post mod_asis
+%module_post
+
+%postun mod_asis
+%module_postun
+
+%post mod_auth
+%module_post
+
+%postun mod_auth
+%module_postun
+
+%post mod_auth_anon
+%module_post
+
+%postun mod_auth_anon
+%module_postun
+
+%post mod_auth_db
+%module_post
+
+%postun mod_auth_db
+%module_postun
+
+%post mod_auth_digest
+%module_post
+
+%postun mod_auth_digest
+%module_postun
+
+%post mod_autoindex
+%module_post
+
+%postun mod_autoindex
+%module_postun
+
+%post mod_cern_meta
+%module_post
+
+%postun mod_cern_meta
+%module_postun
+
+%post mod_cgi
+%module_post
+
+%postun mod_cgi
+%module_postun
+
+%post mod_define
+%module_post
+
+%postun mod_define
+%module_postun
+
+%post mod_digest
+%module_post
+
+%postun mod_digest
+%module_postun
+
+%post mod_dir
+%module_post
+
+%postun mod_dir
+%module_postun
+
+%post mod_env
+%module_post
+
+%postun mod_env
+%module_postun
+
+%post mod_expires
+%module_post
+
+%postun mod_expires
+%module_postun
+
+%post mod_headers
+%module_post
+
+%postun mod_headers
+%module_postun
+
+%post mod_imap
+%module_post
+
+%postun mod_imap
+%module_postun
+
+%post mod_include
+%module_post
+
+%postun mod_include
+%module_postun
+
+%post mod_info
+%module_post
+
+%postun mod_info
+%module_postun
+
+%post mod_log_agent
+%module_post
+
+%postun mod_log_agent
+%module_postun
+
+%post mod_log_config
+%module_post
+
+%postun mod_log_config
+%module_postun
+
+%post mod_log_forensic
+%module_post
+
+%postun mod_log_forensic
+%module_postun
+
+%post mod_log_referer
+%module_post
+
+%postun mod_log_referer
+%module_postun
+
+%post mod_mime
+%module_post
+
+%postun mod_mime
+%module_postun
+
+%post mod_mime_magic
+%module_post
+
+%postun mod_mime_magic
+%module_postun
+
+%post mod_mmap_static
+%module_post
+
+%postun mod_mmap_static
+%module_postun
+
+%post mod_negotiation
+%module_post
+
+%postun mod_negotiation
+%module_postun
+
+%post mod_proxy
+%module_post
+
+%postun mod_proxy
+%module_postun
+
+%post mod_rewrite
+%module_post
+
+%postun mod_rewrite
+%module_postun
+
+%post mod_setenvif
+%module_post
+
+%postun mod_setenvif
+%module_postun
+
+%post mod_speling
+%module_post
+
+%postun mod_speling
+%module_postun
+
+%post mod_status
+%module_post
+
+%postun mod_status
+%module_postun
+
+%post mod_unique_id
+%module_post
+
+%postun mod_unique_id
+%module_postun
+
+%post mod_userdir
+%module_post
+
+%postun mod_userdir
+%module_postun
+
+%post mod_usertrack
+%module_post
+
+%postun mod_usertrack
+%module_postun
+
+%post mod_vhost_alias
+%module_post
+
+%postun mod_vhost_alias
+%module_postun
 
 %files
 %defattr(644,root,root,755)
