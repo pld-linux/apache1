@@ -1,5 +1,6 @@
 # TODO
 # - move DocumentRoot and cgi-dir out of /home/services
+# - does main package really need apxs dep?
 #
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
@@ -30,7 +31,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.33
-Release:	7.9
+Release:	7.11
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1522,7 +1523,7 @@ sed -i -e '
 # main package are very important for all this to work.
 
 # restart webserver at the end of transaction
-%service -q apache restart
+%service apache restart
 
 # macro called at module post scriptlet
 %define	module_post \
