@@ -84,7 +84,7 @@ Patch18:	%{name}-PLD-nov6.patch
 Patch19:	%{name}-configdir_skip_backups.patch
 Patch20:	%{name}-apxs-quiet.patch
 Patch21:	%{name}-db4.patch
-URL:		http://www.apache.org/
+URL:		http://httpd.apache.org/
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
 %{?with_rewrite_ldap:BuildRequires:	openldap-devel}
