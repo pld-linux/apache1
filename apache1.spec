@@ -1,6 +1,5 @@
 # TODO
 # - move DocumentRoot and cgi-dir out of /home/services
-# - does main package really need apxs dep?
 #
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
@@ -114,7 +113,6 @@ Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
 Requires(triggerpostun):	sed >= 4.0
 Requires:	/etc/mime.types
-Requires:	%{name}-apxs = %{version}-%{release}
 Requires:	mailcap
 Requires:	psmisc >= 20.1
 Provides:	%{name}(EAPI) = %{version}-%{release}
