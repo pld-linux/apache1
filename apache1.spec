@@ -119,7 +119,7 @@ Requires:	mailcap
 Requires:	psmisc >= 20.1
 Provides:	%{name}(EAPI) = %{version}-%{release}
 Provides:	group(http)
-Provides:	httpd
+Provides:	httpd = %{version}
 Provides:	user(http)
 Provides:	webserver = apache
 Provides:	apache = %{version}-%{release}
