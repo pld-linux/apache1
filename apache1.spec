@@ -30,7 +30,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.34
-Release:	1
+Release:	1.4
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -90,10 +90,9 @@ BuildRequires:	mm-devel >= 1.3.0
 BuildRequires:	rpmbuild(macros) >= 1.228
 BuildRequires:	rpm-build >= 4.4.0
 BuildRequires:	rpm-perlprov
-PreReq:		mm
-PreReq:		perl-base
-PreReq:		rc-scripts
-Requires(pre):	/bin/id
+BuildRequires:	perl-base
+Requires:		mm
+Requires:		rc-scripts
 %if %{without minimal}
 # essental modules (maybe remove these in future if all Requires in
 # place for other packages).
@@ -102,6 +101,7 @@ Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	%{name}-mod_log_config = %{version}-%{release}
 Requires:	%{name}-mod_mime = %{version}-%{release}
 %endif
+Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getent
 Requires(pre):	/usr/bin/getgid
 Requires(pre):	/usr/sbin/groupadd
@@ -586,7 +586,7 @@ przegl±darki i umo¿liwienie u¿ytkownikom wspó³dzielenia URL-i.
 Summary:	Apache module with user authentication which uses Berkeley DB files
 Summary(pl):	Modu³ Apache'a z mechanizmem uwierzytelniania u¿ywaj±cym plików Berkeley DB
 Group:		Networking/Daemons
-Requires(triggerpostun):	%{apxs}
+Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_auth_db) = %{version}-%{release}
 Obsoletes:	apache-mod_auth_db < 2.0.0
@@ -620,7 +620,7 @@ Authentication.
 Summary:	Apache module - display index of files
 Summary(pl):	Modu³ apache do wy¶wietlania indeksu plików
 Group:		Networking/Daemons
-Requires(triggerpostun):	%{apxs}
+Requires(triggerpostun):	sed >= 4.0
 Provides:	apache(mod_autoindex) = %{version}-%{release}
 Requires:	%{name}(EAPI) = %{version}-%{release}
 
@@ -1036,7 +1036,7 @@ dostêpnych dokumentów. S± dwie ró¿ne implementacje.
 Summary:	Apache module with Web proxy
 Summary(pl):	Modu³ dodaj±cy obs³ugê serwera proxy
 Group:		Networking/Daemons
-Requires(triggerpostun):	%{apxs}
+Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_proxy) = %{version}-%{release}
 Obsoletes:	apache-mod_proxy < 2.0.0
@@ -1120,7 +1120,7 @@ dla tej strategii.
 Summary:	Server status report module for apache
 Summary(pl):	Modu³ dostarczaj±cy informacje statystyczne o serwerze
 Group:		Networking/Daemons
-Requires(triggerpostun):	%{apxs}
+Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_status) = %{version}-%{release}
 Obsoletes:	apache-mod_status < 2.0.0
@@ -1196,7 +1196,7 @@ wiele plików logów.
 Summary:	Apache module for dynamically configured mass virtual hosting
 Summary(pl):	Modu³ dodaj±cy obs³ugê hostów wirtualnych
 Group:		Networking/Daemons
-Requires(triggerpostun):	%{apxs}
+Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_vhost_alias) = %{version}-%{release}
 Obsoletes:	apache-mod_vhost_alias < 2.0.0
@@ -1484,29 +1484,30 @@ if [ -f /etc/sysconfig/apache1.rpmsave ]; then
 fi
 
 %triggerpostun mod_auth_db -- apache-mod_auth_db <= 1.3.20-2
-%{apxs} -e -A -n auth_dbm %{_libexecdir}/mod_auth_dbm.so 1>&2
+sed -i -e '/^\(Add\|Load\)Module.*mod_auth_dbm\.\(so\|c\)/d' /etc/apache/apache.conf
 
 %triggerpostun mod_autoindex -- apache1-mod_autoindex < 1.3.33-1.85
-%{apxs} -e -A -n autoindex %{_libexecdir}/mod_autoindex.so 1>&2
 sed -i -e '
+	/^\(Add\|Load\)Module.*mod_autoindex\.\(so\|c\)/d
 	s,^Include.*mod_autoindex.conf,Include %{_sysconfdir}/conf.d/*_mod_autoindex.conf,
 ' /etc/apache/apache.conf
 
 %triggerpostun mod_proxy -- apache1-mod_proxy < 1.3.33-1.85
-%{apxs} -e -A -n proxy %{_libexecdir}/libproxy.so 1>&2
 sed -i -e '
+	/^LoadModule.*libproxy\.so/d
+	/^AddModule.*mod_proxy\.c/d
 	s,^Include.*mod_proxy.conf,Include %{_sysconfdir}/conf.d/*_mod_proxy.conf,
 ' /etc/apache/apache.conf
 
 %triggerpostun mod_status -- apache1-mod_status < 1.3.33-1.85
-%{apxs} -e -A -n status %{_libexecdir}/mod_status.so 1>&2
 sed -i -e '
+	/^\(Add\|Load\)Module.*mod_status\.\(so\|c\)/d
 	s,^Include.*mod_status.conf,Include %{_sysconfdir}/conf.d/*_mod_status.conf,
 ' /etc/apache/apache.conf
 
 %triggerpostun mod_vhost_alias -- apache1-mod_vhost_alias < 1.3.33-1.85
-%{apxs} -e -A -n vhost_alias %{_libexecdir}/mod_vhost_alias.so 1>&2
 sed -i -e '
+	/^\(Add\|Load\)Module.*mod_vhost_alias\.\(so\|c\)/d
 	s,^Include.*mod_vhost_alias.conf,Include %{_sysconfdir}/conf.d/*_mod_vhost_alias.conf,
 ' /etc/apache/apache.conf
 
@@ -1522,6 +1523,7 @@ sed -i -e '
 
 # restart webserver at the end of transaction
 %service apache restart
+exit 0
 
 # macro called at module post scriptlet
 %define	module_post \
