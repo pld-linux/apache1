@@ -87,7 +87,7 @@ URL:		http://httpd.apache.org/
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
 %{?with_rewrite_ldap:BuildRequires:	openldap-devel}
-BuildRequires:	rpmbuild(macros) >= 1.228
+BuildRequires:	rpmbuild(macros) >= 1.247
 BuildRequires:	rpm-build >= 4.4.0
 BuildRequires:	rpm-perlprov
 BuildRequires:	perl-base
@@ -1522,29 +1522,29 @@ sed -i -e '
 # main package are very important for all this to work.
 
 # restart webserver at the end of transaction
-%service apache restart
+%service apache restart "Apache HTTP daemon"
 exit 0
 
 # macro called at module post scriptlet
 %define	module_post \
 if [ "$1" = "1" ]; then \
-	%service -q apache restart \
+	%service -q apache restart "Apache HTTP daemon" \
 fi
 
 # macro called at module postun scriptlet
 %define	module_postun \
 if [ "$1" = "0" ]; then \
-	%service -q apache restart \
+	%service -q apache restart "Apache HTTP daemon" \
 fi
 
 %post errordocs
 if [ "$1" = "1" ]; then
-	%service -q apache reload
+	%service -q apache reload "Apache HTTP daemon"
 fi
 
 %postun errordocs
 if [ "$1" = "0" ]; then
-	%service -q apache reload
+	%service -q apache reload "Apache HTTP daemon"
 fi
 
 %post mod_access
