@@ -1394,10 +1394,10 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/icons{,/small}/README*
 rm -f $RPM_BUILD_ROOT%{_mandir}/README*
 
 # Not for our os or for older apache
-rm -f $RPM_BUILD_ROOT/usr/share/apache1-manual/{cygwin,ebcdic,install-tpf,man-template}.html \
-rm -f $RPM_BUILD_ROOT/usr/share/apache1-manual/mod/mod_{auth_dbm,browser,dld,example,isapi,log_common}.html \
-rm -f $RPM_BUILD_ROOT/usr/share/apache1-manual/{mpeix,netware,new_features_1_[0-2],readme-tpf,suexec_1_2,unixware,vhosts/details_1_2}.html \
-rm -f $RPM_BUILD_ROOT/usr/share/apache1-manual/{win_{compiling,service}.html*,windows.html*}
+rm $RPM_BUILD_ROOT/usr/share/apache1-manual/{cygwin,ebcdic,install-{z,}tpf,man-template}.html
+rm $RPM_BUILD_ROOT/usr/share/apache1-manual/mod/mod_{auth_dbm,browser,dld,example,isapi,log_common}.html
+rm $RPM_BUILD_ROOT/usr/share/apache1-manual/{mpeix,netware,new_features_1_[0-2],readme-tpf,suexec_1_2,unixware,vhosts/details_1_2}.html
+rm $RPM_BUILD_ROOT/usr/share/apache1-manual/{win_{compiling,service}.html*,windows.html*}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
