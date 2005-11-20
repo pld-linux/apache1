@@ -30,7 +30,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.34
-Release:	3
+Release:	3.3
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1304,7 +1304,7 @@ rm -f src/modules/standard/mod_rewrite.so
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig,monit} \
 	$RPM_BUILD_ROOT%{_datadir}/errordocs \
-	$RPM_BUILD_ROOT%{_sysconfdir}/conf.d \
+	$RPM_BUILD_ROOT%{_sysconfdir}/{webapps.d,conf.d} \
 	$RPM_BUILD_ROOT%{_libexecdir} \
 	$RPM_BUILD_ROOT/var/{log/{apache,archiv/apache},run/apache}
 
@@ -1484,6 +1484,17 @@ if [ -f /etc/sysconfig/apache1.rpmsave ]; then
 	cp -f /etc/sysconfig/apache{,.rpmnew}
 	mv -f /etc/sysconfig/apache{1.rpmsave,}
 fi
+
+%triggerpostun -- %{name} < 1.3.34-3.3
+# make sure webapps.d is included
+cp -f /etc/apache/apache.conf{,.rpmsave}
+sed -i -e '
+	/^Include conf.d/{
+		a
+		a# Include webapps config
+		aInclude webapps.d/*.conf
+	}
+' /etc/apache/apache.conf
 
 %triggerpostun mod_auth_db -- apache-mod_auth_db <= 1.3.20-2
 sed -i -e '/^\(Add\|Load\)Module.*mod_auth_dbm\.\(so\|c\)/d' /etc/apache/apache.conf
@@ -1782,6 +1793,7 @@ fi
 %{_sysconfdir}/modules
 %{_sysconfdir}/logs
 %attr(750,root,root) %dir %{_sysconfdir}/conf.d
+%attr(750,root,root) %dir %{_sysconfdir}/webapps.d
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_common.conf
 
