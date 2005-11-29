@@ -5,6 +5,7 @@
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
 %bcond_without	ipv6		# disable IPv6 support
 %bcond_with	minimal		# minimal apache, without any modules
+%bcond_with	lingerd		# build with lingerd support
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	The most widely used Web server on the Internet
@@ -30,7 +31,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.34
-Release:	5
+Release:	5.3
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -61,6 +62,8 @@ Source21:	%{name}-mod_cern_meta.conf
 Source22:	%{name}-mod_setenvif.conf
 Source23:	%{name}-mod_vhost_alias.conf
 Source24:	%{name}-errordocs.conf
+Source25:	http://images.iagora.com/media/software/lingerd/lingerd-0.94.tar.gz
+# Source25-md5:	6401015bafad4f44fdf8a9a1795d9258
 Patch0:		%{name}-PLD.patch
 Patch1:		%{name}-suexec.patch
 Patch2:		%{name}-errordocs.patch
@@ -123,6 +126,7 @@ Provides:	user(http)
 Provides:	webserver = apache
 Provides:	apache = %{version}-%{release}
 %{?with_ipv6:Provides:	apache1(ipv6)}
+%{?with_lingerd:Provides:	apache1(lingerd)}
 Obsoletes:	apache < 2.0.0
 Obsoletes:	apache-extra
 Obsoletes:	apache6
@@ -142,6 +146,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Apache is a powerful, full-featured, efficient and freely-available
 Web server. Apache is also the most popular Web server on the
 Internet.
+
+%{?with_lingerd:This version of Apache includes lingerd support:}
+%{?with_lingerd:<http://www.iagora.com/about/software/lingerd/>.}
 
 %description -l cs
 Apache je výkonný plnì funkèní efektivní a volnì dostupný WWW server.
@@ -1231,7 +1238,7 @@ wersja obs³uguje has³a zapisane czystym tekstem oraz zakodowane
 algorytmami CRYPT (domy¶lnym), MD5 i SHA1.
 
 %prep
-%setup -q -n apache_%{version} -a3
+%setup -q -n apache_%{version} -a3 %{?with_lingerd:-a25}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -1255,6 +1262,14 @@ algorytmami CRYPT (domy¶lnym), MD5 i SHA1.
 %patch20 -p1
 %patch21 -p1
 %patch22 -p1
+
+%if %{with lingerd}
+mv lingerd-* _lingerd
+mkdir -p lingerd
+cp -a _lingerd/{README,TUNING,LICENSE,TODO,ChangeLog} lingerd
+cp -a _lingerd/{apache-1.3/ap_lingerd.c,li_config.h} src/main
+patch -p0 -d src < _lingerd/apache-1.3/aplinger-ssl.diff
+%endif
 
 %build
 OPTIM="%{rpmcflags} -DHARD_SERVER_LIMIT=2048" \
@@ -1299,6 +1314,13 @@ rm -f src/modules/standard/mod_auth_db.so
 rm -f src/modules/standard/mod_rewrite.so
 %{__make} -C src/modules/standard mod_rewrite.so \
 	LIBS_SHLIB="-ldb %{?with_rewrite_ldap:-lldap -llber}"
+
+%if %{with lingerd}
+make -C _lingerd  lingerd \
+	CC="%{__cc}" \
+	CFLAGS="%{rpmcflags}"
+	LDFLAGS="%{rpmldflags}"
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -1398,6 +1420,11 @@ rm $RPM_BUILD_ROOT/usr/share/apache1-manual/{cygwin,ebcdic,install-{z,}tpf,man-t
 rm $RPM_BUILD_ROOT/usr/share/apache1-manual/mod/mod_{auth_dbm,browser,dld,example,isapi,log_common}.html
 rm $RPM_BUILD_ROOT/usr/share/apache1-manual/{mpeix,netware,new_features_1_[0-2],readme-tpf,suexec_1_2,unixware,vhosts/details_1_2}.html
 rm $RPM_BUILD_ROOT/usr/share/apache1-manual/{win_{compiling,service}.html*,windows.html*}
+
+%if %{with lingerd}
+install _lingerd/lingerd $RPM_BUILD_ROOT%{_libexecdir}
+install -d $RPM_BUILD_ROOT%{_localstatedir}/run/lingerd
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -1786,6 +1813,7 @@ fi
 %defattr(644,root,root,755)
 %doc ABOUT_APACHE src/CHANGES README
 %doc conf/mime.types conf/apache.conf.dist
+%{?with_lingerd:%doc lingerd}
 
 %attr(754,root,root) /etc/rc.d/init.d/apache
 
@@ -1802,6 +1830,11 @@ fi
 %attr(750,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/monit/*.monitrc
 
 %dir %{_libexecdir}
+
+%if %{with lingerd}
+%{_libexecdir}/lingerd
+%attr(770,root,http) %dir %{_localstatedir}/run/lingerd
+%endif
 
 %attr(755,root,root) %{_bindir}/checkgid
 %attr(755,root,root) %{_bindir}/htdigest
