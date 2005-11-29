@@ -31,7 +31,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.34
-Release:	5.3
+Release:	5.4
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1334,7 +1334,7 @@ install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig,monit} \
 	root=$RPM_BUILD_ROOT
 
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/apache1
-install %{SOURCE1} $RPM_BUILD_ROOT/etc/rc.d/init.d/apache
+sed -e '%{?with_lingerd:s,/usr/lib,%{_libdir},g}' %{SOURCE1} > $RPM_BUILD_ROOT/etc/rc.d/init.d/apache
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/apache
 bzip2 -dc %{SOURCE5} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
@@ -1832,7 +1832,7 @@ fi
 %dir %{_libexecdir}
 
 %if %{with lingerd}
-%{_libexecdir}/lingerd
+%attr(755,root,root) %{_libexecdir}/lingerd
 %attr(770,root,http) %dir %{_localstatedir}/run/lingerd
 %endif
 
