@@ -31,7 +31,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.34
-Release:	5.4
+Release:	5.9
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1390,7 +1390,7 @@ install %{SOURCE13} $CFG/77_mod_info.conf
 install %{SOURCE24}	$CFG/80_errordocs.conf
 install %{SOURCE17}	$CFG/80_mod_alias.conf
 
-install %{SOURCE6} $RPM_BUILD_ROOT/etc/monit
+install %{SOURCE6} $RPM_BUILD_ROOT/etc/monit/apache.monitrc
 
 ln -sf index.html.en $RPM_BUILD_ROOT%{_datadir}/html/index.html
 
@@ -1512,7 +1512,8 @@ if [ -f /etc/sysconfig/apache1.rpmsave ]; then
 	mv -f /etc/sysconfig/apache{1.rpmsave,}
 fi
 
-%triggerpostun -- %{name} < 1.3.34-3.3
+%triggerpostun -- %{name} < 1.3.34-5.9
+if ! grep -q 'Include webapps.d/' /etc/apache/apache.conf; then
 # make sure webapps.d is included
 cp -f /etc/apache/apache.conf{,.rpmsave}
 sed -i -e '
@@ -1522,6 +1523,13 @@ sed -i -e '
 		aInclude webapps.d/*.conf
 	}
 ' /etc/apache/apache.conf
+fi
+
+# rename monitrc to be service name like other files
+if [ -f /etc/monit/apache1.monitrc.rpmsave ]; then
+	mv -f /etc/monit/apache.monitrc{,.rpmnew}
+	mv -f /etc/monit/{apache1.monitrc.rpmsave,apache.monitrc}
+fi
 
 %triggerpostun mod_auth_db -- apache-mod_auth_db <= 1.3.20-2
 sed -i -e '/^\(Add\|Load\)Module.*mod_auth_dbm\.\(so\|c\)/d' /etc/apache/apache.conf
@@ -1827,7 +1835,7 @@ fi
 
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/apache
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/*
-%attr(750,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/monit/*.monitrc
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/monit/*.monitrc
 
 %dir %{_libexecdir}
 
