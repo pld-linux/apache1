@@ -71,7 +71,7 @@ Patch3:		%{name}-apxs.patch
 Patch4:		%{name}-mod_ssl-addon.patch
 Patch5:		%{name}-mod_ssl-eapi.patch
 # http://allafrica.com/tools/apache/mod_proxy/mod_proxy-khk_1.3.26-patch.diff with eapi duplicates removed
-Patch6:         %{name}-mod_proxy-khk.patch
+Patch6:		%{name}-mod_proxy-khk.patch
 Patch7:		%{name}-EAPI_MM_CORE_PATH-correction.patch
 Patch8:		%{name}-EAPI_MM=SYSTEM.patch
 Patch9:		%{name}-ipv6-PLD.patch
@@ -93,10 +93,10 @@ URL:		http://httpd.apache.org/
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
 %{?with_rewrite_ldap:BuildRequires:	openldap-devel}
-BuildRequires:	rpmbuild(macros) >= 1.247
+BuildRequires:	perl-base
 BuildRequires:	rpm-build >= 4.4.0
 BuildRequires:	rpm-perlprov
-BuildRequires:	perl-base
+BuildRequires:	rpmbuild(macros) >= 1.247
 Requires:		mm
 Requires:		rc-scripts
 %if %{without minimal}
@@ -107,6 +107,9 @@ Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	%{name}-mod_log_config = %{version}-%{release}
 Requires:	%{name}-mod_mime = %{version}-%{release}
 %endif
+Requires(post,preun):	/sbin/chkconfig
+Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
 Requires(pre):	/bin/id
 Requires(pre):	/usr/bin/getent
 Requires(pre):	/usr/bin/getgid
@@ -114,9 +117,6 @@ Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
 Requires(pre):	/usr/sbin/usermod
 Requires(pre):	textutils
-Requires(post,preun):	/sbin/chkconfig
-Requires(postun):	/usr/sbin/groupdel
-Requires(postun):	/usr/sbin/userdel
 Requires(triggerpostun):	sed >= 4.0
 Requires:	/etc/mime.types
 Requires:	mailcap
@@ -1055,15 +1055,15 @@ Obsoletes:	apache-mod_proxy < 2.0.0
 This package contains module with implementation a proxy/cache for
 Apache. It implements proxying capability for FTP, CONNECT (for SSL),
 HTTP/0.9, and HTTP/1.0. The module can be configured to connect to
-other proxy modules for these and other protocols.
-Contains patch from: http://allafrica.com/tools/apache/mod_proxy/
+other proxy modules for these and other protocols. Contains patch
+from: <http://allafrica.com/tools/apache/mod_proxy/>
 
 %description mod_proxy -l pl
 Modu³ zawiera implementacjê serwera proxy/cache dla Apache.
 Iplementacja zawiera obs³ugê FTP, CONNECT (dla SSL), HTTP/0.9 i
 HTTP/1.0. Ten modu³ mo¿e byæ skonfigurowany tak, aby ³±czy³ siê z
-innymi modu³ami proxy dla tych i innych protoko³ów.
-Zawiera ³atê z http://allafrica.com/tools/apache/mod_proxy/
+innymi modu³ami proxy dla tych i innych protoko³ów. Zawiera ³atê z
+<http://allafrica.com/tools/apache/mod_proxy/>.
 
 %package mod_rewrite
 Summary:	Apache module with rule-based engine for rewrite requested URLs on the fly
@@ -1321,7 +1321,7 @@ rm -f src/modules/standard/mod_rewrite.so
 	LIBS_SHLIB="-ldb %{?with_rewrite_ldap:-lldap -llber}"
 
 %if %{with lingerd}
-make -C _lingerd  lingerd \
+%{__make} -C _lingerd lingerd \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags}"
 	LDFLAGS="%{rpmldflags}"
@@ -1421,10 +1421,10 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/icons{,/small}/README*
 rm -f $RPM_BUILD_ROOT%{_mandir}/README*
 
 # Not for our os or for older apache
-rm $RPM_BUILD_ROOT/usr/share/apache1-manual/{cygwin,ebcdic,install-{z,}tpf,man-template}.html
-rm $RPM_BUILD_ROOT/usr/share/apache1-manual/mod/mod_{auth_dbm,browser,dld,example,isapi,log_common}.html
-rm $RPM_BUILD_ROOT/usr/share/apache1-manual/{mpeix,netware,new_features_1_[0-2],readme-tpf,suexec_1_2,unixware,vhosts/details_1_2}.html
-rm $RPM_BUILD_ROOT/usr/share/apache1-manual/{win_{compiling,service}.html*,windows.html*}
+rm $RPM_BUILD_ROOT%{_prefix}/share/apache1-manual/{cygwin,ebcdic,install-{z,}tpf,man-template}.html
+rm $RPM_BUILD_ROOT%{_prefix}/share/apache1-manual/mod/mod_{auth_dbm,browser,dld,example,isapi,log_common}.html
+rm $RPM_BUILD_ROOT%{_prefix}/share/apache1-manual/{mpeix,netware,new_features_1_[0-2],readme-tpf,suexec_1_2,unixware,vhosts/details_1_2}.html
+rm $RPM_BUILD_ROOT%{_prefix}/share/apache1-manual/{win_{compiling,service}.html*,windows.html*}
 
 %if %{with lingerd}
 install _lingerd/lingerd $RPM_BUILD_ROOT%{_libexecdir}
