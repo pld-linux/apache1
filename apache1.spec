@@ -31,7 +31,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.34
-Release:	5.9
+Release:	6
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1850,7 +1850,6 @@ fi
 %endif
 
 %attr(755,root,root) %{_bindir}/checkgid
-%attr(755,root,root) %{_bindir}/htdigest
 
 %attr(755,root,root) %{_sbindir}/apache
 
@@ -1882,6 +1881,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/ab
 %attr(755,root,root) %{_sbindir}/apachectl
+%attr(755,root,root) %{_bindir}/htdigest
 %attr(755,root,root) %{_sbindir}/logresolve
 %attr(755,root,root) %{_sbindir}/rotatelogs
 %{_mandir}/man1/htdigest.1*
