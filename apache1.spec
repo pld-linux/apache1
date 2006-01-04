@@ -31,7 +31,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.34
-Release:	6
+Release:	7
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -125,7 +125,6 @@ Provides:	%{name}(EAPI) = %{version}-%{release}
 Provides:	group(http)
 Provides:	user(http)
 Provides:	webserver = apache
-Provides:	apache = %{version}-%{release}
 %{?with_ipv6:Provides:	apache1(ipv6)}
 %{?with_lingerd:Provides:	apache1(lingerd)}
 Obsoletes:	apache < 2.0.0
