@@ -97,7 +97,7 @@ BuildRequires:	mm-devel >= 1.3.0
 BuildRequires:	perl-base
 BuildRequires:	rpm-build >= 4.4.0
 BuildRequires:	rpm-perlprov
-BuildRequires:	rpmbuild(macros) >= 1.247
+BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	mm
 Requires:	rc-scripts
 %if %{without minimal}
@@ -1449,9 +1449,7 @@ touch /var/log/apache/{access,error,agent,referer}_log
 
 %preun
 if [ "$1" = "0" ]; then
-	if [ -f /var/lock/subsys/apache ]; then
-		/etc/rc.d/init.d/apache stop 1>&2
-	fi
+	%service apache stop
 	/sbin/chkconfig --del apache
 fi
 
