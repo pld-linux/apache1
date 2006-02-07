@@ -43,7 +43,7 @@ diff -uNr apache_1.3.10.orig/src/support/httpd.8 apache_1.3.10/src/support/httpd
 +.B @@SysconfDir@@/access.conf
  .br
 -.B /usr/local/apache/conf/mime.types
-+.B @@SysconfDir@@/mime.types
++.B /etc/mime.types
  .br
 -.B /usr/local/apache/conf/magic
 +.B @@SysconfDir@@/magic
@@ -55,7 +55,7 @@ diff -uNr apache_1.3.10.orig/src/support/httpd.8 apache_1.3.10/src/support/httpd
 +.B @@LogfileDir@@/access_log
  .br
 -.B /usr/local/apache/logs/httpd.pid
-+.B @@RuntimeDir@@/httpd.pid
++.B @@RuntimeDir@@/apache.pid
  .PD
  .SH SEE ALSO
  .BR inetd (8).
