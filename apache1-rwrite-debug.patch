@@ -1,0 +1,11 @@
+--- ./src/main/http_protocol.c~	Thu Apr 25 15:56:54 2002
++++ ./src/main/http_protocol.c	Thu Apr 25 15:56:57 2002
+@@ -2537,7 +2537,7 @@
+     if (n < 0) {
+         if (!r->connection->aborted) {
+             ap_log_rerror(APLOG_MARK, APLOG_INFO, r,
+-                "client stopped connection before rwrite completed");
++                "client stopped connection before rwrite completed (url: %s?%s)", r->uri, r->args ? r->args : "");
+             ap_bsetflag(r->connection->client, B_EOUT, 1);
+             r->connection->aborted = 1;
+         }
