@@ -1,6 +1,3 @@
-# TODO
-# - move DocumentRoot and cgi-dir out of /home/services
-#
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
 %bcond_without	ipv6		# disable IPv6 support
@@ -31,7 +28,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.34
-Release:	8.2
+Release:	8.3
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -124,11 +121,11 @@ Requires:	/etc/mime.types
 Requires:	mailcap
 Requires:	psmisc >= 20.1
 Provides:	%{name}(EAPI) = %{version}-%{release}
+%{?with_ipv6:Provides:	apache1(ipv6)}
+%{?with_lingerd:Provides:	apache1(lingerd)}
 Provides:	group(http)
 Provides:	user(http)
 Provides:	webserver = apache
-%{?with_ipv6:Provides:	apache1(ipv6)}
-%{?with_lingerd:Provides:	apache1(lingerd)}
 Obsoletes:	apache < 2.0.0
 Obsoletes:	apache-extra
 Obsoletes:	apache6
@@ -614,9 +611,9 @@ Summary:	Apache user authentication module using MD5 Digest Authentication
 Summary(pl):	Modu³ Apache'a do uwierzytelniania metod± MD5 Digest Authentication
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Obsoletes:	%{name}-mod_digest
 Provides:	apache(mod_auth_digest) = %{version}-%{release}
 Obsoletes:	apache-mod_auth_digest < 2.0.0
+Obsoletes:	apache1-mod_digest
 
 %description mod_auth_digest
 This package contains mod_digest module. It provides user
@@ -631,8 +628,8 @@ Summary:	Apache module - display index of files
 Summary(pl):	Modu³ apache do wy¶wietlania indeksu plików
 Group:		Networking/Daemons
 Requires(triggerpostun):	sed >= 4.0
-Provides:	apache(mod_autoindex) = %{version}-%{release}
 Requires:	%{name}(EAPI) = %{version}-%{release}
+Provides:	apache(mod_autoindex) = %{version}-%{release}
 
 %description mod_autoindex
 This package contains mod_autoindex module. It provides generation
@@ -1576,28 +1573,27 @@ sed -i -e '
 
 # restart webserver at the end of transaction
 %service apache restart "Apache HTTP daemon"
-exit 0
 
 # macro called at module post scriptlet
 %define	module_post \
 if [ "$1" = "1" ]; then \
-	%service -q apache restart "Apache HTTP daemon" \
+	%service -q apache restart \
 fi
 
 # macro called at module postun scriptlet
 %define	module_postun \
 if [ "$1" = "0" ]; then \
-	%service -q apache restart "Apache HTTP daemon" \
+	%service -q apache restart \
 fi
 
 %post errordocs
 if [ "$1" = "1" ]; then
-	%service -q apache reload "Apache HTTP daemon"
+	%service -q apache reload
 fi
 
 %postun errordocs
 if [ "$1" = "0" ]; then
-	%service -q apache reload "Apache HTTP daemon"
+	%service -q apache reload
 fi
 
 %post mod_access
@@ -1827,9 +1823,7 @@ fi
 %doc ABOUT_APACHE src/CHANGES README
 %doc conf/mime.types conf/apache.conf.dist
 %{?with_lingerd:%doc lingerd}
-
 %attr(754,root,root) /etc/rc.d/init.d/apache
-
 %attr(750,root,root) %dir %{_sysconfdir}
 %{_sysconfdir}/modules
 %{_sysconfdir}/logs
@@ -1837,33 +1831,23 @@ fi
 %attr(750,root,root) %dir %{_sysconfdir}/webapps.d
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_common.conf
-
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/apache
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/*
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/monit/*.monitrc
-
 %dir %{_libexecdir}
-
 %if %{with lingerd}
 %attr(755,root,root) %{_libexecdir}/lingerd
 %attr(770,root,http) %dir %{_localstatedir}/run/lingerd
 %endif
-
 %attr(755,root,root) %{_bindir}/checkgid
-
 %attr(755,root,root) %{_sbindir}/apache
-
 %dir %attr(1773,root,http) /var/run/apache
-
 %{_mandir}/man8/apache.8*
-
 %attr(2750,root,logs) %dir /var/log/apache
 %attr(2750,root,logs) %dir /var/log/archiv/apache
 %attr(640,root,logs) %ghost /var/log/apache/*
-
 %dir %{_datadir}
 %attr(755,root,root) %dir %{_datadir}/html
-
 %dir %{_datadir}/icons
 %{_datadir}/icons/*.gif
 %{_datadir}/icons/*.png
