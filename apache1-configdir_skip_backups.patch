@@ -1,14 +1,14 @@
---- apache_1.3.17/src/main/http_config.c.wiget	Thu May 10 14:41:08 2001
-+++ apache_1.3.17/src/main/http_config.c	Thu May 10 15:42:12 2001
-@@ -1287,6 +1287,7 @@
- 	DIR *dirp;
- 	struct DIR_TYPE *dir_entry;
- 	int current;
-+	size_t slen;
- 	array_header *candidates = NULL;
+--- apache_1.3.35/src/main/http_config.c~	2006-05-03 01:17:59.162162254 +0300
++++ apache_1.3.35/src/main/http_config.c	2006-05-03 01:17:16.131203177 +0300
+@@ -1345,6 +1345,7 @@
  	fnames *fnew;
+ 	char *path = ap_pstrdup(p,fname);
+ 	char *pattern = NULL;
++	size_t slen;
  
-@@ -1309,13 +1310,21 @@
+         if(ispatt && (pattern = strrchr(path, '/')) != NULL) {
+             *pattern++ = '\0';
+@@ -1390,13 +1391,21 @@
  	}
  	candidates = ap_make_array(p, 1, sizeof(fnames));
  	while ((dir_entry = readdir(dirp)) != NULL) {
