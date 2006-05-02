@@ -27,12 +27,12 @@ Summary(tr):	Lider WWW tarayýcý
 Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
-Version:	1.3.34
-Release:	9
+Version:	1.3.35
+Release:	1
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
-# Source0-md5:	9978cc552b423f0015c1052d23ab619e
+# Source0-md5:	31f99663028828a8b56633e255ee634e
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
 Source3:	apache-icons.tar.gz
@@ -86,9 +86,8 @@ Patch20:	%{name}-configdir_skip_backups.patch
 Patch21:	%{name}-apxs-quiet.patch
 Patch22:	%{name}-db4.patch
 Patch23:	%{name}-less-libs.patch
-Patch24:	%{name}-CVE-2005-3352.patch
-Patch25:	%{name}-rwrite-debug.patch
-Patch26:	%{name}-apxs-DESTDIR.patch
+Patch24:	%{name}-rwrite-debug.patch
+Patch25:	%{name}-apxs-DESTDIR.patch
 URL:		http://httpd.apache.org/
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
@@ -1265,9 +1264,8 @@ algorytmami CRYPT (domy¶lnym), MD5 i SHA1.
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
-%patch24 -p0
+%patch24 -p1
 %patch25 -p1
-%patch26 -p1
 
 %if %{with lingerd}
 mv lingerd-* _lingerd
