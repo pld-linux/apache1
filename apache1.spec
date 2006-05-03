@@ -90,6 +90,7 @@ Patch24:	%{name}-rwrite-debug.patch
 Patch25:	%{name}-apxs-DESTDIR.patch
 URL:		http://httpd.apache.org/
 BuildRequires:	db-devel >= 4.1
+BuildRequires:	include *.conf is broken
 BuildRequires:	mm-devel >= 1.3.0
 %{?with_rewrite_ldap:BuildRequires:	openldap-devel}
 BuildRequires:	perl-base
