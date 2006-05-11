@@ -97,7 +97,6 @@ BuildRequires:	perl-base
 BuildRequires:	rpm-build >= 4.4.0
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.268
-Requires:	mm
 Requires:	rc-scripts
 %if %{without minimal}
 # essental modules (maybe remove these in future if all Requires in
