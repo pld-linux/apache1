@@ -1,3 +1,4 @@
+#
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
 %bcond_without	ipv6		# disable IPv6 support
@@ -27,12 +28,12 @@ Summary(tr):	Lider WWW tarayıcı
 Summary(uk):	îÁÊĞÏĞÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·şÎñ³ÌĞò¡£
 Name:		apache1
-Version:	1.3.35
+Version:	1.3.36
 Release:	1
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
-# Source0-md5:	31f99663028828a8b56633e255ee634e
+# Source0-md5:	d6c0709fc1f20d6d93d30435fcfc4843
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
 Source3:	apache-icons.tar.gz
@@ -90,7 +91,6 @@ Patch24:	%{name}-rwrite-debug.patch
 Patch25:	%{name}-apxs-DESTDIR.patch
 URL:		http://httpd.apache.org/
 BuildRequires:	db-devel >= 4.1
-BuildRequires:	include *.conf is broken
 BuildRequires:	mm-devel >= 1.3.0
 %{?with_rewrite_ldap:BuildRequires:	openldap-devel}
 BuildRequires:	perl-base
