@@ -29,7 +29,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.36
-Release:	1
+Release:	1.1
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -89,6 +89,23 @@ Patch22:	%{name}-db4.patch
 Patch23:	%{name}-less-libs.patch
 Patch24:	%{name}-rwrite-debug.patch
 Patch25:	%{name}-apxs-DESTDIR.patch
+# from debian apache_1.3.34-2.diff.gz
+Patch26:	%{name}-regex_must_conform_to_posix_for_LFS_to_work.patch
+Patch27:	%{name}-suexec_of_death.patch
+Patch28:	%{name}-suexec_reopenlog.patch
+Patch29:	%{name}-autoindex_studly.patch
+Patch30:	%{name}-autoindex_indexes.patch
+Patch31:	%{name}-autoindex_generator.patch
+Patch32:	%{name}-ab.8_formatting_error.patch
+Patch33:	%{name}-proxy_content_base.patch
+Patch34:	%{name}-inetdfix.patch
+Patch35:	%{name}-configure_hashbang.patch
+Patch36:	%{name}-log_files_permission.patch
+Patch37:	%{name}-htpasswd_do_not_trash_extra_fields.patch
+Patch38:	%{name}-GNU_xargs.patch
+Patch39:	%{name}-security_htdigest_local_buffer_overflow.patch
+Patch40:	%{name}-security_htpasswd_user_buffer_overflow.patch
+Patch41:	%{name}-security_check_forensic_tempfiles.patch
 URL:		http://httpd.apache.org/
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
@@ -1266,6 +1283,23 @@ algorytmami CRYPT (domy¶lnym), MD5 i SHA1.
 %patch23 -p1
 %patch24 -p1
 %patch25 -p1
+
+%patch26 -p2
+%patch27 -p2
+%patch28 -p2
+%patch29 -p2
+%patch30 -p2
+%patch31 -p2
+%patch32 -p2
+%patch33 -p2
+%patch34 -p2
+%patch35 -p2
+%patch36 -p2
+%patch37 -p2
+%patch38 -p2
+%patch39 -p2
+%patch40 -p2
+%patch41 -p2
 
 %if %{with lingerd}
 mv lingerd-* _lingerd
