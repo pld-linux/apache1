@@ -1,0 +1,12 @@
+diff -ruN -x Makefile.in -x '*~' -x build-tree.orig -x 'ap_ctx.[ch]' -x 'ap_hook.[ch]' -x 'ap_mm.[ch]' -x os-inline.c -x os.h build-tree.orig/apache_1.3.34/src/modules/proxy/proxy_http.c build-tree/apache_1.3.34/src/modules/proxy/proxy_http.c
+--- build-tree.orig/apache_1.3.34/src/modules/proxy/proxy_http.c	2003-02-03 12:13:26.000000000 -0500
++++ build-tree/apache_1.3.34/src/modules/proxy/proxy_http.c	2003-10-17 12:24:51.000000000 -0400
+@@ -552,6 +595,8 @@
+         ap_table_set(resp_hdrs, "URI", proxy_location_reverse_map(r, urlstr));
+     if ((urlstr = ap_table_get(resp_hdrs, "Content-Location")) != NULL)
+         ap_table_set(resp_hdrs, "Content-Location", proxy_location_reverse_map(r, urlstr));
++    if ((urlstr = ap_table_get(resp_hdrs, "Content-Base")) != NULL)
++        ap_table_set(resp_hdrs, "Content-Base", proxy_location_reverse_map(r, urlstr));
+ 
+ /* check if NoCache directive on this host */
+     if (nocache == 0) {

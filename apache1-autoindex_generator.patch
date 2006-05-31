@@ -1,0 +1,12 @@
+--- build-tree-apache-ssl/apache_1.3.34/src/modules/standard/mod_autoindex.c	2004-03-10 15:22:23.000000000 -0500
++++ build-tree-apache/apache_1.3.34/src/modules/standard/mod_autoindex.c	2004-03-19 09:45:18.953625781 -0500
+@@ -215,7 +215,8 @@
+ {
+     ap_rvputs(r, DOCTYPE_HTML_4_0T,
+ 	      "<HTML>\n <HEAD>\n  <TITLE>Index of ", title,
+-	      "</TITLE>\n </HEAD>\n <BODY bgcolor=\"",
++	      "</TITLE>\n <META NAME=\"generator\", CONTENT=\"mod_autoindex\"> "
++	      "</HEAD>\n <BODY bgcolor=\"",
+               autoindex_conf->body_col ?: "#ffffff", "\" text=\"",
+               autoindex_conf->text_col ?: "#000000", "\"", NULL);
+     if (autoindex_conf->opts & STUDLY_INDEXING) {

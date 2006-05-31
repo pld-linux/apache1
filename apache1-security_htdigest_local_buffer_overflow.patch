@@ -1,0 +1,29 @@
+diff -Naurd build-tree.orig/apache_1.3.34/src/support/htdigest.c build-tree/apache_1.3.34/src/support/htdigest.c
+--- build-tree.orig/apache_1.3.34/src/support/htdigest.c	2004-05-15 08:34:22.000000000 +0200
++++ build-tree/apache_1.3.34/src/support/htdigest.c	2004-05-15 08:35:14.000000000 +0200
+@@ -124,7 +124,8 @@
+     fprintf(f, "%s:%s:", user, realm);
+ 
+     /* Do MD5 stuff */
+-    sprintf(string, "%s:%s:%s", user, realm, pw);
++    memset(string, '\0',sizeof(string));
++    snprintf(string, sizeof(string)-1, "%s:%s:%s", user, realm, pw);
+ 
+     ap_MD5Init(&context);
+     ap_MD5Update(&context, (unsigned char *) string, strlen(string));
+@@ -241,11 +242,13 @@
+     }   
+     fclose(f);
+     fclose(tfp);
++
++    memset(command,'\0', sizeof(command));
+ #ifndef NETWARE
+ #if defined(OS2) || defined(WIN32)
+-    sprintf(command, "copy \"%s\" \"%s\"", tn, argv[1]);
++    snprintf(command, sizeof(command)-1, "copy \"%s\" \"%s\"", tn, argv[1]);
+ #else
+-    sprintf(command, "cp %s %s", tn, argv[1]);
++    snprintf(command, sizeof(command)-1, "cp %s %s", tn, argv[1]);
+ #endif
+     system(command);
+ #else

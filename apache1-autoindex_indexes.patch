@@ -1,0 +1,43 @@
+--- build-tree-apache/apache_1.3.34/src/modules/standard/mod_autoindex.c	Wed Mar 13 22:05:33 2002
++++ build-tree-apache/apache_1.3.34/src/modules/standard/mod_autoindex.c	Wed Apr 24 17:17:05 2002
+@@ -101,6 +101,7 @@
+ #define TRACK_MODIFIED 1024
+ #define SORT_NOCASE 2048
+ #define STUDLY_INDEXING 4096
++#define INDEXOPT_INDEXES 8192
+ 
+ #define K_PAD 1
+ #define K_NOPAD 0
+@@ -463,6 +464,9 @@
+ 	else if (!strcasecmp(w, "IgnoreCase")) {
+ 		option = SORT_NOCASE;
+ 	}
++	else if (!strcasecmp(w, "Indexes")) {
++            option = INDEXOPT_INDEXES;
++	}
+ 	else if (!strcasecmp(w, "None")) {
+ 	    if (action != '\0') {
+ 		return "Cannot combine '+' or '-' with 'None' keyword";
+@@ -2012,7 +2016,7 @@
+ static int handle_autoindex(request_rec *r)
+ {
+     autoindex_config_rec *d;
+-    int allow_opts = ap_allow_options(r);
++    int opt_indexes = ap_allow_options(r) & OPT_INDEXES;
+ 
+     d = (autoindex_config_rec *) ap_get_module_config(r->per_dir_config,
+ 						      &autoindex_module);
+@@ -2023,8 +2027,12 @@
+     }
+ 
+     /* OK, nothing easy.  Trot out the heavy artillery... */
++    if ((d->incremented_opts & INDEXOPT_INDEXES) ||
++	(d->opts & INDEXOPT_INDEXES)) opt_indexes = 1;
++    if ((d->decremented_opts & INDEXOPT_INDEXES) &&
++	!(d->opts & INDEXOPT_INDEXES)) opt_indexes = 0;
+ 
+-    if (allow_opts & OPT_INDEXES) {
++    if (opt_indexes) {
+ 	/* KLUDGE --- make the sub_req lookups happen in the right directory.
+ 	 * Fixing this in the sub_req_lookup functions themselves is difficult,
+ 	 * and would probably break virtual includes...

@@ -1,0 +1,36 @@
+diff -Naurd build-tree.orig/apache_1.3.34/configure build-tree/apache_1.3.34/configure
+--- build-tree.orig/apache_1.3.34/configure	2004-02-20 23:40:50.000000000 +0100
++++ build-tree/apache_1.3.34/configure	2004-05-15 00:06:13.000000000 +0200
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ # Copyright 1999-2004 The Apache Software Foundation
+ #
+diff -Naurd build-tree.orig/apache_1.3.34/src/Configure build-tree/apache_1.3.34/src/Configure
+--- build-tree.orig/apache_1.3.34/src/Configure	2004-04-09 19:01:50.000000000 +0200
++++ build-tree/apache_1.3.34/src/Configure	2004-05-15 00:06:57.000000000 +0200
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ # Copyright 1999-2004 The Apache Software Foundation
+ #
+@@ -208,7 +208,7 @@
+ ##
+ DBM_LIB="-ldbm"
+ DB_LIB="-ldb"
+-SHELL="/bin/sh"
++SHELL="/bin/bash"
+ SUBTARGET="target_static"
+ SHLIB_SUFFIX_NAME=""
+ SHLIB_SUFFIX_LIST=""
+diff -Naurd build-tree.orig/apache_1.3.34/src/helpers/TestCompile build-tree/apache_1.3.34/src/helpers/TestCompile
+--- build-tree.orig/apache_1.3.34/src/helpers/TestCompile	2004-02-16 23:23:09.000000000 +0100
++++ build-tree/apache_1.3.34/src/helpers/TestCompile	2004-05-15 00:07:11.000000000 +0200
+@@ -1,4 +1,4 @@
+-#!/bin/sh
++#!/bin/bash
+ #
+ # Copyright 1999-2004 The Apache Software Foundation
+ #

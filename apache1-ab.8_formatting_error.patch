@@ -1,0 +1,11 @@
+--- build-tree/apache_1.3.34/src/support/ab.8	2004-10-01 21:28:14.000000000 +0200
++++ build-tree/apache_1.3.34/src/support/ab.8	2004-10-01 21:35:15.000000000 +0200
+@@ -185,7 +185,7 @@
+ percentage (from 1% to 100%) the time (in milli seconds) it took
+ to serve that percentage of the requests. This is usually more
+ usefull than the 'gnuplot' file; as the results are already
+-'binned'.
++\&'binned'.
+ 
+ .TP 12
+ .B \-v 

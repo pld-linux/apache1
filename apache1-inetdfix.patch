@@ -1,0 +1,21 @@
+diff -Naurd build-tree.orig/apache_1.3.34/src/main/http_config.c build-tree/apache_1.3.34/src/main/http_config.c
+--- build-tree.orig/apache_1.3.34/src/main/http_config.c	2004-11-07 17:15:08.000000000 +0100
++++ build-tree/apache_1.3.34/src/main/http_config.c	2004-11-07 17:17:24.000000000 +0100
+@@ -1302,7 +1302,7 @@
+ 	 * entries here and store 'em away. Recall we need full pathnames
+ 	 * for this.
+ 	 */
+-	fprintf(stderr, "Processing config directory: %s\n", fname);
++	/* fprintf(stderr, "Processing config directory: %s\n", fname); */
+ #ifdef NETWARE
+ 	dirp = ap_popendir(p, fname);
+ #else
+@@ -1340,7 +1340,7 @@
+ 	     */
+ 	    for (current = 0; current < candidates->nelts; ++current) {
+ 	        fnew = &((fnames *) candidates->elts)[current];
+-		fprintf(stderr, " Processing config file: %s\n", fnew->fname);
++		/* fprintf(stderr, " Processing config file: %s\n", fnew->fname); */
+ 		ap_process_resource_config(s, fnew->fname, p, ptemp);
+ 	    }
+ 	}

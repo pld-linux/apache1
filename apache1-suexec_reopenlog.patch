@@ -1,0 +1,44 @@
+diff -Naurd build-tree.orig/apache_1.3.34/src/support/suexec.c build-tree/apache_1.3.34/src/support/suexec.c
+--- build-tree.orig/apache_1.3.34/src/support/suexec.c	2004-08-23 23:36:55.000000000 +0200
++++ build-tree/apache_1.3.34/src/support/suexec.c	2004-08-23 23:40:35.000000000 +0200
+@@ -49,6 +49,10 @@
+ #include <stdarg.h>
+ #include <strings.h>
+ 
++/* for fcntl(fileno(log), F_SETFD, FD_CLOEXEC); */
++#include <unistd.h>
++#include <fcntl.h>
++
+ #include "suexec.h"
+ 
+ /*
+@@ -151,6 +155,8 @@
+ 	    perror("fopen");
+ 	    exit(1);
+ 	}
++	/* Set the close-on-exec flag -- Liyang HU <liyang@nerv.cx> */
++	fcntl(fileno(log), F_SETFD, FD_CLOEXEC);
+     }
+ 
+     time(&timevar);
+@@ -823,20 +829,6 @@
+     umask(SUEXEC_UMASK);
+ #endif /* SUEXEC_UMASK */
+ 
+-    /* 
+-     * Be sure to close the log file so the CGI can't
+-     * mess with it.  If the exec fails, it will be reopened 
+-     * automatically when log_err is called.  Note that the log
+-     * might not actually be open if LOG_EXEC isn't defined.
+-     * However, the "log" cell isn't ifdef'd so let's be defensive
+-     * and assume someone might have done something with it
+-     * outside an ifdef'd LOG_EXEC block.
+-     */
+-    if (log != NULL) {
+-	fclose(log);
+-	log = NULL;
+-    }
+-
+     /*
+      * Execute the command, replacing our image with its own.
+      */
