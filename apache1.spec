@@ -29,7 +29,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.36
-Release:	1.1
+Release:	1.4
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1439,8 +1439,8 @@ perl -p -i -e 's/^if ...O ne "MSWin32"./if (0)/' $RPM_BUILD_ROOT%{apxs}
 
 mv $RPM_BUILD_ROOT%{_sysconfdir}/modules/* $RPM_BUILD_ROOT%{_libexecdir}
 rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/modules
-ln -s %{_libexecdir} $RPM_BUILD_ROOT%{_sysconfdir}/modules
-ln -s /var/log/apache $RPM_BUILD_ROOT%{_sysconfdir}/logs
+ln -s ../..%{_libexecdir} $RPM_BUILD_ROOT%{_sysconfdir}/modules
+ln -s ../../var/log/apache $RPM_BUILD_ROOT%{_sysconfdir}/logs
 
 ln -sf %{_bindir}/htpasswd $RPM_BUILD_ROOT%{_sbindir}
 
