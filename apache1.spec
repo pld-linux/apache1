@@ -29,7 +29,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.36
-Release:	1.4
+Release:	1.5
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -443,6 +443,7 @@ Summary(pl):	Kontrola dostêpu w oparciu o nazwê hosta lub adres IP klienta
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_access) = %{version}-%{release}
+Provides:	webserver(url_access)
 
 %description mod_access
 The directives provided by mod_access are used in <Directory>,
@@ -490,6 +491,7 @@ Summary(pl):	Odwzorowywanie czê¶ci systemu plików w drzewie dokumentów oraz prze
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_alias) = %{version}-%{release}
+Provides:	webserver(url_alias)
 
 %description mod_alias
 This module provides for mapping different parts of the host
@@ -564,6 +566,7 @@ Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Requires:	htpasswd
 Provides:	apache(mod_auth) = %{version}-%{release}
+Provides:	webserver(authentication)
 Obsoletes:	apache-mod_auth < 2.0.0
 
 %description mod_auth
@@ -754,6 +757,7 @@ Summary(pl):	Modu³ oferuj±cy przekierowania i serwowanie indeksu katalogu
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_dir) = %{version}-%{release}
+Provides:	webserver(indexfile)
 Obsoletes:	apache-mod_dir < 2.0.0
 
 %description mod_dir
