@@ -1,4 +1,3 @@
-diff -Nur apache_1.3.28.orig/README.v6 apache_1.3.28/README.v6
 --- apache_1.3.28.orig/README.v6	Thu Jan  1 01:00:00 1970
 +++ apache_1.3.28/README.v6	Fri Jul 25 11:01:55 2003
 @@ -0,0 +1,166 @@
@@ -168,7 +167,6 @@ diff -Nur apache_1.3.28.orig/README.v6 apache_1.3.28/README.v6
 +	 http://www.v6.linux.or.jp/
 +	YOSHIFUJI Hideaki, USAGI Project
 +	 http://www.linux-ipv6.org/
-diff -Nur apache_1.3.28.orig/conf/httpd.conf-dist apache_1.3.28/conf/httpd.conf-dist
 --- apache_1.3.28.orig/conf/httpd.conf-dist	Wed Jul 16 21:36:41 2003
 +++ apache_1.3.28/conf/httpd.conf-dist	Fri Jul 25 11:01:55 2003
 @@ -174,6 +174,11 @@
@@ -183,14 +181,12 @@ diff -Nur apache_1.3.28.orig/conf/httpd.conf-dist apache_1.3.28/conf/httpd.conf-
  #
  # BindAddress: You can support virtual hosts with this option. This directive
  # is used to tell the server which IP address to listen to. It can either
-diff -Nur apache_1.3.28.orig/configure.v6 apache_1.3.28/configure.v6
 --- apache_1.3.28.orig/configure.v6	Thu Jan  1 01:00:00 1970
 +++ apache_1.3.28/configure.v6	Fri Jul 25 11:01:55 2003
 @@ -0,0 +1,3 @@
 +#! /bin/sh
 +
 +./configure --enable-rule=INET6 --enable-module=proxy $*
-diff -Nur apache_1.3.28.orig/src/Configuration.tmpl apache_1.3.28/src/Configuration.tmpl
 --- apache_1.3.28.orig/src/Configuration.tmpl	Fri Jul 25 11:00:49 2003
 +++ apache_1.3.28/src/Configuration.tmpl	Fri Jul 25 11:01:55 2003
 @@ -191,6 +191,9 @@
@@ -211,7 +207,6 @@ diff -Nur apache_1.3.28.orig/src/Configuration.tmpl apache_1.3.28/src/Configurat
  Rule CYGWIN_WINSOCK=no 
  
  # DEV_RANDOM:
-diff -Nur apache_1.3.28.orig/src/Configure apache_1.3.28/src/Configure
 --- apache_1.3.28.orig/src/Configure	Fri Jul 25 11:00:49 2003
 +++ apache_1.3.28/src/Configure	Fri Jul 25 11:01:55 2003
 @@ -238,6 +238,7 @@
@@ -386,7 +381,6 @@ diff -Nur apache_1.3.28.orig/src/Configure apache_1.3.28/src/Configure
  ####################################################################
  ## More building ap_config_auto.h
  ##
-diff -Nur apache_1.3.28.orig/src/ap/ap_snprintf.c apache_1.3.28/src/ap/ap_snprintf.c
 --- apache_1.3.28.orig/src/ap/ap_snprintf.c	Mon Feb  3 18:13:17 2003
 +++ apache_1.3.28/src/ap/ap_snprintf.c	Fri Jul 25 11:01:55 2003
 @@ -73,6 +73,7 @@
@@ -465,7 +459,6 @@ diff -Nur apache_1.3.28.orig/src/ap/ap_snprintf.c apache_1.3.28/src/ap/ap_snprin
  			else {
  			    s = S_NULL;
  			    s_len = S_NULL_LEN;
-diff -Nur apache_1.3.28.orig/src/include/ap.h apache_1.3.28/src/include/ap.h
 --- apache_1.3.28.orig/src/include/ap.h	Mon Feb  3 18:13:17 2003
 +++ apache_1.3.28/src/include/ap.h	Fri Jul 25 11:01:55 2003
 @@ -95,7 +95,8 @@
@@ -478,7 +471,6 @@ diff -Nur apache_1.3.28.orig/src/include/ap.h apache_1.3.28/src/include/ap.h
   * %pp  takes a void * and outputs it in hex
   *
   * The %p hacks are to force gcc's printf warning code to skip
-diff -Nur apache_1.3.28.orig/src/include/ap_config.h apache_1.3.28/src/include/ap_config.h
 --- apache_1.3.28.orig/src/include/ap_config.h	Mon May  5 13:45:49 2003
 +++ apache_1.3.28/src/include/ap_config.h	Fri Jul 25 11:01:55 2003
 @@ -411,6 +411,10 @@
@@ -563,7 +555,6 @@ diff -Nur apache_1.3.28.orig/src/include/ap_config.h apache_1.3.28/src/include/a
  #ifdef __cplusplus
  }
  #endif
-diff -Nur apache_1.3.28.orig/src/include/http_conf_globals.h apache_1.3.28/src/include/http_conf_globals.h
 --- apache_1.3.28.orig/src/include/http_conf_globals.h	Fri Jul 25 11:00:49 2003
 +++ apache_1.3.28/src/include/http_conf_globals.h	Fri Jul 25 11:01:55 2003
 @@ -82,7 +82,8 @@
@@ -576,7 +567,6 @@ diff -Nur apache_1.3.28.orig/src/include/http_conf_globals.h apache_1.3.28/src/i
  extern listen_rec *ap_listeners;
  extern API_VAR_EXPORT int ap_daemons_to_start;
  extern API_VAR_EXPORT int ap_daemons_min_free;
-diff -Nur apache_1.3.28.orig/src/include/http_vhost.h apache_1.3.28/src/include/http_vhost.h
 --- apache_1.3.28.orig/src/include/http_vhost.h	Mon Feb  3 18:13:19 2003
 +++ apache_1.3.28/src/include/http_vhost.h	Fri Jul 25 11:01:55 2003
 @@ -73,7 +73,7 @@
@@ -588,7 +578,6 @@ diff -Nur apache_1.3.28.orig/src/include/http_vhost.h apache_1.3.28/src/include/
  
  /* given an ip address only, give our best guess as to what vhost it is */
  API_EXPORT(void) ap_update_vhost_given_ip(conn_rec *conn);
-diff -Nur apache_1.3.28.orig/src/include/httpd.h apache_1.3.28/src/include/httpd.h
 --- apache_1.3.28.orig/src/include/httpd.h	Fri Jul 25 11:00:49 2003
 +++ apache_1.3.28/src/include/httpd.h	Fri Jul 25 11:01:55 2003
 @@ -904,8 +904,8 @@
@@ -631,7 +620,6 @@ diff -Nur apache_1.3.28.orig/src/include/httpd.h apache_1.3.28/src/include/httpd
  
  extern API_VAR_EXPORT time_t ap_restart_time;
  
-diff -Nur apache_1.3.28.orig/src/include/sa_len.h apache_1.3.28/src/include/sa_len.h
 --- apache_1.3.28.orig/src/include/sa_len.h	Thu Jan  1 01:00:00 1970
 +++ apache_1.3.28/src/include/sa_len.h	Fri Jul 25 11:01:55 2003
 @@ -0,0 +1,41 @@
@@ -676,7 +664,6 @@ diff -Nur apache_1.3.28.orig/src/include/sa_len.h apache_1.3.28/src/include/sa_l
 +}
 +#endif /* SA_LEN */
 +#endif /* HAVE_SOCKADDR_LEN */
-diff -Nur apache_1.3.28.orig/src/include/sockaddr_storage.h apache_1.3.28/src/include/sockaddr_storage.h
 --- apache_1.3.28.orig/src/include/sockaddr_storage.h	Thu Jan  1 01:00:00 1970
 +++ apache_1.3.28/src/include/sockaddr_storage.h	Fri Jul 25 11:01:55 2003
 @@ -0,0 +1,53 @@
@@ -733,7 +720,6 @@ diff -Nur apache_1.3.28.orig/src/include/sockaddr_storage.h apache_1.3.28/src/in
 +#define su_port		su_si.si_port
 +
 +#endif /* NEED_SOCKADDR_STORAGE */
-diff -Nur apache_1.3.28.orig/src/main/getaddrinfo.c apache_1.3.28/src/main/getaddrinfo.c
 --- apache_1.3.28.orig/src/main/getaddrinfo.c	Thu Jan  1 01:00:00 1970
 +++ apache_1.3.28/src/main/getaddrinfo.c	Fri Jul 25 11:01:55 2003
 @@ -0,0 +1,162 @@
@@ -899,7 +885,6 @@ diff -Nur apache_1.3.28.orig/src/main/getaddrinfo.c apache_1.3.28/src/main/getad
 +  }
 +  return EAI_NODATA;
 +}
-diff -Nur apache_1.3.28.orig/src/main/getnameinfo.c apache_1.3.28/src/main/getnameinfo.c
 --- apache_1.3.28.orig/src/main/getnameinfo.c	Thu Jan  1 01:00:00 1970
 +++ apache_1.3.28/src/main/getnameinfo.c	Fri Jul 25 11:01:55 2003
 @@ -0,0 +1,95 @@
@@ -998,7 +983,6 @@ diff -Nur apache_1.3.28.orig/src/main/getnameinfo.c apache_1.3.28/src/main/getna
 +	return EAI_NODATA;
 +  return 0;
 +}
-diff -Nur apache_1.3.28.orig/src/main/http_config.c apache_1.3.28/src/main/http_config.c
 --- apache_1.3.28.orig/src/main/http_config.c	Fri Jul 25 11:00:49 2003
 +++ apache_1.3.28/src/main/http_config.c	Fri Jul 25 11:01:55 2003
 @@ -1591,7 +1591,6 @@
@@ -1381,7 +1365,6 @@ diff -Nur apache_1.3.28.orig/src/main/http_config.c apache_1.3.28/src/main/http_
    "A numeric IP address:port, or the name of a host" },
  #ifdef _OSD_POSIX
  { "BS2000Account", set_bs2000_account, NULL, RSRC_CONF, TAKE1,
-diff -Nur apache_1.3.28.orig/src/main/http_main.c apache_1.3.28/src/main/http_main.c
 --- apache_1.3.28.orig/src/main/http_main.c	Fri Jul 25 11:00:49 2003
 +++ apache_1.3.28/src/main/http_main.c	Fri Jul 25 12:13:12 2003
 @@ -124,6 +124,8 @@
@@ -2429,7 +2412,6 @@ diff -Nur apache_1.3.28.orig/src/main/http_main.c apache_1.3.28/src/main/http_ma
      /* otherwise we're stuck with just the main server
       * and no name-based vhosts
       */
-diff -Nur apache_1.3.28.orig/src/main/rfc1413.c apache_1.3.28/src/main/rfc1413.c
 --- apache_1.3.28.orig/src/main/rfc1413.c	Mon Feb  3 18:13:23 2003
 +++ apache_1.3.28/src/main/rfc1413.c	Fri Jul 25 12:15:05 2003
 @@ -82,6 +82,7 @@
@@ -2569,7 +2551,6 @@ diff -Nur apache_1.3.28.orig/src/main/rfc1413.c apache_1.3.28/src/main/rfc1413.c
      }
      ap_set_callback_and_alarm(NULL, 0);
      ap_pclosesocket(conn->pool, sock);
-diff -Nur apache_1.3.28.orig/src/main/util.c apache_1.3.28/src/main/util.c
 --- apache_1.3.28.orig/src/main/util.c	Mon Feb  3 18:13:23 2003
 +++ apache_1.3.28/src/main/util.c	Fri Jul 25 11:01:55 2003
 @@ -2017,52 +2017,87 @@
@@ -2769,7 +2750,6 @@ diff -Nur apache_1.3.28.orig/src/main/util.c apache_1.3.28/src/main/util.c
 +#ifdef NEED_GETNAMEINFO
 +#include "getnameinfo.c"
 +#endif
-diff -Nur apache_1.3.28.orig/src/main/util_script.c apache_1.3.28/src/main/util_script.c
 --- apache_1.3.28.orig/src/main/util_script.c	Mon Feb  3 18:13:23 2003
 +++ apache_1.3.28/src/main/util_script.c	Fri Jul 25 11:01:55 2003
 @@ -67,6 +67,7 @@
@@ -2807,7 +2787,6 @@ diff -Nur apache_1.3.28.orig/src/main/util_script.c apache_1.3.28/src/main/util_
  
      if (c->user) {
  	ap_table_addn(e, "REMOTE_USER", c->user);
-diff -Nur apache_1.3.28.orig/src/main/util_uri.c apache_1.3.28/src/main/util_uri.c
 --- apache_1.3.28.orig/src/main/util_uri.c	Mon Feb  3 18:13:24 2003
 +++ apache_1.3.28/src/main/util_uri.c	Fri Jul 25 11:01:55 2003
 @@ -424,6 +424,12 @@
@@ -2837,7 +2816,6 @@ diff -Nur apache_1.3.28.orig/src/main/util_uri.c apache_1.3.28/src/main/util_uri
      if (s == NULL) {
          return HTTP_BAD_REQUEST;
      }
-diff -Nur apache_1.3.28.orig/src/modules/proxy/mod_proxy.c apache_1.3.28/src/modules/proxy/mod_proxy.c
 --- apache_1.3.28.orig/src/modules/proxy/mod_proxy.c	Fri Jul 25 11:00:49 2003
 +++ apache_1.3.28/src/modules/proxy/mod_proxy.c	Fri Jul 25 11:01:55 2003
 @@ -574,11 +574,31 @@
@@ -2891,7 +2869,6 @@ diff -Nur apache_1.3.28.orig/src/modules/proxy/mod_proxy.c apache_1.3.28/src/mod
      new->port = port;
      return NULL;
  }
-diff -Nur apache_1.3.28.orig/src/modules/proxy/mod_proxy.h apache_1.3.28/src/modules/proxy/mod_proxy.h
 --- apache_1.3.28.orig/src/modules/proxy/mod_proxy.h	Mon Feb  3 18:13:26 2003
 +++ apache_1.3.28/src/modules/proxy/mod_proxy.h	Fri Jul 25 11:01:55 2003
 @@ -310,7 +310,7 @@
@@ -2903,7 +2880,6 @@ diff -Nur apache_1.3.28.orig/src/modules/proxy/mod_proxy.h apache_1.3.28/src/mod
  int ap_proxy_garbage_init(server_rec *, pool *);
  /* This function is called by ap_table_do() for all header lines */
  int ap_proxy_send_hdr_line(void *p, const char *key, const char *value);
-diff -Nur apache_1.3.28.orig/src/modules/proxy/proxy_connect.c apache_1.3.28/src/modules/proxy/proxy_connect.c
 --- apache_1.3.28.orig/src/modules/proxy/proxy_connect.c	Mon Feb  3 18:13:26 2003
 +++ apache_1.3.28/src/modules/proxy/proxy_connect.c	Fri Jul 25 11:27:12 2003
 @@ -113,14 +113,15 @@
@@ -3077,7 +3053,6 @@ diff -Nur apache_1.3.28.orig/src/modules/proxy/proxy_connect.c apache_1.3.28/src
      if (i == -1) {
          ap_pclosesocket(r->pool, sock);
          return ap_proxyerror(r, HTTP_INTERNAL_SERVER_ERROR, ap_pstrcat(r->pool,
-diff -Nur apache_1.3.28.orig/src/modules/proxy/proxy_ftp.c apache_1.3.28/src/modules/proxy/proxy_ftp.c
 --- apache_1.3.28.orig/src/modules/proxy/proxy_ftp.c	Mon Feb  3 18:13:26 2003
 +++ apache_1.3.28/src/modules/proxy/proxy_ftp.c	Fri Jul 25 11:18:38 2003
 @@ -62,6 +62,7 @@
@@ -3635,7 +3610,6 @@ diff -Nur apache_1.3.28.orig/src/modules/proxy/proxy_ftp.c apache_1.3.28/src/mod
          /*
           * update the cache file, possibly even fulfilling the request if it
           * turns out a conditional allowed us to serve the object from the
-diff -Nur apache_1.3.28.orig/src/modules/proxy/proxy_util.c apache_1.3.28/src/modules/proxy/proxy_util.c
 --- apache_1.3.28.orig/src/modules/proxy/proxy_util.c	Mon Feb  3 18:13:26 2003
 +++ apache_1.3.28/src/modules/proxy/proxy_util.c	Fri Jul 25 11:01:55 2003
 @@ -64,6 +64,7 @@
@@ -4170,7 +4144,6 @@ diff -Nur apache_1.3.28.orig/src/modules/proxy/proxy_util.c apache_1.3.28/src/mo
  	case T_HOST:
  	    if (!gothost) {
  		remotehost = ap_get_remote_host(r->connection, r->per_dir_config,
-diff -Nur apache_1.3.28.orig/src/modules/standard/mod_unique_id.c apache_1.3.28/src/modules/standard/mod_unique_id.c
 --- apache_1.3.28.orig/src/modules/standard/mod_unique_id.c	Mon Feb  3 18:13:30 2003
 +++ apache_1.3.28/src/modules/standard/mod_unique_id.c	Fri Jul 25 11:01:55 2003
 @@ -67,10 +67,22 @@
@@ -4302,7 +4275,6 @@ diff -Nur apache_1.3.28.orig/src/modules/standard/mod_unique_id.c apache_1.3.28/
  
      /*
       * If we use 0 as the initial counter we have a little less protection
-diff -Nur apache_1.3.28.orig/src/support/ab.c apache_1.3.28/src/support/ab.c
 --- apache_1.3.28.orig/src/support/ab.c	Sun Jul  6 19:52:27 2003
 +++ apache_1.3.28/src/support/ab.c	Fri Jul 25 11:01:55 2003
 @@ -158,6 +158,8 @@
@@ -4461,7 +4433,6 @@ diff -Nur apache_1.3.28.orig/src/support/ab.c apache_1.3.28/src/support/ab.c
 +#ifdef NEED_GETADDRINFO
 +#include "../main/getaddrinfo.c"
 +#endif
-diff -Nur apache_1.3.28.orig/src/support/logresolve.c apache_1.3.28/src/support/logresolve.c
 --- apache_1.3.28.orig/src/support/logresolve.c	Wed May 23 00:52:21 2001
 +++ apache_1.3.28/src/support/logresolve.c	Fri Jul 25 11:01:55 2003
 @@ -54,7 +54,9 @@
