@@ -443,7 +443,7 @@ Summary(pl):	Kontrola dostêpu w oparciu o nazwê hosta lub adres IP klienta
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_access) = %{version}-%{release}
-Provides:	webserver(url_access)
+Provides:	webserver(access)
 
 %description mod_access
 The directives provided by mod_access are used in <Directory>,
@@ -491,7 +491,7 @@ Summary(pl):	Odwzorowywanie czê¶ci systemu plików w drzewie dokumentów oraz prze
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_alias) = %{version}-%{release}
-Provides:	webserver(url_alias)
+Provides:	webserver(alias)
 
 %description mod_alias
 This module provides for mapping different parts of the host
@@ -566,7 +566,7 @@ Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Requires:	htpasswd
 Provides:	apache(mod_auth) = %{version}-%{release}
-Provides:	webserver(authentication)
+Provides:	webserver(auth)
 Obsoletes:	apache-mod_auth < 2.0.0
 
 %description mod_auth
