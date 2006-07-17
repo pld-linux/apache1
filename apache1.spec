@@ -689,6 +689,7 @@ Summary(pl):	Wywo³ywanie skryptów CGI
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_cgi) = %{version}-%{release}
+Provides:	webserver(cgi)
 
 %description mod_cgi
 Any file that has the MIME type application/x-httpd-cgi or handler
