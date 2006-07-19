@@ -1,4 +1,5 @@
 /var/log/apache/*access_log
+/var/log/apache/*combined_log
 /var/log/apache/*agent_log
 /var/log/apache/*error_log
 /var/log/apache/*referer_log
