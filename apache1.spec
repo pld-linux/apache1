@@ -28,12 +28,12 @@ Summary(tr):	Lider WWW tarayıcı
 Summary(uk):	îÁÊĞÏĞÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·şÎñ³ÌĞò¡£
 Name:		apache1
-Version:	1.3.36
-Release:	2
+Version:	1.3.37
+Release:	1
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
-# Source0-md5:	d6c0709fc1f20d6d93d30435fcfc4843
+# Source0-md5:	b278f0969a9ccadeb781316e79e3520f
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
 Source3:	apache-icons.tar.gz
