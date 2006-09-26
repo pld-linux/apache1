@@ -7,6 +7,6 @@
 	sharedscripts
     olddir /var/log/archiv/apache
     postrotate
-		/etc/rc.d/init.d/apache flush-logs > /dev/null
+		/sbin/service apache flush-logs > /dev/null
     endscript
 }
