@@ -3,7 +3,7 @@
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
 %bcond_without	ipv6		# disable IPv6 support
 %bcond_with	minimal		# minimal apache, without any modules
-%bcond_with	lingerd		# build with lingerd support
+%bcond_without	lingerd		# don't build lingerd support
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	The most widely used Web server on the Internet
@@ -1336,7 +1336,7 @@ OPTIM="%{rpmcflags} -DHARD_SERVER_LIMIT=2048" \
 	--enable-module=auth_digest \
 	--enable-shared=max \
 	--proxycachedir=/var/cache/apache \
-	--with-perl=%{_bindir}/perl \
+	--with-perl=%{__perl} \
 	--enable-suexec \
 	--suexec-caller=http \
 	--suexec-uidmin=500 \
