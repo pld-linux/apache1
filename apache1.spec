@@ -28,7 +28,7 @@ Summary(uk):	Ó¡ –œ–’Ã—“Œ¶€…  Web-Server
 Summary(zh_CN):	Internet …œ”¶”√◊Óπ„∑∫µƒ Web ∑˛ŒÒ≥Ã–Ú°£
 Name:		apache1
 Version:	1.3.37
-Release:	3
+Release:	4
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -118,6 +118,7 @@ Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	%{name}-mod_dir = %{version}-%{release}
 Requires:	%{name}-mod_log_config = %{version}-%{release}
 Requires:	%{name}-mod_mime = %{version}-%{release}
+Conflicts:	%{name} < 1.3.37-3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/apache
