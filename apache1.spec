@@ -28,7 +28,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.37
-Release:	2.2
+Release:	3
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -115,6 +115,7 @@ BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	%{name}-mod_access = %{version}-%{release}
 Requires:	%{name}-mod_alias = %{version}-%{release}
+Requires:	%{name}-mod_dir = %{version}-%{release}
 Requires:	%{name}-mod_log_config = %{version}-%{release}
 Requires:	%{name}-mod_mime = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -226,7 +227,6 @@ Internet ÉÏ×îÁ÷ÐÐµÄ Web ·þÎñ³ÌÐò¡£
 Summary:	The most widely used Web server on the Internet
 Summary(pl):	Serwer WWW (World Wide Web)
 Group:		Networking/Daemons
-Requires:	rc-scripts
 Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
 Requires(postun):	/usr/sbin/userdel
@@ -241,6 +241,7 @@ Requires(triggerpostun):	sed >= 4.0
 Requires:	/etc/mime.types
 Requires:	mailcap
 Requires:	psmisc >= 20.1
+Requires:	rc-scripts
 Provides:	%{name}(EAPI) = %{version}-%{release}
 %{?with_ipv6:Provides:	apache1(ipv6)}
 %{?with_lingerd:Provides:	apache1(lingerd)}
