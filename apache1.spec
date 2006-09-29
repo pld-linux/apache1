@@ -2,7 +2,6 @@
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
 %bcond_without	ipv6		# disable IPv6 support
-%bcond_with	minimal		# minimal apache, without any modules
 %bcond_without	lingerd		# don't build lingerd support
 #
 %include	/usr/lib/rpm/macros.perl
@@ -29,7 +28,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.37
-Release:	2
+Release:	2.2
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -114,40 +113,10 @@ BuildRequires:	perl-base
 BuildRequires:	rpm-build >= 4.4.0
 BuildRequires:	rpm-perlprov
 BuildRequires:	rpmbuild(macros) >= 1.268
-Requires:	rc-scripts
-%if %{without minimal}
-# essental modules (maybe remove these in future if all Requires in
-# place for other packages).
 Requires:	%{name}-mod_access = %{version}-%{release}
 Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	%{name}-mod_log_config = %{version}-%{release}
 Requires:	%{name}-mod_mime = %{version}-%{release}
-%endif
-Requires(post,preun):	/sbin/chkconfig
-Requires(postun):	/usr/sbin/groupdel
-Requires(postun):	/usr/sbin/userdel
-Requires(pre):	/bin/id
-Requires(pre):	/usr/bin/getent
-Requires(pre):	/usr/bin/getgid
-Requires(pre):	/usr/sbin/groupadd
-Requires(pre):	/usr/sbin/useradd
-Requires(pre):	/usr/sbin/usermod
-Requires(pre):	textutils
-Requires(triggerpostun):	sed >= 4.0
-Requires:	/etc/mime.types
-Requires:	mailcap
-Requires:	psmisc >= 20.1
-Provides:	%{name}(EAPI) = %{version}-%{release}
-%{?with_ipv6:Provides:	apache1(ipv6)}
-%{?with_lingerd:Provides:	apache1(lingerd)}
-Provides:	group(http)
-Provides:	user(http)
-Provides:	webserver = apache
-Obsoletes:	apache < 2.0.0
-Obsoletes:	apache-extra
-Obsoletes:	apache6
-# for the posttrans scriptlet, conflicts because in vserver environment rpm package is not installed.
-Conflicts:	rpm < 4.4.2-0.2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/apache
@@ -253,6 +222,47 @@ Internet ÉÏ×îÁ÷ÐÐµÄ Web ·þÎñ³ÌÐò¡£
 
 Èç¹ûÄúÐèÒª Web ·þÎñ³ÌÐò£¬Çë°²×° apache Èí¼þ°ü¡£
 
+%package base
+Summary:	The most widely used Web server on the Internet
+Summary(pl):	Serwer WWW (World Wide Web)
+Group:		Networking/Daemons
+Requires:	rc-scripts
+Requires(post,preun):	/sbin/chkconfig
+Requires(postun):	/usr/sbin/groupdel
+Requires(postun):	/usr/sbin/userdel
+Requires(pre):	/bin/id
+Requires(pre):	/usr/bin/getent
+Requires(pre):	/usr/bin/getgid
+Requires(pre):	/usr/sbin/groupadd
+Requires(pre):	/usr/sbin/useradd
+Requires(pre):	/usr/sbin/usermod
+Requires(pre):	textutils
+Requires(triggerpostun):	sed >= 4.0
+Requires:	/etc/mime.types
+Requires:	mailcap
+Requires:	psmisc >= 20.1
+Provides:	%{name}(EAPI) = %{version}-%{release}
+%{?with_ipv6:Provides:	apache1(ipv6)}
+%{?with_lingerd:Provides:	apache1(lingerd)}
+Provides:	group(http)
+Provides:	user(http)
+Provides:	webserver = apache
+Obsoletes:	apache < 2.0.0
+Obsoletes:	apache-extra
+Obsoletes:	apache6
+# for the posttrans scriptlet, conflicts because in vserver environment rpm package is not installed.
+Conflicts:	rpm < 4.4.2-0.2
+
+%description base
+Apache is a powerful, full-featured, efficient and freely-available
+Web server. Apache is also the most popular Web server on the
+Internet.
+
+%description base -l pl
+Apache jest potê¿nym, w pe³ni funkcjonalnym, wydajnym i wolnodostêpnym
+serwerem WWW (World Wide Web). Jest tak¿e najbardziej popularnym
+serwerem WWW w Internecie.
+
 %package suexec
 Summary:	Apache suexec wrapper
 Summary(pl):	Suexec wrapper do serwera WWW Apache
@@ -322,7 +332,7 @@ Narzêdzia Apache'a.
 Summary:	Apache index.html* files
 Summary(pl):	Pliki Apache index.html*
 Group:		Documentation
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-base = %{version}-%{release}
 Obsoletes:	indexhtml
 
 %description index
@@ -335,7 +345,7 @@ Pliki Apache index.html*.
 Summary:	Apache 1.3.x manual
 Summary(pl):	Podrêcznik do Apache'a 1.3.x
 Group:		Documentation
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-base = %{version}-%{release}
 
 %description doc
 Apache 1.3.x manual.
@@ -1472,7 +1482,7 @@ install -d $RPM_BUILD_ROOT%{_localstatedir}/run/lingerd
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%pre
+%pre base
 %groupadd -g 51 -r -f http
 %useradd -u 51 -r -d %{httpdir} -s /bin/false -c "HTTP User" -g http http
 
@@ -1480,29 +1490,29 @@ if [ "`getent passwd http | cut -d: -f6`" = "/home/httpd" ]; then
 	/usr/sbin/usermod -d %{httpdir} http
 fi
 
-%post
+%post base
 /sbin/chkconfig --add apache
 umask 137
 touch /var/log/apache/{access,error,agent,referer}_log
 
-%preun
+%preun base
 if [ "$1" = "0" ]; then
 	%service apache stop
 	/sbin/chkconfig --del apache
 fi
 
-%postun
+%postun base
 if [ "$1" = "0" ]; then
 	%userremove http
 	%groupremove http
 fi
 
-%triggerpostun -- apache < 2.0.0
+%triggerpostun base -- apache < 2.0.0
 %groupadd -g 51 -r -f http
 %useradd -u 51 -r -d %{httpdir} -s /bin/false -c "HTTP User" -g http http
 /sbin/chkconfig --add apache
 
-%triggerpostun -- apache1 < 1.3.33-1.85
+%triggerpostun base -- apache1 < 1.3.33-1.85
 # upgrading from older version
 if [ "$1" = "2" ]; then
 	sed -i -e '
@@ -1514,7 +1524,7 @@ if [ "$1" = "2" ]; then
 	' /etc/apache/apache.conf
 fi
 
-%triggerpostun -- %{name} <= 1.3.31-5
+%triggerpostun base -- %{name} <= 1.3.31-5
 %banner %{name} -e -a <<EOF
 WARNING!!!
  Since 1.3.31-5 version autoindex module has been separated to package %{name}-mod_autoindex
@@ -1523,7 +1533,7 @@ poldek -Uv %{name}-mod_autoindex
 
 EOF
 
-%triggerpostun -- %{name} < 1.3.33-3.4
+%triggerpostun base -- %{name} < 1.3.33-3.4
 %banner %{name} -e -a <<EOF
 WARNING!!!
  Since 1.3.33-3.4 version following modules have been separated to subpackages
@@ -1546,14 +1556,14 @@ WARNING!!!
 	mod_userdir
 EOF
 
-%triggerpostun -- %{name} < 1.3.33-6.7
+%triggerpostun base -- %{name} < 1.3.33-6.7
 # update /etc/sysconfig/apache1 -> apache rename
 if [ -f /etc/sysconfig/apache1.rpmsave ]; then
 	cp -f /etc/sysconfig/apache{,.rpmnew}
 	mv -f /etc/sysconfig/apache{1.rpmsave,}
 fi
 
-%triggerpostun -- %{name} < 1.3.34-5.9
+%triggerpostun base -- %{name} < 1.3.34-5.9
 if ! grep -q 'Include webapps.d/' /etc/apache/apache.conf; then
 # make sure webapps.d is included
 cp -f /etc/apache/apache.conf{,.rpmsave}
@@ -1600,7 +1610,7 @@ sed -i -e '
 	s,^Include.*mod_vhost_alias.conf,Include %{_sysconfdir}/conf.d/*_mod_vhost_alias.conf,
 ' /etc/apache/apache.conf
 
-%posttrans
+%posttrans base
 # minimizing apache restarts logics. we restart webserver:
 #
 # 1. at the end of transaction. (posttrans, feature from rpm 4.4.2)
@@ -1858,6 +1868,9 @@ fi
 %module_postun
 
 %files
+%defattr(644,root,root,755)
+
+%files base
 %defattr(644,root,root,755)
 %doc ABOUT_APACHE src/CHANGES README
 %doc conf/mime.types conf/apache.conf.dist
