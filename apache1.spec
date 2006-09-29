@@ -1360,14 +1360,17 @@ OPTIM="%{rpmcflags} -DHARD_SERVER_LIMIT=2048" \
 	%{?with_ipv6:--enable-rule=INET6}
 
 %{__make} \
+	CC="%{__cc}"
 	LIBS1="-lm -lcrypt -lmm -ldl"
 
 rm -f src/modules/standard/mod_auth_db.so
 %{__make} -C src/modules/standard mod_auth_db.so \
+	CC="%{__cc}"
 	LIBS_SHLIB="-ldb"
 
 rm -f src/modules/standard/mod_rewrite.so
 %{__make} -C src/modules/standard mod_rewrite.so \
+	CC="%{__cc}"
 	LIBS_SHLIB="-ldb %{?with_rewrite_ldap:-lldap -llber}"
 
 %if %{with lingerd}
