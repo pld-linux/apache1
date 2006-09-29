@@ -106,6 +106,7 @@ Patch39:	%{name}-security_htdigest_local_buffer_overflow.patch
 Patch40:	%{name}-security_htpasswd_user_buffer_overflow.patch
 Patch41:	%{name}-security_check_forensic_tempfiles.patch
 URL:		http://httpd.apache.org/
+BuildRequires:	bash
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
 %{?with_rewrite_ldap:BuildRequires:	openldap-devel}
