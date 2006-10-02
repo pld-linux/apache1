@@ -119,7 +119,7 @@ Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	%{name}-mod_dir = %{version}-%{release}
 Requires:	%{name}-mod_log_config = %{version}-%{release}
 Requires:	%{name}-mod_mime = %{version}-%{release}
-Conflicts:	%{name} < 1.3.37-3
+Conflicts:	apache1 < 1.3.37-3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/apache
