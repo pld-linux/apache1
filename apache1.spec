@@ -577,7 +577,6 @@ Summary:	Apache module with user authentication using textual files
 Summary(pl):	Modu³ uwierzytelniania u¿ytkownika przy u¿yciu plików tekstowych dla Apache
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
-Requires:	htpasswd
 Provides:	apache(mod_auth) = %{version}-%{release}
 Provides:	webserver(auth)
 Obsoletes:	apache-mod_auth < 2.0.0
