@@ -1,6 +1,33 @@
---- ./src/main/http_protocol.c~	Thu Apr 25 15:56:54 2002
-+++ ./src/main/http_protocol.c	Thu Apr 25 15:56:57 2002
-@@ -2537,7 +2537,7 @@
+--- apache_1.3.37/src/main/http_protocol.c	2006-11-23 15:05:03.776638483 +0200
++++ apache_1.3.37/src/main/http_protocol.c	2006-11-23 15:07:14.679573858 +0200
+@@ -2486,7 +2486,7 @@
+             else if (w < 0) {
+                 if (!r->connection->aborted) {
+                     ap_log_rerror(APLOG_MARK, APLOG_INFO, r,
+-                     "client stopped connection before send body completed");
++                     "client stopped connection before send body completed (url: %s?%s)", r->uri, r->args ? r->args : "");
+                     ap_bsetflag(r->connection->client, B_EOUT, 1);
+                     r->connection->aborted = 1;
+                 }
+@@ -2572,7 +2572,7 @@
+             /* we need to block, so flush the output first */
+             if (ap_bflush(r->connection->client) < 0) {
+                 ap_log_rerror(APLOG_MARK, APLOG_INFO, r,
+-                    "client stopped connection before send body completed");
++                    "client stopped connection before send body completed (url: %s?%s)", r->uri, r->args ? r->args : "");
+                 ap_bsetflag(r->connection->client, B_EOUT, 1);
+                 r->connection->aborted = 1;
+                 break;
+@@ -2610,7 +2610,7 @@
+             else if (w < 0) {
+                 if (!r->connection->aborted) {
+                     ap_log_rerror(APLOG_MARK, APLOG_INFO, r,
+-                       "client stopped connection before send body completed");
++                       "client stopped connection before send body completed (url: %s?%s)", r->uri, r->args ? r->args : "");
+                     ap_bsetflag(r->connection->client, B_EOUT, 1);
+                     r->connection->aborted = 1;
+                 }
+@@ -2735,7 +2735,7 @@
      if (n < 0) {
          if (!r->connection->aborted) {
              ap_log_rerror(APLOG_MARK, APLOG_INFO, r,
