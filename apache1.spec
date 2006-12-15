@@ -28,7 +28,7 @@ Summary(uk):	îÁÊÐÏÐÕÌÑÒÎ¦ÛÉÊ Web-Server
 Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·þÎñ³ÌÐò¡£
 Name:		apache1
 Version:	1.3.37
-Release:	6
+Release:	7
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -243,6 +243,7 @@ Requires:	/etc/mime.types
 Requires:	mailcap
 Requires:	psmisc >= 20.1
 Requires:	rc-scripts
+Requires:	webapps
 Provides:	%{name}(EAPI) = %{version}-%{release}
 %{?with_ipv6:Provides:	apache1(ipv6)}
 %{?with_lingerd:Provides:	apache1(lingerd)}
