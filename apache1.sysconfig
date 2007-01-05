@@ -1,10 +1,14 @@
 # Customized settings for apache
+# $Id$
 
 # Nice level for apache
 SERVICE_RUN_NICE_LEVEL="+5"
 
 # Cmdline options
 HTTPD_OPTS=""
+
+# perhaps set 128MB memory limit
+#SERVICE_LIMITS="$DEFAULT_SERVICE_LIMITS -m 128000"
 
 # Skip apache restarts invoked from rpm installs.
 # Enable this if you run a production server and don't want rpm upgrade restart
