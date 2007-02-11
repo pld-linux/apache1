@@ -946,7 +946,7 @@ ka¿dego ¿±dania do wielu plików.
 
 %package mod_log_forensic
 Summary:	Apache module for forensic logging of the requests
-Summary:	Modu³ Apache'a do logowania ¿±dañ w celu pó¼niejszej analizy
+Summary(pl):	Modu³ Apache'a do logowania ¿±dañ w celu pó¼niejszej analizy
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_forensic) = %{version}-%{release}
