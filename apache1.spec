@@ -6,26 +6,26 @@
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	The most widely used Web server on the Internet
-Summary(cs.UTF-8):   Nejrozšířenější WWW server v Internetu
-Summary(da.UTF-8):   Den mest brugte web-tjener på Internet
-Summary(de.UTF-8):   Der am häufigsten verwendete Web-Server im Internet
-Summary(es.UTF-8):   El servidor web más conocido y usado en Internet
-Summary(fr.UTF-8):   Le serveur Web le plus utilisé sur Internet
-Summary(id.UTF-8):   Web server yang paling banyak digunakan di Internet
-Summary(is.UTF-8):   Vinsælasti vefþjónninn á Netinu
-Summary(it.UTF-8):   Il web server più diffuso su Internet
-Summary(ja.UTF-8):   インターネット上で最も一般的に使用されている Web サーバー
-Summary(nb.UTF-8):   Den mest utbredte web-tjeneren på Internett
-Summary(pl.UTF-8):   Serwer WWW (World Wide Web)
-Summary(pt.UTF-8):   O servidor Web mais largamente utilizado em toda a Internet
-Summary(pt_BR.UTF-8):   Servidor HTTPD para prover serviços WWW
-Summary(ru.UTF-8):   Самый популярный Web-Server
-Summary(sk.UTF-8):   Najviac používaný Web server na Internete
-Summary(sl.UTF-8):   Najbolj uporabljani spletni strežnik interneta
-Summary(sv.UTF-8):   Den mest använda webbservern på Internet
-Summary(tr.UTF-8):   Lider WWW tarayıcı
-Summary(uk.UTF-8):   Найпопулярніший Web-Server
-Summary(zh_CN.UTF-8):   Internet 上应用最广泛的 Web 服务程序。
+Summary(cs.UTF-8):	Nejrozšířenější WWW server v Internetu
+Summary(da.UTF-8):	Den mest brugte web-tjener på Internet
+Summary(de.UTF-8):	Der am häufigsten verwendete Web-Server im Internet
+Summary(es.UTF-8):	El servidor web más conocido y usado en Internet
+Summary(fr.UTF-8):	Le serveur Web le plus utilisé sur Internet
+Summary(id.UTF-8):	Web server yang paling banyak digunakan di Internet
+Summary(is.UTF-8):	Vinsælasti vefþjónninn á Netinu
+Summary(it.UTF-8):	Il web server più diffuso su Internet
+Summary(ja.UTF-8):	インターネット上で最も一般的に使用されている Web サーバー
+Summary(nb.UTF-8):	Den mest utbredte web-tjeneren på Internett
+Summary(pl.UTF-8):	Serwer WWW (World Wide Web)
+Summary(pt.UTF-8):	O servidor Web mais largamente utilizado em toda a Internet
+Summary(pt_BR.UTF-8):	Servidor HTTPD para prover serviços WWW
+Summary(ru.UTF-8):	Самый популярный Web-Server
+Summary(sk.UTF-8):	Najviac používaný Web server na Internete
+Summary(sl.UTF-8):	Najbolj uporabljani spletni strežnik interneta
+Summary(sv.UTF-8):	Den mest använda webbservern på Internet
+Summary(tr.UTF-8):	Lider WWW tarayıcı
+Summary(uk.UTF-8):	Найпопулярніший Web-Server
+Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.37
 Release:	7
@@ -226,7 +226,7 @@ Internet 上最流行的 Web 服务程序。
 
 %package base
 Summary:	The most widely used Web server on the Internet
-Summary(pl.UTF-8):   Serwer WWW (World Wide Web)
+Summary(pl.UTF-8):	Serwer WWW (World Wide Web)
 Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
@@ -269,9 +269,9 @@ serwerem WWW w Internecie.
 
 %package suexec
 Summary:	Apache suexec wrapper
-Summary(pl.UTF-8):   Suexec wrapper do serwera WWW Apache
-Summary(ru.UTF-8):   Apache suEXEC CGI wrapper
-Summary(uk.UTF-8):   Apache suEXEC CGI wrapper
+Summary(pl.UTF-8):	Suexec wrapper do serwera WWW Apache
+Summary(ru.UTF-8):	Apache suEXEC CGI wrapper
+Summary(uk.UTF-8):	Apache suEXEC CGI wrapper
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Obsoletes:	apache-suexec < 2.0.0
@@ -312,7 +312,7 @@ wykonywane jako taki sam użytkownik jak serwer WWW.
 
 %package apxs
 Summary:	APache eXtenSion tool
-Summary(pl.UTF-8):   Narzędzie do rozszerzania Apache'a
+Summary(pl.UTF-8):	Narzędzie do rozszerzania Apache'a
 Group:		Development/Tools
 
 %description apxs
@@ -323,7 +323,7 @@ Narzędzie do rozszerzania Apache'a.
 
 %package tools
 Summary:	Apache tools
-Summary(pl.UTF-8):   Narzędzia Apache'a
+Summary(pl.UTF-8):	Narzędzia Apache'a
 Group:		Development/Tools
 
 %description tools
@@ -334,7 +334,7 @@ Narzędzia Apache'a.
 
 %package index
 Summary:	Apache index.html* files
-Summary(pl.UTF-8):   Pliki Apache index.html*
+Summary(pl.UTF-8):	Pliki Apache index.html*
 Group:		Documentation
 Requires:	%{name}-base = %{version}-%{release}
 Obsoletes:	indexhtml
@@ -347,7 +347,7 @@ Pliki Apache index.html*.
 
 %package doc
 Summary:	Apache 1.3.x manual
-Summary(pl.UTF-8):   Podręcznik do Apache'a 1.3.x
+Summary(pl.UTF-8):	Podręcznik do Apache'a 1.3.x
 Group:		Documentation
 Requires:	%{name}-base = %{version}-%{release}
 
@@ -359,7 +359,7 @@ Podręcznik do Apache'a 1.3.x.
 
 %package errordocs
 Summary:	Apache 1.3.x HTTP error documents
-Summary(pl.UTF-8):   Dokumenty opisujące błędy HTTP dla Apache'a 1.3.x
+Summary(pl.UTF-8):	Dokumenty opisujące błędy HTTP dla Apache'a 1.3.x
 Group:		Applications/WWW
 Requires:	%{name}-mod_include = %{version}-%{release}
 
@@ -373,25 +373,25 @@ angielsku i polsku.
 
 %package devel
 Summary:	Module development tools for the Apache web server
-Summary(cs.UTF-8):   Hlavičkové soubory pro Apache Web server
-Summary(da.UTF-8):   Header-filer for Apache webserveren
-Summary(de.UTF-8):   Include-Dateien für den Apache Web-Server
-Summary(es.UTF-8):   Archivos de inclusión del Apache para desarrollo de módulos
-Summary(fr.UTF-8):   Fichiers à inclure pour le serveur Web Apache
-Summary(id.UTF-8):   File header untuk Apache Web server
-Summary(is.UTF-8):   Hausaskrár með Apache vefþjóninum
-Summary(it.UTF-8):   File include per il web server Apache
-Summary(ja.UTF-8):   Apache Web サーバー用の開発ツール
-Summary(nb.UTF-8):   Headerfiler for webtjeneren Apache
-Summary(pl.UTF-8):   Pliki nagłówkowe do tworzenia modułów rozszerzeń do serwera WWW Apache
-Summary(pt.UTF-8):   Ficheiros de inclusão para o servidor Web Apache
-Summary(pt_BR.UTF-8):   Arquivos de inclusão do Apache para desenvolvimento de módulos
-Summary(ru.UTF-8):   Файлы заголовков для web server'а Apache
-Summary(sk.UTF-8):   Hlavičkové súbory pre Apache Web server
-Summary(sl.UTF-8):   Glave za spletni strežnik Apache
-Summary(sv.UTF-8):   Huvudfiler för webbservern Apache
-Summary(uk.UTF-8):   Засоби створення модулів для web server'у Apache
-Summary(zh_CN.UTF-8):   用于 Apache Web 服务程序的开发工具。
+Summary(cs.UTF-8):	Hlavičkové soubory pro Apache Web server
+Summary(da.UTF-8):	Header-filer for Apache webserveren
+Summary(de.UTF-8):	Include-Dateien für den Apache Web-Server
+Summary(es.UTF-8):	Archivos de inclusión del Apache para desarrollo de módulos
+Summary(fr.UTF-8):	Fichiers à inclure pour le serveur Web Apache
+Summary(id.UTF-8):	File header untuk Apache Web server
+Summary(is.UTF-8):	Hausaskrár með Apache vefþjóninum
+Summary(it.UTF-8):	File include per il web server Apache
+Summary(ja.UTF-8):	Apache Web サーバー用の開発ツール
+Summary(nb.UTF-8):	Headerfiler for webtjeneren Apache
+Summary(pl.UTF-8):	Pliki nagłówkowe do tworzenia modułów rozszerzeń do serwera WWW Apache
+Summary(pt.UTF-8):	Ficheiros de inclusão para o servidor Web Apache
+Summary(pt_BR.UTF-8):	Arquivos de inclusão do Apache para desenvolvimento de módulos
+Summary(ru.UTF-8):	Файлы заголовков для web server'а Apache
+Summary(sk.UTF-8):	Hlavičkové súbory pre Apache Web server
+Summary(sl.UTF-8):	Glave za spletni strežnik Apache
+Summary(sv.UTF-8):	Huvudfiler för webbservern Apache
+Summary(uk.UTF-8):	Засоби створення модулів для web server'у Apache
+Summary(zh_CN.UTF-8):	用于 Apache Web 服务程序的开发工具。
 Group:		Networking/Utilities
 Requires:	%{name}-apxs = %{version}-%{release}
 Provides:	%{name}(EAPI)-devel = %{version}-%{release}
@@ -453,7 +453,7 @@ Paketet apache-devel innehåller huvudfilerna för Apache.
 
 %package mod_access
 Summary:	Access control based on client hostname or IP address
-Summary(pl.UTF-8):   Kontrola dostępu w oparciu o nazwę hosta lub adres IP klienta
+Summary(pl.UTF-8):	Kontrola dostępu w oparciu o nazwę hosta lub adres IP klienta
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_access) = %{version}-%{release}
@@ -483,7 +483,7 @@ dyrektywy Allow i Deny wpływają na siebie nawzajem.
 
 %package mod_actions
 Summary:	Apache module for run CGI whenever a file of a certain type is requested
-Summary(pl.UTF-8):   Moduł dla Apache'a do uruchamiania skryptów cgi
+Summary(pl.UTF-8):	Moduł dla Apache'a do uruchamiania skryptów cgi
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_actions) = %{version}-%{release}
@@ -501,7 +501,7 @@ wykonywanie skryptów przetwarzających pliki.
 
 %package mod_alias
 Summary:	Mapping different parts of the host filesystem in the document tree, and URL redirection
-Summary(pl.UTF-8):   Odwzorowywanie części systemu plików w drzewie dokumentów oraz przekierowywanie URL-i
+Summary(pl.UTF-8):	Odwzorowywanie części systemu plików w drzewie dokumentów oraz przekierowywanie URL-i
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_alias) = %{version}-%{release}
@@ -545,7 +545,7 @@ URL-ami znajduje się w module mod_rewrite.
 
 %package mod_asis
 Summary:	Sending files which contain their own HTTP headers
-Summary(pl.UTF-8):   Wysyłanie plików zawierających własne nagłówki HTTP
+Summary(pl.UTF-8):	Wysyłanie plików zawierających własne nagłówki HTTP
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_asis) = %{version}-%{release}
@@ -575,7 +575,7 @@ typie MIME httpd/send-as-is.
 
 %package mod_auth
 Summary:	Apache module with user authentication using textual files
-Summary(pl.UTF-8):   Moduł uwierzytelniania użytkownika przy użyciu plików tekstowych dla Apache
+Summary(pl.UTF-8):	Moduł uwierzytelniania użytkownika przy użyciu plików tekstowych dla Apache
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_auth) = %{version}-%{release}
@@ -592,7 +592,7 @@ użyciu plików tekstowych.
 
 %package mod_auth_anon
 Summary:	Apache module with "anonymous" user access authentication
-Summary(pl.UTF-8):   Moduł apache oferujący anonimową autoryzację użytkownia
+Summary(pl.UTF-8):	Moduł apache oferujący anonimową autoryzację użytkownia
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_auth_anon) = %{version}-%{release}
@@ -624,7 +624,7 @@ przeglądarki i umożliwienie użytkownikom współdzielenia URL-i.
 
 %package mod_auth_db
 Summary:	Apache module with user authentication which uses Berkeley DB files
-Summary(pl.UTF-8):   Moduł Apache'a z mechanizmem uwierzytelniania używającym plików Berkeley DB
+Summary(pl.UTF-8):	Moduł Apache'a z mechanizmem uwierzytelniania używającym plików Berkeley DB
 Group:		Networking/Daemons
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
@@ -641,7 +641,7 @@ uwierzytelniania, ale jako plików danych używa Berkeley DB.
 
 %package mod_auth_digest
 Summary:	Apache user authentication module using MD5 Digest Authentication
-Summary(pl.UTF-8):   Moduł Apache'a do uwierzytelniania metodą MD5 Digest Authentication
+Summary(pl.UTF-8):	Moduł Apache'a do uwierzytelniania metodą MD5 Digest Authentication
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_auth_digest) = %{version}-%{release}
@@ -658,7 +658,7 @@ Authentication.
 
 %package mod_autoindex
 Summary:	Apache module - display index of files
-Summary(pl.UTF-8):   Moduł apache do wyświetlania indeksu plików
+Summary(pl.UTF-8):	Moduł apache do wyświetlania indeksu plików
 Group:		Networking/Daemons
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
@@ -673,7 +673,7 @@ Ten pakiet dostarcza moduł autoindex, który generuje indeks plików.
 
 %package mod_cern_meta
 Summary:	Support for HTTP header metafiles
-Summary(pl.UTF-8):   Obsługa metaplików nagłówków HTTP
+Summary(pl.UTF-8):	Obsługa metaplików nagłówków HTTP
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_cern_meta) = %{version}-%{release}
@@ -698,7 +698,7 @@ użytkowników CERN wykorzystujących ten moduł.
 
 %package mod_cgi
 Summary:	Invoking CGI scripts
-Summary(pl.UTF-8):   Wywoływanie skryptów CGI
+Summary(pl.UTF-8):	Wywoływanie skryptów CGI
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_cgi) = %{version}-%{release}
@@ -728,7 +728,7 @@ zostanie opcja ExecCGI - więcej szczegółów w dyrektywie Options.
 
 %package mod_define
 Summary:	Apache module - definition variables for arbitrary directives
-Summary(pl.UTF-8):   Moduł Apache'a do definiowania zmiennych
+Summary(pl.UTF-8):	Moduł Apache'a do definiowania zmiennych
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_define) = %{version}-%{release}
@@ -744,7 +744,7 @@ zmiennych, które mogą być rozwijane w dowolnej linii dyrektywy.
 
 %package mod_digest
 Summary:	Older version of apache user authentication module using MD5 Digest Authentication
-Summary(pl.UTF-8):   Starsza wersja modułu apache do autoryzacji MD5
+Summary(pl.UTF-8):	Starsza wersja modułu apache do autoryzacji MD5
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_digest) = %{version}-%{release}
@@ -767,7 +767,7 @@ najnowszą wersję standardu.
 
 %package mod_dir
 Summary:	Apache module for "trailing slash" redirects and serving directory index files
-Summary(pl.UTF-8):   Moduł oferujący przekierowania i serwowanie indeksu katalogu
+Summary(pl.UTF-8):	Moduł oferujący przekierowania i serwowanie indeksu katalogu
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_dir) = %{version}-%{release}
@@ -784,7 +784,7 @@ udostępnianie indeksu katalogu.
 
 %package mod_env
 Summary:	Passing of environments to CGI scripts
-Summary(pl.UTF-8):   Przekazywanie środowiska do skryptów CGI
+Summary(pl.UTF-8):	Przekazywanie środowiska do skryptów CGI
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_env) = %{version}-%{release}
@@ -804,7 +804,7 @@ usuwane w procesie konfiguracji.
 
 %package mod_expires
 Summary:	Apache module which generates Expires HTTP headers
-Summary(pl.UTF-8):   Moduł generujący nagłówki HTTP Expires
+Summary(pl.UTF-8):	Moduł generujący nagłówki HTTP Expires
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_expires) = %{version}-%{release}
@@ -823,7 +823,7 @@ ważności może być ustalana w zależności od czasu modyfikacji plików
 
 %package mod_headers
 Summary:	Apache module allows for the customization of HTTP response headers
-Summary(pl.UTF-8):   Moduł pozwalający na modyfikację nagłówków HTTP
+Summary(pl.UTF-8):	Moduł pozwalający na modyfikację nagłówków HTTP
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_headers) = %{version}-%{release}
@@ -841,7 +841,7 @@ usuwane.
 
 %package mod_imap
 Summary:	Apache module with imap-file handler
-Summary(pl.UTF-8):   Moduł Apache'a z obsługą imap-file
+Summary(pl.UTF-8):	Moduł Apache'a z obsługą imap-file
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_imap) = %{version}-%{release}
@@ -858,7 +858,7 @@ programu CGI imagemap.
 
 %package mod_include
 Summary:	Server-parsed documents
-Summary(pl.UTF-8):   Dokumenty przetwarzane po stronie serwera
+Summary(pl.UTF-8):	Dokumenty przetwarzane po stronie serwera
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_include) = %{version}-%{release}
@@ -879,7 +879,7 @@ a także ustawianie i wypisywanie zmiennych środowiskowych.
 
 %package mod_info
 Summary:	Apache module with comprehensive overview of the server configuration
-Summary(pl.UTF-8):   Moduł dostarczający informacji na temat serwera
+Summary(pl.UTF-8):	Moduł dostarczający informacji na temat serwera
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_info) = %{version}-%{release}
@@ -897,7 +897,7 @@ konfiguracyjnych.
 
 %package mod_log_agent
 Summary:	Logging of User Agents
-Summary(pl.UTF-8):   Logowanie nazw klientów (User Agent)
+Summary(pl.UTF-8):	Logowanie nazw klientów (User Agent)
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_agent) = %{version}-%{release}
@@ -912,7 +912,7 @@ i jest niezalecany. Zamiast niego lepiej używać mod_log_config.
 
 %package mod_log_config
 Summary:	User-configurable logging replacement for mod_log_common
-Summary(pl.UTF-8):   Konfigurowalny logujący zamiennik dla mod_log_common
+Summary(pl.UTF-8):	Konfigurowalny logujący zamiennik dla mod_log_common
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_config) = %{version}-%{release}
@@ -946,7 +946,7 @@ każdego żądania do wielu plików.
 
 %package mod_log_forensic
 Summary:	Apache module for forensic logging of the requests
-Summary(pl.UTF-8):   Moduł Apache'a do logowania żądań w celu późniejszej analizy
+Summary(pl.UTF-8):	Moduł Apache'a do logowania żądań w celu późniejszej analizy
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_forensic) = %{version}-%{release}
@@ -962,7 +962,7 @@ Logowanie jest wykonywane przed i po przetworzeniu żądania.
 
 %package mod_log_referer
 Summary:	User-configurable logging replacement for mod_log_common
-Summary(pl.UTF-8):   Konfigurowalny logujący zamiennik dla mod_log_common
+Summary(pl.UTF-8):	Konfigurowalny logujący zamiennik dla mod_log_common
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_referer) = %{version}-%{release}
@@ -977,7 +977,7 @@ i jest niezalecany. Zamiast niego lepiej używać mod_log_config.
 
 %package mod_mime
 Summary:	Determining document types using file extensions
-Summary(pl.UTF-8):   Określanie typów dokumentów przy użyciu rozszerzeń plików
+Summary(pl.UTF-8):	Określanie typów dokumentów przy użyciu rozszerzeń plików
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_mime) = %{version}-%{release}
@@ -999,7 +999,7 @@ wewnątrz serwera.
 
 %package mod_mime_magic
 Summary:	Determining document types using "magic numbers"
-Summary(pl.UTF-8):   Określanie typów dokumentów przy użyciu "liczb magicznych"
+Summary(pl.UTF-8):	Określanie typów dokumentów przy użyciu "liczb magicznych"
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_mime_magic) = %{version}-%{release}
@@ -1032,7 +1032,7 @@ tylko jeśli plik magic został określony dyrektywą MimeMagicFile.
 
 %package mod_mmap_static
 Summary:	Apache module for mmap()ing statically configured list files
-Summary(pl.UTF-8):   Moduł służący do mmap()owania plików
+Summary(pl.UTF-8):	Moduł służący do mmap()owania plików
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_mmap_static) = %{version}-%{release}
@@ -1049,7 +1049,7 @@ Moduł umożliwia mmap()owanie statycznie skonfigurowanych plików
 
 %package mod_negotiation
 Summary:	Content negotiation
-Summary(pl.UTF-8):   Negocjacja treści
+Summary(pl.UTF-8):	Negocjacja treści
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_negotiation) = %{version}-%{release}
@@ -1076,7 +1076,7 @@ dostępnych dokumentów. Są dwie różne implementacje.
 
 %package mod_proxy
 Summary:	Apache module with Web proxy
-Summary(pl.UTF-8):   Moduł dodający obsługę serwera proxy
+Summary(pl.UTF-8):	Moduł dodający obsługę serwera proxy
 Group:		Networking/Daemons
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
@@ -1099,7 +1099,7 @@ innymi modułami proxy dla tych i innych protokołów. Zawiera łatę z
 
 %package mod_rewrite
 Summary:	Apache module with rule-based engine for rewrite requested URLs on the fly
-Summary(pl.UTF-8):   Moduł do ,,przepisywania'' adresów URL w locie
+Summary(pl.UTF-8):	Moduł do ,,przepisywania'' adresów URL w locie
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_rewrite) = %{version}-%{release}
@@ -1114,7 +1114,7 @@ Moduł oferujący możliwość ,,przepisywania'' adresów URL w locie.
 
 %package mod_setenvif
 Summary:	Set environment variables based on client information
-Summary(pl.UTF-8):   Ustawianie zmiennych środowiskowych w oparciu o informacje o kliencie
+Summary(pl.UTF-8):	Ustawianie zmiennych środowiskowych w oparciu o informacje o kliencie
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_setenvif) = %{version}-%{release}
@@ -1133,7 +1133,7 @@ części serwera do podejmowania decyzji o podejmowanych akcjach.
 
 %package mod_speling
 Summary:	Automatically correct minor typos in URLs
-Summary(pl.UTF-8):   Automatyczne poprawianie pomniejszych literówek w URL-ach
+Summary(pl.UTF-8):	Automatyczne poprawianie pomniejszych literówek w URL-ach
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_speling) = %{version}-%{release}
@@ -1162,7 +1162,7 @@ dla tej strategii.
 
 %package mod_status
 Summary:	Server status report module for apache
-Summary(pl.UTF-8):   Moduł dostarczający informacje statystyczne o serwerze
+Summary(pl.UTF-8):	Moduł dostarczający informacje statystyczne o serwerze
 Group:		Networking/Daemons
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
@@ -1184,7 +1184,7 @@ przeglądarkę).
 
 %package mod_unique_id
 Summary:	Apache module which provides a magic token for each request
-Summary(pl.UTF-8):   Moduł nadający każdemu żądaniu unikalny token
+Summary(pl.UTF-8):	Moduł nadający każdemu żądaniu unikalny token
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_unique_id) = %{version}-%{release}
@@ -1207,7 +1207,7 @@ UNIQUE_ID.
 
 %package mod_userdir
 Summary:	User home directories
-Summary(pl.UTF-8):   Katalogi domowe użytkowników
+Summary(pl.UTF-8):	Katalogi domowe użytkowników
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_userdir) = %{version}-%{release}
@@ -1220,7 +1220,7 @@ Ten moduł dostarcza obsługę katalogów specyficznych dla uzytkownika.
 
 %package mod_usertrack
 Summary:	Apache module for user tracking using cookies
-Summary(pl.UTF-8):   Moduł służący do śledzenia użytkowników przy użyciu ciasteczek
+Summary(pl.UTF-8):	Moduł służący do śledzenia użytkowników przy użyciu ciasteczek
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_usertrack) = %{version}-%{release}
@@ -1238,7 +1238,7 @@ wiele plików logów.
 
 %package mod_vhost_alias
 Summary:	Apache module for dynamically configured mass virtual hosting
-Summary(pl.UTF-8):   Moduł dodający obsługę hostów wirtualnych
+Summary(pl.UTF-8):	Moduł dodający obsługę hostów wirtualnych
 Group:		Networking/Daemons
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
@@ -1255,7 +1255,7 @@ wirtualnych.
 
 %package -n htpasswd-%{name}
 Summary:	Apache 1.x htpasswd utility
-Summary(pl.UTF-8):   Narzędzie htpasswd z Apache'a 1.x
+Summary(pl.UTF-8):	Narzędzie htpasswd z Apache'a 1.x
 Group:		Networking/Utilities
 Provides:	htpasswd
 Obsoletes:	htpasswd
