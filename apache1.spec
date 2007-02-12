@@ -6,26 +6,26 @@
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	The most widely used Web server on the Internet
-Summary(cs):	Nejroz¹íøenìj¹í WWW server v Internetu
-Summary(da):	Den mest brugte web-tjener på Internet
-Summary(de):	Der am häufigsten verwendete Web-Server im Internet
-Summary(es):	El servidor web más conocido y usado en Internet
-Summary(fr):	Le serveur Web le plus utilisé sur Internet
-Summary(id):	Web server yang paling banyak digunakan di Internet
-Summary(is):	Vinsælasti vefşjónninn á Netinu
-Summary(it):	Il web server più diffuso su Internet
-Summary(ja):	¥¤¥ó¥¿¡¼¥Í¥Ã¥È¾å¤ÇºÇ¤â°ìÈÌÅª¤Ë»ÈÍÑ¤µ¤ì¤Æ¤¤¤ë Web ¥µ¡¼¥Ğ¡¼
-Summary(nb):	Den mest utbredte web-tjeneren på Internett
-Summary(pl):	Serwer WWW (World Wide Web)
-Summary(pt):	O servidor Web mais largamente utilizado em toda a Internet
-Summary(pt_BR):	Servidor HTTPD para prover serviços WWW
-Summary(ru):	óÁÍÙÊ ĞÏĞÕÌÑÒÎÙÊ Web-Server
-Summary(sk):	Najviac pou¾ívanı Web server na Internete
-Summary(sl):	Najbolj uporabljani spletni stre¾nik interneta
-Summary(sv):	Den mest använda webbservern på Internet
-Summary(tr):	Lider WWW tarayıcı
-Summary(uk):	îÁÊĞÏĞÕÌÑÒÎ¦ÛÉÊ Web-Server
-Summary(zh_CN):	Internet ÉÏÓ¦ÓÃ×î¹ã·ºµÄ Web ·şÎñ³ÌĞò¡£
+Summary(cs.UTF-8):   NejrozÅ¡Ã­Å™enÄ›jÅ¡Ã­ WWW server v Internetu
+Summary(da.UTF-8):   Den mest brugte web-tjener pÃ¥ Internet
+Summary(de.UTF-8):   Der am hÃ¤ufigsten verwendete Web-Server im Internet
+Summary(es.UTF-8):   El servidor web mÃ¡s conocido y usado en Internet
+Summary(fr.UTF-8):   Le serveur Web le plus utilisÃ© sur Internet
+Summary(id.UTF-8):   Web server yang paling banyak digunakan di Internet
+Summary(is.UTF-8):   VinsÃ¦lasti vefÃ¾jÃ³nninn Ã¡ Netinu
+Summary(it.UTF-8):   Il web server piÃ¹ diffuso su Internet
+Summary(ja.UTF-8):   ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒƒãƒˆä¸Šã§æœ€ã‚‚ä¸€èˆ¬çš„ã«ä½¿ç”¨ã•ã‚Œã¦ã„ã‚‹ Web ã‚µãƒ¼ãƒãƒ¼
+Summary(nb.UTF-8):   Den mest utbredte web-tjeneren pÃ¥ Internett
+Summary(pl.UTF-8):   Serwer WWW (World Wide Web)
+Summary(pt.UTF-8):   O servidor Web mais largamente utilizado em toda a Internet
+Summary(pt_BR.UTF-8):   Servidor HTTPD para prover serviÃ§os WWW
+Summary(ru.UTF-8):   Ğ¡Ğ°Ğ¼Ñ‹Ğ¹ Ğ¿Ğ¾Ğ¿ÑƒĞ»ÑÑ€Ğ½Ñ‹Ğ¹ Web-Server
+Summary(sk.UTF-8):   Najviac pouÅ¾Ã­vanÃ½ Web server na Internete
+Summary(sl.UTF-8):   Najbolj uporabljani spletni streÅ¾nik interneta
+Summary(sv.UTF-8):   Den mest anvÃ¤nda webbservern pÃ¥ Internet
+Summary(tr.UTF-8):   Lider WWW tarayÄ±cÄ±
+Summary(uk.UTF-8):   ĞĞ°Ğ¹Ğ¿Ğ¾Ğ¿ÑƒĞ»ÑÑ€Ğ½Ñ–ÑˆĞ¸Ğ¹ Web-Server
+Summary(zh_CN.UTF-8):   Internet ä¸Šåº”ç”¨æœ€å¹¿æ³›çš„ Web æœåŠ¡ç¨‹åºã€‚
 Name:		apache1
 Version:	1.3.37
 Release:	7
@@ -137,96 +137,96 @@ Internet.
 %{?with_lingerd:This version of Apache includes lingerd support:}
 %{?with_lingerd:<http://www.iagora.com/about/software/lingerd/>.}
 
-%description -l cs
-Apache je vıkonnı plnì funkèní efektivní a volnì dostupnı WWW server.
-Je to nejpopulárnìj¹í WWW server v Internetu.
+%description -l cs.UTF-8
+Apache je vÃ½konnÃ½ plnÄ› funkÄnÃ­ efektivnÃ­ a volnÄ› dostupnÃ½ WWW server.
+Je to nejpopulÃ¡rnÄ›jÅ¡Ã­ WWW server v Internetu.
 
-%description -l da
-Apache er en stærk, funktionsrig, effektiv og frit tilgængelig
-web-tjener. Apache er også den mest populære web-tjener på Internet.
+%description -l da.UTF-8
+Apache er en stÃ¦rk, funktionsrig, effektiv og frit tilgÃ¦ngelig
+web-tjener. Apache er ogsÃ¥ den mest populÃ¦re web-tjener pÃ¥ Internet.
 
-%description -l de
-Apache ist ein leistungsfähiger, frei verfügbarer und effizienter
-Web-Server mit umfassenden Funktionen. Apache ist zudem der populärste
+%description -l de.UTF-8
+Apache ist ein leistungsfÃ¤higer, frei verfÃ¼gbarer und effizienter
+Web-Server mit umfassenden Funktionen. Apache ist zudem der populÃ¤rste
 Web-Server im Internet.
 
-%description -l es
+%description -l es.UTF-8
 El servidor web Apache es el mejor servidor gratuito disponible en el
 mundo UNIX hoy. Usa HTTP (HyperText Transfer Protocol) para permitir
 que browsers web vean documentos y sometan datos remotamente. Puede
 ejecutar varias funciones diferentes, incluyendo funciones de proxy y
-caché, y nos ofrece características como monitor de estado, conversión
-dinámica de tipo, y otras más.
+cachÃ©, y nos ofrece caracterÃ­sticas como monitor de estado, conversiÃ³n
+dinÃ¡mica de tipo, y otras mÃ¡s.
 
-%description -l fr
+%description -l fr.UTF-8
 Apache est un serveur Web puissant, efficace, gratuit et complet.
 Apache est aussi le serveur Web le plus populaire sur Internet.
 
-%description -l id
+%description -l id.UTF-8
 Apache adalah Web server yang powerful, efisien, kaya akan feature,
 dan tersedia dengan free. Apache juga merupakan Web server yang paling
 populer di Internet.
 
-%description -l is
-Apache er mjög öflugur og háşróağur vefşjónn sem er ókeypis. Apache er
-einnig mest notaği vefşjónninn á Internetinu.
+%description -l is.UTF-8
+Apache er mjÃ¶g Ã¶flugur og hÃ¡Ã¾rÃ³aÃ°ur vefÃ¾jÃ³nn sem er Ã³keypis. Apache er
+einnig mest notaÃ°i vefÃ¾jÃ³nninn Ã¡ Internetinu.
 
-%description -l it
-Apache è un Web server potente, dotato di tutte le caratteristiche,
-efficiente e gratuito. Ed è anche il web server più diffuso su
+%description -l it.UTF-8
+Apache Ã¨ un Web server potente, dotato di tutte le caratteristiche,
+efficiente e gratuito. Ed Ã¨ anche il web server piÃ¹ diffuso su
 Internet.
 
-%description -l ja
-Apache ¤Ï¶¯ÎÏ¤Ç½¼¼Â¤·¤¿µ¡Ç½¤ò»ı¤ÄÌµ½ş¤Î Web ¥µ¡¼¥Ğ¡¼
-¤Ç¤¹¡£¤Ş¤¿¡¢apache ¤Ï¥¤¥ó¥¿¡¼¥Í¥Ã¥È¾å¤ÇºÇ¤â°ìÈÌÅª¤Ë»ÈÍÑ ¤µ¤ì¤Æ¤¤¤ë Web
-¥µ¡¼¥Ğ¡¼¤Ç¤¹¡£
+%description -l ja.UTF-8
+Apache ã¯å¼·åŠ›ã§å……å®Ÿã—ãŸæ©Ÿèƒ½ã‚’æŒã¤ç„¡å„Ÿã® Web ã‚µãƒ¼ãƒãƒ¼
+ã§ã™ã€‚ã¾ãŸã€apache ã¯ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒƒãƒˆä¸Šã§æœ€ã‚‚ä¸€èˆ¬çš„ã«ä½¿ç”¨ ã•ã‚Œã¦ã„ã‚‹ Web
+ã‚µãƒ¼ãƒãƒ¼ã§ã™ã€‚
 
-%description -l nb
+%description -l nb.UTF-8
 Apache er en kraftig, funksjonsrik, effektiv og fritt tilgjengelig
-web-tjener. Apache er også den mest populære web-tjeneren på Internet.
+web-tjener. Apache er ogsÃ¥ den mest populÃ¦re web-tjeneren pÃ¥ Internet.
 
-%description -l pl
-Apache jest serwerem WWW (World Wide Web). Instaluj±c ten pakiet
-bêdziesz móg³ prezentowaæ w³asne strony WWW w sieci internet.
+%description -l pl.UTF-8
+Apache jest serwerem WWW (World Wide Web). InstalujÄ…c ten pakiet
+bÄ™dziesz mÃ³gÅ‚ prezentowaÄ‡ wÅ‚asne strony WWW w sieci internet.
 
-%description -l pt
-O Apache é um servidor de Web poderoso, cheio de potencialidades,
-eficiente e gratuito. O Apache é também o servidor Web mais conhecido
+%description -l pt.UTF-8
+O Apache Ã© um servidor de Web poderoso, cheio de potencialidades,
+eficiente e gratuito. O Apache Ã© tambÃ©m o servidor Web mais conhecido
 na Internet.
 
-%description -l pt_BR
-O servidor web Apache é o melhor servidor gratuito disponível no mundo
+%description -l pt_BR.UTF-8
+O servidor web Apache Ã© o melhor servidor gratuito disponÃ­vel no mundo
 UNIX hoje. Ele usa HTTP (HyperText Transfer Protocol) para permitir
 que browsers web vejam documentos e submetam dados remotamente. Ele
-pode executar várias funções diferentes, incluindo funções de proxy e
-cache, e oferece características como monitor de status, conversão
-dinâmica de tipo, e mais.
+pode executar vÃ¡rias funÃ§Ãµes diferentes, incluindo funÃ§Ãµes de proxy e
+cache, e oferece caracterÃ­sticas como monitor de status, conversÃ£o
+dinÃ¢mica de tipo, e mais.
 
-%description -l ru
-Apache - ÜÔÏ ÍÏİÎÙÊ, ĞÏÌÎÏÆÕÎËÃÉÏÎÁÌØÎÙÊ, ÜÆÆÅËÔÉ×ÎÙÊ, Ó×ÏÂÏÄÎÏ
-ÒÁÓĞÒÏÓÔÒÁÎÑÅÍÙÊ É ÓÁÍÙÊ ĞÏĞÕÌÑÒÎÙÊ × Internet WWW-ÓÅÒ×ÅÒ.
+%description -l ru.UTF-8
+Apache - ÑÑ‚Ğ¾ Ğ¼Ğ¾Ñ‰Ğ½Ñ‹Ğ¹, Ğ¿Ğ¾Ğ»Ğ½Ğ¾Ñ„ÑƒĞ½ĞºÑ†Ğ¸Ğ¾Ğ½Ğ°Ğ»ÑŒĞ½Ñ‹Ğ¹, ÑÑ„Ñ„ĞµĞºÑ‚Ğ¸Ğ²Ğ½Ñ‹Ğ¹, ÑĞ²Ğ¾Ğ±Ğ¾Ğ´Ğ½Ğ¾
+Ñ€Ğ°ÑĞ¿Ñ€Ğ¾ÑÑ‚Ñ€Ğ°Ğ½ÑĞµĞ¼Ñ‹Ğ¹ Ğ¸ ÑĞ°Ğ¼Ñ‹Ğ¹ Ğ¿Ğ¾Ğ¿ÑƒĞ»ÑÑ€Ğ½Ñ‹Ğ¹ Ğ² Internet WWW-ÑĞµÑ€Ğ²ĞµÑ€.
 
-%description -l sk
-Apache je vıkonnı, efektívny a voµne dostupnı Web server, bohatı na
-funkcie. Apache je tie¾ najpopulárnej¹ím Web serverom na Internete.
+%description -l sk.UTF-8
+Apache je vÃ½konnÃ½, efektÃ­vny a voÄ¾ne dostupnÃ½ Web server, bohatÃ½ na
+funkcie. Apache je tieÅ¾ najpopulÃ¡rnejÅ¡Ã­m Web serverom na Internete.
 
-%description -l sv
-Apache är en kraftfull, finessrik, effektiv och fritt tillgänglig
-webbserver. Apache är också den populäraste webbservern på Internet.
+%description -l sv.UTF-8
+Apache Ã¤r en kraftfull, finessrik, effektiv och fritt tillgÃ¤nglig
+webbserver. Apache Ã¤r ocksÃ¥ den populÃ¤raste webbservern pÃ¥ Internet.
 
-%description -l tr
-Apache serbest dağıtılan ve çok kullanılan yetenekli bir web
+%description -l tr.UTF-8
+Apache serbest daÄŸÄ±tÄ±lan ve Ã§ok kullanÄ±lan yetenekli bir web
 sunucusudur.
 
-%description -l zh_CN
-Apache ÊÇ¹¦ÄÜÇ¿¾¢ÆëÈ«¡¢¸ßĞ§ÇÒÃâ·ÑÌá¹©µÄ Web ·şÎñ³ÌĞò£¬ Í¬Ê±Ò²ÊÇ
-Internet ÉÏ×îÁ÷ĞĞµÄ Web ·şÎñ³ÌĞò¡£
+%description -l zh_CN.UTF-8
+Apache æ˜¯åŠŸèƒ½å¼ºåŠ²é½å…¨ã€é«˜æ•ˆä¸”å…è´¹æä¾›çš„ Web æœåŠ¡ç¨‹åºï¼Œ åŒæ—¶ä¹Ÿæ˜¯
+Internet ä¸Šæœ€æµè¡Œçš„ Web æœåŠ¡ç¨‹åºã€‚
 
-Èç¹ûÄúĞèÒª Web ·şÎñ³ÌĞò£¬Çë°²×° apache Èí¼ş°ü¡£
+å¦‚æœæ‚¨éœ€è¦ Web æœåŠ¡ç¨‹åºï¼Œè¯·å®‰è£… apache è½¯ä»¶åŒ…ã€‚
 
 %package base
 Summary:	The most widely used Web server on the Internet
-Summary(pl):	Serwer WWW (World Wide Web)
+Summary(pl.UTF-8):   Serwer WWW (World Wide Web)
 Group:		Networking/Daemons
 Requires(post,preun):	/sbin/chkconfig
 Requires(postun):	/usr/sbin/groupdel
@@ -262,16 +262,16 @@ Apache is a powerful, full-featured, efficient and freely-available
 Web server. Apache is also the most popular Web server on the
 Internet.
 
-%description base -l pl
-Apache jest potê¿nym, w pe³ni funkcjonalnym, wydajnym i wolnodostêpnym
-serwerem WWW (World Wide Web). Jest tak¿e najbardziej popularnym
+%description base -l pl.UTF-8
+Apache jest potÄ™Å¼nym, w peÅ‚ni funkcjonalnym, wydajnym i wolnodostÄ™pnym
+serwerem WWW (World Wide Web). Jest takÅ¼e najbardziej popularnym
 serwerem WWW w Internecie.
 
 %package suexec
 Summary:	Apache suexec wrapper
-Summary(pl):	Suexec wrapper do serwera WWW Apache
-Summary(ru):	Apache suEXEC CGI wrapper
-Summary(uk):	Apache suEXEC CGI wrapper
+Summary(pl.UTF-8):   Suexec wrapper do serwera WWW Apache
+Summary(ru.UTF-8):   Apache suEXEC CGI wrapper
+Summary(uk.UTF-8):   Apache suEXEC CGI wrapper
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Obsoletes:	apache-suexec < 2.0.0
@@ -282,59 +282,59 @@ SSI programs under user IDs different from the user ID of the calling
 web-server. Normally, when a CGI or SSI program executes, it runs as
 the same user who is running the web server.
 
-%description suexec -l pl
-SuEXEC umo¿liwia serwerowi Apache uruchamianie programów CGI i SSI z
-innym UID ni¿ wywo³uj±cy je serwer. Normalnie programy CGI i SSI s±
-wykonywane jako taki sam u¿ytkownik jak serwer WWW.
+%description suexec -l pl.UTF-8
+SuEXEC umoÅ¼liwia serwerowi Apache uruchamianie programÃ³w CGI i SSI z
+innym UID niÅ¼ wywoÅ‚ujÄ…cy je serwer. Normalnie programy CGI i SSI sÄ…
+wykonywane jako taki sam uÅ¼ytkownik jak serwer WWW.
 
-%description suexec -l ru
-ğÁËÅÔ suEXEC ĞÏÚ×ÏÌÑÅÔ ÚÁĞÕÓËÁÔØ CGI-ĞÒÏÇÒÁÍÍÙ ĞÏÄ user-id, ÏÔÌÉŞÎÙÍÉ
-ÏÔ ÔÏÇÏ, ĞÏÄ ËÏÔÏÒÙÍ ÒÁÂÏÔÁÅÔ ×ÙÚÙ×ÁÀİÉÊ ÉÈ web-ÓÅÒ×ÅÒ. âÕÄÕŞÉ
-ĞÒÁ×ÉÌØÎÏ ÉÓĞÏÌØÚÏ×ÁÎÎÙÍ, ÜÔÏÔ ĞÁËÅÔ ĞÏÚ×ÏÌÑÅÔ ÚÁÍÅÔÎÏ ÓÎÉÚÉÔØ ÒÉÓË
-ÎÁÒÕÛÅÎÉÑ ÓÉÓÔÅÍÎÏÊ ÂÅÚÏĞÁÓÎÏÓÔÉ, ×ÙÚ×ÁÎÎÙÊ ÒÁÚÒÅÛÅÎÉÅÍ ÚÁĞÕÓËÁ
-ĞÏÌØÚÏ×ÁÔÅÌÑÍ CGI-ĞÒÏÇÒÁÍÍ. ÷ÍÅÓÔÅ Ó ÔÅÍ, ÂÕÄÕŞÉ ÎÅĞÒÁ×ÉÌØÎÏ
-ÓËÏÎÆÉÇÕÒÉÒÏ×ÁÎÎÙÍ, ÜÔÏÔ ĞÁËÅÔ ÍÏÖÅÔ ÒÁÚÒÕÛÉÔØ ×ÁÛÕ ÓÉÓÔÅÍÕ, ÓÖÅŞØ ×ÁÛ
-ÄÏÍ É ÕËÒÁÓÔØ ÄÅÎØÇÉ ÉÚ ×ÁÛÅÇÏ ĞÅÎÓÉÏÎÎÏÇÏ ÆÏÎÄÁ :)). åÓÌÉ ×Ù ÎÅ
-ÉÍÅÅÔÅ ÏĞÙÔÁ ÒÁÂÏÔÙ Ó setuid root ĞÒÏÇÒÁÍÍÁÍÉ É ĞÒÏÂÌÅÍÁÍÉ ÓÉÓÔÅÍÎÏÊ
-ÂÅÚÏĞÁÓÎÏÓÔÉ, ĞÏÒÏÖÄÅÎÎÙÍÉ ÉÈ ĞÒÉÍÅÎÅÎÉÅÍ, ÎÁÓÔÏÑÔÅÌØÎÏ ÒÅËÏÍÅÎÄÕÅÍ ÎÅ
-ÉÓĞÏÌØÚÏ×ÁÔØ ÜÔÏÇÏ ĞÁËÅÔÁ...
+%description suexec -l ru.UTF-8
+ĞŸĞ°ĞºĞµÑ‚ suEXEC Ğ¿Ğ¾Ğ·Ğ²Ğ¾Ğ»ÑĞµÑ‚ Ğ·Ğ°Ğ¿ÑƒÑĞºĞ°Ñ‚ÑŒ CGI-Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼Ğ¼Ñ‹ Ğ¿Ğ¾Ğ´ user-id, Ğ¾Ñ‚Ğ»Ğ¸Ñ‡Ğ½Ñ‹Ğ¼Ğ¸
+Ğ¾Ñ‚ Ñ‚Ğ¾Ğ³Ğ¾, Ğ¿Ğ¾Ğ´ ĞºĞ¾Ñ‚Ğ¾Ñ€Ñ‹Ğ¼ Ñ€Ğ°Ğ±Ğ¾Ñ‚Ğ°ĞµÑ‚ Ğ²Ñ‹Ğ·Ñ‹Ğ²Ğ°ÑÑ‰Ğ¸Ğ¹ Ğ¸Ñ… web-ÑĞµÑ€Ğ²ĞµÑ€. Ğ‘ÑƒĞ´ÑƒÑ‡Ğ¸
+Ğ¿Ñ€Ğ°Ğ²Ğ¸Ğ»ÑŒĞ½Ğ¾ Ğ¸ÑĞ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ğ½Ğ½Ñ‹Ğ¼, ÑÑ‚Ğ¾Ñ‚ Ğ¿Ğ°ĞºĞµÑ‚ Ğ¿Ğ¾Ğ·Ğ²Ğ¾Ğ»ÑĞµÑ‚ Ğ·Ğ°Ğ¼ĞµÑ‚Ğ½Ğ¾ ÑĞ½Ğ¸Ğ·Ğ¸Ñ‚ÑŒ Ñ€Ğ¸ÑĞº
+Ğ½Ğ°Ñ€ÑƒÑˆĞµĞ½Ğ¸Ñ ÑĞ¸ÑÑ‚ĞµĞ¼Ğ½Ğ¾Ğ¹ Ğ±ĞµĞ·Ğ¾Ğ¿Ğ°ÑĞ½Ğ¾ÑÑ‚Ğ¸, Ğ²Ñ‹Ğ·Ğ²Ğ°Ğ½Ğ½Ñ‹Ğ¹ Ñ€Ğ°Ğ·Ñ€ĞµÑˆĞµĞ½Ğ¸ĞµĞ¼ Ğ·Ğ°Ğ¿ÑƒÑĞºĞ°
+Ğ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ñ‚ĞµĞ»ÑĞ¼ CGI-Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼Ğ¼. Ğ’Ğ¼ĞµÑÑ‚Ğµ Ñ Ñ‚ĞµĞ¼, Ğ±ÑƒĞ´ÑƒÑ‡Ğ¸ Ğ½ĞµĞ¿Ñ€Ğ°Ğ²Ğ¸Ğ»ÑŒĞ½Ğ¾
+ÑĞºĞ¾Ğ½Ñ„Ğ¸Ğ³ÑƒÑ€Ğ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ½Ñ‹Ğ¼, ÑÑ‚Ğ¾Ñ‚ Ğ¿Ğ°ĞºĞµÑ‚ Ğ¼Ğ¾Ğ¶ĞµÑ‚ Ñ€Ğ°Ğ·Ñ€ÑƒÑˆĞ¸Ñ‚ÑŒ Ğ²Ğ°ÑˆÑƒ ÑĞ¸ÑÑ‚ĞµĞ¼Ñƒ, ÑĞ¶ĞµÑ‡ÑŒ Ğ²Ğ°Ñˆ
+Ğ´Ğ¾Ğ¼ Ğ¸ ÑƒĞºÑ€Ğ°ÑÑ‚ÑŒ Ğ´ĞµĞ½ÑŒĞ³Ğ¸ Ğ¸Ğ· Ğ²Ğ°ÑˆĞµĞ³Ğ¾ Ğ¿ĞµĞ½ÑĞ¸Ğ¾Ğ½Ğ½Ğ¾Ğ³Ğ¾ Ñ„Ğ¾Ğ½Ğ´Ğ° :)). Ğ•ÑĞ»Ğ¸ Ğ²Ñ‹ Ğ½Ğµ
+Ğ¸Ğ¼ĞµĞµÑ‚Ğµ Ğ¾Ğ¿Ñ‹Ñ‚Ğ° Ñ€Ğ°Ğ±Ğ¾Ñ‚Ñ‹ Ñ setuid root Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼Ğ¼Ğ°Ğ¼Ğ¸ Ğ¸ Ğ¿Ñ€Ğ¾Ğ±Ğ»ĞµĞ¼Ğ°Ğ¼Ğ¸ ÑĞ¸ÑÑ‚ĞµĞ¼Ğ½Ğ¾Ğ¹
+Ğ±ĞµĞ·Ğ¾Ğ¿Ğ°ÑĞ½Ğ¾ÑÑ‚Ğ¸, Ğ¿Ğ¾Ñ€Ğ¾Ğ¶Ğ´ĞµĞ½Ğ½Ñ‹Ğ¼Ğ¸ Ğ¸Ñ… Ğ¿Ñ€Ğ¸Ğ¼ĞµĞ½ĞµĞ½Ğ¸ĞµĞ¼, Ğ½Ğ°ÑÑ‚Ğ¾ÑÑ‚ĞµĞ»ÑŒĞ½Ğ¾ Ñ€ĞµĞºĞ¾Ğ¼ĞµĞ½Ğ´ÑƒĞµĞ¼ Ğ½Ğµ
+Ğ¸ÑĞ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ñ‚ÑŒ ÑÑ‚Ğ¾Ğ³Ğ¾ Ğ¿Ğ°ĞºĞµÑ‚Ğ°...
 
-%description suexec -l uk
-ğÁËÅÔ suEXEC ÄÏÚ×ÏÌÑ¤ ÚÁĞÕÓËÁÔÉ CGI-ĞÒÏÇÒÁÍÉ Ğ¦Ä user-id, ×¦ÄÍ¦ÎÎÉÍ
-×¦Ä ÔÏÇÏ, Ğ¦Ä ÑËÉÍ ĞÒÁÃÀ¤ ÓÅÒ×ÅÒ. ğÒÉ ĞÒÁ×ÉÌØÎÏÍÕ ×ÉËÏÒÉÓÔÁÎÎ¦, ÃÅÊ
-ĞÁËÅÔ ÄÏÚ×ÏÌÑ¤ ĞÏÍ¦ÔÎÏ ÚÎÉÚÉÔÉ ÒÉÚÉË ĞÏÒÕÛÅÎÎÑ ÓÉÓÔÅÍÎÏ§ ÂÅÚĞÅËÉ,
-×ÉËÌÉËÁÎÉÊ ÄÏÚ×ÏÌÏÍ ÚÁĞÕÓËÕ ËÏÒÉÓÔÕ×ÁŞÁÍÉ CGI-ĞÒÏÇÒÁÍ. òÁÚÏÍ Ú ÔÉÍ,
-ĞÒÉ ÎÅ×¦ÒÎÏÍÕ ËÏÎÆ¦ÇÕÒÕ×ÁÎÎ¦, ÃÅÊ ĞÁËÅÔ ÍÏÖÅ ÚÒÕÊÎÕ×ÁÔÉ ×ÁÛÉ ÓÉÓÔÅÍÕ,
-ÓĞÁÌÉÔÉ ×ÁÛ Ä¦Í ¦ ×ËÒÁÓÔÉ ÇÒÏÛ¦ Ú ×ÁÛÏÇÏ ĞÅÎÓ¦ÊÎÏÇÏ ÆÏÎÄÕ :)). ñËİÏ ×É
-ÎÅ ÍÁ¤ÔÅ ÄÏÓ×¦ÄÕ ÒÏÂÏÔÉ Ú setuid root ĞÒÏÇÒÁÍÁÍÉ ÔÁ ĞÒÏÂÌÅÍÁÍÉ
-ÓÉÓÔÅÍÎÏ§ ÂÅÚĞÅËÉ, ËÏÔÒ¦ ĞÏÒÏÄÖÅÎ¦ ×ÉËÏÒÉÓÔÁÎÎÑÍ ÔÁËÉÈ ĞÒÏÇÒÁÍ,
-ÎÁÓÔ¦ÊÌÉ×Ï ÒÁÄÉÍÏ ÎÅ ×ÉËÏÒÉÓÔÏ×Õ×ÁÔÉ ÃØÏÇÏ ĞÁËÅÔÕ...
+%description suexec -l uk.UTF-8
+ĞŸĞ°ĞºĞµÑ‚ suEXEC Ğ´Ğ¾Ğ·Ğ²Ğ¾Ğ»ÑÑ” Ğ·Ğ°Ğ¿ÑƒÑĞºĞ°Ñ‚Ğ¸ CGI-Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼Ğ¸ Ğ¿Ñ–Ğ´ user-id, Ğ²Ñ–Ğ´Ğ¼Ñ–Ğ½Ğ½Ğ¸Ğ¼
+Ğ²Ñ–Ğ´ Ñ‚Ğ¾Ğ³Ğ¾, Ğ¿Ñ–Ğ´ ÑĞºĞ¸Ğ¼ Ğ¿Ñ€Ğ°Ñ†ÑÑ” ÑĞµÑ€Ğ²ĞµÑ€. ĞŸÑ€Ğ¸ Ğ¿Ñ€Ğ°Ğ²Ğ¸Ğ»ÑŒĞ½Ğ¾Ğ¼Ñƒ Ğ²Ğ¸ĞºĞ¾Ñ€Ğ¸ÑÑ‚Ğ°Ğ½Ğ½Ñ–, Ñ†ĞµĞ¹
+Ğ¿Ğ°ĞºĞµÑ‚ Ğ´Ğ¾Ğ·Ğ²Ğ¾Ğ»ÑÑ” Ğ¿Ğ¾Ğ¼Ñ–Ñ‚Ğ½Ğ¾ Ğ·Ğ½Ğ¸Ğ·Ğ¸Ñ‚Ğ¸ Ñ€Ğ¸Ğ·Ğ¸Ğº Ğ¿Ğ¾Ñ€ÑƒÑˆĞµĞ½Ğ½Ñ ÑĞ¸ÑÑ‚ĞµĞ¼Ğ½Ğ¾Ñ— Ğ±ĞµĞ·Ğ¿ĞµĞºĞ¸,
+Ğ²Ğ¸ĞºĞ»Ğ¸ĞºĞ°Ğ½Ğ¸Ğ¹ Ğ´Ğ¾Ğ·Ğ²Ğ¾Ğ»Ğ¾Ğ¼ Ğ·Ğ°Ğ¿ÑƒÑĞºÑƒ ĞºĞ¾Ñ€Ğ¸ÑÑ‚ÑƒĞ²Ğ°Ñ‡Ğ°Ğ¼Ğ¸ CGI-Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼. Ğ Ğ°Ğ·Ğ¾Ğ¼ Ğ· Ñ‚Ğ¸Ğ¼,
+Ğ¿Ñ€Ğ¸ Ğ½ĞµĞ²Ñ–Ñ€Ğ½Ğ¾Ğ¼Ñƒ ĞºĞ¾Ğ½Ñ„Ñ–Ğ³ÑƒÑ€ÑƒĞ²Ğ°Ğ½Ğ½Ñ–, Ñ†ĞµĞ¹ Ğ¿Ğ°ĞºĞµÑ‚ Ğ¼Ğ¾Ğ¶Ğµ Ğ·Ñ€ÑƒĞ¹Ğ½ÑƒĞ²Ğ°Ñ‚Ğ¸ Ğ²Ğ°ÑˆĞ¸ ÑĞ¸ÑÑ‚ĞµĞ¼Ñƒ,
+ÑĞ¿Ğ°Ğ»Ğ¸Ñ‚Ğ¸ Ğ²Ğ°Ñˆ Ğ´Ñ–Ğ¼ Ñ– Ğ²ĞºÑ€Ğ°ÑÑ‚Ğ¸ Ğ³Ñ€Ğ¾ÑˆÑ– Ğ· Ğ²Ğ°ÑˆĞ¾Ğ³Ğ¾ Ğ¿ĞµĞ½ÑÑ–Ğ¹Ğ½Ğ¾Ğ³Ğ¾ Ñ„Ğ¾Ğ½Ğ´Ñƒ :)). Ğ¯ĞºÑ‰Ğ¾ Ğ²Ğ¸
+Ğ½Ğµ Ğ¼Ğ°Ñ”Ñ‚Ğµ Ğ´Ğ¾ÑĞ²Ñ–Ğ´Ñƒ Ñ€Ğ¾Ğ±Ğ¾Ñ‚Ğ¸ Ğ· setuid root Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼Ğ°Ğ¼Ğ¸ Ñ‚Ğ° Ğ¿Ñ€Ğ¾Ğ±Ğ»ĞµĞ¼Ğ°Ğ¼Ğ¸
+ÑĞ¸ÑÑ‚ĞµĞ¼Ğ½Ğ¾Ñ— Ğ±ĞµĞ·Ğ¿ĞµĞºĞ¸, ĞºĞ¾Ñ‚Ñ€Ñ– Ğ¿Ğ¾Ñ€Ğ¾Ğ´Ğ¶ĞµĞ½Ñ– Ğ²Ğ¸ĞºĞ¾Ñ€Ğ¸ÑÑ‚Ğ°Ğ½Ğ½ÑĞ¼ Ñ‚Ğ°ĞºĞ¸Ñ… Ğ¿Ñ€Ğ¾Ğ³Ñ€Ğ°Ğ¼,
+Ğ½Ğ°ÑÑ‚Ñ–Ğ¹Ğ»Ğ¸Ğ²Ğ¾ Ñ€Ğ°Ğ´Ğ¸Ğ¼Ğ¾ Ğ½Ğµ Ğ²Ğ¸ĞºĞ¾Ñ€Ğ¸ÑÑ‚Ğ¾Ğ²ÑƒĞ²Ğ°Ñ‚Ğ¸ Ñ†ÑŒĞ¾Ğ³Ğ¾ Ğ¿Ğ°ĞºĞµÑ‚Ñƒ...
 
 %package apxs
 Summary:	APache eXtenSion tool
-Summary(pl):	Narzêdzie do rozszerzania Apache'a
+Summary(pl.UTF-8):   NarzÄ™dzie do rozszerzania Apache'a
 Group:		Development/Tools
 
 %description apxs
 APache eXtenSion tool.
 
-%description apxs -l pl
-Narzêdzie do rozszerzania Apache'a.
+%description apxs -l pl.UTF-8
+NarzÄ™dzie do rozszerzania Apache'a.
 
 %package tools
 Summary:	Apache tools
-Summary(pl):	Narzêdzia Apache'a
+Summary(pl.UTF-8):   NarzÄ™dzia Apache'a
 Group:		Development/Tools
 
 %description tools
 Apache tools.
 
-%description tools -l pl
-Narzêdzia Apache'a.
+%description tools -l pl.UTF-8
+NarzÄ™dzia Apache'a.
 
 %package index
 Summary:	Apache index.html* files
-Summary(pl):	Pliki Apache index.html*
+Summary(pl.UTF-8):   Pliki Apache index.html*
 Group:		Documentation
 Requires:	%{name}-base = %{version}-%{release}
 Obsoletes:	indexhtml
@@ -342,24 +342,24 @@ Obsoletes:	indexhtml
 %description index
 Apache index.html* files.
 
-%description index -l pl
+%description index -l pl.UTF-8
 Pliki Apache index.html*.
 
 %package doc
 Summary:	Apache 1.3.x manual
-Summary(pl):	Podrêcznik do Apache'a 1.3.x
+Summary(pl.UTF-8):   PodrÄ™cznik do Apache'a 1.3.x
 Group:		Documentation
 Requires:	%{name}-base = %{version}-%{release}
 
 %description doc
 Apache 1.3.x manual.
 
-%description doc -l pl
-Podrêcznik do Apache'a 1.3.x.
+%description doc -l pl.UTF-8
+PodrÄ™cznik do Apache'a 1.3.x.
 
 %package errordocs
 Summary:	Apache 1.3.x HTTP error documents
-Summary(pl):	Dokumenty opisuj±ce b³êdy HTTP dla Apache'a 1.3.x
+Summary(pl.UTF-8):   Dokumenty opisujÄ…ce bÅ‚Ä™dy HTTP dla Apache'a 1.3.x
 Group:		Applications/WWW
 Requires:	%{name}-mod_include = %{version}-%{release}
 
@@ -367,31 +367,31 @@ Requires:	%{name}-mod_include = %{version}-%{release}
 Apache 1.3.x HTTP error documents. Currently in English and Polish
 only.
 
-%description errordocs -l pl
-Dokumenty opisuj±ce b³êdy HTTP dla Apache'a 1.3.x. Aktualnie tylko po
+%description errordocs -l pl.UTF-8
+Dokumenty opisujÄ…ce bÅ‚Ä™dy HTTP dla Apache'a 1.3.x. Aktualnie tylko po
 angielsku i polsku.
 
 %package devel
 Summary:	Module development tools for the Apache web server
-Summary(cs):	Hlavièkové soubory pro Apache Web server
-Summary(da):	Header-filer for Apache webserveren
-Summary(de):	Include-Dateien für den Apache Web-Server
-Summary(es):	Archivos de inclusión del Apache para desarrollo de módulos
-Summary(fr):	Fichiers à inclure pour le serveur Web Apache
-Summary(id):	File header untuk Apache Web server
-Summary(is):	Hausaskrár meğ Apache vefşjóninum
-Summary(it):	File include per il web server Apache
-Summary(ja):	Apache Web ¥µ¡¼¥Ğ¡¼ÍÑ¤Î³«È¯¥Ä¡¼¥ë
-Summary(nb):	Headerfiler for webtjeneren Apache
-Summary(pl):	Pliki nag³ówkowe do tworzenia modu³ów rozszerzeñ do serwera WWW Apache
-Summary(pt):	Ficheiros de inclusão para o servidor Web Apache
-Summary(pt_BR):	Arquivos de inclusão do Apache para desenvolvimento de módulos
-Summary(ru):	æÁÊÌÙ ÚÁÇÏÌÏ×ËÏ× ÄÌÑ web server'Á Apache
-Summary(sk):	Hlavièkové súbory pre Apache Web server
-Summary(sl):	Glave za spletni stre¾nik Apache
-Summary(sv):	Huvudfiler för webbservern Apache
-Summary(uk):	úÁÓÏÂÉ ÓÔ×ÏÒÅÎÎÑ ÍÏÄÕÌ¦× ÄÌÑ web server'Õ Apache
-Summary(zh_CN):	ÓÃÓÚ Apache Web ·şÎñ³ÌĞòµÄ¿ª·¢¹¤¾ß¡£
+Summary(cs.UTF-8):   HlaviÄkovÃ© soubory pro Apache Web server
+Summary(da.UTF-8):   Header-filer for Apache webserveren
+Summary(de.UTF-8):   Include-Dateien fÃ¼r den Apache Web-Server
+Summary(es.UTF-8):   Archivos de inclusiÃ³n del Apache para desarrollo de mÃ³dulos
+Summary(fr.UTF-8):   Fichiers Ã  inclure pour le serveur Web Apache
+Summary(id.UTF-8):   File header untuk Apache Web server
+Summary(is.UTF-8):   HausaskrÃ¡r meÃ° Apache vefÃ¾jÃ³ninum
+Summary(it.UTF-8):   File include per il web server Apache
+Summary(ja.UTF-8):   Apache Web ã‚µãƒ¼ãƒãƒ¼ç”¨ã®é–‹ç™ºãƒ„ãƒ¼ãƒ«
+Summary(nb.UTF-8):   Headerfiler for webtjeneren Apache
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe do tworzenia moduÅ‚Ã³w rozszerzeÅ„ do serwera WWW Apache
+Summary(pt.UTF-8):   Ficheiros de inclusÃ£o para o servidor Web Apache
+Summary(pt_BR.UTF-8):   Arquivos de inclusÃ£o do Apache para desenvolvimento de mÃ³dulos
+Summary(ru.UTF-8):   Ğ¤Ğ°Ğ¹Ğ»Ñ‹ Ğ·Ğ°Ğ³Ğ¾Ğ»Ğ¾Ğ²ĞºĞ¾Ğ² Ğ´Ğ»Ñ web server'Ğ° Apache
+Summary(sk.UTF-8):   HlaviÄkovÃ© sÃºbory pre Apache Web server
+Summary(sl.UTF-8):   Glave za spletni streÅ¾nik Apache
+Summary(sv.UTF-8):   Huvudfiler fÃ¶r webbservern Apache
+Summary(uk.UTF-8):   Ğ—Ğ°ÑĞ¾Ğ±Ğ¸ ÑÑ‚Ğ²Ğ¾Ñ€ĞµĞ½Ğ½Ñ Ğ¼Ğ¾Ğ´ÑƒĞ»Ñ–Ğ² Ğ´Ğ»Ñ web server'Ñƒ Apache
+Summary(zh_CN.UTF-8):   ç”¨äº Apache Web æœåŠ¡ç¨‹åºçš„å¼€å‘å·¥å…·ã€‚
 Group:		Networking/Utilities
 Requires:	%{name}-apxs = %{version}-%{release}
 Provides:	%{name}(EAPI)-devel = %{version}-%{release}
@@ -402,58 +402,58 @@ Obsoletes:	apache-devel < 2.0.0
 %description devel
 The apache-devel package contains header files for Apache.
 
-%description devel -l cs
-Balíèek apache-devel obsahuje hlavièkové soubory pro Apache.
+%description devel -l cs.UTF-8
+BalÃ­Äek apache-devel obsahuje hlaviÄkovÃ© soubory pro Apache.
 
-%description devel -l da
+%description devel -l da.UTF-8
 Apache-devel pakken indeholder headerfiler for Apache.
 
-%description devel -l de
-Das Paket apache-devel enthält Header-Dateien für Apache.
+%description devel -l de.UTF-8
+Das Paket apache-devel enthÃ¤lt Header-Dateien fÃ¼r Apache.
 
-%description devel -l es
-Este paquete contiene los archivos de inclusión para el Apache.
+%description devel -l es.UTF-8
+Este paquete contiene los archivos de inclusiÃ³n para el Apache.
 
-%description devel -l fr
+%description devel -l fr.UTF-8
 Le package apache-devel contient le code source pour le serveur Web
 Apache.
 
-%description devel -l id
+%description devel -l id.UTF-8
 Package apache-devel berisi source code dari Apache Web server.
 
-%description devel -l is
-Apache-devel pakkinn inniheldur frumkóğa Apache vefşjónsins.
+%description devel -l is.UTF-8
+Apache-devel pakkinn inniheldur frumkÃ³Ã°a Apache vefÃ¾jÃ³nsins.
 
-%description devel -l it
+%description devel -l it.UTF-8
 Il pacchetto apache-devel contiene i file header per Apache.
 
-%description devel -l nb
+%description devel -l nb.UTF-8
 Apache-devel pakken inneholder headerfiler for Apache.
 
-%description devel -l pl
-Pliki nag³ówkowe dla serwera WWW Apache.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe dla serwera WWW Apache.
 
-%description devel -l pt
-O pacote apache-devel contém outros ficheiros para o Apache.
+%description devel -l pt.UTF-8
+O pacote apache-devel contÃ©m outros ficheiros para o Apache.
 
-%description devel -l pt_BR
-Este pacote contem os arquivos de inclusão para o Apache.
+%description devel -l pt_BR.UTF-8
+Este pacote contem os arquivos de inclusÃ£o para o Apache.
 
-%description devel -l ru
-ğÁËÅÔ apache-devel ÓÏÄÅÒÖÉÔ ÈÅÄÅÒÙ ÄÌÑ Web Server'Á.
+%description devel -l ru.UTF-8
+ĞŸĞ°ĞºĞµÑ‚ apache-devel ÑĞ¾Ğ´ĞµÑ€Ğ¶Ğ¸Ñ‚ Ñ…ĞµĞ´ĞµÑ€Ñ‹ Ğ´Ğ»Ñ Web Server'Ğ°.
 
-%description devel -l sk
-Balík apache-devel obsahuje zdrojovı kód Apache Web servera.
+%description devel -l sk.UTF-8
+BalÃ­k apache-devel obsahuje zdrojovÃ½ kÃ³d Apache Web servera.
 
-%description devel -l sv
-Paketet apache-devel innehåller huvudfilerna för Apache.
+%description devel -l sv.UTF-8
+Paketet apache-devel innehÃ¥ller huvudfilerna fÃ¶r Apache.
 
-%description devel -l uk
-ğÁËÅÔ apache-devel Í¦ÓÔÉÔØ ÈÅÄÅÒÉ ÄÌÑ Web Server'Á.
+%description devel -l uk.UTF-8
+ĞŸĞ°ĞºĞµÑ‚ apache-devel Ğ¼Ñ–ÑÑ‚Ğ¸Ñ‚ÑŒ Ñ…ĞµĞ´ĞµÑ€Ğ¸ Ğ´Ğ»Ñ Web Server'Ğ°.
 
 %package mod_access
 Summary:	Access control based on client hostname or IP address
-Summary(pl):	Kontrola dostêpu w oparciu o nazwê hosta lub adres IP klienta
+Summary(pl.UTF-8):   Kontrola dostÄ™pu w oparciu o nazwÄ™ hosta lub adres IP klienta
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_access) = %{version}-%{release}
@@ -470,20 +470,20 @@ allowed access to the server, while the Order directive sets the
 default access state, and configures how the Allow and Deny directives
 interact with each other.
 
-%description mod_access -l pl
-Dyrektyw dostarczanych przez mod_access mo¿na u¿ywaæ w sekcjach
-<Directory>, <Files> i <Location>, a tak¿e plikach .htaccess w celu
-kontrolowania dostêpu do poszczególnych czê¶ci serwera. Dostêp mo¿e
-byæ kontrolowany w oparciu o nazwê hosta lub adres IP klienta albo
-inn± charakterystykê ¿±dania klienta wychwycon± przez zmienne
-¶rodowiskowe. Dyrektywy Allow i Deny s± u¿ywane w celu okre¶lenia
-którzy klienci maj± dostêp do serwera, a którzy go nie maj±, natomiast
-dyrektywa Order ustawia stan domy¶lny i okre¶la sposób, w jaki
-dyrektywy Allow i Deny wp³ywaj± na siebie nawzajem.
+%description mod_access -l pl.UTF-8
+Dyrektyw dostarczanych przez mod_access moÅ¼na uÅ¼ywaÄ‡ w sekcjach
+<Directory>, <Files> i <Location>, a takÅ¼e plikach .htaccess w celu
+kontrolowania dostÄ™pu do poszczegÃ³lnych czÄ™Å›ci serwera. DostÄ™p moÅ¼e
+byÄ‡ kontrolowany w oparciu o nazwÄ™ hosta lub adres IP klienta albo
+innÄ… charakterystykÄ™ Å¼Ä…dania klienta wychwyconÄ… przez zmienne
+Å›rodowiskowe. Dyrektywy Allow i Deny sÄ… uÅ¼ywane w celu okreÅ›lenia
+ktÃ³rzy klienci majÄ… dostÄ™p do serwera, a ktÃ³rzy go nie majÄ…, natomiast
+dyrektywa Order ustawia stan domyÅ›lny i okreÅ›la sposÃ³b, w jaki
+dyrektywy Allow i Deny wpÅ‚ywajÄ… na siebie nawzajem.
 
 %package mod_actions
 Summary:	Apache module for run CGI whenever a file of a certain type is requested
-Summary(pl):	Modu³ dla Apache'a do uruchamiania skryptów cgi
+Summary(pl.UTF-8):   ModuÅ‚ dla Apache'a do uruchamiania skryptÃ³w cgi
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_actions) = %{version}-%{release}
@@ -494,14 +494,14 @@ This package contains mod_actions module. This module lets you run CGI
 scripts whenever a file of a certain type is requested. This makes it
 much easier to execute scripts that process files.
 
-%description mod_actions -l pl
-Ten modu³ pozwala na uruchamianie skryptów CGI w momencie gdy
-nadchodzi ¿±danie pobrania pliku okre¶lonego typu. Znacznie u³atwia to
-wykonywanie skryptów przetwarzaj±cych pliki.
+%description mod_actions -l pl.UTF-8
+Ten moduÅ‚ pozwala na uruchamianie skryptÃ³w CGI w momencie gdy
+nadchodzi Å¼Ä…danie pobrania pliku okreÅ›lonego typu. Znacznie uÅ‚atwia to
+wykonywanie skryptÃ³w przetwarzajÄ…cych pliki.
 
 %package mod_alias
 Summary:	Mapping different parts of the host filesystem in the document tree, and URL redirection
-Summary(pl):	Odwzorowywanie czê¶ci systemu plików w drzewie dokumentów oraz przekierowywanie URL-i
+Summary(pl.UTF-8):   Odwzorowywanie czÄ™Å›ci systemu plikÃ³w w drzewie dokumentÃ³w oraz przekierowywanie URL-i
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_alias) = %{version}-%{release}
@@ -525,27 +525,27 @@ moved to a new location.
 A more powerful and flexible set of directives for manipulating URLs
 is contained in the mod_rewrite module.
 
-%description mod_alias -l pl
-Ten modu³ umo¿liwia odwzorowywanie ró¿nych czê¶ci systemu plików
-serwera w drzewie dokumentów oraz przekierowywanie URL-i. Dyrektywy
-obs³ugiwane przez ten modu³ umo¿liwiaj± manipulowanie i kontrolê URL-i
-podczas przychodzenia ¿±dañ do serwera. Dyrektywy Alias i ScriptAlias
-s³u¿± do odwzorowywania pomiêdzy URL-ami i ¶cie¿kami w systemie
-plików. Pozwala to na udostêpnianie tre¶ci nie umieszczonej
-bezpo¶rednio wewn±trz DocumentRoota jako czê¶ci drzewa dokumentów WWW.
+%description mod_alias -l pl.UTF-8
+Ten moduÅ‚ umoÅ¼liwia odwzorowywanie rÃ³Å¼nych czÄ™Å›ci systemu plikÃ³w
+serwera w drzewie dokumentÃ³w oraz przekierowywanie URL-i. Dyrektywy
+obsÅ‚ugiwane przez ten moduÅ‚ umoÅ¼liwiajÄ… manipulowanie i kontrolÄ™ URL-i
+podczas przychodzenia Å¼Ä…daÅ„ do serwera. Dyrektywy Alias i ScriptAlias
+sÅ‚uÅ¼Ä… do odwzorowywania pomiÄ™dzy URL-ami i Å›cieÅ¼kami w systemie
+plikÃ³w. Pozwala to na udostÄ™pnianie treÅ›ci nie umieszczonej
+bezpoÅ›rednio wewnÄ…trz DocumentRoota jako czÄ™Å›ci drzewa dokumentÃ³w WWW.
 Dyrektywa ScriptAlias ponadto oznacza katalog docelowy jako
-zawieraj±cy wy³±cznie skrypty CGI.
+zawierajÄ…cy wyÅ‚Ä…cznie skrypty CGI.
 
-Dyrektywy Redirect s³u¿± do instruowania klientów o konieczno¶ci
-wys³ania nowego ¿±dania z innym URL-em. S± one zwykle u¿ywane w
-sytuacji, kiedy zasoby zosta³y przeniesione w nowe miejsce.
+Dyrektywy Redirect sÅ‚uÅ¼Ä… do instruowania klientÃ³w o koniecznoÅ›ci
+wysÅ‚ania nowego Å¼Ä…dania z innym URL-em. SÄ… one zwykle uÅ¼ywane w
+sytuacji, kiedy zasoby zostaÅ‚y przeniesione w nowe miejsce.
 
-Potê¿niejszy i bardziej elastyczny zbiór dyrektyw do manipulowania
-URL-ami znajduje siê w module mod_rewrite.
+PotÄ™Å¼niejszy i bardziej elastyczny zbiÃ³r dyrektyw do manipulowania
+URL-ami znajduje siÄ™ w module mod_rewrite.
 
 %package mod_asis
 Summary:	Sending files which contain their own HTTP headers
-Summary(pl):	Wysy³anie plików zawieraj±cych w³asne nag³ówki HTTP
+Summary(pl.UTF-8):   WysyÅ‚anie plikÃ³w zawierajÄ…cych wÅ‚asne nagÅ‚Ã³wki HTTP
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_asis) = %{version}-%{release}
@@ -561,21 +561,21 @@ cgi-script or an nph script.
 For historical reasons, this module will also process any file with
 the MIME type httpd/send-as-is.
 
-%description mod_asis -l pl
-Ten modu³ dostarcza funkcjê obs³ugi send-as-is powoduj±c±, ¿e Apache
-wysy³a dokument bez dodawania wiêkszo¶ci zwykle stosowanych nag³ówków
+%description mod_asis -l pl.UTF-8
+Ten moduÅ‚ dostarcza funkcjÄ™ obsÅ‚ugi send-as-is powodujÄ…cÄ…, Å¼e Apache
+wysyÅ‚a dokument bez dodawania wiÄ™kszoÅ›ci zwykle stosowanych nagÅ‚Ã³wkÃ³w
 HTTP.
 
-Mo¿e on s³u¿yæ do wysy³ania z serwera dowolnego rodzaju danych,
-w³±cznie z przekierowaniami i innymi specjalnymi odpowiedziami HTTP
-bez u¿ycia skryptu CGI czy nph.
+MoÅ¼e on sÅ‚uÅ¼yÄ‡ do wysyÅ‚ania z serwera dowolnego rodzaju danych,
+wÅ‚Ä…cznie z przekierowaniami i innymi specjalnymi odpowiedziami HTTP
+bez uÅ¼ycia skryptu CGI czy nph.
 
-Ze wzglêdów historycznych ten modu³ przetwarza tak¿e wszelkie pliki o
+Ze wzglÄ™dÃ³w historycznych ten moduÅ‚ przetwarza takÅ¼e wszelkie pliki o
 typie MIME httpd/send-as-is.
 
 %package mod_auth
 Summary:	Apache module with user authentication using textual files
-Summary(pl):	Modu³ uwierzytelniania u¿ytkownika przy u¿yciu plików tekstowych dla Apache
+Summary(pl.UTF-8):   ModuÅ‚ uwierzytelniania uÅ¼ytkownika przy uÅ¼yciu plikÃ³w tekstowych dla Apache
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_auth) = %{version}-%{release}
@@ -586,13 +586,13 @@ Obsoletes:	apache-mod_auth < 2.0.0
 This package contains mod_auth module. It provides for user
 authentication using textual files.
 
-%description mod_auth -l pl
-Ten pakiet zawiera modu³ mod_auth. S³u¿y on do uwierzytelniania przy
-u¿yciu plików tekstowych.
+%description mod_auth -l pl.UTF-8
+Ten pakiet zawiera moduÅ‚ mod_auth. SÅ‚uÅ¼y on do uwierzytelniania przy
+uÅ¼yciu plikÃ³w tekstowych.
 
 %package mod_auth_anon
 Summary:	Apache module with "anonymous" user access authentication
-Summary(pl):	Modu³ apache oferuj±cy anonimow± autoryzacjê u¿ytkownia
+Summary(pl.UTF-8):   ModuÅ‚ apache oferujÄ…cy anonimowÄ… autoryzacjÄ™ uÅ¼ytkownia
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_auth_anon) = %{version}-%{release}
@@ -610,21 +610,21 @@ users. One advantage of using Auth-based user tracking is that, unlike
 magic-cookies and funny URL pre/postfixes, it is completely browser
 independent and it allows users to share URLs.
 
-%description mod_auth_anon -l pl
-Ten modu³ oferuje anonimow± autoryzacjê u¿ytkownia podobnie do
-anonimowych serwerów FTP (u¿ytkownik "anonymous" oraz has³o w postaci
-adresu pocztowego u¿ytkownika). Podawane adresy mog± byæ logowane. W
-po³±czeniu z innymi (opartymi o bazy danych) metodami kontroli dostêpu
-umo¿liwia efektywne ¶ledzenie u¿ytkowników i dostosowywanie w
-zale¿no¶ci od profilu u¿ytkownika, jednocze¶nie zachowuj±c stronê
-otwart± dla "niezarejestrowanych" u¿ytkowników. Jedn± z zalet u¿ywania
-¶ledzenia u¿ytkowników opartego o uwierzytelnienie nad ciasteczkami i
-¶miesznymi prze-/przyrostkami URL-i jest ca³kowita niezale¿no¶æ od
-przegl±darki i umo¿liwienie u¿ytkownikom wspó³dzielenia URL-i.
+%description mod_auth_anon -l pl.UTF-8
+Ten moduÅ‚ oferuje anonimowÄ… autoryzacjÄ™ uÅ¼ytkownia podobnie do
+anonimowych serwerÃ³w FTP (uÅ¼ytkownik "anonymous" oraz hasÅ‚o w postaci
+adresu pocztowego uÅ¼ytkownika). Podawane adresy mogÄ… byÄ‡ logowane. W
+poÅ‚Ä…czeniu z innymi (opartymi o bazy danych) metodami kontroli dostÄ™pu
+umoÅ¼liwia efektywne Å›ledzenie uÅ¼ytkownikÃ³w i dostosowywanie w
+zaleÅ¼noÅ›ci od profilu uÅ¼ytkownika, jednoczeÅ›nie zachowujÄ…c stronÄ™
+otwartÄ… dla "niezarejestrowanych" uÅ¼ytkownikÃ³w. JednÄ… z zalet uÅ¼ywania
+Å›ledzenia uÅ¼ytkownikÃ³w opartego o uwierzytelnienie nad ciasteczkami i
+Å›miesznymi prze-/przyrostkami URL-i jest caÅ‚kowita niezaleÅ¼noÅ›Ä‡ od
+przeglÄ…darki i umoÅ¼liwienie uÅ¼ytkownikom wspÃ³Å‚dzielenia URL-i.
 
 %package mod_auth_db
 Summary:	Apache module with user authentication which uses Berkeley DB files
-Summary(pl):	Modu³ Apache'a z mechanizmem uwierzytelniania u¿ywaj±cym plików Berkeley DB
+Summary(pl.UTF-8):   ModuÅ‚ Apache'a z mechanizmem uwierzytelniania uÅ¼ywajÄ…cym plikÃ³w Berkeley DB
 Group:		Networking/Daemons
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
@@ -635,13 +635,13 @@ Obsoletes:	apache-mod_auth_db < 2.0.0
 This package contains mod_auth_db module. It provides for user
 authentication using Berkeley DB files.
 
-%description mod_auth_db -l pl
-Ten pakiet zawiera modu³ mod_auth_db. Modu³ ten s³u¿y do
-uwierzytelniania, ale jako plików danych u¿ywa Berkeley DB.
+%description mod_auth_db -l pl.UTF-8
+Ten pakiet zawiera moduÅ‚ mod_auth_db. ModuÅ‚ ten sÅ‚uÅ¼y do
+uwierzytelniania, ale jako plikÃ³w danych uÅ¼ywa Berkeley DB.
 
 %package mod_auth_digest
 Summary:	Apache user authentication module using MD5 Digest Authentication
-Summary(pl):	Modu³ Apache'a do uwierzytelniania metod± MD5 Digest Authentication
+Summary(pl.UTF-8):   ModuÅ‚ Apache'a do uwierzytelniania metodÄ… MD5 Digest Authentication
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_auth_digest) = %{version}-%{release}
@@ -652,13 +652,13 @@ Obsoletes:	apache1-mod_digest
 This package contains mod_digest module. It provides user
 authentication using MD5 Digest Authentication.
 
-%description mod_auth_digest -l pl
-Modu³ ten dostarcza metodê uwierzytelniania przy u¿yciu MD5 Digest
+%description mod_auth_digest -l pl.UTF-8
+ModuÅ‚ ten dostarcza metodÄ™ uwierzytelniania przy uÅ¼yciu MD5 Digest
 Authentication.
 
 %package mod_autoindex
 Summary:	Apache module - display index of files
-Summary(pl):	Modu³ apache do wy¶wietlania indeksu plików
+Summary(pl.UTF-8):   ModuÅ‚ apache do wyÅ›wietlania indeksu plikÃ³w
 Group:		Networking/Daemons
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
@@ -668,12 +668,12 @@ Provides:	apache(mod_autoindex) = %{version}-%{release}
 This package contains mod_autoindex module. It provides generation
 index of files.
 
-%description mod_autoindex -l pl
-Ten pakiet dostarcza modu³ autoindex, który generuje indeks plików.
+%description mod_autoindex -l pl.UTF-8
+Ten pakiet dostarcza moduÅ‚ autoindex, ktÃ³ry generuje indeks plikÃ³w.
 
 %package mod_cern_meta
 Summary:	Support for HTTP header metafiles
-Summary(pl):	Obs³uga metaplików nag³ówków HTTP
+Summary(pl.UTF-8):   ObsÅ‚uga metaplikÃ³w nagÅ‚Ã³wkÃ³w HTTP
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_cern_meta) = %{version}-%{release}
@@ -687,18 +687,18 @@ header, as well as providing other curiosities. There are many ways to
 manage meta information, this one was chosen because there is already
 a large number of CERN users who can exploit this module.
 
-%description mod_cern_meta -l pl
-Modu³ emuluj±cy semantykê metaplików CERN HTTPD. Metapliki to nag³ówki
-HTTP, które mog± byæ wysy³ane oprócz normalnego zestawu nag³ówków dla
-ka¿dego przetwarzanego pliku. Zachowuj± siê bardziej jak pliki .asis
-Apache'a i mog± dawaæ brutalny sposób wp³ywania na nag³ówek Expires:,
-a tak¿e dostarczaæ inne ciekawostki. Jest wiele sposobów zarz±dzania
-metainformacjami, ta zosta³a wybrana poniewa¿ istnieje ju¿ wielu
-u¿ytkowników CERN wykorzystuj±cych ten modu³.
+%description mod_cern_meta -l pl.UTF-8
+ModuÅ‚ emulujÄ…cy semantykÄ™ metaplikÃ³w CERN HTTPD. Metapliki to nagÅ‚Ã³wki
+HTTP, ktÃ³re mogÄ… byÄ‡ wysyÅ‚ane oprÃ³cz normalnego zestawu nagÅ‚Ã³wkÃ³w dla
+kaÅ¼dego przetwarzanego pliku. ZachowujÄ… siÄ™ bardziej jak pliki .asis
+Apache'a i mogÄ… dawaÄ‡ brutalny sposÃ³b wpÅ‚ywania na nagÅ‚Ã³wek Expires:,
+a takÅ¼e dostarczaÄ‡ inne ciekawostki. Jest wiele sposobÃ³w zarzÄ…dzania
+metainformacjami, ta zostaÅ‚a wybrana poniewaÅ¼ istnieje juÅ¼ wielu
+uÅ¼ytkownikÃ³w CERN wykorzystujÄ…cych ten moduÅ‚.
 
 %package mod_cgi
 Summary:	Invoking CGI scripts
-Summary(pl):	Wywo³ywanie skryptów CGI
+Summary(pl.UTF-8):   WywoÅ‚ywanie skryptÃ³w CGI
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_cgi) = %{version}-%{release}
@@ -715,20 +715,20 @@ are of type application/x-httpd-cgi by virtue of an AddType directive,
 will still not be executed by the server unless Options ExecCGI is
 enabled. See the Options directive for more details.
 
-%description mod_cgi -l pl
-Ten modu³ powoduje, ¿e dowolny plik o typie MIME
-application/x-httpd-cgi albo procedurze obs³ugi cgi-script (w Apache'u
-1.1 lub nowszym) bêdzie traktowany jako skrypt CGI i uruchamiany przez
-serwer, a jego wyj¶cie bêdzie zwracane klientowi. Pliki uzyskuj± ten
-typ przez posiadanie nazwy zawieraj±cej rozszerzenie okre¶lone
-dyrektyw± AddType lub bêd±c w katalogu ScriptAlias. Pliki nie bêd±ce w
-katalogu ScriptAlias, ale maj±ce typ application/x-httpd-cgi dziêki
-dyrektywie AddType nie bêd± jednak wykonywane, chyba ¿e w³±czona
-zostanie opcja ExecCGI - wiêcej szczegó³ów w dyrektywie Options.
+%description mod_cgi -l pl.UTF-8
+Ten moduÅ‚ powoduje, Å¼e dowolny plik o typie MIME
+application/x-httpd-cgi albo procedurze obsÅ‚ugi cgi-script (w Apache'u
+1.1 lub nowszym) bÄ™dzie traktowany jako skrypt CGI i uruchamiany przez
+serwer, a jego wyjÅ›cie bÄ™dzie zwracane klientowi. Pliki uzyskujÄ… ten
+typ przez posiadanie nazwy zawierajÄ…cej rozszerzenie okreÅ›lone
+dyrektywÄ… AddType lub bÄ™dÄ…c w katalogu ScriptAlias. Pliki nie bÄ™dÄ…ce w
+katalogu ScriptAlias, ale majÄ…ce typ application/x-httpd-cgi dziÄ™ki
+dyrektywie AddType nie bÄ™dÄ… jednak wykonywane, chyba Å¼e wÅ‚Ä…czona
+zostanie opcja ExecCGI - wiÄ™cej szczegÃ³Å‚Ã³w w dyrektywie Options.
 
 %package mod_define
 Summary:	Apache module - definition variables for arbitrary directives
-Summary(pl):	Modu³ Apache'a do definiowania zmiennych
+Summary(pl.UTF-8):   ModuÅ‚ Apache'a do definiowania zmiennych
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_define) = %{version}-%{release}
@@ -738,13 +738,13 @@ Obsoletes:	apache-mod_define < 2.0.0
 It provides the definition variables for arbitrary directives, i.e.
 variables which can be expanded on any(!) directive line.
 
-%description mod_define -l pl
-Modu³ ten umo¿liwia definicjê zmiennych dla dowolnych dyrektyw, tzn.
-zmiennych, które mog± byæ rozwijane w dowolnej linii dyrektywy.
+%description mod_define -l pl.UTF-8
+ModuÅ‚ ten umoÅ¼liwia definicjÄ™ zmiennych dla dowolnych dyrektyw, tzn.
+zmiennych, ktÃ³re mogÄ… byÄ‡ rozwijane w dowolnej linii dyrektywy.
 
 %package mod_digest
 Summary:	Older version of apache user authentication module using MD5 Digest Authentication
-Summary(pl):	Starsza wersja modu³u apache do autoryzacji MD5
+Summary(pl.UTF-8):   Starsza wersja moduÅ‚u apache do autoryzacji MD5
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_digest) = %{version}-%{release}
@@ -758,16 +758,16 @@ probably not work with modern browsers. Please take a look at
 mod_auth_digest which implements the most recent version of the
 standard.
 
-%description mod_digest -l pl
-Modu³ ten dostarcza metodê autoryzacji bazuj±c± na MD5 Digest
-Authentication. Implementuje on jedynie starsz± wersjê specyfikacji
-uwierzytelniania MD5, i mo¿e nie dzia³aæ z nowoczesnymi
-przegl±darkami. Lepiej u¿yæ modu³u mod_auth_digest implementuj±cego
-najnowsz± wersjê standardu.
+%description mod_digest -l pl.UTF-8
+ModuÅ‚ ten dostarcza metodÄ™ autoryzacji bazujÄ…cÄ… na MD5 Digest
+Authentication. Implementuje on jedynie starszÄ… wersjÄ™ specyfikacji
+uwierzytelniania MD5, i moÅ¼e nie dziaÅ‚aÄ‡ z nowoczesnymi
+przeglÄ…darkami. Lepiej uÅ¼yÄ‡ moduÅ‚u mod_auth_digest implementujÄ…cego
+najnowszÄ… wersjÄ™ standardu.
 
 %package mod_dir
 Summary:	Apache module for "trailing slash" redirects and serving directory index files
-Summary(pl):	Modu³ oferuj±cy przekierowania i serwowanie indeksu katalogu
+Summary(pl.UTF-8):   ModuÅ‚ oferujÄ…cy przekierowania i serwowanie indeksu katalogu
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_dir) = %{version}-%{release}
@@ -778,13 +778,13 @@ Obsoletes:	apache-mod_dir < 2.0.0
 This package contains mod_dir which provides "trailing slash"
 redirects and serving directory index files.
 
-%description mod_dir -l pl
-Modu³ oferuj±cy przekierowania o "koñcowy slash" oraz przekierowania i
-udostêpnianie indeksu katalogu.
+%description mod_dir -l pl.UTF-8
+ModuÅ‚ oferujÄ…cy przekierowania o "koÅ„cowy slash" oraz przekierowania i
+udostÄ™pnianie indeksu katalogu.
 
 %package mod_env
 Summary:	Passing of environments to CGI scripts
-Summary(pl):	Przekazywanie ¶rodowiska do skryptów CGI
+Summary(pl.UTF-8):   Przekazywanie Å›rodowiska do skryptÃ³w CGI
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_env) = %{version}-%{release}
@@ -796,15 +796,15 @@ passed from the shell which invoked the httpd process. Alternatively,
 environment variables may be set or unset within the configuration
 process.
 
-%description mod_env -l pl
-Ten modu³ pozwala na kontrolê ¶rodowiska udostêpnianego skryptom CGI i
-stronom SSI. Zmienne ¶rodowiskowe mog± byæ przekazywane z pow³oki w
+%description mod_env -l pl.UTF-8
+Ten moduÅ‚ pozwala na kontrolÄ™ Å›rodowiska udostÄ™pnianego skryptom CGI i
+stronom SSI. Zmienne Å›rodowiskowe mogÄ… byÄ‡ przekazywane z powÅ‚oki w
 czasie uruchamiania procesu httpd, albo - alternatywnie - ustawiane i
 usuwane w procesie konfiguracji.
 
 %package mod_expires
 Summary:	Apache module which generates Expires HTTP headers
-Summary(pl):	Modu³ generuj±cy nag³ówki HTTP Expires
+Summary(pl.UTF-8):   ModuÅ‚ generujÄ…cy nagÅ‚Ã³wki HTTP Expires
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_expires) = %{version}-%{release}
@@ -816,14 +816,14 @@ responses. The expiration date can set to be relative to either the
 time the source file was last modified, or to the time of the client
 access.
 
-%description mod_expires -l pl
-Modu³ kontroluje ustawianie nag³ówka HTTP Expires. Data wyga¶niêcia
-wa¿no¶ci mo¿e byæ ustalana w zale¿no¶ci od czasu modyfikacji plików
-¼ród³owych lub odwo³ania klienta.
+%description mod_expires -l pl.UTF-8
+ModuÅ‚ kontroluje ustawianie nagÅ‚Ã³wka HTTP Expires. Data wygaÅ›niÄ™cia
+waÅ¼noÅ›ci moÅ¼e byÄ‡ ustalana w zaleÅ¼noÅ›ci od czasu modyfikacji plikÃ³w
+ÅºrÃ³dÅ‚owych lub odwoÅ‚ania klienta.
 
 %package mod_headers
 Summary:	Apache module allows for the customization of HTTP response headers
-Summary(pl):	Modu³ pozwalaj±cy na modyfikacjê nag³ówków HTTP
+Summary(pl.UTF-8):   ModuÅ‚ pozwalajÄ…cy na modyfikacjÄ™ nagÅ‚Ã³wkÃ³w HTTP
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_headers) = %{version}-%{release}
@@ -834,14 +834,14 @@ This package contains mod_headers module. The module allows for the
 customization of HTTP response headers. Headers can be merged,
 replaced or removed.
 
-%description mod_headers -l pl
-Modu³ pozwalaj±cy na ³±czenie, usuwania, zamianê nag³ówków HTTP
-wysy³anych do przegl±darki. Nag³ówki mog± byæ ³±czone, zastêpowane lub
+%description mod_headers -l pl.UTF-8
+ModuÅ‚ pozwalajÄ…cy na Å‚Ä…czenie, usuwania, zamianÄ™ nagÅ‚Ã³wkÃ³w HTTP
+wysyÅ‚anych do przeglÄ…darki. NagÅ‚Ã³wki mogÄ… byÄ‡ Å‚Ä…czone, zastÄ™powane lub
 usuwane.
 
 %package mod_imap
 Summary:	Apache module with imap-file handler
-Summary(pl):	Modu³ Apache'a z obs³ug± imap-file
+Summary(pl.UTF-8):   ModuÅ‚ Apache'a z obsÅ‚ugÄ… imap-file
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_imap) = %{version}-%{release}
@@ -852,13 +852,13 @@ This package contains mod_imap module. It provides for .map files,
 replacing the functionality of the imagemap CGI program. Any directory
 or document type configured to use the handler imap-file.
 
-%description mod_imap -l pl
-Modu³ umo¿liwiaj±cy obs³ugê plików .map, zastêpuj±cy funkcjonalno¶æ
+%description mod_imap -l pl.UTF-8
+ModuÅ‚ umoÅ¼liwiajÄ…cy obsÅ‚ugÄ™ plikÃ³w .map, zastÄ™pujÄ…cy funkcjonalnoÅ›Ä‡
 programu CGI imagemap.
 
 %package mod_include
 Summary:	Server-parsed documents
-Summary(pl):	Dokumenty przetwarzane po stronie serwera
+Summary(pl.UTF-8):   Dokumenty przetwarzane po stronie serwera
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_include) = %{version}-%{release}
@@ -870,16 +870,16 @@ formated SGML comments, referred to as elements. These elements allow
 conditional text, the inclusion other files or programs, as well as
 the setting and printing of environment variables.
 
-%description mod_include -l pl
-Ten modu³ dostarcza procedurê obs³ugi przetwarzaj±c± pliki przed
-wys³aniem ich do klienta. Przetwarzanie jest sterowane specjalnie
+%description mod_include -l pl.UTF-8
+Ten moduÅ‚ dostarcza procedurÄ™ obsÅ‚ugi przetwarzajÄ…cÄ… pliki przed
+wysÅ‚aniem ich do klienta. Przetwarzanie jest sterowane specjalnie
 sformatowanymi komentarzami SGML, nazywanymi elementami. Elementy te
-pozwalaj± na tekst warunkowy, do³±czanie innych plików lub programów,
-a tak¿e ustawianie i wypisywanie zmiennych ¶rodowiskowych.
+pozwalajÄ… na tekst warunkowy, doÅ‚Ä…czanie innych plikÃ³w lub programÃ³w,
+a takÅ¼e ustawianie i wypisywanie zmiennych Å›rodowiskowych.
 
 %package mod_info
 Summary:	Apache module with comprehensive overview of the server configuration
-Summary(pl):	Modu³ dostarczaj±cy informacji na temat serwera
+Summary(pl.UTF-8):   ModuÅ‚ dostarczajÄ…cy informacji na temat serwera
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_info) = %{version}-%{release}
@@ -890,14 +890,14 @@ This package contains mod_info module. It provides a comprehensive
 overview of the server configuration including all installed modules
 and directives in the configuration files.
 
-%description mod_info -l pl
-Modu³ dostarczaj±cy wyczerpuj±cych informacji o konfiguracji serwera,
-w tym zainstalowanych modu³ach oraz dyrektywach w plikach
+%description mod_info -l pl.UTF-8
+ModuÅ‚ dostarczajÄ…cy wyczerpujÄ…cych informacji o konfiguracji serwera,
+w tym zainstalowanych moduÅ‚ach oraz dyrektywach w plikach
 konfiguracyjnych.
 
 %package mod_log_agent
 Summary:	Logging of User Agents
-Summary(pl):	Logowanie nazw klientów (User Agent)
+Summary(pl.UTF-8):   Logowanie nazw klientÃ³w (User Agent)
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_agent) = %{version}-%{release}
@@ -906,13 +906,13 @@ Provides:	apache(mod_log_agent) = %{version}-%{release}
 This module is provided strictly for compatibility with NCSA httpd,
 and is deprecated. We recommend you use mod_log_config instead.
 
-%description mod_log_agent -l pl
-Ten modu³ jest dostarczony wy³±cznie dla kompatybilno¶ci z NCSA httpd
-i jest niezalecany. Zamiast niego lepiej u¿ywaæ mod_log_config.
+%description mod_log_agent -l pl.UTF-8
+Ten moduÅ‚ jest dostarczony wyÅ‚Ä…cznie dla kompatybilnoÅ›ci z NCSA httpd
+i jest niezalecany. Zamiast niego lepiej uÅ¼ywaÄ‡ mod_log_config.
 
 %package mod_log_config
 Summary:	User-configurable logging replacement for mod_log_common
-Summary(pl):	Konfigurowalny loguj±cy zamiennik dla mod_log_common
+Summary(pl.UTF-8):   Konfigurowalny logujÄ…cy zamiennik dla mod_log_common
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_config) = %{version}-%{release}
@@ -930,23 +930,23 @@ log file and format in one step. The TransferLog and CustomLog
 directives can be used multiple times in each server to cause each
 request to be logged to multiple files.
 
-%description mod_log_config -l pl
-Ten modu³ umo¿liwia elastyczne logowanie ¿±dañ klientów. Logi s±
-zapisywane w konfigurowalnym formacie i mog± byæ zapisywane
-bezpo¶rednio do pliku lub przekazywane do zewnêtrznego programu.
-Dostêpne jest logowanie warunkowe polegaj±ce na w³±czeniu lub
-wy³±czeniu poszczególnych ¿±dañ z logowania na podstawie
-charakterystyki ¿±dania.
+%description mod_log_config -l pl.UTF-8
+Ten moduÅ‚ umoÅ¼liwia elastyczne logowanie Å¼Ä…daÅ„ klientÃ³w. Logi sÄ…
+zapisywane w konfigurowalnym formacie i mogÄ… byÄ‡ zapisywane
+bezpoÅ›rednio do pliku lub przekazywane do zewnÄ™trznego programu.
+DostÄ™pne jest logowanie warunkowe polegajÄ…ce na wÅ‚Ä…czeniu lub
+wyÅ‚Ä…czeniu poszczegÃ³lnych Å¼Ä…daÅ„ z logowania na podstawie
+charakterystyki Å¼Ä…dania.
 
-Ten modu³ udostêpnia trzy dyrektywy: TransferLog tworz±cy plik logu,
-LogFormat ustawiaj±cy w³asny format logowania i CustomLog okre¶laj±cy
-plik logu i format jednocze¶nie. Dyrektywy TransferLog i CustomLog
-mog± byæ u¿ywane wielokrotnie w ka¿dym serwerze powoduj±c logowanie
-ka¿dego ¿±dania do wielu plików.
+Ten moduÅ‚ udostÄ™pnia trzy dyrektywy: TransferLog tworzÄ…cy plik logu,
+LogFormat ustawiajÄ…cy wÅ‚asny format logowania i CustomLog okreÅ›lajÄ…cy
+plik logu i format jednoczeÅ›nie. Dyrektywy TransferLog i CustomLog
+mogÄ… byÄ‡ uÅ¼ywane wielokrotnie w kaÅ¼dym serwerze powodujÄ…c logowanie
+kaÅ¼dego Å¼Ä…dania do wielu plikÃ³w.
 
 %package mod_log_forensic
 Summary:	Apache module for forensic logging of the requests
-Summary(pl):	Modu³ Apache'a do logowania ¿±dañ w celu pó¼niejszej analizy
+Summary(pl.UTF-8):   ModuÅ‚ Apache'a do logowania Å¼Ä…daÅ„ w celu pÃ³Åºniejszej analizy
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_forensic) = %{version}-%{release}
@@ -956,13 +956,13 @@ Obsoletes:	apache-mod_log_forensic < 2.0.0
 This module provides for forensic logging of client requests. Logging
 is done before and after processing a request.
 
-%description mod_log_forensic -l pl
-Ten modu³ pozwala na logowanie ¿±dañ w celu pó¼niejszej analizy.
-Logowanie jest wykonywane przed i po przetworzeniu ¿±dania.
+%description mod_log_forensic -l pl.UTF-8
+Ten moduÅ‚ pozwala na logowanie Å¼Ä…daÅ„ w celu pÃ³Åºniejszej analizy.
+Logowanie jest wykonywane przed i po przetworzeniu Å¼Ä…dania.
 
 %package mod_log_referer
 Summary:	User-configurable logging replacement for mod_log_common
-Summary(pl):	Konfigurowalny loguj±cy zamiennik dla mod_log_common
+Summary(pl.UTF-8):   Konfigurowalny logujÄ…cy zamiennik dla mod_log_common
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_log_referer) = %{version}-%{release}
@@ -971,13 +971,13 @@ Provides:	apache(mod_log_referer) = %{version}-%{release}
 This module is provided strictly for compatibility with NCSA httpd,
 and is deprecated. We recommend you use mod_log_config instead.
 
-%description mod_log_referer -l pl
-Ten modu³ jest dostarczony wy³±cznie dla kompatybilno¶ci z NCSA httpd
-i jest niezalecany. Zamiast niego lepiej u¿ywaæ mod_log_config.
+%description mod_log_referer -l pl.UTF-8
+Ten moduÅ‚ jest dostarczony wyÅ‚Ä…cznie dla kompatybilnoÅ›ci z NCSA httpd
+i jest niezalecany. Zamiast niego lepiej uÅ¼ywaÄ‡ mod_log_config.
 
 %package mod_mime
 Summary:	Determining document types using file extensions
-Summary(pl):	Okre¶lanie typów dokumentów przy u¿yciu rozszerzeñ plików
+Summary(pl.UTF-8):   OkreÅ›lanie typÃ³w dokumentÃ³w przy uÅ¼yciu rozszerzeÅ„ plikÃ³w
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_mime) = %{version}-%{release}
@@ -989,17 +989,17 @@ document and is returned to the browser or used in content-negotiation
 within the server. In addition, a "handler" can be set for a document,
 which determines how the document will be processed within the server.
 
-%description mod_mime -l pl
-Ten modu³ s³u¿y do okre¶lania ró¿nych fragmentów metainformacji
-dotycz±cych dokumentów. Informacja ta odnoszi siê do zawarto¶ci
-dokumentu i jest zwracana przegl±darce albo u¿ywana przy negocjacji
-tre¶ci wewn±trz serwera. Ponadto dla dokumentu mo¿na ustawiæ procedurê
-obs³ugi, okre¶laj±c± w jaki sposób dokument bêdzie przetwarzany
-wewn±trz serwera.
+%description mod_mime -l pl.UTF-8
+Ten moduÅ‚ sÅ‚uÅ¼y do okreÅ›lania rÃ³Å¼nych fragmentÃ³w metainformacji
+dotyczÄ…cych dokumentÃ³w. Informacja ta odnoszi siÄ™ do zawartoÅ›ci
+dokumentu i jest zwracana przeglÄ…darce albo uÅ¼ywana przy negocjacji
+treÅ›ci wewnÄ…trz serwera. Ponadto dla dokumentu moÅ¼na ustawiÄ‡ procedurÄ™
+obsÅ‚ugi, okreÅ›lajÄ…cÄ… w jaki sposÃ³b dokument bÄ™dzie przetwarzany
+wewnÄ…trz serwera.
 
 %package mod_mime_magic
 Summary:	Determining document types using "magic numbers"
-Summary(pl):	Okre¶lanie typów dokumentów przy u¿yciu "liczb magicznych"
+Summary(pl.UTF-8):   OkreÅ›lanie typÃ³w dokumentÃ³w przy uÅ¼yciu "liczb magicznych"
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_mime_magic) = %{version}-%{release}
@@ -1017,22 +1017,22 @@ Unix, which uses "magic numbers" and other hints from a file's
 contents to figure out what the contents are. This module is active
 only if the magic file is specified by the MimeMagicFile directive.
 
-%description mod_mime_magic -l pl
-Ten modu³ okre¶la typ MIME plików w ten sam sposób, co polecenie
-file(1): sprawdza pierwsze kilka bajtów pliku. Ma byæ "drug± lini±
-obrony" dla przypadków, których nie mo¿e rozwi±zaæ mod_mime. Aby mieæ
-pewno¶æ, ¿e mod_mime dostaje pierwsz± próbê okre¶lenia typu MIME,
-nale¿y upewniæ siê, ¿e mod_mime_magic jest umieszczony w konfiguracji
+%description mod_mime_magic -l pl.UTF-8
+Ten moduÅ‚ okreÅ›la typ MIME plikÃ³w w ten sam sposÃ³b, co polecenie
+file(1): sprawdza pierwsze kilka bajtÃ³w pliku. Ma byÄ‡ "drugÄ… liniÄ…
+obrony" dla przypadkÃ³w, ktÃ³rych nie moÅ¼e rozwiÄ…zaÄ‡ mod_mime. Aby mieÄ‡
+pewnoÅ›Ä‡, Å¼e mod_mime dostaje pierwszÄ… prÃ³bÄ™ okreÅ›lenia typu MIME,
+naleÅ¼y upewniÄ‡ siÄ™, Å¼e mod_mime_magic jest umieszczony w konfiguracji
 przed mod_mime.
 
-Ten modu³ wywodzi siê z wolnodostêpnej wersji polecenia file(1) dla
-uniksów, u¿ywaj±cej "liczb magicznych" i innych podpowiedzi z
-zawarto¶ci plików w celu rozpoznania zawarto¶ci. Modu³ jest aktywny
-tylko je¶li plik magic zosta³ okre¶lony dyrektyw± MimeMagicFile.
+Ten moduÅ‚ wywodzi siÄ™ z wolnodostÄ™pnej wersji polecenia file(1) dla
+uniksÃ³w, uÅ¼ywajÄ…cej "liczb magicznych" i innych podpowiedzi z
+zawartoÅ›ci plikÃ³w w celu rozpoznania zawartoÅ›ci. ModuÅ‚ jest aktywny
+tylko jeÅ›li plik magic zostaÅ‚ okreÅ›lony dyrektywÄ… MimeMagicFile.
 
 %package mod_mmap_static
 Summary:	Apache module for mmap()ing statically configured list files
-Summary(pl):	Modu³ s³u¿±cy do mmap()owania plików
+Summary(pl.UTF-8):   ModuÅ‚ sÅ‚uÅ¼Ä…cy do mmap()owania plikÃ³w
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_mmap_static) = %{version}-%{release}
@@ -1043,13 +1043,13 @@ This package contains mod_mmap_static module. It provides mmap()ing of
 a statically configured list of frequently requested but not changed
 files.
 
-%description mod_mmap_static -l pl
-Modu³ umo¿liwia mmap()owanie statycznie skonfigurowanych plików
-(czêsto u¿ywanych, ale nie ulegaj±cych zmianom).
+%description mod_mmap_static -l pl.UTF-8
+ModuÅ‚ umoÅ¼liwia mmap()owanie statycznie skonfigurowanych plikÃ³w
+(czÄ™sto uÅ¼ywanych, ale nie ulegajÄ…cych zmianom).
 
 %package mod_negotiation
 Summary:	Content negotiation
-Summary(pl):	Negocjacja tre¶ci
+Summary(pl.UTF-8):   Negocjacja treÅ›ci
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_negotiation) = %{version}-%{release}
@@ -1065,18 +1065,18 @@ of this.
   server does an implicit filename pattern match, and choose from
   amongst the results.
 
-%description mod_negotiation -l pl
-Negocjacja tre¶ci, albo bardziej precyzyjnie wybór tre¶ci, to wybór
-dokumentu najbardziej pasuj±cego do mo¿liwo¶ci klienta spo¶ród ró¿nych
-dostêpnych dokumentów. S± dwie ró¿ne implementacje.
-- Odwzorowanie typów (plik z obs³ug± type-map) wypisuj±cy explicite
-  pliki zawieraj±ce warianty.
-- Wyszukiwanie MultiViews (w³±czane opcj± MultiViews, kiedy serwer
-  dopasowuje implicite wzorzec nazwy pliku i wybiera spo¶ród wyników).
+%description mod_negotiation -l pl.UTF-8
+Negocjacja treÅ›ci, albo bardziej precyzyjnie wybÃ³r treÅ›ci, to wybÃ³r
+dokumentu najbardziej pasujÄ…cego do moÅ¼liwoÅ›ci klienta spoÅ›rÃ³d rÃ³Å¼nych
+dostÄ™pnych dokumentÃ³w. SÄ… dwie rÃ³Å¼ne implementacje.
+- Odwzorowanie typÃ³w (plik z obsÅ‚ugÄ… type-map) wypisujÄ…cy explicite
+  pliki zawierajÄ…ce warianty.
+- Wyszukiwanie MultiViews (wÅ‚Ä…czane opcjÄ… MultiViews, kiedy serwer
+  dopasowuje implicite wzorzec nazwy pliku i wybiera spoÅ›rÃ³d wynikÃ³w).
 
 %package mod_proxy
 Summary:	Apache module with Web proxy
-Summary(pl):	Modu³ dodaj±cy obs³ugê serwera proxy
+Summary(pl.UTF-8):   ModuÅ‚ dodajÄ…cy obsÅ‚ugÄ™ serwera proxy
 Group:		Networking/Daemons
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
@@ -1090,16 +1090,16 @@ HTTP/0.9, and HTTP/1.0. The module can be configured to connect to
 other proxy modules for these and other protocols. Contains patch
 from: <http://allafrica.com/tools/apache/mod_proxy/>
 
-%description mod_proxy -l pl
-Modu³ zawiera implementacjê serwera proxy/cache dla Apache.
-Iplementacja zawiera obs³ugê FTP, CONNECT (dla SSL), HTTP/0.9 i
-HTTP/1.0. Ten modu³ mo¿e byæ skonfigurowany tak, aby ³±czy³ siê z
-innymi modu³ami proxy dla tych i innych protoko³ów. Zawiera ³atê z
+%description mod_proxy -l pl.UTF-8
+ModuÅ‚ zawiera implementacjÄ™ serwera proxy/cache dla Apache.
+Iplementacja zawiera obsÅ‚ugÄ™ FTP, CONNECT (dla SSL), HTTP/0.9 i
+HTTP/1.0. Ten moduÅ‚ moÅ¼e byÄ‡ skonfigurowany tak, aby Å‚Ä…czyÅ‚ siÄ™ z
+innymi moduÅ‚ami proxy dla tych i innych protokoÅ‚Ã³w. Zawiera Å‚atÄ™ z
 <http://allafrica.com/tools/apache/mod_proxy/>.
 
 %package mod_rewrite
 Summary:	Apache module with rule-based engine for rewrite requested URLs on the fly
-Summary(pl):	Modu³ do ,,przepisywania'' adresów URL w locie
+Summary(pl.UTF-8):   ModuÅ‚ do ,,przepisywania'' adresÃ³w URL w locie
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_rewrite) = %{version}-%{release}
@@ -1109,12 +1109,12 @@ Obsoletes:	apache-mod_rewrite < 2.0.0
 This package contains It provides a rule-based rewriting engine to
 rewrite requested URLs on the fly.
 
-%description mod_rewrite -l pl
-Modu³ oferuj±cy mo¿liwo¶æ ,,przepisywania'' adresów URL w locie.
+%description mod_rewrite -l pl.UTF-8
+ModuÅ‚ oferujÄ…cy moÅ¼liwoÅ›Ä‡ ,,przepisywania'' adresÃ³w URL w locie.
 
 %package mod_setenvif
 Summary:	Set environment variables based on client information
-Summary(pl):	Ustawianie zmiennych ¶rodowiskowych w oparciu o informacje o kliencie
+Summary(pl.UTF-8):   Ustawianie zmiennych Å›rodowiskowych w oparciu o informacje o kliencie
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_setenvif) = %{version}-%{release}
@@ -1125,15 +1125,15 @@ according to whether different aspects of the request match regular
 expressions you specify. These environment variables can be used by
 other parts of the server to make decisions about actions to be taken.
 
-%description mod_setenvif -l pl
-Modu³ mod_setenvif pozwala na ustawianie zmiennych ¶rodowiskowych w
-zale¿no¶ci od ró¿nych aspektów ¿±dania pasuj±cych do podanych wyra¿eñ
-regularnych. Te zmienne ¶rodowiskowe mog± byæ u¿ywane przez inne
-czê¶ci serwera do podejmowania decyzji o podejmowanych akcjach.
+%description mod_setenvif -l pl.UTF-8
+ModuÅ‚ mod_setenvif pozwala na ustawianie zmiennych Å›rodowiskowych w
+zaleÅ¼noÅ›ci od rÃ³Å¼nych aspektÃ³w Å¼Ä…dania pasujÄ…cych do podanych wyraÅ¼eÅ„
+regularnych. Te zmienne Å›rodowiskowe mogÄ… byÄ‡ uÅ¼ywane przez inne
+czÄ™Å›ci serwera do podejmowania decyzji o podejmowanych akcjach.
 
 %package mod_speling
 Summary:	Automatically correct minor typos in URLs
-Summary(pl):	Automatyczne poprawianie pomniejszych literówek w URL-ach
+Summary(pl.UTF-8):   Automatyczne poprawianie pomniejszych literÃ³wek w URL-ach
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_speling) = %{version}-%{release}
@@ -1149,20 +1149,20 @@ misspelling (character insertion / omission / transposition or wrong
 character). A list is built with all document names which were matched
 using this strategy.
 
-%description mod_speling -l pl
-Czasami ¿±dania dokumentów nie mog± byæ wykonane przez sam serwer
-Apache, poniewa¿ ¿±danie zosta³o napisane z b³êdem w znakach lub
-wielko¶ci liter. Ten modu³ próbuje rozwi±zaæ ten problem próbuj±c
-znale¼æ pasuj±cy dokument, nawet je¶li inne modu³y siê podda³y. Dzia³a
-on poprzez porównywanie nazwy ka¿dego dokumentu w ¿±danym katalogu z
-¿±dan± nazw± dokumentu bez zwracania uwagi na wielko¶æ liter i
-pozwalaj±c na jeden b³±d (dodany, pominiêty, przestawiony lub z³y
-znak). Tworzona jest lista dla wszystkich nazw dokumentów pasuj±cych
+%description mod_speling -l pl.UTF-8
+Czasami Å¼Ä…dania dokumentÃ³w nie mogÄ… byÄ‡ wykonane przez sam serwer
+Apache, poniewaÅ¼ Å¼Ä…danie zostaÅ‚o napisane z bÅ‚Ä™dem w znakach lub
+wielkoÅ›ci liter. Ten moduÅ‚ prÃ³buje rozwiÄ…zaÄ‡ ten problem prÃ³bujÄ…c
+znaleÅºÄ‡ pasujÄ…cy dokument, nawet jeÅ›li inne moduÅ‚y siÄ™ poddaÅ‚y. DziaÅ‚a
+on poprzez porÃ³wnywanie nazwy kaÅ¼dego dokumentu w Å¼Ä…danym katalogu z
+Å¼Ä…danÄ… nazwÄ… dokumentu bez zwracania uwagi na wielkoÅ›Ä‡ liter i
+pozwalajÄ…c na jeden bÅ‚Ä…d (dodany, pominiÄ™ty, przestawiony lub zÅ‚y
+znak). Tworzona jest lista dla wszystkich nazw dokumentÃ³w pasujÄ…cych
 dla tej strategii.
 
 %package mod_status
 Summary:	Server status report module for apache
-Summary(pl):	Modu³ dostarczaj±cy informacje statystyczne o serwerze
+Summary(pl.UTF-8):   ModuÅ‚ dostarczajÄ…cy informacje statystyczne o serwerze
 Group:		Networking/Daemons
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
@@ -1176,15 +1176,15 @@ current server statistics in an easily readable form. If required this
 page can be made to automatically refresh (given a compatible
 browser).
 
-%description mod_status -l pl
-Modu³ pozwala administratorowi na przegl±danie statystyk dotycz±cych
-pracy serwera apache (w postaci strony HTML). Strona ta mo¿e siê
-automatycznie od¶wie¿aæ (o ile jest to obs³ugiwane przez
-przegl±darkê).
+%description mod_status -l pl.UTF-8
+ModuÅ‚ pozwala administratorowi na przeglÄ…danie statystyk dotyczÄ…cych
+pracy serwera apache (w postaci strony HTML). Strona ta moÅ¼e siÄ™
+automatycznie odÅ›wieÅ¼aÄ‡ (o ile jest to obsÅ‚ugiwane przez
+przeglÄ…darkÄ™).
 
 %package mod_unique_id
 Summary:	Apache module which provides a magic token for each request
-Summary(pl):	Modu³ nadaj±cy ka¿demu ¿±daniu unikalny token
+Summary(pl.UTF-8):   ModuÅ‚ nadajÄ…cy kaÅ¼demu Å¼Ä…daniu unikalny token
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_unique_id) = %{version}-%{release}
@@ -1199,15 +1199,15 @@ machines. The environment variable UNIQUE_ID is set to the identifier
 for each request. Unique identifiers are useful for various reasons
 which are beyond the scope of this document.
 
-%description mod_unique_id -l pl
-Modu³ nadaje przy ka¿dym ¿±daniu token unikalny w ramach wszystkich
-¿±dañ, nawet w ramach poprawnie skonfigurowanego klastra z wielu
-maszyn. Modu³ ustawia przy ka¿dym ¿±daniu zmienn± ¶rodowiskow±
+%description mod_unique_id -l pl.UTF-8
+ModuÅ‚ nadaje przy kaÅ¼dym Å¼Ä…daniu token unikalny w ramach wszystkich
+Å¼Ä…daÅ„, nawet w ramach poprawnie skonfigurowanego klastra z wielu
+maszyn. ModuÅ‚ ustawia przy kaÅ¼dym Å¼Ä…daniu zmiennÄ… Å›rodowiskowÄ…
 UNIQUE_ID.
 
 %package mod_userdir
 Summary:	User home directories
-Summary(pl):	Katalogi domowe u¿ytkowników
+Summary(pl.UTF-8):   Katalogi domowe uÅ¼ytkownikÃ³w
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_userdir) = %{version}-%{release}
@@ -1215,12 +1215,12 @@ Provides:	apache(mod_userdir) = %{version}-%{release}
 %description mod_userdir
 This module provides for user-specific directories.
 
-%description mod_userdir -l pl
-Ten modu³ dostarcza obs³ugê katalogów specyficznych dla uzytkownika.
+%description mod_userdir -l pl.UTF-8
+Ten moduÅ‚ dostarcza obsÅ‚ugÄ™ katalogÃ³w specyficznych dla uzytkownika.
 
 %package mod_usertrack
 Summary:	Apache module for user tracking using cookies
-Summary(pl):	Modu³ s³u¿±cy do ¶ledzenia u¿ytkowników przy u¿yciu ciasteczek
+Summary(pl.UTF-8):   ModuÅ‚ sÅ‚uÅ¼Ä…cy do Å›ledzenia uÅ¼ytkownikÃ³w przy uÅ¼yciu ciasteczek
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_usertrack) = %{version}-%{release}
@@ -1231,14 +1231,14 @@ This package contains the user tracking module which did its own
 logging using CookieLog directory. This module allow multiple log
 files.
 
-%description mod_usertrack -l pl
-Modu³ pozwalaj±cy na ¶ledzenie u¿ytkowników przy pomocy ciasteczek.
-Modu³ ma w³asne logowanie przy u¿yciu katalogu CookieLog; pozwala na
-wiele plików logów.
+%description mod_usertrack -l pl.UTF-8
+ModuÅ‚ pozwalajÄ…cy na Å›ledzenie uÅ¼ytkownikÃ³w przy pomocy ciasteczek.
+ModuÅ‚ ma wÅ‚asne logowanie przy uÅ¼yciu katalogu CookieLog; pozwala na
+wiele plikÃ³w logÃ³w.
 
 %package mod_vhost_alias
 Summary:	Apache module for dynamically configured mass virtual hosting
-Summary(pl):	Modu³ dodaj±cy obs³ugê hostów wirtualnych
+Summary(pl.UTF-8):   ModuÅ‚ dodajÄ…cy obsÅ‚ugÄ™ hostÃ³w wirtualnych
 Group:		Networking/Daemons
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
@@ -1249,13 +1249,13 @@ Obsoletes:	apache-mod_vhost_alias < 2.0.0
 This package contains the mod_vhost_alias. It provides support for
 dynamically configured mass virtual hosting.
 
-%description mod_vhost_alias -l pl
-Modu³ umo¿liwia na dynamiczne konfigurowanie masowej ilo¶ci serwerów
+%description mod_vhost_alias -l pl.UTF-8
+ModuÅ‚ umoÅ¼liwia na dynamiczne konfigurowanie masowej iloÅ›ci serwerÃ³w
 wirtualnych.
 
 %package -n htpasswd-%{name}
 Summary:	Apache 1.x htpasswd utility
-Summary(pl):	Narzêdzie htpasswd z Apache'a 1.x
+Summary(pl.UTF-8):   NarzÄ™dzie htpasswd z Apache'a 1.x
 Group:		Networking/Utilities
 Provides:	htpasswd
 Obsoletes:	htpasswd
@@ -1266,12 +1266,12 @@ usernames and password for basic authentication of HTTP users. This
 package contains htpasswd from Apache 1.x; this version supports
 plaintext passwords and CRYPT (default), MD5 and SHA1 encryptions.
 
-%description -n htpasswd-%{name} -l pl
-htpasswd s³u¿y do tworzenia i uaktualniania p³askich plików s³u¿±cych
-do przechowywania nazw u¿ytkowników i hase³ do uwierzytelnienia basic
-u¿ytkowników HTTP. Ten pakiet zawiera htpasswd z Apache'a 1.x; ta
-wersja obs³uguje has³a zapisane czystym tekstem oraz zakodowane
-algorytmami CRYPT (domy¶lnym), MD5 i SHA1.
+%description -n htpasswd-%{name} -l pl.UTF-8
+htpasswd sÅ‚uÅ¼y do tworzenia i uaktualniania pÅ‚askich plikÃ³w sÅ‚uÅ¼Ä…cych
+do przechowywania nazw uÅ¼ytkownikÃ³w i haseÅ‚ do uwierzytelnienia basic
+uÅ¼ytkownikÃ³w HTTP. Ten pakiet zawiera htpasswd z Apache'a 1.x; ta
+wersja obsÅ‚uguje hasÅ‚a zapisane czystym tekstem oraz zakodowane
+algorytmami CRYPT (domyÅ›lnym), MD5 i SHA1.
 
 %prep
 %setup -q -n apache_%{version} -a3 %{?with_lingerd:-a25}
