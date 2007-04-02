@@ -5,7 +5,7 @@
 /var/log/apache/*referer_log
 {
 	sharedscripts
-    olddir /var/log/archiv/apache
+    olddir /var/log/archive/apache
     postrotate
 		/sbin/service apache flush-logs > /dev/null
     endscript
