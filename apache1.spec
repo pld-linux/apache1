@@ -28,7 +28,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.37
-Release:	8
+Release:	9
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1387,7 +1387,7 @@ install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig,monit} \
 	$RPM_BUILD_ROOT%{_datadir}/errordocs \
 	$RPM_BUILD_ROOT%{_sysconfdir}/{webapps.d,conf.d} \
 	$RPM_BUILD_ROOT%{_libexecdir} \
-	$RPM_BUILD_ROOT/var/{log/{apache,archiv/apache},run/apache}
+	$RPM_BUILD_ROOT/var/{log/{apache,archive/apache},run/apache}
 
 %{__make} -j1 install-quiet \
 	root=$RPM_BUILD_ROOT
