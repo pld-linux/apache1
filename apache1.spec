@@ -254,6 +254,7 @@ Obsoletes:	apache < 2.0.0
 Obsoletes:	apache-extra
 Obsoletes:	apache6
 Conflicts:	apache1 < 1.3.37-4
+Conflicts:	logrotate < 3.7.4
 # for the posttrans scriptlet, conflicts because in vserver environment rpm package is not installed.
 Conflicts:	rpm < 4.4.2-0.2
 
