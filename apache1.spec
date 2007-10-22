@@ -28,7 +28,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.39
-Release:	0.1
+Release:	0.2
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -313,17 +313,6 @@ wykonywane jako taki sam użytkownik jak serwer WWW.
 системної безпеки, котрі породжені використанням таких програм,
 настійливо радимо не використовувати цього пакету...
 
-%package apxs
-Summary:	APache eXtenSion tool
-Summary(pl.UTF-8):	Narzędzie do rozszerzania Apache'a
-Group:		Development/Tools
-
-%description apxs
-APache eXtenSion tool.
-
-%description apxs -l pl.UTF-8
-Narzędzie do rozszerzania Apache'a.
-
 %package tools
 Summary:	Apache tools
 Summary(pl.UTF-8):	Narzędzia Apache'a
@@ -396,11 +385,11 @@ Summary(sv.UTF-8):	Huvudfiler för webbservern Apache
 Summary(uk.UTF-8):	Засоби створення модулів для web server'у Apache
 Summary(zh_CN.UTF-8):	用于 Apache Web 服务程序的开发工具。
 Group:		Networking/Utilities
-Requires:	%{name}-apxs = %{version}-%{release}
 Provides:	%{name}(EAPI)-devel = %{version}-%{release}
 Provides:	apache(EAPI)-devel = %{version}-%{release}
 %{?with_ipv6:Provides:	apache1(ipv6)-devel}
 Obsoletes:	apache-devel < 2.0.0
+Obsoletes:	apache1-apxs
 
 %description devel
 The apache-devel package contains header files for Apache.
@@ -1916,11 +1905,6 @@ fi
 %{_datadir}/icons/small/*.png
 %attr(755,root,root) %{_datadir}/cgi-bin
 
-%files apxs
-%defattr(644,root,root,755)
-%attr(755,root,root) %{apxs}
-%{_mandir}/man8/apxs1.8*
-
 %files tools
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/ab
@@ -2250,6 +2234,8 @@ fi
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{apxs}
+%{_mandir}/man8/apxs1.8*
 %{_includedir}
 
 %files -n htpasswd-%{name}
