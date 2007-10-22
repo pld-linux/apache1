@@ -27,12 +27,12 @@ Summary(tr.UTF-8):	Lider WWW tarayıcı
 Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
-Version:	1.3.37
-Release:	10
+Version:	1.3.39
+Release:	0.1
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
-# Source0-md5:	b278f0969a9ccadeb781316e79e3520f
+# Source0-md5:	76066f630203291acd20c764e5eedb6e
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
 Source3:	apache-icons.tar.gz
@@ -59,6 +59,7 @@ Source21:	%{name}-mod_cern_meta.conf
 Source22:	%{name}-mod_setenvif.conf
 Source23:	%{name}-mod_vhost_alias.conf
 Source24:	%{name}-errordocs.conf
+# http://www.iagora.com/about/software/lingerd/
 Source25:	http://images.iagora.com/media/software/lingerd/lingerd-0.94.tar.gz
 # Source25-md5:	6401015bafad4f44fdf8a9a1795d9258
 Patch0:		%{name}-PLD.patch
@@ -105,6 +106,7 @@ Patch38:	%{name}-GNU_xargs.patch
 Patch39:	%{name}-security_htdigest_local_buffer_overflow.patch
 Patch40:	%{name}-security_htpasswd_user_buffer_overflow.patch
 Patch41:	%{name}-security_check_forensic_tempfiles.patch
+Patch42:	%{name}-lingerd.patch
 URL:		http://httpd.apache.org/
 BuildRequires:	bash
 BuildRequires:	db-devel >= 4.1
@@ -1321,11 +1323,10 @@ algorytmami CRYPT (domyślnym), MD5 i SHA1.
 %patch41 -p2
 
 %if %{with lingerd}
-mv lingerd-* _lingerd
 mkdir -p lingerd
-cp -a _lingerd/{README,TUNING,LICENSE,TODO,ChangeLog} lingerd
-cp -a _lingerd/{apache-1.3/ap_lingerd.c,li_config.h} src/main
-patch -p0 -d src < _lingerd/apache-1.3/aplinger-ssl.diff
+cp -a lingerd-*/{README,TUNING,LICENSE,TODO,ChangeLog} lingerd
+cp -a lingerd-*/{apache-1.3/ap_lingerd.c,li_config.h} src/main
+%patch42 -p1
 %endif
 
 %build
@@ -1376,7 +1377,7 @@ rm -f src/modules/standard/mod_rewrite.so
 	LIBS_SHLIB="-ldb %{?with_rewrite_ldap:-lldap -llber}"
 
 %if %{with lingerd}
-%{__make} -C _lingerd lingerd \
+%{__make} -C lingerd-* lingerd \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags}"
 	LDFLAGS="%{rpmldflags}"
@@ -1394,7 +1395,7 @@ install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig,monit} \
 	root=$RPM_BUILD_ROOT
 
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/apache1
-sed -e '%{?with_lingerd:s,/usr/lib,%{_libdir},g}' %{SOURCE1} > $RPM_BUILD_ROOT/etc/rc.d/init.d/apache
+sed -e 's,/usr/lib,%{_libdir},g' %{SOURCE1} > $RPM_BUILD_ROOT/etc/rc.d/init.d/apache
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/apache
 bzip2 -dc %{SOURCE5} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 
@@ -1482,7 +1483,7 @@ rm $RPM_BUILD_ROOT%{_prefix}/share/apache1-manual/{mpeix,netware,new_features_1_
 rm $RPM_BUILD_ROOT%{_prefix}/share/apache1-manual/{win_{compiling,service}.html*,windows.html*}
 
 %if %{with lingerd}
-install _lingerd/lingerd $RPM_BUILD_ROOT%{_libexecdir}
+install lingerd-*/lingerd $RPM_BUILD_ROOT%{_libexecdir}
 install -d $RPM_BUILD_ROOT%{_localstatedir}/run/lingerd
 %endif
 
