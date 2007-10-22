@@ -1251,10 +1251,10 @@ Index: src/main/http_main.c
  #ifdef TPF
      show_os_specific_compile_settings();
  #endif
-@@ -4339,6 +4408,22 @@
-     ap_server_pre_read_config  = ap_make_array(pcommands, 1, sizeof(char *));
+@@ -4468,6 +4468,22 @@
      ap_server_post_read_config = ap_make_array(pcommands, 1, sizeof(char *));
      ap_server_config_defines   = ap_make_array(pcommands, 1, sizeof(char *));
+     pid_table                  = ap_make_table(pglobal, HARD_SERVER_LIMIT);
 +
 +#ifdef EAPI
 +    ap_hook_init();
@@ -1591,38 +1591,35 @@ Index: src/modules/standard/mod_rewrite.c
          return ap_pstrdup(r->pool, "");
      }
 
-+---------------------------------------------------------------------------
-| Add an EAPI hook to allow other modules to add content to 
-| the status HTML page.
-+---------------------------------------------------------------------------
-Index: src/modules/standard/mod_status.c
---- src/modules/standard/mod_status.c	28 Jul 2006 13:55:27 -0000	1.1.1.17
-+++ src/modules/standard/mod_status.c	28 Jul 2006 13:56:29 -0000	1.14
-@@ -652,12 +678,23 @@
+--- src/modules/standard/mod_status.c~	2007-10-23 01:33:07.000000000 +0300
++++ src/modules/standard/mod_status.c	2007-10-23 01:45:00.186221317 +0300
+@@ -679,6 +679,18 @@
  			    ap_rprintf(r,
  			     "<td>?<td nowrap>?<td nowrap>..reading.. </tr>\n\n");
  			else
 +#ifndef NO_PRETTYPRINT
 +			    ap_rprintf(r,
-+			     "<td nowrap><font face=\"Arial,Helvetica\" size=\"-1\">%s</font>"
-+			     "<td nowrap><font face=\"Arial,Helvetica\" size=\"-1\">%s</font>"
-+			     "<td nowrap><font face=\"Arial,Helvetica\" size=\"-1\">%s</font>"
-+			     "</tr>\n\n",
-+			     score_record.client,
-+			     vhost ? vhost->server_hostname : "(unavailable)",
-+			     ap_escape_html(r->pool, score_record.request));
++			     "<td nowrap><font face=\"Arial,Helvetica\" size=\"-1\">%s"
++				 "<td nowrap><font face=\"Arial,Helvetica\" size=\"-1\">%s"
++				 "<td nowrap><font face=\"Arial,Helvetica\" size=\"-1\">%s"
++				 "</tr>\n\n",
++			     ap_escape_html(r->pool, score_record.client),
++			     vhost ? ap_escape_html(r->pool, 
++				vhost->server_hostname) : "(unavailable)",
++			     ap_escape_html(r->pool,
++                                            ap_escape_logitem(r->pool, score_record.request)));
 +#else
  			    ap_rprintf(r,
  			     "<td>%s<td nowrap>%s<td nowrap>%s</tr>\n\n",
  			     ap_escape_html(r->pool, score_record.client),
- 			     vhost ? ap_escape_html(r->pool, 
+@@ -686,6 +698,7 @@
  				vhost->server_hostname) : "(unavailable)",
- 			     ap_escape_html(r->pool, score_record.request));
+ 			     ap_escape_html(r->pool,
+                                             ap_escape_logitem(r->pool, score_record.request)));
 +#endif
  		    }		/* no_table_report */
  		}			/* !short_report */
  	    }			/* if (<active child>) */
-
 +---------------------------------------------------------------------------
 | Add hooks to the scheme processing to allow other modules to
 | recognize more schemes by intercepting this processing.
