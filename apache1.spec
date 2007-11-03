@@ -111,7 +111,7 @@ URL:		http://httpd.apache.org/
 BuildRequires:	bash
 BuildRequires:	db-devel >= 4.1
 BuildRequires:	mm-devel >= 1.3.0
-%{?with_rewrite_ldap:BuildRequires:	openldap-devel}
+%{?with_rewrite_ldap:BuildRequires:	openldap-devel >= 2.4.6}
 BuildRequires:	perl-base
 BuildRequires:	rpm-build >= 4.4.0
 BuildRequires:	rpm-perlprov
