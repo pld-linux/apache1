@@ -7,8 +7,8 @@
 ## ____________________________________________________________________________
 ##
 ## Annotated patch file: addon.patch
-## Copyright (c) 1998-2001 Ralf S. Engelschall, All Rights Reserved. 
-## Created on: 28-Jul-2006
+## Copyright (c) 1998-2007 Ralf S. Engelschall, All Rights Reserved. 
+## Created on: 12-Sep-2007
 ##
 ## This file assembles changes to existing Apache source files
 ## between the original Apache and the patched variant. It can be
@@ -40,8 +40,8 @@ Index: src/Configuration.tmpl
 | Add more beautiful optic to the status page table..
 +---------------------------------------------------------------------------
 Index: src/modules/standard/mod_status.c
---- src/modules/standard/mod_status.c	28 Jul 2006 13:55:27 -0000	1.1.1.17
-+++ src/modules/standard/mod_status.c	28 Jul 2006 13:56:29 -0000	1.14
+--- src/modules/standard/mod_status.c	10 Sep 2007 20:30:37 -0000	1.1.1.18
++++ src/modules/standard/mod_status.c	12 Sep 2007 05:32:20 -0000
 @@ -442,12 +442,33 @@
  	    if (no_table_report)
  		ap_rputs("<p><hr><h2>Server Details</h2>\n\n", r);
@@ -76,7 +76,7 @@ Index: src/modules/standard/mod_status.c
  	}
  
  	for (i = 0; i < HARD_SERVER_LIMIT; ++i) {
-@@ -575,6 +596,11 @@
+@@ -576,6 +597,11 @@
  				vhost->server_hostname) : "(unavailable)");
  		    }
  		    else {		/* !no_table_report */
@@ -88,7 +88,7 @@ Index: src/modules/standard/mod_status.c
  			if (score_record.status == SERVER_DEAD)
  #ifdef TPF
                              if (kill(ps_record.pid, 0) == 0) {
-@@ -587,12 +613,12 @@
+@@ -588,12 +614,12 @@
                              } else
  #endif /* TPF */
  			    ap_rprintf(r,
@@ -103,19 +103,31 @@ Index: src/modules/standard/mod_status.c
  				i, (int) ps_record.generation,
  				(int) ps_record.pid, (int) conn_lres,
  				my_lres, lres);
-@@ -696,6 +733,12 @@
- #endif
- 	}
- 
-+#ifdef EAPI
-+    ap_hook_use("ap::mod_status::display",
-+                AP_HOOK_SIG4(void,ptr,int,int), AP_HOOK_ALL,
-+                r, no_table_report, short_report);
+@@ -653,6 +679,16 @@
+ 			    ap_rprintf(r,
+ 			     "<td>?<td nowrap>?<td nowrap>..reading.. </tr>\n\n");
+ 			else
++#ifndef NO_PRETTYPRINT
++			    ap_rprintf(r,
++			     "<td nowrap><font face=\"Arial,Helvetica\" size=\"-1\">%s</font>"
++			     "<td nowrap><font face=\"Arial,Helvetica\" size=\"-1\">%s</font>"
++			     "<td nowrap><font face=\"Arial,Helvetica\" size=\"-1\">%s</font>"
++			     "</tr>\n\n",
++			     score_record.client,
++			     vhost ? vhost->server_hostname : "(unavailable)",
++			     ap_escape_html(r->pool, score_record.request));
++#else
+ 			    ap_rprintf(r,
+ 			     "<td>%s<td nowrap>%s<td nowrap>%s</tr>\n\n",
+ 			     ap_escape_html(r->pool, score_record.client),
+@@ -660,6 +696,7 @@
+ 				vhost->server_hostname) : "(unavailable)",
+ 			     ap_escape_html(r->pool,
+                                             ap_escape_logitem(r->pool, score_record.request)));
 +#endif
-+
-     } else {
- 
- 	if (!short_report) {
+ 		    }		/* no_table_report */
+ 		}			/* !short_report */
+ 	    }			/* if (<active child>) */
 
 +---------------------------------------------------------------------------
 | Add a hyperlink to the mod_define.html document.
