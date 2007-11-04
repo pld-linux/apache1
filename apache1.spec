@@ -28,7 +28,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.39
-Release:	1
+Release:	2
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -40,7 +40,7 @@ Source3:	apache-icons.tar.gz
 Source4:	%{name}.sysconfig
 Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/apache-non-english-man-pages.tar.bz2
 # Source5-md5:	74ff6e8d8a7b365b48ed10a52fbeb84e
-Source6:	%{name}.monitrc
+
 Source7:	%{name}-httpd.conf
 Source8:	%{name}-common.conf
 Source9:	%{name}-mod_status.conf
@@ -1374,7 +1374,7 @@ rm -f src/modules/standard/mod_rewrite.so
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig,monit} \
+install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig} \
 	$RPM_BUILD_ROOT%{_datadir}/errordocs \
 	$RPM_BUILD_ROOT%{_sysconfdir}/{webapps.d,conf.d} \
 	$RPM_BUILD_ROOT%{_libexecdir} \
@@ -1439,8 +1439,6 @@ echo "LoadModule mmap_static_module	modules/mod_mmap_static.so" > $CFG/76_mod_mm
 install %{SOURCE13} $CFG/77_mod_info.conf
 install %{SOURCE24}	$CFG/80_errordocs.conf
 install %{SOURCE17}	$CFG/80_mod_alias.conf
-
-install %{SOURCE6} $RPM_BUILD_ROOT/etc/monit/apache.monitrc
 
 ln -sf index.html.en $RPM_BUILD_ROOT%{_datadir}/html/index.html
 
@@ -1571,12 +1569,6 @@ sed -i -e '
 		aInclude webapps.d/*.conf
 	}
 ' /etc/apache/apache.conf
-fi
-
-# rename monitrc to be service name like other files
-if [ -f /etc/monit/apache1.monitrc.rpmsave ]; then
-	mv -f /etc/monit/apache.monitrc{,.rpmnew}
-	mv -f /etc/monit/{apache1.monitrc.rpmsave,apache.monitrc}
 fi
 
 %triggerpostun mod_auth_db -- apache-mod_auth_db <= 1.3.20-2
@@ -1882,7 +1874,6 @@ fi
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_common.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/apache
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/logrotate.d/*
-%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/monit/*.monitrc
 %dir %{_libexecdir}
 %if %{with lingerd}
 %attr(755,root,root) %{_libexecdir}/lingerd
