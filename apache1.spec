@@ -28,7 +28,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.39
-Release:	2
+Release:	3
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1387,6 +1387,8 @@ install %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/apache1
 sed -e 's,/usr/lib,%{_libdir},g' %{SOURCE1} > $RPM_BUILD_ROOT/etc/rc.d/init.d/apache
 install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/apache
 bzip2 -dc %{SOURCE5} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
+mv $RPM_BUILD_ROOT%{_mandir}/hu/man8/{httpd,apache}.8
+mv $RPM_BUILD_ROOT%{_mandir}/pl/man8/{httpd,apache}.8
 
 touch $RPM_BUILD_ROOT/var/log/apache/{access,error,agent,referer}_log
 
@@ -1883,6 +1885,8 @@ fi
 %attr(755,root,root) %{_sbindir}/apache
 %dir %attr(1773,root,http) /var/run/apache
 %{_mandir}/man8/apache.8*
+%lang(hu) %{_mandir}/hu/man8/apache.8*
+%lang(pl) %{_mandir}/pl/man8/apache.8*
 %attr(2751,root,logs) %dir /var/log/apache
 %attr(2750,root,logs) %dir /var/log/archive/apache
 %attr(640,root,logs) %ghost /var/log/apache/*
@@ -1898,18 +1902,17 @@ fi
 
 %files tools
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/htdigest
 %attr(755,root,root) %{_sbindir}/ab
 %attr(755,root,root) %{_sbindir}/apachectl
-%attr(755,root,root) %{_bindir}/htdigest
 %attr(755,root,root) %{_sbindir}/logresolve
 %attr(755,root,root) %{_sbindir}/rotatelogs
+%lang(ko) %{_mandir}/ko/man8/ab.8*
 %{_mandir}/man1/htdigest.1*
 %{_mandir}/man8/ab*
 %{_mandir}/man8/apachectl*
-%{_mandir}/man8/[l-z]*
-%lang(hu) %{_mandir}/hu/man8/*
-%lang(ko) %{_mandir}/ko/man8/*
-%lang(pl) %{_mandir}/pl/man8/*
+%{_mandir}/man8/logresolve.8*
+%{_mandir}/man8/rotatelogs.8*
 
 %files index
 %defattr(644,root,root,755)
@@ -2222,6 +2225,7 @@ fi
 %files suexec
 %defattr(644,root,root,755)
 %attr(4755,root,root) %{_sbindir}/suexec
+%{_mandir}/man8/suexec.8*
 
 %files devel
 %defattr(644,root,root,755)
