@@ -3,6 +3,8 @@
 /var/log/apache/*agent_log
 /var/log/apache/*error_log
 /var/log/apache/*referer_log
+/var/log/apache/ssl_engine_log
+/var/log/apache/ssl_request_log
 {
 	sharedscripts
     olddir /var/log/archive/apache
