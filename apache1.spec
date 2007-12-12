@@ -28,7 +28,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.39
-Release:	5
+Release:	6
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -256,6 +256,7 @@ Obsoletes:	apache < 2.0.0
 Obsoletes:	apache-extra
 Obsoletes:	apache6
 Conflicts:	apache1 < 1.3.37-4
+Conflicts:	apache1-mod_ssl < 2.8.30_1.3.39-3
 Conflicts:	logrotate < 3.7-4
 # for the posttrans scriptlet, conflicts because in vserver environment rpm package is not installed.
 Conflicts:	rpm < 4.4.2-0.2
@@ -2236,7 +2237,7 @@ fi
 %files -n htpasswd-%{name}
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/htpasswd
-%{_sbindir}/htpasswd
+%attr(755,root,root) %{_sbindir}/htpasswd
 %{_mandir}/man1/htpasswd.1*
 
 %files mod_access
