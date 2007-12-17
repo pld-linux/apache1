@@ -6,9 +6,13 @@
 /var/log/apache/ssl_engine_log
 /var/log/apache/ssl_request_log
 {
+	daily
+	rotate 7
+	missingok
+	notifempty
 	sharedscripts
-    olddir /var/log/archive/apache
-    postrotate
+	olddir /var/log/archive/apache
+	postrotate
 		/sbin/service apache flush-logs > /dev/null
-    endscript
+	endscript
 }
