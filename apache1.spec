@@ -28,7 +28,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.39
-Release:	7
+Release:	7.1
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -124,12 +124,12 @@ Requires:	%{name}-mod_mime = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sysconfdir	/etc/apache
-%define		_includedir	%{_prefix}/include/apache1
-%define		_libexecdir	%{_prefix}/%{_lib}/apache1
-%define		_datadir	%{httpdir}
+%define		_includedir	%{_prefix}/include/%{name}
+%define		_libexecdir	%{_prefix}/%{_lib}/%{name}
 %define		apxs		/usr/sbin/apxs1
 %define		httpdir		/home/services/apache
-%define		manualdir	%{_prefix}/share/apache1-manual
+%define		manualdir	%{_datadir}/%{name}/manual
+%define		cgibindir	%{_prefix}/lib/cgi-bin/%{name}
 
 %description
 Apache is a powerful, full-featured, efficient and freely-available
@@ -655,6 +655,7 @@ Summary(pl.UTF-8):	Moduł apache do wyświetlania indeksu plików
 Group:		Networking/Daemons
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
+Requires:	apache-icons
 Provides:	apache(mod_autoindex) = %{version}-%{release}
 
 %description mod_autoindex
@@ -1266,8 +1267,21 @@ użytkowników HTTP. Ten pakiet zawiera htpasswd z Apache'a 1.x; ta
 wersja obsługuje hasła zapisane czystym tekstem oraz zakodowane
 algorytmami CRYPT (domyślnym), MD5 i SHA1.
 
+%package cgi_test
+Summary:	cgi test/demo programs
+Summary(pl.UTF-8):	Programy testowe/przykładowe cgi
+Group:		Networking/Utilities
+Requires:	%{name}-base = %{version}-%{release}
+Requires:	filesystem >= 2.0-1
+
+%description cgi_test
+Two cgi test/demo programs: test-cgi and print-env.
+
+%description cgi_test -l pl.UTF-8
+Dwa programy testowe/przykładowe cgi: test-cgi and print-env.
+
 %prep
-%setup -q -n apache_%{version} -a3 %{?with_lingerd:-a25}
+%setup -q -n apache_%{version} %{?with_lingerd:-a25}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -1319,34 +1333,23 @@ cp -a lingerd-*/{apache-1.3/ap_lingerd.c,li_config.h} src/main
 %patch42 -p1
 %endif
 
+# fix libdir (at least in PLD layout; no need to care about other ones)
+%{__sed} -i -e 's,/lib$,/%{_lib},' config.layout
+
 %build
 OPTIM="%{rpmcflags} -DHARD_SERVER_LIMIT=2048" \
 ./configure \
-	--prefix=%{_sysconfdir} \
-	--exec-prefix=%{_libexecdir} \
-	--bindir=%{_bindir} \
-	--sbindir=%{_sbindir} \
-	--sysconfdir=%{_sysconfdir} \
-	--datadir=%{_datadir} \
-	--includedir=%{_includedir} \
-	--libexecdir=%{_sysconfdir}/modules \
-	--localstatedir=/var \
-	--mandir=%{_mandir} \
-	--manualdir=%{manualdir} \
-	--runtimedir=/var/run \
-	--logfiledir=/var/log/apache \
 	--with-layout=PLD \
 	--without-confadjust \
 	--enable-module=all \
 	--enable-module=auth_digest \
 	--enable-shared=max \
-	--proxycachedir=/var/cache/apache \
 	--with-perl=%{__perl} \
 	--enable-suexec \
 	--suexec-caller=http \
 	--suexec-uidmin=500 \
 	--suexec-gidmin=500 \
-	--suexec-docroot=%{_datadir} \
+	--suexec-docroot=%{httpdir} \
 	--disable-rule=WANTHSREGEX \
 	--enable-rule=EAPI \
 	--target=apache \
@@ -1376,8 +1379,8 @@ rm -f src/modules/standard/mod_rewrite.so
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig} \
-	$RPM_BUILD_ROOT%{_datadir}/errordocs \
 	$RPM_BUILD_ROOT%{_sysconfdir}/{webapps.d,conf.d} \
+	$RPM_BUILD_ROOT%{httpdir} \
 	$RPM_BUILD_ROOT%{_libexecdir} \
 	$RPM_BUILD_ROOT/var/{log/{apache,archive/apache},run/apache}
 
@@ -1393,42 +1396,43 @@ mv $RPM_BUILD_ROOT%{_mandir}/pl/man8/{httpd,apache}.8
 
 touch $RPM_BUILD_ROOT/var/log/apache/{access,error,agent,referer}_log
 
-install errordocs/* $RPM_BUILD_ROOT%{_datadir}/errordocs
+install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/errordocs
+cp -a errordocs/* $RPM_BUILD_ROOT%{_datadir}/%{name}/errordocs
 
 mv $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf conf/apache.conf.dist
-install %{SOURCE7} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
+cp -a %{SOURCE7} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
 
 CFG="$RPM_BUILD_ROOT%{_sysconfdir}/conf.d"
 
 echo "LoadModule access_module      modules/mod_access.so" > $CFG/01_mod_access.conf
 echo "LoadModule alias_module       modules/mod_alias.so" > $CFG/02_mod_alias.conf
 echo "LoadModule asis_module        modules/mod_asis.so" > $CFG/03_mod_asis.conf
-install %{SOURCE21} $CFG/04_mod_cern_meta.conf
+cp -a %{SOURCE21} $CFG/04_mod_cern_meta.conf
 echo "LoadModule cgi_module         modules/mod_cgi.so" > $CFG/05_mod_cgi.conf
 echo "LoadModule env_module         modules/mod_env.so" > $CFG/06_mod_env.conf
 echo "LoadModule include_module     modules/mod_include.so" > $CFG/07_mod_include.conf
 echo "LoadModule log_agent_module   modules/mod_log_agent.so" > $CFG/08_mod_log_agent.conf
-install %{SOURCE14} $CFG/09_mod_log_config.conf
+cp -a %{SOURCE14} $CFG/09_mod_log_config.conf
 echo "LoadModule log_referer_module modules/mod_log_referer.so" > $CFG/10_mod_log_referer.conf
-install %{SOURCE16}	$CFG/11_mod_mime_magic.conf
-install %{SOURCE19}	$CFG/12_mod_mime.conf
-install %{SOURCE18} $CFG/13_mod_negotiation.conf
-install %{SOURCE22}	$CFG/14_mod_setenvif.conf
+cp -a %{SOURCE16}	$CFG/11_mod_mime_magic.conf
+cp -a %{SOURCE19}	$CFG/12_mod_mime.conf
+cp -a %{SOURCE18} $CFG/13_mod_negotiation.conf
+cp -a %{SOURCE22}	$CFG/14_mod_setenvif.conf
 echo "LoadModule speling_module     modules/mod_speling.so" > $CFG/15_mod_speling.conf
-install %{SOURCE15}	$CFG/16_mod_userdir.conf
+cp -a %{SOURCE15}	$CFG/16_mod_userdir.conf
 
-install %{SOURCE8}	$CFG/20_common.conf
+cp -a %{SOURCE8}	$CFG/20_common.conf
 
-install %{SOURCE23}	$CFG/20_mod_vhost_alias.conf
-install %{SOURCE9}	$CFG/25_mod_status.conf
-install %{SOURCE10}	$CFG/30_mod_proxy.conf
-install %{SOURCE20}	$CFG/50_mod_actions.conf
+cp -a %{SOURCE23}	$CFG/20_mod_vhost_alias.conf
+cp -a %{SOURCE9}	$CFG/25_mod_status.conf
+cp -a %{SOURCE10}	$CFG/30_mod_proxy.conf
+cp -a %{SOURCE20}	$CFG/50_mod_actions.conf
 echo "LoadModule auth_module	modules/mod_auth.so" > $CFG/51_mod_auth.conf
 echo "LoadModule auth_anon_module	modules/mod_auth_anon.so" > $CFG/52_mod_auth_anon.conf
 echo "LoadModule auth_db_module	modules/mod_auth_db.so" > $CFG/53_mod_auth_db.conf
 echo "LoadModule auth_digest_module	modules/mod_auth_digest.so" > $CFG/54_mod_auth_digest.conf
-install %{SOURCE11}	$CFG/57_mod_autoindex.conf
-install %{SOURCE12}	$CFG/59_mod_dir.conf
+cp -a %{SOURCE11}	$CFG/57_mod_autoindex.conf
+cp -a %{SOURCE12}	$CFG/59_mod_dir.conf
 echo "LoadModule expires_module	modules/mod_expires.so" > $CFG/67_mod_expires.conf
 echo "LoadModule headers_module	modules/mod_headers.so" > $CFG/68_mod_headers.conf
 echo "LoadModule imap_module	modules/mod_imap.so" > $CFG/69_mod_imap.conf
@@ -1439,19 +1443,22 @@ echo "LoadModule define_module	modules/mod_define.so" > $CFG/73_mod_define.conf
 echo "LoadModule digest_module	modules/mod_digest.so" > $CFG/74_mod_digest.conf
 echo "LoadModule log_forensic_module	modules/mod_log_forensic.so" > $CFG/75_mod_log_forensic.conf
 echo "LoadModule mmap_static_module	modules/mod_mmap_static.so" > $CFG/76_mod_mmap_static.conf
-install %{SOURCE13} $CFG/77_mod_info.conf
-install %{SOURCE24}	$CFG/80_errordocs.conf
-install %{SOURCE17}	$CFG/80_mod_alias.conf
+cp -a %{SOURCE13} $CFG/77_mod_info.conf
+cp -a %{SOURCE24}	$CFG/80_errordocs.conf
+cp -a %{SOURCE17}	$CFG/80_mod_alias.conf
+# cgi_test: create config file with ScriptAlias
+cat << 'EOF' > $CFG/09_cgi_test.conf
+ScriptAlias /cgi-bin/printenv %{cgibindir}/printenv
+ScriptAlias /cgi-bin/test-cgi %{cgibindir}/test-cgi
+EOF
 
-ln -sf index.html.en $RPM_BUILD_ROOT%{_datadir}/html/index.html
+ln -sf index.html.en $RPM_BUILD_ROOT%{_datadir}/%{name}/html/index.html
 
 mv $RPM_BUILD_ROOT%{_sbindir}/apxs $RPM_BUILD_ROOT%{apxs}
 mv $RPM_BUILD_ROOT%{_mandir}/man8/apxs.8 $RPM_BUILD_ROOT%{_mandir}/man8/apxs1.8
 
 perl -p -i -e 's/^if ...O ne "MSWin32"./if (0)/' $RPM_BUILD_ROOT%{apxs}
 
-mv $RPM_BUILD_ROOT%{_sysconfdir}/modules/* $RPM_BUILD_ROOT%{_libexecdir}
-rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/modules
 ln -s ../..%{_libexecdir} $RPM_BUILD_ROOT%{_sysconfdir}/modules
 ln -s ../../var/log/apache $RPM_BUILD_ROOT%{_sysconfdir}/logs
 
@@ -1463,14 +1470,17 @@ rm -f $RPM_BUILD_ROOT%{_sysconfdir}/{access,srm}.conf
 rm -f $RPM_BUILD_ROOT%{_sysconfdir}/mime.types
 rm -f $RPM_BUILD_ROOT%{_libexecdir}/*.exp
 rm -f $RPM_BUILD_ROOT%{_libexecdir}/mod_{auth_dbm,example}.so
-rm -f $RPM_BUILD_ROOT%{_datadir}/icons{,/small}/README*
 rm -f $RPM_BUILD_ROOT%{_mandir}/README*
 
+rm -rf $RPM_BUILD_ROOT%{_datadir}/apache-icons
+install -d $RPM_BUILD_ROOT%{_datadir}/apache-icons
+%{__tar} -zxf %{SOURCE3} --strip-components=1 -C $RPM_BUILD_ROOT%{_datadir}/apache-icons
+
 # Not for our os or for older apache
-rm $RPM_BUILD_ROOT%{_prefix}/share/apache1-manual/{cygwin,ebcdic,install-{z,}tpf,man-template}.html
-rm $RPM_BUILD_ROOT%{_prefix}/share/apache1-manual/mod/mod_{auth_dbm,browser,dld,example,isapi,log_common}.html
-rm $RPM_BUILD_ROOT%{_prefix}/share/apache1-manual/{mpeix,netware,new_features_1_[0-2],readme-tpf,suexec_1_2,unixware,vhosts/details_1_2}.html
-rm $RPM_BUILD_ROOT%{_prefix}/share/apache1-manual/{win_{compiling,service}.html*,windows.html*}
+rm $RPM_BUILD_ROOT%{manualdir}/{cygwin,ebcdic,install-{z,}tpf,man-template}.html
+rm $RPM_BUILD_ROOT%{manualdir}/mod/mod_{auth_dbm,browser,dld,example,isapi,log_common}.html
+rm $RPM_BUILD_ROOT%{manualdir}/{mpeix,netware,new_features_1_[0-2],readme-tpf,suexec_1_2,unixware,vhosts/details_1_2}.html
+rm $RPM_BUILD_ROOT%{manualdir}/{win_{compiling,service}.html*,windows.html*}
 
 %if %{with lingerd}
 install lingerd-*/lingerd $RPM_BUILD_ROOT%{_libexecdir}
@@ -1483,8 +1493,7 @@ rm -rf $RPM_BUILD_ROOT
 %pre base
 %groupadd -g 51 -r -f http
 %useradd -u 51 -r -d %{httpdir} -s /bin/false -c "HTTP User" -g http http
-
-if [ "`getent passwd http | cut -d: -f6`" = "/home/httpd" ]; then
+if [ "$(getent passwd http | cut -d: -f6)" = "/home/httpd" ]; then
 	/usr/sbin/usermod -d %{httpdir} http
 fi
 
@@ -1859,6 +1868,16 @@ fi
 %postun mod_vhost_alias
 %module_postun
 
+%post cgi_test
+if [ "$1" = "1" ]; then
+	%service -q httpd reload
+fi
+
+%postun cgi_test
+if [ "$1" = "0" ]; then
+	%service -q httpd reload
+fi
+
 %files
 %defattr(644,root,root,755)
 
@@ -1891,15 +1910,15 @@ fi
 %attr(2751,root,logs) %dir /var/log/apache
 %attr(2750,root,logs) %dir /var/log/archive/apache
 %attr(640,root,logs) %ghost /var/log/apache/*
-%dir %{_datadir}
-%attr(755,root,root) %dir %{_datadir}/html
-%dir %{_datadir}/icons
-%{_datadir}/icons/*.gif
-%{_datadir}/icons/*.png
-%dir %{_datadir}/icons/small
-%{_datadir}/icons/small/*.gif
-%{_datadir}/icons/small/*.png
-%attr(755,root,root) %{_datadir}/cgi-bin
+%dir %{_datadir}/%{name}
+%dir %{_datadir}/%{name}/html
+%dir %{httpdir}
+
+%files cgi_test
+%defattr(644,root,root,755)
+%dir %{cgibindir}
+%attr(755,root,root) %{cgibindir}/*
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_cgi_test.conf
 
 %files tools
 %defattr(644,root,root,755)
@@ -1917,39 +1936,39 @@ fi
 
 %files index
 %defattr(644,root,root,755)
-%config(noreplace,missingok) %{_datadir}/html/index.html
+%config(noreplace,missingok) %{_datadir}/%{name}/html/index.html
 # NOTE: html extensions are not the same as (g)libc locale names
-%lang(ca) %{_datadir}/html/index.html.ca
-%lang(cs) %{_datadir}/html/index.html.cz
-%lang(de) %{_datadir}/html/index.html.de
-%lang(da) %{_datadir}/html/index.html.dk
-%lang(et) %{_datadir}/html/index.html.ee
-%lang(el) %{_datadir}/html/index.html.el
-%{_datadir}/html/index.html.en
-%lang(es) %{_datadir}/html/index.html.es
-%lang(fr) %{_datadir}/html/index.html.fr
-%lang(he) %{_datadir}/html/index.html.he.iso8859-8
-%lang(hu) %{_datadir}/html/index.html.hu
-%lang(it) %{_datadir}/html/index.html.it
-%lang(ja) %{_datadir}/html/index.html.ja.jis
-%lang(ko) %{_datadir}/html/index.html.kr.iso-kr
-%lang(de_LU) %{_datadir}/html/index.html.lb.utf8
-%lang(nl) %{_datadir}/html/index.html.nl
-%lang(nn) %{_datadir}/html/index.html.nn
-%lang(nb) %{_datadir}/html/index.html.no
-%lang(pl) %{_datadir}/html/index.html.po.iso-pl
-%lang(pt) %{_datadir}/html/index.html.pt
-%lang(pt_BR) %{_datadir}/html/index.html.pt-br
-%lang(ru) %{_datadir}/html/index.html.ru.cp-1251
-%lang(ru) %{_datadir}/html/index.html.ru.cp866
-%lang(ru) %{_datadir}/html/index.html.ru.iso-ru
-%lang(ru) %{_datadir}/html/index.html.ru.koi8-r
-%lang(ru) %{_datadir}/html/index.html.ru.ucs2
-%lang(ru) %{_datadir}/html/index.html.ru.ucs4
-%lang(ru) %{_datadir}/html/index.html.ru.utf8
-%lang(sv) %{_datadir}/html/index.html.se
-%lang(zh_TW) %{_datadir}/html/index.html.zh-tw.big5
-%{_datadir}/html/*.gif
+%lang(ca) %{_datadir}/%{name}/html/index.html.ca
+%lang(cs) %{_datadir}/%{name}/html/index.html.cz
+%lang(de) %{_datadir}/%{name}/html/index.html.de
+%lang(da) %{_datadir}/%{name}/html/index.html.dk
+%lang(et) %{_datadir}/%{name}/html/index.html.ee
+%lang(el) %{_datadir}/%{name}/html/index.html.el
+%{_datadir}/%{name}/html/index.html.en
+%lang(es) %{_datadir}/%{name}/html/index.html.es
+%lang(fr) %{_datadir}/%{name}/html/index.html.fr
+%lang(he) %{_datadir}/%{name}/html/index.html.he.iso8859-8
+%lang(hu) %{_datadir}/%{name}/html/index.html.hu
+%lang(it) %{_datadir}/%{name}/html/index.html.it
+%lang(ja) %{_datadir}/%{name}/html/index.html.ja.jis
+%lang(ko) %{_datadir}/%{name}/html/index.html.kr.iso-kr
+%lang(de_LU) %{_datadir}/%{name}/html/index.html.lb.utf8
+%lang(nl) %{_datadir}/%{name}/html/index.html.nl
+%lang(nn) %{_datadir}/%{name}/html/index.html.nn
+%lang(nb) %{_datadir}/%{name}/html/index.html.no
+%lang(pl) %{_datadir}/%{name}/html/index.html.po.iso-pl
+%lang(pt) %{_datadir}/%{name}/html/index.html.pt
+%lang(pt_BR) %{_datadir}/%{name}/html/index.html.pt-br
+%lang(ru) %{_datadir}/%{name}/html/index.html.ru.cp-1251
+%lang(ru) %{_datadir}/%{name}/html/index.html.ru.cp866
+%lang(ru) %{_datadir}/%{name}/html/index.html.ru.iso-ru
+%lang(ru) %{_datadir}/%{name}/html/index.html.ru.koi8-r
+%lang(ru) %{_datadir}/%{name}/html/index.html.ru.ucs2
+%lang(ru) %{_datadir}/%{name}/html/index.html.ru.ucs4
+%lang(ru) %{_datadir}/%{name}/html/index.html.ru.utf8
+%lang(sv) %{_datadir}/%{name}/html/index.html.se
+%lang(zh_TW) %{_datadir}/%{name}/html/index.html.zh-tw.big5
+%{_datadir}/%{name}/html/*.gif
 
 %files doc
 %defattr(644,root,root,755)
@@ -2221,7 +2240,7 @@ fi
 %files errordocs
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_errordocs.conf
-%{_datadir}/errordocs
+%{_datadir}/%{name}/errordocs
 
 %files suexec
 %defattr(644,root,root,755)
@@ -2286,6 +2305,7 @@ fi
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_autoindex.conf
 %attr(755,root,root) %{_libexecdir}/mod_autoindex.so
+%{_datadir}/apache-icons/*.gif
 
 %files mod_cern_meta
 %defattr(644,root,root,755)
