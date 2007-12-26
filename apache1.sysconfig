@@ -5,6 +5,7 @@
 SERVICE_RUN_NICE_LEVEL="+5"
 
 # Cmdline options
+# Use -4 to disable ipv6 networking
 HTTPD_OPTS=""
 
 # perhaps set 128MB memory limit
