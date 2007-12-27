@@ -28,7 +28,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.39
-Release:	7.1
+Release:	7.11
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -40,7 +40,7 @@ Source3:	apache-icons.tar.gz
 Source4:	%{name}.sysconfig
 Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/apache-non-english-man-pages.tar.bz2
 # Source5-md5:	74ff6e8d8a7b365b48ed10a52fbeb84e
-
+Source6:	%{name}-defaultindex.conf
 Source7:	%{name}-httpd.conf
 Source8:	%{name}-common.conf
 Source9:	%{name}-mod_status.conf
@@ -62,6 +62,7 @@ Source24:	%{name}-errordocs.conf
 # http://www.iagora.com/about/software/lingerd/
 Source25:	http://images.iagora.com/media/software/lingerd/lingerd-0.94.tar.gz
 # Source25-md5:	6401015bafad4f44fdf8a9a1795d9258
+Source26:	%{name}-manual.conf
 Patch0:		%{name}-PLD.patch
 Patch1:		%{name}-suexec.patch
 Patch2:		%{name}-errordocs.patch
@@ -128,6 +129,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		_libexecdir	%{_prefix}/%{_lib}/%{name}
 %define		apxs		/usr/sbin/apxs1
 %define		httpdir		/home/services/apache
+%define		docroot		%{_datadir}/%{name}/html
 %define		manualdir	%{_datadir}/%{name}/manual
 %define		cgibindir	%{_prefix}/lib/cgi-bin/%{name}
 
@@ -325,29 +327,37 @@ Apache tools.
 %description tools -l pl.UTF-8
 Narzędzia Apache'a.
 
-%package index
+%package defaultindex
 Summary:	Apache index.html* files
 Summary(pl.UTF-8):	Pliki Apache index.html*
 Group:		Documentation
 Requires:	%{name}-base = %{version}-%{release}
+Requires:	%{name}-mod_alias = %{version}-%{release}
+Requires:	%{name}-mod_dir = %{version}-%{release}
+Provides:	apache1-index
+Obsoletes:	apache1-index < 1.3.39-7.9
 Obsoletes:	indexhtml
 
-%description index
+%description defaultindex
 Apache index.html* files.
 
-%description index -l pl.UTF-8
+%description defaultindex -l pl.UTF-8
 Pliki Apache index.html*.
 
-%package doc
+%package manual
 Summary:	Apache 1.3.x manual
 Summary(pl.UTF-8):	Podręcznik do Apache'a 1.3.x
 Group:		Documentation
 Requires:	%{name}-base = %{version}-%{release}
+Requires:	%{name}-mod_alias = %{version}-%{release}
+Requires:	%{name}-mod_negotiation = %{version}-%{release}
+Provides:	apache1-doc
+Obsoletes:	apache1-doc < 1.3.39-7.9
 
-%description doc
+%description manual
 Apache 1.3.x manual.
 
-%description doc -l pl.UTF-8
+%description manual -l pl.UTF-8
 Podręcznik do Apache'a 1.3.x.
 
 %package errordocs
@@ -655,6 +665,7 @@ Summary(pl.UTF-8):	Moduł apache do wyświetlania indeksu plików
 Group:		Networking/Daemons
 Requires(triggerpostun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
+Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	apache-icons
 Provides:	apache(mod_autoindex) = %{version}-%{release}
 
@@ -1380,7 +1391,7 @@ rm -f src/modules/standard/mod_rewrite.so
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig} \
 	$RPM_BUILD_ROOT%{_sysconfdir}/{webapps.d,conf.d} \
-	$RPM_BUILD_ROOT%{httpdir} \
+	$RPM_BUILD_ROOT%{httpdir}/html \
 	$RPM_BUILD_ROOT%{_libexecdir} \
 	$RPM_BUILD_ROOT/var/{log/{apache,archive/apache},run/apache}
 
@@ -1422,6 +1433,8 @@ echo "LoadModule speling_module     modules/mod_speling.so" > $CFG/15_mod_spelin
 cp -a %{SOURCE15}	$CFG/16_mod_userdir.conf
 
 cp -a %{SOURCE8}	$CFG/20_common.conf
+cp -a %{SOURCE6}	$CFG/30_defaultindex.conf
+cp -a %{SOURCE26}	$CFG/30_manual.conf
 
 cp -a %{SOURCE23}	$CFG/20_mod_vhost_alias.conf
 cp -a %{SOURCE9}	$CFG/25_mod_status.conf
@@ -1452,7 +1465,7 @@ ScriptAlias /cgi-bin/printenv %{cgibindir}/printenv
 ScriptAlias /cgi-bin/test-cgi %{cgibindir}/test-cgi
 EOF
 
-ln -sf index.html.en $RPM_BUILD_ROOT%{_datadir}/%{name}/html/index.html
+ln -sf index.html.en $RPM_BUILD_ROOT%{docroot}/index.html
 
 mv $RPM_BUILD_ROOT%{_sbindir}/apxs $RPM_BUILD_ROOT%{apxs}
 mv $RPM_BUILD_ROOT%{_mandir}/man8/apxs.8 $RPM_BUILD_ROOT%{_mandir}/man8/apxs1.8
@@ -1870,12 +1883,12 @@ fi
 
 %post cgi_test
 if [ "$1" = "1" ]; then
-	%service -q httpd reload
+	%service -q apache reload
 fi
 
 %postun cgi_test
 if [ "$1" = "0" ]; then
-	%service -q httpd reload
+	%service -q apache reload
 fi
 
 %files
@@ -1911,8 +1924,9 @@ fi
 %attr(2750,root,logs) %dir /var/log/archive/apache
 %attr(640,root,logs) %ghost /var/log/apache/*
 %dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/html
 %dir %{httpdir}
+%dir %{httpdir}/html
+%dir %{docroot}
 
 %files cgi_test
 %defattr(644,root,root,755)
@@ -1934,44 +1948,46 @@ fi
 %{_mandir}/man8/logresolve.8*
 %{_mandir}/man8/rotatelogs.8*
 
-%files index
+%files defaultindex
 %defattr(644,root,root,755)
-%config(noreplace,missingok) %{_datadir}/%{name}/html/index.html
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_defaultindex.conf
+%config(noreplace,missingok) %{docroot}/index.html
 # NOTE: html extensions are not the same as (g)libc locale names
-%lang(ca) %{_datadir}/%{name}/html/index.html.ca
-%lang(cs) %{_datadir}/%{name}/html/index.html.cz
-%lang(de) %{_datadir}/%{name}/html/index.html.de
-%lang(da) %{_datadir}/%{name}/html/index.html.dk
-%lang(et) %{_datadir}/%{name}/html/index.html.ee
-%lang(el) %{_datadir}/%{name}/html/index.html.el
-%{_datadir}/%{name}/html/index.html.en
-%lang(es) %{_datadir}/%{name}/html/index.html.es
-%lang(fr) %{_datadir}/%{name}/html/index.html.fr
-%lang(he) %{_datadir}/%{name}/html/index.html.he.iso8859-8
-%lang(hu) %{_datadir}/%{name}/html/index.html.hu
-%lang(it) %{_datadir}/%{name}/html/index.html.it
-%lang(ja) %{_datadir}/%{name}/html/index.html.ja.jis
-%lang(ko) %{_datadir}/%{name}/html/index.html.kr.iso-kr
-%lang(de_LU) %{_datadir}/%{name}/html/index.html.lb.utf8
-%lang(nl) %{_datadir}/%{name}/html/index.html.nl
-%lang(nn) %{_datadir}/%{name}/html/index.html.nn
-%lang(nb) %{_datadir}/%{name}/html/index.html.no
-%lang(pl) %{_datadir}/%{name}/html/index.html.po.iso-pl
-%lang(pt) %{_datadir}/%{name}/html/index.html.pt
-%lang(pt_BR) %{_datadir}/%{name}/html/index.html.pt-br
-%lang(ru) %{_datadir}/%{name}/html/index.html.ru.cp-1251
-%lang(ru) %{_datadir}/%{name}/html/index.html.ru.cp866
-%lang(ru) %{_datadir}/%{name}/html/index.html.ru.iso-ru
-%lang(ru) %{_datadir}/%{name}/html/index.html.ru.koi8-r
-%lang(ru) %{_datadir}/%{name}/html/index.html.ru.ucs2
-%lang(ru) %{_datadir}/%{name}/html/index.html.ru.ucs4
-%lang(ru) %{_datadir}/%{name}/html/index.html.ru.utf8
-%lang(sv) %{_datadir}/%{name}/html/index.html.se
-%lang(zh_TW) %{_datadir}/%{name}/html/index.html.zh-tw.big5
-%{_datadir}/%{name}/html/*.gif
+%lang(ca) %{docroot}/index.html.ca
+%lang(cs) %{docroot}/index.html.cz
+%lang(de) %{docroot}/index.html.de
+%lang(da) %{docroot}/index.html.dk
+%lang(et) %{docroot}/index.html.ee
+%lang(el) %{docroot}/index.html.el
+%{docroot}/index.html.en
+%lang(es) %{docroot}/index.html.es
+%lang(fr) %{docroot}/index.html.fr
+%lang(he) %{docroot}/index.html.he.iso8859-8
+%lang(hu) %{docroot}/index.html.hu
+%lang(it) %{docroot}/index.html.it
+%lang(ja) %{docroot}/index.html.ja.jis
+%lang(ko) %{docroot}/index.html.kr.iso-kr
+%lang(de_LU) %{docroot}/index.html.lb.utf8
+%lang(nl) %{docroot}/index.html.nl
+%lang(nn) %{docroot}/index.html.nn
+%lang(nb) %{docroot}/index.html.no
+%lang(pl) %{docroot}/index.html.po.iso-pl
+%lang(pt) %{docroot}/index.html.pt
+%lang(pt_BR) %{docroot}/index.html.pt-br
+%lang(ru) %{docroot}/index.html.ru.cp-1251
+%lang(ru) %{docroot}/index.html.ru.cp866
+%lang(ru) %{docroot}/index.html.ru.iso-ru
+%lang(ru) %{docroot}/index.html.ru.koi8-r
+%lang(ru) %{docroot}/index.html.ru.ucs2
+%lang(ru) %{docroot}/index.html.ru.ucs4
+%lang(ru) %{docroot}/index.html.ru.utf8
+%lang(sv) %{docroot}/index.html.se
+%lang(zh_TW) %{docroot}/index.html.zh-tw.big5
+%{docroot}/*.gif
 
-%files doc
+%files manual
 %defattr(644,root,root,755)
+%attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_manual.conf
 %dir %{manualdir}
 %dir %{manualdir}/images
 %{manualdir}/images/apache_header.gif
