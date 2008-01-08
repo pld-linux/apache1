@@ -28,7 +28,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.39
-Release:	7.11
+Release:	8
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1343,6 +1343,9 @@ cp -a lingerd-*/{README,TUNING,LICENSE,TODO,ChangeLog} lingerd
 cp -a lingerd-*/{apache-1.3/ap_lingerd.c,li_config.h} src/main
 %patch42 -p1
 %endif
+
+# make manual link with full path
+%{__sed} -i -e 's,href="manual/,href="/manual/,i' htdocs/index.html.*
 
 # fix libdir (at least in PLD layout; no need to care about other ones)
 %{__sed} -i -e 's,/lib$,/%{_lib},' config.layout
