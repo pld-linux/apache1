@@ -1884,6 +1884,16 @@ fi
 %postun mod_vhost_alias
 %module_postun
 
+%post defaultindex
+if [ "$1" = "1" ]; then
+	%service -q apache reload
+fi
+
+%postun defaultindex
+if [ "$1" = "0" ]; then
+	%service -q apache reload
+fi
+
 %post cgi_test
 if [ "$1" = "1" ]; then
 	%service -q apache reload
