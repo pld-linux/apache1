@@ -27,12 +27,12 @@ Summary(tr.UTF-8):	Lider WWW tarayıcı
 Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
-Version:	1.3.39
-Release:	8
+Version:	1.3.41
+Release:	1
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
-# Source0-md5:	76066f630203291acd20c764e5eedb6e
+# Source0-md5:	f7f00b635243f03a787ca9f4d4c85651
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
 Source3:	apache-icons.tar.gz
