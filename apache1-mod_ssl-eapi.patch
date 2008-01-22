@@ -1252,9 +1252,9 @@ Index: src/main/http_main.c
      show_os_specific_compile_settings();
  #endif
 @@ -4396,6 +4465,22 @@
-     ap_server_post_read_config = ap_make_array(pcommands, 1, sizeof(char *));
-     ap_server_config_defines   = ap_make_array(pcommands, 1, sizeof(char *));
-     pid_table                  = ap_make_table(pglobal, HARD_SERVER_LIMIT);
+     for (i = 0; i < HARD_SERVER_LIMIT; i++) {
+          pid_table[i] = 0;
+     }
 +
 +#ifdef EAPI
 +    ap_hook_init();
