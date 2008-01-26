@@ -1,3 +1,7 @@
+# TODO:
+# - update errordocs to use MultiViews (like Apache 2) instead of dual language pages
+# - replace linux_pwd.gif by e.g. http://pl.docs.pld-linux.org/zrzuty_ekr/logo_04.png
+# - then drop Source3
 #
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
