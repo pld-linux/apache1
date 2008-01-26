@@ -56,15 +56,14 @@
 +    proxycachedir: /var/cache/apache
 +    installbuilddir: ${libexecdir}/build
 +</Layout>
---- apache_1.3.14.orig/src/main/http_main.c	Thu Sep 28 15:32:36 2000
-+++ apache_1.3.14/src/main/http_main.c	Sat Nov 11 20:39:48 2000
-@@ -432,6 +432,9 @@
-     else {
- 	ap_add_version_component(SERVER_BASEVERSION " (" PLATFORM ")");
+--- apache_1.3.41/src/main/http_main.c.orig	2008-01-26 14:20:52.528919834 +0100
++++ apache_1.3.41/src/main/http_main.c	2008-01-26 14:21:24.270728698 +0100
+@@ -478,7 +478,7 @@
+ 	ap_add_version_component(SERVER_BASEVERSION);
      }
-+
-+    ap_add_version_component(" (PLD/Linux)");
-+    
+     else {
+-	ap_add_version_component(SERVER_BASEVERSION " (" PLATFORM ")");
++	ap_add_version_component(SERVER_BASEVERSION " (PLD/Linux)");
+     }
      /*
       * Lock the server_version string if we're not displaying
-      * the full set of tokens
