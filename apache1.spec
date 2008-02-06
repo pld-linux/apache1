@@ -32,7 +32,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.41
-Release:	1
+Release:	2
 License:	Apache Group
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1551,7 +1551,7 @@ if [ "$1" = "2" ]; then
 	' /etc/apache/apache.conf
 fi
 
-%triggerpostun base -- %{name} <= 1.3.31-5
+%triggerpostun base -- %{name} < 1.3.31-5.9
 %banner %{name} -e -a <<EOF
 WARNING!!!
  Since 1.3.31-5 version autoindex module has been separated to package %{name}-mod_autoindex
@@ -1603,7 +1603,7 @@ sed -i -e '
 ' /etc/apache/apache.conf
 fi
 
-%triggerpostun mod_auth_db -- apache-mod_auth_db <= 1.3.20-2
+%triggerpostun mod_auth_db -- apache-mod_auth_db < 1.3.20-16
 sed -i -e '/^\(Add\|Load\)Module.*mod_auth_dbm\.\(so\|c\)/d' /etc/apache/apache.conf
 
 %triggerpostun mod_autoindex -- apache1-mod_autoindex < 1.3.33-1.85
