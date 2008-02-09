@@ -1,7 +1,3 @@
-# TODO:
-# - update errordocs to use MultiViews (like Apache 2) instead of dual language pages
-# - replace linux_pwd.gif by e.g. http://pl.docs.pld-linux.org/zrzuty_ekr/logo_04.png
-# - then drop Source3
 #
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
@@ -32,16 +28,17 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.41
-Release:	3
-License:	Apache Group
+Release:	4
+License:	Apache v2.0
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
 # Source0-md5:	f7f00b635243f03a787ca9f4d4c85651
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
-Source3:	apache-icons.tar.gz
-# Source3-md5:	2b085cbc19fd28536dc883f0b864cd83
-Source4:	%{name}.sysconfig
+Source3:	%{name}.sysconfig
+# http://www.iagora.com/about/software/lingerd/
+Source4:	http://images.iagora.com/media/software/lingerd/lingerd-0.94.tar.gz
+# Source4-md5:	6401015bafad4f44fdf8a9a1795d9258
 Source5:	http://www.mif.pg.gda.pl/homepages/ankry/man-PLD/apache-non-english-man-pages.tar.bz2
 # Source5-md5:	74ff6e8d8a7b365b48ed10a52fbeb84e
 Source6:	%{name}-defaultindex.conf
@@ -63,10 +60,7 @@ Source21:	%{name}-mod_cern_meta.conf
 Source22:	%{name}-mod_setenvif.conf
 Source23:	%{name}-mod_vhost_alias.conf
 Source24:	%{name}-errordocs.conf
-# http://www.iagora.com/about/software/lingerd/
-Source25:	http://images.iagora.com/media/software/lingerd/lingerd-0.94.tar.gz
-# Source25-md5:	6401015bafad4f44fdf8a9a1795d9258
-Source26:	%{name}-manual.conf
+Source25:	%{name}-manual.conf
 Patch0:		%{name}-PLD.patch
 Patch1:		%{name}-suexec.patch
 Patch2:		%{name}-errordocs.patch
@@ -134,6 +128,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		apxs		/usr/sbin/apxs1
 %define		httpdir		/home/services/apache
 %define		docroot		%{_datadir}/%{name}/html
+%define		errordir	%{_datadir}/%{name}/error
 %define		manualdir	%{_datadir}/%{name}/manual
 %define		cgibindir	%{_prefix}/lib/cgi-bin/%{name}
 
@@ -368,7 +363,9 @@ Podręcznik do Apache'a 1.3.x.
 Summary:	Apache 1.3.x HTTP error documents
 Summary(pl.UTF-8):	Dokumenty opisujące błędy HTTP dla Apache'a 1.3.x
 Group:		Applications/WWW
+Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	%{name}-mod_include = %{version}-%{release}
+Requires:	%{name}-mod_negotiation = %{version}-%{release}
 
 %description errordocs
 Apache 1.3.x HTTP error documents. Currently in English and Polish
@@ -1296,7 +1293,7 @@ Two cgi test/demo programs: test-cgi and print-env.
 Dwa programy testowe/przykładowe cgi: test-cgi and print-env.
 
 %prep
-%setup -q -n apache_%{version} %{?with_lingerd:-a25}
+%setup -q -n apache_%{version} %{?with_lingerd:-a4}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -1407,15 +1404,15 @@ install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig} \
 
 install %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/apache1
 sed -e 's,/usr/lib,%{_libdir},g' %{SOURCE1} > $RPM_BUILD_ROOT/etc/rc.d/init.d/apache
-install %{SOURCE4} $RPM_BUILD_ROOT/etc/sysconfig/apache
+install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/apache
 bzip2 -dc %{SOURCE5} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 mv $RPM_BUILD_ROOT%{_mandir}/hu/man8/{httpd,apache}.8
 mv $RPM_BUILD_ROOT%{_mandir}/pl/man8/{httpd,apache}.8
 
 touch $RPM_BUILD_ROOT/var/log/apache/{access,error,agent,referer}_log
 
-install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/errordocs
-cp -a errordocs/* $RPM_BUILD_ROOT%{_datadir}/%{name}/errordocs
+install -d $RPM_BUILD_ROOT%{errordir}
+cp -a errordocs/* $RPM_BUILD_ROOT%{errordir}
 
 mv $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf conf/apache.conf.dist
 cp -a %{SOURCE7} $RPM_BUILD_ROOT%{_sysconfdir}/apache.conf
@@ -1441,7 +1438,7 @@ cp -a %{SOURCE15}	$CFG/16_mod_userdir.conf
 
 cp -a %{SOURCE8}	$CFG/20_common.conf
 cp -a %{SOURCE6}	$CFG/30_defaultindex.conf
-cp -a %{SOURCE26}	$CFG/30_manual.conf
+cp -a %{SOURCE25}	$CFG/30_manual.conf
 
 cp -a %{SOURCE23}	$CFG/20_mod_vhost_alias.conf
 cp -a %{SOURCE9}	$CFG/25_mod_status.conf
@@ -1493,8 +1490,6 @@ rm -f $RPM_BUILD_ROOT%{_libexecdir}/mod_{auth_dbm,example}.so
 rm -f $RPM_BUILD_ROOT%{_mandir}/README*
 
 rm -rf $RPM_BUILD_ROOT%{_datadir}/apache-icons
-install -d $RPM_BUILD_ROOT%{_datadir}/apache-icons
-%{__tar} -zxf %{SOURCE3} --strip-components=1 -C $RPM_BUILD_ROOT%{_datadir}/apache-icons
 
 # Not for our os or for older apache
 rm $RPM_BUILD_ROOT%{manualdir}/{cygwin,ebcdic,install-{z,}tpf,man-template}.html
@@ -2273,7 +2268,11 @@ fi
 %files errordocs
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_errordocs.conf
-%{_datadir}/%{name}/errordocs
+%dir %{errordir}
+%{errordir}/HEADER.shtml
+%{errordir}/FOOT.shtml
+%{errordir}/*.shtml.en
+%lang(pl) %{errordir}/*.shtml.po
 
 %files suexec
 %defattr(644,root,root,755)
@@ -2338,7 +2337,6 @@ fi
 %defattr(644,root,root,755)
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_mod_autoindex.conf
 %attr(755,root,root) %{_libexecdir}/mod_autoindex.so
-%{_datadir}/apache-icons/*.gif
 
 %files mod_cern_meta
 %defattr(644,root,root,755)
