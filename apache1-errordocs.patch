@@ -1,440 +1,322 @@
---- apache_1.3.9/errordocs/400.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/400.shtml	Wed Jul 15 13:54:20 1998
-@@ -0,0 +1,24 @@
-+<!--#set var="title" value="Bad Request : Niepoprawne zapytanie"-->
+diff -Nur apache_1.3.41/errordocs.orig/400.shtml.en apache_1.3.41/errordocs/400.shtml.en
+--- apache_1.3.41/errordocs.orig/400.shtml.en	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/400.shtml.en	2008-02-09 20:08:41.633400775 +0100
+@@ -0,0 +1,5 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-1"-->
++<!--#set var="TITLE" value="Bad Request"-->
 +<!--#include virtual="HEADER.shtml"-->
-+<H2 ALIGN="center">
-+[<!--#echo var="REDIRECT_STATUS"-->] Bad Request : Niepoprawne zapytanie
-+</H2>
-+<HR>
-+<CENTER>
-+<TABLE>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="english"-->" WIDTH=26 HEIGHT=19 ALT="English">
-+</TD><TD>
 +Your browser sent a request that this server could not understand.
-+</TD></TR><TR><TD></TD><TD><HR></TD></TR>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="polish"-->" WIDTH=26 HEIGHT=19 ALT="Polish">
-+</TD><TD>
-+Twoja przegl±darka przes³a³a zapytanie, które nie mo¿e zinterpretowaæ serwer.
-+B³±d w sk³adni zapytania.
-+</TD></TR>
-+</TABLE>
-+</CENTER>
-+<P>
-+<HR>
 +<!--#include virtual="FOOT.shtml"-->
---- apache_1.3.9/errordocs/401.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/401.shtml	Wed Jul 15 13:54:30 1998
-@@ -0,0 +1,28 @@
-+<!--#set var="title" value="Authorization Required : Brak autoryzacji"-->
+diff -Nur apache_1.3.41/errordocs.orig/400.shtml.po apache_1.3.41/errordocs/400.shtml.po
+--- apache_1.3.41/errordocs.orig/400.shtml.po	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/400.shtml.po	2008-02-09 20:09:07.014847182 +0100
+@@ -0,0 +1,6 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-2"-->
++<!--#set var="TITLE" value="Niepoprawne zapytanie"-->
 +<!--#include virtual="HEADER.shtml"-->
-+<H2 ALIGN="center">
-+[<!--#echo var="REDIRECT_STATUS"-->] Authorization Required : Brak autoryzacji
-+</H2>
-+<HR>
-+<CENTER>
-+<TABLE>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="english"-->" WIDTH=26 HEIGHT=19 ALT="English">
-+</TD><TD>
++Twoja przegl±darka przes³a³a zapytanie, którego nie mo¿e zinterpretowaæ serwer.
++B³±d w sk³adni zapytania.
++<!--#include virtual="FOOT.shtml"-->
+diff -Nur apache_1.3.41/errordocs.orig/401.shtml.en apache_1.3.41/errordocs/401.shtml.en
+--- apache_1.3.41/errordocs.orig/401.shtml.en	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/401.shtml.en	2008-02-09 20:09:20.167596714 +0100
+@@ -0,0 +1,7 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-1"-->
++<!--#set var="TITLE" value="Authorization Required"-->
++<!--#include virtual="HEADER.shtml"-->
 +This server could not verify that you are authorized to access the document
 +you requested. Either you supplied the wrong credentials (e.g. bad password)
 +or your browser doesn't understand how to supply the credentials required.
-+</TD></TR><TR><TD></TD><TD><HR></TD></TR>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="polish"-->" WIDTH=26 HEIGHT=19 ALT="Polish">
-+</TD><TD>
++<!--#include virtual="FOOT.shtml"-->
+diff -Nur apache_1.3.41/errordocs.orig/401.shtml.po apache_1.3.41/errordocs/401.shtml.po
+--- apache_1.3.41/errordocs.orig/401.shtml.po	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/401.shtml.po	2008-02-09 20:09:39.976725572 +0100
+@@ -0,0 +1,8 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-2"-->
++<!--#set var="TITLE" value="Brak autoryzacji"-->
++<!--#include virtual="HEADER.shtml"-->
 +Zapytanie nie przesz³o pomy¶lnie procesu uwierzytelnienia.
 +Serwer nie mo¿e zweryfikowaæ czy posiadasz autoryzacjê dostêpu do dokumentu,
 +który ¿±dasz. Prawdopodobnie wprowadzono nieprawid³owe dane jak np. has³o lub
 +twoja przegl±darka nie potrafi dostarczyæ w³a¶ciwych danych do autoryzacji.
-+</TD></TR>
-+</TABLE>
-+</CENTER>
-+<P>
-+<HR>
 +<!--#include virtual="FOOT.shtml"-->
---- apache_1.3.9/errordocs/403.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/403.shtml	Wed Jul 15 13:54:52 1998
-@@ -0,0 +1,31 @@
-+<!--#set var="title" value="Forbidden : Dostêp zabroniony"-->
+diff -Nur apache_1.3.41/errordocs.orig/403.shtml.en apache_1.3.41/errordocs/403.shtml.en
+--- apache_1.3.41/errordocs.orig/403.shtml.en	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/403.shtml.en	2008-02-09 20:10:12.322568857 +0100
+@@ -0,0 +1,9 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-1"-->
++<!--#set var="TITLE" value="Forbidden"-->
 +<!--#include virtual="HEADER.shtml"-->
-+<H2 ALIGN="center">
-+[<!--#echo var="REDIRECT_STATUS"-->] Forbidden : Dostêp zabroniony
-+</H2>
-+<HR>
-+<CENTER>
-+<TABLE>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="english"-->" WIDTH=26 HEIGHT=19 ALT="English">
-+</TD><TD>
 +You don't have permission to access
-+<STRONG>
++<strong>
 +<!--#echo var="REQUEST_URI"-->
-+</STRONG>
++</strong>
 +on this server.
-+</TD></TR><TR><TD></TD><TD><HR></TD></TR>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="polish"-->" WIDTH=26 HEIGHT=19 ALT="Polish">
-+</TD><TD>
++<!--#include virtual="FOOT.shtml"-->
+diff -Nur apache_1.3.41/errordocs.orig/403.shtml.po apache_1.3.41/errordocs/403.shtml.po
+--- apache_1.3.41/errordocs.orig/403.shtml.po	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/403.shtml.po	2008-02-09 20:10:21.451089061 +0100
+@@ -0,0 +1,9 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-2"-->
++<!--#set var="TITLE" value="Dostêp zabroniony"-->
++<!--#include virtual="HEADER.shtml"-->
 +Zapytanie odrzucone przez serwer. Nie masz dostêpu do
-+<STRONG>
++<strong>
 +<!--#echo var="REQUEST_URI"-->
-+</STRONG>
++</strong>
 +na tym serwerze.
-+</TD></TR>
-+</TABLE>
-+</CENTER>
-+<P>
-+<HR>
 +<!--#include virtual="FOOT.shtml"-->
---- apache_1.3.9/errordocs/404.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/404.shtml	Wed Jul 15 13:54:58 1998
-@@ -0,0 +1,31 @@
-+<!--#set var="title" value="File Not Found : Plik nie istnieje"-->
+diff -Nur apache_1.3.41/errordocs.orig/404.shtml.en apache_1.3.41/errordocs/404.shtml.en
+--- apache_1.3.41/errordocs.orig/404.shtml.en	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/404.shtml.en	2008-02-09 20:10:33.927800068 +0100
+@@ -0,0 +1,9 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-1"-->
++<!--#set var="TITLE" value="File Not Found"-->
 +<!--#include virtual="HEADER.shtml"-->
-+<H2 ALIGN="center">
-+[<!--#echo var="REDIRECT_STATUS"-->] File Not Found : Plik nie istnieje
-+</H2>
-+<HR>
-+<CENTER>
-+<TABLE>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="english"-->" WIDTH=26 HEIGHT=19 ALT="English">
-+</TD><TD>
 +The requested URL
-+<STRONG>
++<strong>
 +<!--#echo var="REQUEST_URI"-->
-+</STRONG>
++</strong>
 +was not found on this server.
-+</TD></TR><TR><TD></TD><TD><HR></TD></TR>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="polish"-->" WIDTH=26 HEIGHT=19 ALT="Polish">
-+</TD><TD>
++<!--#include virtual="FOOT.shtml"-->
+diff -Nur apache_1.3.41/errordocs.orig/404.shtml.po apache_1.3.41/errordocs/404.shtml.po
+--- apache_1.3.41/errordocs.orig/404.shtml.po	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/404.shtml.po	2008-02-09 20:10:45.972486456 +0100
+@@ -0,0 +1,9 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-2"-->
++<!--#set var="TITLE" value="Plik nie istnieje"-->
++<!--#include virtual="HEADER.shtml"-->
 +Podany w zapytaniu URL
-+<STRONG>
++<strong>
 +<!--#echo var="REQUEST_URI"-->
-+</STRONG>
++</strong>
 +nie zosta³ odnaleziony na tym serwerze.
-+</TD></TR>
-+</TABLE>
-+</CENTER>
-+<P>
-+<HR>
 +<!--#include virtual="FOOT.shtml"-->
---- apache_1.3.9/errordocs/405.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/405.shtml	Wed Jul 15 13:55:04 1998
-@@ -0,0 +1,37 @@
-+<!--#set var="title" value="Method Not Allowed : Niedozwolona metoda"-->
+diff -Nur apache_1.3.41/errordocs.orig/405.shtml.en apache_1.3.41/errordocs/405.shtml.en
+--- apache_1.3.41/errordocs.orig/405.shtml.en	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/405.shtml.en	2008-02-09 20:17:05.006086351 +0100
+@@ -0,0 +1,12 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-1"-->
++<!--#set var="TITLE" value="Method Not Allowed"-->
 +<!--#include virtual="HEADER.shtml"-->
-+<H2 ALIGN="center">
-+[<!--#echo var="REDIRECT_STATUS"-->] Method Not Allowed : Niedozwolona metoda
-+</H2>
-+<HR>
-+<CENTER>
-+<TABLE>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="english"-->" WIDTH=26 HEIGHT=19 ALT="English">
-+</TD><TD>
 +The requested method
-+<STRONG>
++<strong>
 +<!--#echo var="REQUEST_METHOD"-->
-+</STRONG>
++</strong>
 +is not allowed for the URL
-+<STRONG>
-+<!--#echo var="REQUEST_URI"-->.
-+</STRONG>
-+</TD></TR><TR><TD></TD><TD><HR></TD></TR>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="polish"-->" WIDTH=26 HEIGHT=19 ALT="English">
-+</TD><TD>
++<strong>
++<!--#echo var="REQUEST_URI"-->
++</strong>.
++<!--#include virtual="FOOT.shtml"-->
+diff -Nur apache_1.3.41/errordocs.orig/405.shtml.po apache_1.3.41/errordocs/405.shtml.po
+--- apache_1.3.41/errordocs.orig/405.shtml.po	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/405.shtml.po	2008-02-09 20:17:17.506798725 +0100
+@@ -0,0 +1,12 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-2"-->
++<!--#set var="TITLE" value="Niedozwolona metoda"-->
++<!--#include virtual="HEADER.shtml"-->
 +Metoda
-+<STRONG>
++<strong>
 +<!--#echo var="REQUEST_METHOD"-->
-+</STRONG>
++</strong>
 +nie jest obs³ugiwana przez wybrany URL
-+<STRONG>
-+<!--#echo var="REQUEST_URI"-->.
-+</STRONG>
-+</TD></TR>
-+</TABLE>
-+</CENTER>
-+<P>
-+<HR>
++<strong>
++<!--#echo var="REQUEST_URI"-->
++</strong>.
 +<!--#include virtual="FOOT.shtml"-->
---- apache_1.3.9/errordocs/406.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/406.shtml	Wed Jul 15 13:55:10 1998
-@@ -0,0 +1,31 @@
-+<!--#set var="title" value="Not Acceptable : Brak akceptacji"-->
+diff -Nur apache_1.3.41/errordocs.orig/406.shtml.en apache_1.3.41/errordocs/406.shtml.en
+--- apache_1.3.41/errordocs.orig/406.shtml.en	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/406.shtml.en	2008-02-09 20:17:31.643604335 +0100
+@@ -0,0 +1,9 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-1"-->
++<!--#set var="TITLE" value="Not Acceptable"-->
 +<!--#include virtual="HEADER.shtml"-->
-+<H2 ALIGN="center">
-+[<!--#echo var="REDIRECT_STATUS"-->] Not Acceptable : Brak akceptacji
-+</H2>
-+<HR>
-+<CENTER>
-+<TABLE>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="english"-->" WIDTH=26 HEIGHT=19 ALT="English">
-+</TD><TD>
 +An appropriate representation of the requested resource
-+<STRONG>
++<strong>
 +<!--#echo var="REQUEST_URI"-->
-+</STRONG>
++</strong>
 +could not be found on this server.
-+</TD></TR><TR><TD></TD><TD><HR></TD></TR>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="polish"-->" WIDTH=26 HEIGHT=19 ALT="Polish">
-+</TD><TD>
-+Format podanego URL
-+<STRONG>
-+<!--#echo var="REQUEST_URI"-->
-+</STRONG>
-+nie jest akceptowany przez serwer.
-+</TD></TR>
-+</TABLE>
-+</CENTER>
-+<P>
-+<HR>
 +<!--#include virtual="FOOT.shtml"-->
---- apache_1.3.9/errordocs/408.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/408.shtml	Wed Jul 15 13:55:18 1998
-@@ -0,0 +1,23 @@
-+<!--#set var="title" value="Request Time-out : Przekroczony czas oczekiwania"-->
+diff -Nur apache_1.3.41/errordocs.orig/406.shtml.po apache_1.3.41/errordocs/406.shtml.po
+--- apache_1.3.41/errordocs.orig/406.shtml.po	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/406.shtml.po	2008-02-09 20:17:44.224321269 +0100
+@@ -0,0 +1,9 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-2"-->
++<!--#set var="TITLE" value="Brak akceptacji"-->
 +<!--#include virtual="HEADER.shtml"-->
-+<H2 ALIGN="center">
-+[<!--#echo var="REDIRECT_STATUS"-->] Request Time-out : Przekroczony czas oczekiwania
-+</H2>
-+<HR>
-+<CENTER>
-+<TABLE>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="english"-->" WIDTH=26 HEIGHT=19 ALT="English">
-+</TD><TD>
++Odpowiednia reprezentacja ¿±danego zasobu
++<strong>
++<!--#echo var="REQUEST_URI"-->
++</strong>
++nie zosta³a znaleziona przez serwer.
++<!--#include virtual="FOOT.shtml"-->
+diff -Nur apache_1.3.41/errordocs.orig/408.shtml.en apache_1.3.41/errordocs/408.shtml.en
+--- apache_1.3.41/errordocs.orig/408.shtml.en	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/408.shtml.en	2008-02-09 20:17:55.140943373 +0100
+@@ -0,0 +1,5 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-1"-->
++<!--#set var="TITLE" value="Request Time-out"-->
++<!--#include virtual="HEADER.shtml"-->
 +I'm tired of waiting for your request.
-+</TD></TR><TR><TD></TD><TD><HR></TD></TR>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="polish"-->" WIDTH=26 HEIGHT=19 ALT="Polish">
-+</TD><TD>
-+Przekroczony czas na przygotowanie zapytania.
-+</TD></TR>
-+</TABLE>
-+</CENTER>
-+<P>
-+<HR>
 +<!--#include virtual="FOOT.shtml"-->
---- apache_1.3.9/errordocs/410.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/410.shtml	Wed Jul 15 13:55:22 1998
-@@ -0,0 +1,33 @@
-+<!--#set var="title" value="Gone : URI usuniête"-->
+diff -Nur apache_1.3.41/errordocs.orig/408.shtml.po apache_1.3.41/errordocs/408.shtml.po
+--- apache_1.3.41/errordocs.orig/408.shtml.po	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/408.shtml.po	2008-02-09 20:18:10.781834696 +0100
+@@ -0,0 +1,5 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-2"-->
++<!--#set var="TITLE" value="Przekroczony czas oczekiwania"-->
 +<!--#include virtual="HEADER.shtml"-->
-+<H2 ALIGN="center">
-+[<!--#echo var="REDIRECT_STATUS"-->] Gone : URI usuniête
-+</H2>
-+<HR>
-+<CENTER>
-+<TABLE>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="english"-->" WIDTH=26 HEIGHT=19 ALT="English">
-+</TD><TD>
++Przekroczony czas na wys³anie zapytania.
++<!--#include virtual="FOOT.shtml"-->
+diff -Nur apache_1.3.41/errordocs.orig/410.shtml.en apache_1.3.41/errordocs/410.shtml.en
+--- apache_1.3.41/errordocs.orig/410.shtml.en	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/410.shtml.en	2008-02-09 20:18:21.290433547 +0100
+@@ -0,0 +1,10 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-1"-->
++<!--#set var="TITLE" value="Gone"-->
++<!--#include virtual="HEADER.shtml"-->
 +The requested resource
-+<STRONG>
++<strong>
 +<!--#echo var="REQUEST_URI"-->
-+</STRONG>
++</strong>
 +is no longer available on this server and there is no forwarding address.
 +Please remove all references to this resource.
-+</TD></TR><TR><TD></TD><TD><HR></TD></TR>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="polish"-->" WIDTH=26 HEIGHT=19 ALT="Polish">
-+</TD><TD>
++<!--#include virtual="FOOT.shtml"-->
+diff -Nur apache_1.3.41/errordocs.orig/410.shtml.po apache_1.3.41/errordocs/410.shtml.po
+--- apache_1.3.41/errordocs.orig/410.shtml.po	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/410.shtml.po	2008-02-09 20:18:32.895094859 +0100
+@@ -0,0 +1,10 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-2"-->
++<!--#set var="TITLE" value="URI usuniête"-->
++<!--#include virtual="HEADER.shtml"-->
 +Podany w zapytaniu URL
-+<STRONG>
++<strong>
 +<!--#echo var="REQUEST_URI"-->
-+</STRONG>
++</strong>
 +nie jest ju¿ dostêpny na tym serwerze. Proszê usun±æ wszystkie
-+odwo³ania do tego URL.
-+</TD></TR>
-+</TABLE>
-+</CENTER>
-+<P>
-+<HR>
++odwo³ania do tego adresu.
 +<!--#include virtual="FOOT.shtml"-->
---- apache_1.3.9/errordocs/411.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/411.shtml	Wed Jul 15 13:55:26 1998
-@@ -0,0 +1,31 @@
-+<!--#set var="title" value="Length Required : Wymagana d³ugo¶æ"-->
+diff -Nur apache_1.3.41/errordocs.orig/411.shtml.en apache_1.3.41/errordocs/411.shtml.en
+--- apache_1.3.41/errordocs.orig/411.shtml.en	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/411.shtml.en	2008-02-09 20:18:43.651707843 +0100
+@@ -0,0 +1,9 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-1"-->
++<!--#set var="TITLE" value="Length Required"-->
 +<!--#include virtual="HEADER.shtml"-->
-+<H2 ALIGN="center">
-+[<!--#echo var="REDIRECT_STATUS"-->] Length Required : Wymagana d³ugo¶æ
-+</H2>
-+<HR>
-+<CENTER>
-+<TABLE>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="english"-->" WIDTH=26 HEIGHT=19 ALT="English">
-+</TD><TD>
 +A request of the requested method
-+<STRONG>
++<strong>
 +<!--#echo var="REQUEST_METHOD"-->
-+</STRONG>
++</strong>
 +requires a valid Content-length.
-+</TD></TR><TR><TD></TD><TD><HR></TD></TR>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="polish"-->" WIDTH=26 HEIGHT=19 ALT="Polish">
-+</TD><TD>
++<!--#include virtual="FOOT.shtml"-->
+diff -Nur apache_1.3.41/errordocs.orig/411.shtml.po apache_1.3.41/errordocs/411.shtml.po
+--- apache_1.3.41/errordocs.orig/411.shtml.po	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/411.shtml.po	2008-02-09 20:18:52.816230100 +0100
+@@ -0,0 +1,9 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-2"-->
++<!--#set var="TITLE" value="Wymagana d³ugo¶æ"-->
++<!--#include virtual="HEADER.shtml"-->
 +Wybrana metoda
-+<STRONG>
++<strong>
 +<!--#echo var="REQUEST_METHOD"-->
-+</STRONG>
++</strong>
 +wymaga poprawnego nag³ówka Content-length.
-+</TD></TR>
-+</TABLE>
-+</CENTER>
-+<P>
-+<HR>
 +<!--#include virtual="FOOT.shtml"-->
---- apache_1.3.9/errordocs/414.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/414.shtml	Wed Jul 15 13:55:34 1998
-@@ -0,0 +1,23 @@
-+<!--#set var="title" value="Request-URI Too Large : Zbyt d³ugi URI"-->
+diff -Nur apache_1.3.41/errordocs.orig/414.shtml.en apache_1.3.41/errordocs/414.shtml.en
+--- apache_1.3.41/errordocs.orig/414.shtml.en	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/414.shtml.en	2008-02-09 20:19:02.252767858 +0100
+@@ -0,0 +1,5 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-1"-->
++<!--#set var="TITLE" value="Request-URI Too Large"-->
 +<!--#include virtual="HEADER.shtml"-->
-+<H2 ALIGN="center">
-+[<!--#echo var="REDIRECT_STATUS"-->] Request-URI Too Large : Zbyt d³ugi URI
-+</H2>
-+<HR>
-+<CENTER>
-+<TABLE>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="english"-->" WIDTH=26 HEIGHT=19 ALT="English">
-+</TD><TD>
 +The requested URL's length exeeds the capacity limit for this server.
-+</TD></TR><TR><TD></TD><TD><HR></TD></TR>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="polish"-->" WIDTH=26 HEIGHT=19 ALT="Polish">
-+</TD><TD>
-+D³ugo¶æ wybranego URL przekracza zekres zdefiniowany na tym serwerze.
-+</TD></TR>
-+</TABLE>
-+</CENTER>
-+<P>
-+<HR>
 +<!--#include virtual="FOOT.shtml"-->
---- apache_1.3.9/errordocs/500.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/500.shtml	Wed Jul 15 13:55:38 1998
-@@ -0,0 +1,37 @@
-+<!--#set var="title" value="Internal Server Error : Wewnêtrzny b³±d serwera"-->
+diff -Nur apache_1.3.41/errordocs.orig/414.shtml.po apache_1.3.41/errordocs/414.shtml.po
+--- apache_1.3.41/errordocs.orig/414.shtml.po	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/414.shtml.po	2008-02-09 20:19:11.513295585 +0100
+@@ -0,0 +1,5 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-2"-->
++<!--#set var="TITLE" value="Zbyt d³ugi URI"-->
 +<!--#include virtual="HEADER.shtml"-->
-+<H2 ALIGN="center">
-+[<!--#echo var="REDIRECT_STATUS"-->] Internal Server Error : Wewnêtrzny b³±d serwera
-+</H2>
-+<HR>
-+<CENTER>
-+<TABLE>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="english"-->" WIDTH=26 HEIGHT=19 ALT="English">
-+</TD><TD>
++D³ugo¶æ wybranego URL-a przekracza zakres zdefiniowany na tym serwerze.
++<!--#include virtual="FOOT.shtml"-->
+diff -Nur apache_1.3.41/errordocs.orig/500.shtml.en apache_1.3.41/errordocs/500.shtml.en
+--- apache_1.3.41/errordocs.orig/500.shtml.en	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/500.shtml.en	2008-02-09 20:19:24.034009100 +0100
+@@ -0,0 +1,14 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-1"-->
++<!--#set var="TITLE" value="Internal Server Error"-->
++<!--#include virtual="HEADER.shtml"-->
 +The server encountered an internal error or misconfiguration and was unable
-+to complete your request. Please contact the server administrator
-+<A HREF="mailto:<!--#echo var="SERVER_ADMIN"-->?subject=B³±d: [<!--#echo var="REDIRECT_STATUS"-->]
-+		<!--#echo var="title"-->, URL=<!--#echo var="REQUEST_URI"-->">
-+<!--#echo var="SERVER_ADMIN"-->
-+</A>
-+and inform them of the time the error occured and anything you might have
-+done that may have caused the error.
-+</TD></TR><TR><TD></TD><TD><HR></TD></TR>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="polish"-->" WIDTH=26 HEIGHT=19 ALT="Polish">
-+</TD><TD>
-+Wewnêtrzny b³±d serwera (np. zawieszenie programu CGI) lub b³±d konfiguracji.
-+Proszê skontaktowaæ siê z administratorem
-+<A HREF="mailto:<!--#echo var="SERVER_ADMIN"-->?subject=B³±d: [<!--#echo var="REDIRECT_STATUS"-->]
-+		<!--#echo var="title"-->, URL=<!--#echo var="REQUEST_URI"-->">
-+<!--#echo var="SERVER_ADMIN"-->
-+</A>
-+i poinformowaæ go o czasie pojawienia siê b³êdu wraz z podaniem innych informacji,
-+które mog³y byæ przyczyn± b³êdu.
-+</TD></TR>
-+</TABLE>
-+</CENTER>
-+<P>
-+<HR>
++to complete your request.
++</p>
++<p>
++<!--#if expr="$REDIRECT_ERROR_NOTES" -->
++Error message:
++<br /><!--#echo encoding="none" var="REDIRECT_ERROR_NOTES" -->
++<!--#else -->
++Either the server is overloaded or there was an error in a CGI script.
++<!--#endif -->
 +<!--#include virtual="FOOT.shtml"-->
---- apache_1.3.9/errordocs/503.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/503.shtml	Wed Jul 15 13:55:48 1998
-@@ -0,0 +1,25 @@
-+<!--#set var="title" value="Service Temporarily Unavailable : Us³ugi tymczasowo niedostêpne"-->
+diff -Nur apache_1.3.41/errordocs.orig/500.shtml.po apache_1.3.41/errordocs/500.shtml.po
+--- apache_1.3.41/errordocs.orig/500.shtml.po	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/500.shtml.po	2008-02-09 20:19:37.602782340 +0100
+@@ -0,0 +1,13 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-2"-->
++<!--#set var="TITLE" value="Wewnêtrzny b³±d serwera"-->
 +<!--#include virtual="HEADER.shtml"-->
-+<H2 ALIGN="center">
-+[<!--#echo var="REDIRECT_STATUS"-->] Service Temporarily Unavailable : Us³ugi tymczasowo niedostêpne
-+</H2>
-+<HR>
-+<CENTER>
-+<TABLE>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="english"-->" WIDTH=26 HEIGHT=19 ALT="English">
-+</TD><TD>
++Wewnêtrzny b³±d serwera lub b³±d konfiguracji.
++</p>
++<p>
++<!--#if expr="$REDIRECT_ERROR_NOTES" -->
++Komunikat b³êdu:
++<br /><!--#echo encoding="none" var="REDIRECT_ERROR_NOTES" -->
++<!--#else -->
++Serwer jest przeci±¿ony albo wyst±pi³ b³±d w skrypcie CGI.
++<!--#endif -->
++<!--#include virtual="FOOT.shtml"-->
+diff -Nur apache_1.3.41/errordocs.orig/503.shtml.en apache_1.3.41/errordocs/503.shtml.en
+--- apache_1.3.41/errordocs.orig/503.shtml.en	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/503.shtml.en	2008-02-09 20:19:56.143838935 +0100
+@@ -0,0 +1,6 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-1"-->
++<!--#set var="TITLE" value="Service Temporarily Unavailable"-->
++<!--#include virtual="HEADER.shtml"-->
 +The server is temporarily unable to service your request due to
 +maintenance downtime or capacity problems. Please try again later.
-+</TD></TR><TR><TD></TD><TD><HR></TD></TR>
-+<TR><TD VALIGN="top" ALIGN="left" WIDTH=50>
-+<IMG SRC="<!--#echo var="polish"-->" WIDTH=26 HEIGHT=19 ALT="Polish">
-+</TD><TD>
++<!--#include virtual="FOOT.shtml"-->
+diff -Nur apache_1.3.41/errordocs.orig/503.shtml.po apache_1.3.41/errordocs/503.shtml.po
+--- apache_1.3.41/errordocs.orig/503.shtml.po	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/503.shtml.po	2008-02-09 20:20:09.744613998 +0100
+@@ -0,0 +1,6 @@
++<!--#set var="CHARACTER_ENCODING" value="iso-8859-2"-->
++<!--#set var="TITLE" value="Us³ugi tymczasowo niedostêpne"-->
++<!--#include virtual="HEADER.shtml"-->
 +Us³ugi serwera s± czasowo niedostêpne co mo¿e byæ spowodowane jego zatrzymaniem
 +lub prze³adowaniem. Proszê spróbowaæ po³±czyæ siê pó¼niej.
-+</TD></TR>
-+</TABLE>
-+</CENTER>
-+<P>
-+<HR>
 +<!--#include virtual="FOOT.shtml"-->
---- apache_1.3.9/errordocs/FOOT.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/FOOT.shtml	Sun Jan  3 17:11:22 1999
-@@ -0,0 +1,30 @@
-+<P>
-+<!--#set var="Mail" value="/icons/email.gif"-->
-+<!--#set var="Powered_by_Apache" value="/icons/apache_pb.gif"-->
-+<!--#set var="Powered_by_Linux" value="/icons/linux_pwd.gif"-->
-+<CENTER>
-+<IMG SRC="<!--#echo var="Mail"-->" WIDTH=50 HIGHT=66 ALT="Mail to:">
-+<BR>
-+<A HREF="mailto:<!--#echo var="SERVER_ADMIN"-->?subject=Blad: [<!--#echo var="REDIRECT_STATUS"-->]
-+		<!--#echo var="title"-->, URL=<!--#echo var="REQUEST_URI"-->">
-+<!--#echo var="SERVER_ADMIN"-->
-+</A>
-+<P>
-+<TABLE WIDTH=50%>
-+<TR>
-+<TD ALIGN="left">
-+<IMG SRC="<!--#echo var="Powered_by_Apache"-->" WIDTH=259 HIGHT=32 ALT="Powered by Apache">
-+</TD>
-+<TD ALIGN="right">
-+<IMG SRC="<!--#echo var="Powered_by_Linux"-->" WIDTH=196 HIGHT=49 ALT="Powered by Linux">
-+</TD>
-+</TR>
-+</TABLE>
-+<BR>
-+<FONT SIZE=-3>
-+data:<!--#echo var="DATE_LOCAL"-->,
-+ostatnia modyfikacja: <!--#echo var="LAST_MODIFIED"-->
-+</FONT>
-+</CENTER>
-+</BODY>
-+</HTML>
---- apache_1.3.9/errordocs/HEADER.shtml	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.9.new/errordocs/HEADER.shtml	Wed Jul 15 13:56:44 1998
-@@ -0,0 +1,14 @@
-+<HTML>
-+<HEAD>
-+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-2">
-+<TITLE>
-+<!--#echo var="title"-->
-+</TITLE>
-+</HEAD>
-+<BODY BGCOLOR="#FFFFFF">
-+<!--#set var="english" value="/icons/gb.gif"-->
-+<!--#set var="polish" value="/icons/poland.gif"-->
-+<H2 ALIGN="center">
-+[Error : B³±d]
-+</H2>
-+<P>
+diff -Nur apache_1.3.41/errordocs.orig/FOOT.shtml apache_1.3.41/errordocs/FOOT.shtml
+--- apache_1.3.41/errordocs.orig/FOOT.shtml	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/FOOT.shtml	2008-02-09 19:33:56.270562720 +0100
+@@ -0,0 +1,9 @@
++</p>
++<p><a href="mailto:<!--#echo var="SERVER_ADMIN" -->">Administrator</a></p>
++<h2>Error <!--#echo encoding="none" var="REDIRECT_STATUS" --></h2>
++<address>
++<a href="/"><!--#echo encoding="entity" var="SERVER_NAME" --></a><br />
++<span><!--#echo var="SERVER_SOFTWARE" --></span>
++</address>
++</body>
++</html>
+diff -Nur apache_1.3.41/errordocs.orig/HEADER.shtml apache_1.3.41/errordocs/HEADER.shtml
+--- apache_1.3.41/errordocs.orig/HEADER.shtml	1970-01-01 01:00:00.000000000 +0100
++++ apache_1.3.41/errordocs/HEADER.shtml	2008-02-09 19:45:07.336804605 +0100
+@@ -0,0 +1,8 @@
++<html>
++<head>
++<meta http-equiv="content-type" content="text/html; <!--#echo var="CHARACTER_ENCODING" -->">
++<title><!--#echo var="TITLE"--></title>
++</head>
++<body bgcolor="#ffffff">
++<h1 align="center"><!--#echo var="TITLE"--></h1>
++<p>
