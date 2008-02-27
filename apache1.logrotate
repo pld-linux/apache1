@@ -7,7 +7,7 @@
 /var/log/apache/ssl_request_log
 {
 	daily
-	rotate 7
+	rotate 28
 	missingok
 	notifempty
 	sharedscripts
