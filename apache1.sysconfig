@@ -11,6 +11,9 @@ HTTPD_OPTS=""
 # perhaps set 128MB memory limit
 #SERVICE_LIMITS="$DEFAULT_SERVICE_LIMITS -m 128000"
 
+# if you want to use CoreDumpDirectory in apache.conf:
+#SERVICE_LIMITS="-u unlimited -c unlimited"
+
 # Skip apache restarts invoked from rpm installs.
 # Enable this if you run a production server and don't want rpm upgrade restart
 # your webserver like 20 times.
