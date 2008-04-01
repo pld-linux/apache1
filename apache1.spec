@@ -28,7 +28,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.41
-Release:	5
+Release:	6
 License:	Apache v2.0
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1352,7 +1352,7 @@ cp -a lingerd-*/{apache-1.3/ap_lingerd.c,li_config.h} src/main
 %{__sed} -i -e 's,/lib$,/%{_lib},' config.layout
 
 %build
-OPTIM="%{rpmcflags} -DHARD_SERVER_LIMIT=2048" \
+OPTIM="%{rpmcflags} -DHARD_SERVER_LIMIT=2048 -D_FILE_OFFSET_BITS=64" \
 ./configure \
 	--with-layout=PLD \
 	--without-confadjust \
