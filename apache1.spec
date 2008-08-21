@@ -30,7 +30,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.41
-Release:	12
+Release:	13
 License:	Apache v2.0
 Group:		Networking/Daemons
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -817,6 +817,7 @@ Summary(pl.UTF-8):	Moduł generujący nagłówki HTTP Expires
 Group:		Networking/Daemons
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_expires) = %{version}-%{release}
+Provides:	webserver(expires)
 Obsoletes:	apache-mod_expires < 2.0.0
 
 %description mod_expires
