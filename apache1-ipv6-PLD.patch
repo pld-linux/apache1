@@ -2210,7 +2210,7 @@
  		    s->server_hostname =
  			ap_pstrdup(p, "bogus_host_without_reverse_dns");
  		}
-@@ -664,45 +829,80 @@
+@@ -664,45 +829,81 @@
      const char *src;
      char *dst;
      const char *port_str;
@@ -2308,6 +2308,7 @@
 +                    }
 +                    r->parsed_uri.port_str = ap_pstrdup(r->pool, port_str);
 +                    r->parsed_uri.port = iport;
++                    break;
                  }
 -                r->parsed_uri.port_str = ap_pstrdup(r->pool, port_str);
 -                r->parsed_uri.port = iport;
@@ -2319,7 +2320,7 @@
      }
      /* strip trailing gubbins */
      if (dst > host && dst[-1] == '.') {
-@@ -717,7 +917,7 @@
+@@ -717,7 +918,7 @@
  bad:
      r->status = HTTP_BAD_REQUEST;
      ap_log_rerror(APLOG_MARK, APLOG_NOERRNO|APLOG_ERR, r,
@@ -2328,7 +2329,7 @@
      return;
  }
  
-@@ -820,11 +1020,25 @@
+@@ -820,11 +1021,25 @@
       *   names we'll match have ports associated with them
       */
      const char *host = r->hostname;
@@ -2355,7 +2356,7 @@
      last_s = NULL;
  
      /* Recall that the name_chain is a list of server_addr_recs, some of
-@@ -879,7 +1093,22 @@
+@@ -879,7 +1094,22 @@
      server_rec *s;
      server_rec *last_s;
      name_chain *src;
@@ -2379,7 +2380,7 @@
  
      /*
       * This is in conjunction with the ServerPath code in http_core, so we
-@@ -939,10 +1168,22 @@
+@@ -939,10 +1169,22 @@
  API_EXPORT(void) ap_update_vhost_given_ip(conn_rec *conn)
  {
      ipaddr_chain *trav;
@@ -2404,7 +2405,7 @@
      if (trav) {
  	/* save the name_chain for later in case this is a name-vhost */
  	conn->vhost_lookup_data = trav->names;
-@@ -960,6 +1201,7 @@
+@@ -960,6 +1202,7 @@
  	return;
      }
  
