@@ -1,5 +1,25 @@
---- apache_1.3.28.orig/README.v6	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.28/README.v6	Fri Jul 25 11:01:55 2003
+--- apache_1.3.41/conf/httpd.conf-dist	2004-11-24 21:10:19.000000000 +0200
++++ apache_1.3.41-ipv6/conf/httpd.conf-dist	2009-02-16 19:29:36.596835634 +0200
+@@ -174,6 +174,11 @@
+ #Listen 3000
+ #Listen 12.34.56.78:80
+ 
++# Listen can take two arguments.
++# (this is an extension for supporting IPv6 addresses)
++#Listen :: 80
++#Listen 0.0.0.0 80
++
+ #
+ # BindAddress: You can support virtual hosts with this option. This directive
+ # is used to tell the server which IP address to listen to. It can either
+--- apache_1.3.41/configure.v6	1970-01-01 03:00:00.000000000 +0300
++++ apache_1.3.41-ipv6/configure.v6	2009-02-16 19:29:36.600169885 +0200
+@@ -0,0 +1,3 @@
++#! /bin/sh
++
++./configure --enable-rule=INET6 --enable-module=proxy $*
+--- apache_1.3.41/README.v6	1970-01-01 03:00:00.000000000 +0300
++++ apache_1.3.41-ipv6/README.v6	2009-02-16 19:29:36.590170307 +0200
 @@ -0,0 +1,166 @@
 +IPv6-ready apache 1.3.x
 +KAME Project
@@ -167,28 +187,86 @@
 +	 http://www.v6.linux.or.jp/
 +	YOSHIFUJI Hideaki, USAGI Project
 +	 http://www.linux-ipv6.org/
---- apache_1.3.28.orig/conf/httpd.conf-dist	Wed Jul 16 21:36:41 2003
-+++ apache_1.3.28/conf/httpd.conf-dist	Fri Jul 25 11:01:55 2003
-@@ -174,6 +174,11 @@
- #Listen 3000
- #Listen 12.34.56.78:80
+--- apache_1.3.41/src/ap/ap_snprintf.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/ap/ap_snprintf.c	2009-02-16 19:29:36.603503089 +0200
+@@ -31,6 +31,7 @@
+ #include <string.h>
+ #include <stdlib.h>
+ #include <math.h>
++#include "sa_len.h"
+ #ifdef WIN32
+ #include <float.h>
+ #endif
+@@ -468,6 +469,42 @@
  
-+# Listen can take two arguments.
-+# (this is an extension for supporting IPv6 addresses)
-+#Listen :: 80
-+#Listen 0.0.0.0 80
+ 
+ 
++#ifdef INET6
++static char *conv_sockaddr(struct sockaddr *sa, char *buf_end, int *len)
++{
++    char *p = buf_end;
++    char hostnamebuf[MAXHOSTNAMELEN];
++    char portnamebuf[MAXHOSTNAMELEN];
++    char *q;
++    int salen;
 +
- #
- # BindAddress: You can support virtual hosts with this option. This directive
- # is used to tell the server which IP address to listen to. It can either
---- apache_1.3.28.orig/configure.v6	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.28/configure.v6	Fri Jul 25 11:01:55 2003
-@@ -0,0 +1,3 @@
-+#! /bin/sh
++#ifndef SIN6_LEN
++    salen = SA_LEN(sa);
++#else
++    salen = sa->sa_len;
++#endif
++    if (getnameinfo(sa, salen, hostnamebuf, sizeof(hostnamebuf),
++	    portnamebuf, sizeof(portnamebuf), NI_NUMERICHOST | NI_NUMERICSERV)) {
++	strcpy(hostnamebuf, "???");
++	strcpy(portnamebuf, "???");
++    }
++    if (strcmp(portnamebuf,"0") == 0)
++	strcpy(portnamebuf, "*");
++    q = portnamebuf + strlen(portnamebuf);
++    while (portnamebuf < q)
++	*--p = *--q;
++    *--p = ':';
++    q = hostnamebuf + strlen(hostnamebuf);
++    while (hostnamebuf < q)
++	*--p = *--q;
 +
-+./configure --enable-rule=INET6 --enable-module=proxy $*
---- apache_1.3.28.orig/src/Configuration.tmpl	Fri Jul 25 11:00:49 2003
-+++ apache_1.3.28/src/Configuration.tmpl	Fri Jul 25 11:01:55 2003
++    *len = buf_end - p;
++    return (p);
++}
++#endif /*INET6*/
++
++
++
+ /*
+  * Convert a floating point number to a string formats 'f', 'e' or 'E'.
+  * The result is placed in buf, and len denotes the length of the string
+@@ -1015,6 +1052,7 @@
+ 		    /* print a struct sockaddr_in as a.b.c.d:port */
+ 		case 'I':
+ 		    {
++#ifndef INET6
+ 			struct sockaddr_in *si;
+ 
+ 			si = va_arg(ap, struct sockaddr_in *);
+@@ -1023,6 +1061,16 @@
+ 			    if (adjust_precision && precision < s_len)
+ 				s_len = precision;
+ 			}
++#else
++			struct sockaddr *sa;
++
++			sa = va_arg(ap, struct sockaddr *);
++			if (sa != NULL) {
++			    s = conv_sockaddr(sa, &num_buf[NUM_BUF_SIZE], &s_len);
++			    if (adjust_precision && precision < s_len)
++				s_len = precision;
++			}
++#endif
+ 			else {
+ 			    s = S_NULL;
+ 			    s_len = S_NULL_LEN;
+--- apache_1.3.41/src/Configuration.tmpl	2009-02-16 19:29:13.454337891 +0200
++++ apache_1.3.41-ipv6/src/Configuration.tmpl	2009-02-16 19:29:36.600169885 +0200
 @@ -191,6 +191,9 @@
  #  Rule EXPAT=default   : If Expat can be found at the system or
  #                         in lib/expat-lite, use it; otherwise
@@ -207,9 +285,9 @@
  Rule CYGWIN_WINSOCK=no 
  
  # DEV_RANDOM:
---- apache_1.3.28.orig/src/Configure	Fri Jul 25 11:00:49 2003
-+++ apache_1.3.28/src/Configure	Fri Jul 25 11:01:55 2003
-@@ -238,6 +238,7 @@
+--- apache_1.3.41/src/Configure	2009-02-16 19:29:13.414338992 +0200
++++ apache_1.3.41-ipv6/src/Configure	2009-02-16 19:29:36.603503089 +0200
+@@ -195,6 +195,7 @@
  RULE_CYGWIN_WINSOCK=`./helpers/CutRule CYGWIN_WINSOCK $file` 
  RULE_SHARED_CORE=`./helpers/CutRule SHARED_CORE $file`
  RULE_SHARED_CHAIN=`./helpers/CutRule SHARED_CHAIN $file`
@@ -217,7 +295,7 @@
  
  ####################################################################
  ## Rule SHARED_CORE implies required DSO support
-@@ -1724,6 +1725,124 @@
+@@ -1692,6 +1693,124 @@
      esac
  fi
  
@@ -342,7 +420,7 @@
  ####################################################################
  ## Find out what modules we want and try and configure things for them
  ## Module lines can look like this:
-@@ -2320,6 +2439,38 @@
+@@ -2296,6 +2415,38 @@
  echo "#define AP_LONGEST_LONG $AP_LONGEST_LONG" >>$AP_CONFIG_AUTO_H
  echo "#endif" >>$AP_CONFIG_AUTO_H
  
@@ -381,99 +459,9 @@
  ####################################################################
  ## More building ap_config_auto.h
  ##
---- apache_1.3.28.orig/src/ap/ap_snprintf.c	Mon Feb  3 18:13:17 2003
-+++ apache_1.3.28/src/ap/ap_snprintf.c	Fri Jul 25 11:01:55 2003
-@@ -73,6 +73,7 @@
- #include <string.h>
- #include <stdlib.h>
- #include <math.h>
-+#include "sa_len.h"
- #ifdef WIN32
- #include <float.h>
- #endif
-@@ -510,6 +511,42 @@
- 
- 
- 
-+#ifdef INET6
-+static char *conv_sockaddr(struct sockaddr *sa, char *buf_end, int *len)
-+{
-+    char *p = buf_end;
-+    char hostnamebuf[MAXHOSTNAMELEN];
-+    char portnamebuf[MAXHOSTNAMELEN];
-+    char *q;
-+    int salen;
-+
-+#ifndef SIN6_LEN
-+    salen = SA_LEN(sa);
-+#else
-+    salen = sa->sa_len;
-+#endif
-+    if (getnameinfo(sa, salen, hostnamebuf, sizeof(hostnamebuf),
-+	    portnamebuf, sizeof(portnamebuf), NI_NUMERICHOST | NI_NUMERICSERV)) {
-+	strcpy(hostnamebuf, "???");
-+	strcpy(portnamebuf, "???");
-+    }
-+    if (strcmp(portnamebuf,"0") == 0)
-+	strcpy(portnamebuf, "*");
-+    q = portnamebuf + strlen(portnamebuf);
-+    while (portnamebuf < q)
-+	*--p = *--q;
-+    *--p = ':';
-+    q = hostnamebuf + strlen(hostnamebuf);
-+    while (hostnamebuf < q)
-+	*--p = *--q;
-+
-+    *len = buf_end - p;
-+    return (p);
-+}
-+#endif /*INET6*/
-+
-+
-+
- /*
-  * Convert a floating point number to a string formats 'f', 'e' or 'E'.
-  * The result is placed in buf, and len denotes the length of the string
-@@ -1057,6 +1094,7 @@
- 		    /* print a struct sockaddr_in as a.b.c.d:port */
- 		case 'I':
- 		    {
-+#ifndef INET6
- 			struct sockaddr_in *si;
- 
- 			si = va_arg(ap, struct sockaddr_in *);
-@@ -1065,6 +1103,16 @@
- 			    if (adjust_precision && precision < s_len)
- 				s_len = precision;
- 			}
-+#else
-+			struct sockaddr *sa;
-+
-+			sa = va_arg(ap, struct sockaddr *);
-+			if (sa != NULL) {
-+			    s = conv_sockaddr(sa, &num_buf[NUM_BUF_SIZE], &s_len);
-+			    if (adjust_precision && precision < s_len)
-+				s_len = precision;
-+			}
-+#endif
- 			else {
- 			    s = S_NULL;
- 			    s_len = S_NULL_LEN;
---- apache_1.3.28.orig/src/include/ap.h	Mon Feb  3 18:13:17 2003
-+++ apache_1.3.28/src/include/ap.h	Fri Jul 25 11:01:55 2003
-@@ -95,7 +95,8 @@
-  * with some extensions.  The extensions are:
-  *
-  * %pA	takes a struct in_addr *, and prints it as a.b.c.d
-- * %pI	takes a struct sockaddr_in * and prints it as a.b.c.d:port
-+ * %pI	takes a struct sockaddr * and prints it as a.b.c.d:port, or
-+ *	ipv6-numeric-addr:port
-  * %pp  takes a void * and outputs it in hex
-  *
-  * The %p hacks are to force gcc's printf warning code to skip
---- apache_1.3.28.orig/src/include/ap_config.h	Mon May  5 13:45:49 2003
-+++ apache_1.3.28/src/include/ap_config.h	Fri Jul 25 11:01:55 2003
-@@ -411,6 +411,10 @@
+--- apache_1.3.41/src/include/ap_config.h	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/include/ap_config.h	2009-02-16 19:29:36.603503089 +0200
+@@ -375,6 +375,10 @@
  #endif
  #ifndef S_IWOTH
  #define S_IWOTH 000002
@@ -484,7 +472,7 @@
  #endif
  
  #define STDIN_FILENO  0
-@@ -1523,6 +1527,70 @@
+@@ -1455,6 +1459,70 @@
  #define ap_wait_t int
  #endif
  
@@ -555,9 +543,21 @@
  #ifdef __cplusplus
  }
  #endif
---- apache_1.3.28.orig/src/include/http_conf_globals.h	Fri Jul 25 11:00:49 2003
-+++ apache_1.3.28/src/include/http_conf_globals.h	Fri Jul 25 11:01:55 2003
-@@ -82,7 +82,8 @@
+--- apache_1.3.41/src/include/ap.h	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/include/ap.h	2009-02-16 19:29:36.603503089 +0200
+@@ -53,7 +53,8 @@
+  * with some extensions.  The extensions are:
+  *
+  * %pA	takes a struct in_addr *, and prints it as a.b.c.d
+- * %pI	takes a struct sockaddr_in * and prints it as a.b.c.d:port
++ * %pI	takes a struct sockaddr * and prints it as a.b.c.d:port, or
++ *	ipv6-numeric-addr:port
+  * %pp  takes a void * and outputs it in hex
+  *
+  * The %p hacks are to force gcc's printf warning code to skip
+--- apache_1.3.41/src/include/http_conf_globals.h	2009-02-16 19:29:13.421004229 +0200
++++ apache_1.3.41-ipv6/src/include/http_conf_globals.h	2009-02-16 19:29:36.606835974 +0200
+@@ -40,7 +40,8 @@
  extern API_VAR_EXPORT int ap_max_requests_per_child;
  extern API_VAR_EXPORT int ap_threads_per_child;
  extern API_VAR_EXPORT int ap_excess_requests_per_child;
@@ -567,20 +567,9 @@
  extern listen_rec *ap_listeners;
  extern API_VAR_EXPORT int ap_daemons_to_start;
  extern API_VAR_EXPORT int ap_daemons_min_free;
---- apache_1.3.28.orig/src/include/http_vhost.h	Mon Feb  3 18:13:19 2003
-+++ apache_1.3.28/src/include/http_vhost.h	Fri Jul 25 11:01:55 2003
-@@ -73,7 +73,7 @@
- API_EXPORT(const char *) ap_parse_vhost_addrs(pool *p, const char *hostname, server_rec *s);
- 
- /* handle NameVirtualHost directive */
--API_EXPORT_NONSTD(const char *) ap_set_name_virtual_host (cmd_parms *cmd, void *dummy, char *arg);
-+API_EXPORT_NONSTD(const char *) ap_set_name_virtual_host (cmd_parms *cmd, void *dummy, char *h, char *p);
- 
- /* given an ip address only, give our best guess as to what vhost it is */
- API_EXPORT(void) ap_update_vhost_given_ip(conn_rec *conn);
---- apache_1.3.28.orig/src/include/httpd.h	Fri Jul 25 11:00:49 2003
-+++ apache_1.3.28/src/include/httpd.h	Fri Jul 25 11:01:55 2003
-@@ -904,8 +904,8 @@
+--- apache_1.3.41/src/include/httpd.h	2009-02-16 19:29:13.454337891 +0200
++++ apache_1.3.41-ipv6/src/include/httpd.h	2009-02-16 19:29:36.606835974 +0200
+@@ -865,8 +865,8 @@
  
      /* Who is the client? */
  
@@ -591,7 +580,7 @@
      char *remote_ip;		/* Client's IP address */
      char *remote_host;		/* Client's DNS name, if known.
  				 * NULL if DNS hasn't been checked,
-@@ -947,8 +947,8 @@
+@@ -908,8 +908,8 @@
  typedef struct server_addr_rec server_addr_rec;
  struct server_addr_rec {
      server_addr_rec *next;
@@ -602,7 +591,7 @@
      char *virthost;		/* The name given in <VirtualHost> */
  };
  
-@@ -1016,7 +1016,7 @@
+@@ -977,7 +977,7 @@
  /* These are more like real hosts than virtual hosts */
  struct listen_rec {
      listen_rec *next;
@@ -611,7 +600,7 @@
      int fd;
      int used;			/* Only used during restart */        
  /* more stuff here, like which protocol is bound to the port */
-@@ -1184,7 +1184,7 @@
+@@ -1147,7 +1147,7 @@
  #endif /*#ifdef CHARSET_EBCDIC*/
  
  API_EXPORT(char *) ap_get_local_host(pool *);
@@ -620,8 +609,19 @@
  
  extern API_VAR_EXPORT time_t ap_restart_time;
  
---- apache_1.3.28.orig/src/include/sa_len.h	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.28/src/include/sa_len.h	Fri Jul 25 11:01:55 2003
+--- apache_1.3.41/src/include/http_vhost.h	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/include/http_vhost.h	2009-02-16 19:29:36.606835974 +0200
+@@ -31,7 +31,7 @@
+ API_EXPORT(const char *) ap_parse_vhost_addrs(pool *p, const char *hostname, server_rec *s);
+ 
+ /* handle NameVirtualHost directive */
+-API_EXPORT_NONSTD(const char *) ap_set_name_virtual_host (cmd_parms *cmd, void *dummy, char *arg);
++API_EXPORT_NONSTD(const char *) ap_set_name_virtual_host (cmd_parms *cmd, void *dummy, char *h, char *p);
+ 
+ /* given an ip address only, give our best guess as to what vhost it is */
+ API_EXPORT(void) ap_update_vhost_given_ip(conn_rec *conn);
+--- apache_1.3.41/src/include/sa_len.h	1970-01-01 03:00:00.000000000 +0300
++++ apache_1.3.41-ipv6/src/include/sa_len.h	2009-02-16 19:29:36.606835974 +0200
 @@ -0,0 +1,41 @@
 +/* sa_len.h : tiny version of SA_LEN (written by <yoshfuji@ecei.tohoku.ac.jp>) */
 + 
@@ -664,8 +664,8 @@
 +}
 +#endif /* SA_LEN */
 +#endif /* HAVE_SOCKADDR_LEN */
---- apache_1.3.28.orig/src/include/sockaddr_storage.h	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.28/src/include/sockaddr_storage.h	Fri Jul 25 11:01:55 2003
+--- apache_1.3.41/src/include/sockaddr_storage.h	1970-01-01 03:00:00.000000000 +0300
++++ apache_1.3.41-ipv6/src/include/sockaddr_storage.h	2009-02-16 19:29:36.606835974 +0200
 @@ -0,0 +1,53 @@
 +/*
 +struct sockaddr_storage
@@ -720,8 +720,8 @@
 +#define su_port		su_si.si_port
 +
 +#endif /* NEED_SOCKADDR_STORAGE */
---- apache_1.3.28.orig/src/main/getaddrinfo.c	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.28/src/main/getaddrinfo.c	Fri Jul 25 11:01:55 2003
+--- apache_1.3.41/src/main/getaddrinfo.c	1970-01-01 03:00:00.000000000 +0300
++++ apache_1.3.41-ipv6/src/main/getaddrinfo.c	2009-02-16 19:29:36.606835974 +0200
 @@ -0,0 +1,162 @@
 +/*
 + * Copyright (C) 1995, 1996, 1997, 1998, and 1999 WIDE Project.
@@ -885,8 +885,8 @@
 +  }
 +  return EAI_NODATA;
 +}
---- apache_1.3.28.orig/src/main/getnameinfo.c	Thu Jan  1 01:00:00 1970
-+++ apache_1.3.28/src/main/getnameinfo.c	Fri Jul 25 11:01:55 2003
+--- apache_1.3.41/src/main/getnameinfo.c	1970-01-01 03:00:00.000000000 +0300
++++ apache_1.3.41-ipv6/src/main/getnameinfo.c	2009-02-16 19:29:36.610169965 +0200
 @@ -0,0 +1,95 @@
 +/*
 + * Copyright (C) 1995, 1996, 1997, 1998, and 1999 WIDE Project.
@@ -983,9 +983,9 @@
 +	return EAI_NODATA;
 +  return 0;
 +}
---- apache_1.3.28.orig/src/main/http_config.c	Fri Jul 25 11:00:49 2003
-+++ apache_1.3.28/src/main/http_config.c	Fri Jul 25 11:01:55 2003
-@@ -1591,7 +1591,6 @@
+--- apache_1.3.41/src/main/http_config.c	2009-02-16 19:29:13.427670844 +0200
++++ apache_1.3.41-ipv6/src/main/http_config.c	2009-02-16 19:29:36.610169965 +0200
+@@ -1553,7 +1553,6 @@
      ap_scoreboard_fname = DEFAULT_SCOREBOARD;
      ap_lock_fname = DEFAULT_LOCKFILE;
      ap_max_requests_per_child = DEFAULT_MAX_REQUESTS_PER_CHILD;
@@ -993,7 +993,7 @@
      ap_listeners = NULL;
      ap_listenbacklog = DEFAULT_LISTENBACKLOG;
      ap_extended_status = 0;
-@@ -1624,7 +1623,13 @@
+@@ -1586,7 +1585,13 @@
      s->next = NULL;
      s->addrs = ap_pcalloc(p, sizeof(server_addr_rec));
      /* NOT virtual host; don't match any real network interface */
@@ -1008,7 +1008,7 @@
      s->addrs->host_port = 0;	/* matches any port */
      s->addrs->virthost = "";	/* must be non-NULL */
      s->names = s->wild_names = NULL;
-@@ -1643,21 +1648,33 @@
+@@ -1605,21 +1610,33 @@
  static void default_listeners(pool *p, server_rec *s)
  {
      listen_rec *new;
@@ -1047,9 +1047,9 @@
  }
  
  
---- apache_1.3.34/src/main/http_core.c.orig	2005-06-28 20:03:25.000000000 +0200
-+++ apache_1.3.34/src/main/http_core.c	2005-10-18 10:14:09.000000000 +0200
-@@ -28,6 +28,7 @@
+--- apache_1.3.41/src/main/http_core.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/main/http_core.c	2009-02-16 19:29:36.613502634 +0200
+@@ -29,6 +29,7 @@
  #include "util_md5.h"
  #include "scoreboard.h"
  #include "fnmatch.h"
@@ -1057,7 +1057,7 @@
  
  #ifdef USE_MMAP_FILES
  #include <sys/mman.h>
-@@ -570,7 +571,7 @@
+@@ -571,7 +572,7 @@
       * file if you care. So the adhoc value should do.
       */
      return ap_psprintf(r->pool,"%pA%pp%pp%pp%pp",
@@ -1066,7 +1066,7 @@
             (void *)ap_user_name,
             (void *)ap_listeners,
             (void *)ap_server_argv0,
-@@ -666,7 +667,9 @@
+@@ -667,7 +668,9 @@
   */
  static ap_inline void do_double_reverse (conn_rec *conn)
  {
@@ -1077,7 +1077,7 @@
  
      if (conn->double_reverse) {
  	/* already done */
-@@ -678,30 +681,54 @@
+@@ -679,30 +682,54 @@
          conn->remote_host = ""; /* prevent another lookup */
  	return;
      }
@@ -1146,7 +1146,7 @@
  
      /* If we haven't checked the host name, and we want to */
      if (dir_config) {
-@@ -723,10 +750,14 @@
+@@ -724,10 +751,14 @@
  	    || hostname_lookups != HOSTNAME_LOOKUP_OFF)) {
  	old_stat = ap_update_child_status(conn->child_num, SERVER_BUSY_DNS,
  					  (request_rec*)NULL);
@@ -1165,7 +1165,7 @@
  	    ap_str_tolower(conn->remote_host);
  	   
  	    if (hostname_lookups == HOSTNAME_LOOKUP_DOUBLE) {
-@@ -804,6 +835,7 @@
+@@ -805,6 +836,7 @@
  {
      conn_rec *conn = r->connection;
      core_dir_config *d;
@@ -1173,7 +1173,7 @@
  
      d = (core_dir_config *)ap_get_module_config(r->per_dir_config,
  						&core_module);
-@@ -813,23 +845,22 @@
+@@ -814,23 +846,22 @@
      }
      if (d->use_canonical_name == USE_CANONICAL_NAME_DNS) {
          if (conn->local_host == NULL) {
@@ -1209,7 +1209,7 @@
  	    (void) ap_update_child_status(conn->child_num, old_stat, r);
  	}
  	return conn->local_host;
-@@ -841,7 +872,7 @@
+@@ -842,7 +873,7 @@
  API_EXPORT(unsigned) ap_get_server_port(const request_rec *r)
  {
      unsigned port;
@@ -1218,7 +1218,7 @@
      core_dir_config *d =
        (core_dir_config *)ap_get_module_config(r->per_dir_config, &core_module);
      
-@@ -2647,12 +2678,25 @@
+@@ -2648,12 +2679,25 @@
  
  static const char *set_bind_address(cmd_parms *cmd, void *dummy, char *arg) 
  {
@@ -1245,7 +1245,7 @@
      return NULL;
  }
  
-@@ -2684,48 +2728,71 @@
+@@ -2685,48 +2729,71 @@
      return NULL;
  }
  
@@ -1347,7 +1347,7 @@
      new->fd = -1;
      new->used = 0;
      new->next = ap_listeners;
-@@ -3650,7 +3717,7 @@
+@@ -3651,7 +3718,7 @@
  { "ThreadStackSize", set_threadstacksize, NULL, RSRC_CONF, TAKE1,
    "Stack size each created thread will use."},
  #endif
@@ -1356,7 +1356,7 @@
    "A port number or a numeric IP address and a port number"},
  { "SendBufferSize", set_send_buffer_size, NULL, RSRC_CONF, TAKE1,
    "Send buffer size in bytes"},
-@@ -3684,7 +3751,7 @@
+@@ -3685,7 +3752,7 @@
    "Name of the config file to be included" },
  { "LogLevel", set_loglevel, NULL, RSRC_CONF, TAKE1,
    "Level of verbosity in error logging" },
@@ -1365,10 +1365,10 @@
    "A numeric IP address:port, or the name of a host" },
  #ifdef _OSD_POSIX
  { "BS2000Account", set_bs2000_account, NULL, RSRC_CONF, TAKE1,
---- apache_1.3.28.orig/src/main/http_main.c	Fri Jul 25 11:00:49 2003
-+++ apache_1.3.28/src/main/http_main.c	Fri Jul 25 12:13:12 2003
-@@ -124,6 +124,8 @@
- #include <bstring.h>		/* for IRIX, FD_SET calls bzero() */
+--- apache_1.3.41/src/main/http_main.c	2009-02-16 19:29:13.431004203 +0200
++++ apache_1.3.41-ipv6/src/main/http_main.c	2009-02-16 19:29:36.620170407 +0200
+@@ -85,6 +85,8 @@
+ #include <sys/prctl.h>
  #endif
  
 +#include "sa_len.h"
@@ -1376,7 +1376,7 @@
  #ifdef MULTITHREAD
  /* special debug stuff -- PCS */
  
-@@ -249,7 +251,12 @@
+@@ -210,7 +212,12 @@
  API_VAR_EXPORT char *ap_scoreboard_fname=NULL;
  API_VAR_EXPORT char *ap_lock_fname=NULL;
  API_VAR_EXPORT char *ap_server_argv0=NULL;
@@ -1390,7 +1390,7 @@
  API_VAR_EXPORT int ap_daemons_to_start=0;
  API_VAR_EXPORT int ap_daemons_min_free=0;
  API_VAR_EXPORT int ap_daemons_max_free=0;
-@@ -1448,7 +1455,11 @@
+@@ -1461,7 +1468,11 @@
      fprintf(stderr, "Usage: %s [-D name] [-d directory] [-f file]\n", bin);
  #endif
      fprintf(stderr, "       %s [-C \"directive\"] [-c \"directive\"]\n", pad);
@@ -1403,7 +1403,7 @@
      fprintf(stderr, "Options:\n");
  #ifdef SHARED_CORE
      fprintf(stderr, "  -R directory     : specify an alternate location for shared object files\n");
-@@ -1474,6 +1485,10 @@
+@@ -1487,6 +1498,10 @@
  #ifndef WIN32
      fprintf(stderr, "  -F               : run main process in foreground, for process supervisors\n");
  #endif
@@ -1414,7 +1414,7 @@
  #ifdef WIN32
      fprintf(stderr, "  -n name          : name the Apache service for -k options below;\n");
      fprintf(stderr, "  -k stop|shutdown : tell running Apache to shutdown\n");
-@@ -3630,11 +3645,13 @@
+@@ -3740,11 +3755,13 @@
  
  
  static conn_rec *new_connection(pool *p, server_rec *server, BUFF *inout,
@@ -1430,7 +1430,7 @@
  
      /* Got a connection structure, so initialize what fields we can
       * (the rest are zeroed out by pcalloc).
-@@ -3643,17 +3660,29 @@
+@@ -3753,17 +3770,29 @@
      conn->child_num = child_num;
  
      conn->pool = p;
@@ -1466,7 +1466,7 @@
  #ifdef EAPI
      conn->ctx = ap_ctx_new(conn->pool);
  #endif /* EAPI */
-@@ -3711,21 +3740,47 @@
+@@ -3821,21 +3850,47 @@
  #define sock_disable_nagle(s, c)	/* NOOP */
  #endif
  
@@ -1522,7 +1522,7 @@
  	    ap_log_error(APLOG_MARK, APLOG_CRIT, server_conf,
  		    "make_sock: failed to get a socket for %s", addr);
  
-@@ -3828,15 +3883,19 @@
+@@ -3930,15 +3985,19 @@
  
  #ifdef MPE
  /* MPE requires CAP=PM and GETPRIVMODE to bind to ports less than 1024 */
@@ -1546,7 +1546,7 @@
  	    GETUSERMODE();
  #endif
  
-@@ -3849,7 +3908,7 @@
+@@ -3947,7 +4006,7 @@
  	exit(1);
      }
  #ifdef MPE
@@ -1555,7 +1555,7 @@
  	GETUSERMODE();
  #endif
  
-@@ -4002,15 +4061,17 @@
+@@ -4162,15 +4221,17 @@
      for (;;) {
  	fd = find_listener(lr);
  	if (fd < 0) {
@@ -1577,7 +1577,7 @@
  	lr->fd = fd;
  	if (lr->next == NULL)
  	    break;
-@@ -4327,8 +4388,8 @@
+@@ -4521,8 +4582,8 @@
  static void child_main(int child_num_arg)
  {
      NET_SIZE_T clen;
@@ -1588,7 +1588,7 @@
      listen_rec *lr;
  
      /* All of initialization is a critical section, we don't care if we're
-@@ -4505,7 +4566,7 @@
+@@ -4711,7 +4772,7 @@
  	    usr1_just_die = 0;
  	    for (;;) {
  		clen = sizeof(sa_client);
@@ -1597,8 +1597,8 @@
  		if (csd >= 0 || errno != EINTR)
  		    break;
  		if (deferred_die) {
-@@ -4671,7 +4732,7 @@
- 	 */
+@@ -4900,7 +4961,7 @@
+ #endif /* NONBLOCK_WHEN_MULTI_LISTEN */
  
  	clen = sizeof(sa_server);
 -	if (getsockname(csd, &sa_server, &clen) < 0) {
@@ -1606,7 +1606,7 @@
  	    ap_log_error(APLOG_MARK, APLOG_DEBUG, server_conf, 
                           "getsockname, client %pA probably dropped the "
                           "connection", 
-@@ -4719,8 +4780,8 @@
+@@ -4948,8 +5009,8 @@
  	ap_bpushfd(conn_io, csd, dupped_csd);
  
  	current_conn = new_connection(ptrans, server_conf, conn_io,
@@ -1617,7 +1617,7 @@
  				          my_child_num);
  
  	/*
-@@ -4875,12 +4936,13 @@
+@@ -5104,12 +5165,13 @@
  
  #ifdef _OSD_POSIX
      /* BS2000 requires a "special" version of fork() before a setuid() call */
@@ -1634,7 +1634,7 @@
  	ap_log_error(APLOG_MARK, APLOG_ERR, s, "fork: Unable to fork new process");
  
  	/* fork didn't succeed. Fix the scoreboard or else
-@@ -5497,7 +5559,10 @@
+@@ -5756,7 +5818,10 @@
      ap_setup_prelinked_modules();
  
      while ((c = getopt(argc, argv,
@@ -1646,7 +1646,7 @@
  #ifdef DEBUG_SIGSTOP
  				    "Z:"
  #endif
-@@ -5575,8 +5640,14 @@
+@@ -5834,8 +5899,14 @@
  	    ap_configtestonly = 1;
  	    ap_docrootcheck = 0;
  	    break;
@@ -1663,7 +1663,7 @@
  	case '?':
  	    usage(argv[0]);
  	}
-@@ -5665,9 +5736,10 @@
+@@ -5924,9 +5995,10 @@
      else {
  	conn_rec *conn;
  	request_rec *r;
@@ -1675,7 +1675,7 @@
  
  	ap_set_version();
  	/* Yes this is called twice. */
-@@ -5722,25 +5794,32 @@
+@@ -5981,25 +6053,32 @@
  #endif
  
  	l = sizeof(sa_client);
@@ -1713,7 +1713,7 @@
  
  	while ((r = ap_read_request(conn)) != NULL) {
  
-@@ -7447,7 +7526,11 @@
+@@ -7713,7 +7792,11 @@
  
      while ((c = getopt(argc, argv, "D:C:c:Xd:f:vVlLz:Z:wiuStThk:n:W:")) != -1) {
  #else /* !WIN32 */
@@ -1726,7 +1726,7 @@
  #endif
          char **new;
  	switch (c) {
-@@ -7993,6 +8076,10 @@
+@@ -8259,6 +8342,10 @@
  	case 't':
  	case 'T':
  	case 'h':
@@ -1737,9 +1737,9 @@
  	case '?':
  	    break;
  	case 'R':
---- apache_1.3.31/src/main/http_vhost.c.orig	Mon Mar 29 23:03:25 2004
-+++ apache_1.3.31/src/main/http_vhost.c	Wed May 12 13:49:13 2004
-@@ -25,6 +25,7 @@
+--- apache_1.3.41/src/main/http_vhost.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/main/http_vhost.c	2009-02-16 19:29:36.623502355 +0200
+@@ -26,6 +26,7 @@
  #include "http_log.h"
  #include "http_vhost.h"
  #include "http_protocol.h"
@@ -1747,7 +1747,7 @@
  
  /*
   * After all the definitions there's an explanation of how it's all put
-@@ -122,78 +123,114 @@
+@@ -123,78 +124,114 @@
   * *paddr is the variable used to keep track of **paddr between calls
   * port is the default port to assume
   */
@@ -1911,7 +1911,7 @@
      return NULL;
  }
  
-@@ -207,7 +244,8 @@
+@@ -208,7 +245,8 @@
      /* start the list of addreses */
      addrs = &s->addrs;
      while (hostname[0]) {
@@ -1921,7 +1921,7 @@
  	if (err) {
  	    *addrs = NULL;
  	    return err;
-@@ -225,10 +263,11 @@
+@@ -226,10 +264,11 @@
  }
  
  
@@ -1935,7 +1935,7 @@
  			    cmd->server->port);
  }
  
-@@ -302,6 +341,19 @@
+@@ -303,6 +342,19 @@
      return ((key >> 8) ^ key) % IPHASH_TABLE_SIZE;
  }
  
@@ -1955,7 +1955,7 @@
  
  
  static ipaddr_chain *new_ipaddr_chain(pool *p,
-@@ -329,25 +381,77 @@
+@@ -330,25 +382,77 @@
      return new;
  }
  
@@ -2043,7 +2043,7 @@
      return NULL;
  }
  
-@@ -373,21 +477,7 @@
+@@ -374,21 +478,7 @@
      int len;
      char buf[MAX_STRING_LEN];
  
@@ -2066,7 +2066,7 @@
      if (ic->names == NULL) {
  	if (ic->server == NULL)
  	    fprintf(f, "%-22s WARNING: No <VirtualHost> defined for this NameVirtualHost!\n", buf);
-@@ -515,10 +605,37 @@
+@@ -516,10 +606,37 @@
       * occured in the config file, we'll copy it in that order.
       */
      for (sar = name_vhost_list; sar; sar = sar->next) {
@@ -2106,7 +2106,7 @@
  	    *iphash_table_tail[bucket] = ic;
  	    iphash_table_tail[bucket] = &ic->next;
  	}
-@@ -545,12 +662,45 @@
+@@ -546,12 +663,45 @@
  	has_default_vhost_addr = 0;
  	for (sar = s->addrs; sar; sar = sar->next) {
  	    ipaddr_chain *ic;
@@ -2157,7 +2157,7 @@
  			ap_log_error(APLOG_MARK, APLOG_NOERRNO|APLOG_WARNING,
  			    main_s, "_default_ VirtualHost overlap on port %u,"
  			    " the first has precedence", sar->host_port);
-@@ -563,10 +713,11 @@
+@@ -564,10 +714,11 @@
  	    }
  	    else {
  		/* see if it matches something we've already got */
@@ -2171,7 +2171,7 @@
  
  		    ic = new_ipaddr_chain(p, s, sar);
  		    ic->next = *iphash_table_tail[bucket];
-@@ -603,19 +754,33 @@
+@@ -604,19 +755,33 @@
  	    }
  	    else {
  		struct hostent *h;
@@ -2210,7 +2210,7 @@
  		    s->server_hostname =
  			ap_pstrdup(p, "bogus_host_without_reverse_dns");
  		}
-@@ -663,45 +828,80 @@
+@@ -664,45 +829,80 @@
      const char *src;
      char *dst;
      const char *port_str;
@@ -2319,7 +2319,7 @@
      }
      /* strip trailing gubbins */
      if (dst > host && dst[-1] == '.') {
-@@ -716,7 +916,7 @@
+@@ -717,7 +917,7 @@
  bad:
      r->status = HTTP_BAD_REQUEST;
      ap_log_rerror(APLOG_MARK, APLOG_NOERRNO|APLOG_ERR, r,
@@ -2328,7 +2328,7 @@
      return;
  }
  
-@@ -819,11 +1019,25 @@
+@@ -820,11 +1020,25 @@
       *   names we'll match have ports associated with them
       */
      const char *host = r->hostname;
@@ -2355,7 +2355,7 @@
      last_s = NULL;
  
      /* Recall that the name_chain is a list of server_addr_recs, some of
-@@ -878,7 +1092,22 @@
+@@ -879,7 +1093,22 @@
      server_rec *s;
      server_rec *last_s;
      name_chain *src;
@@ -2379,7 +2379,7 @@
  
      /*
       * This is in conjunction with the ServerPath code in http_core, so we
-@@ -938,10 +1167,22 @@
+@@ -939,10 +1168,22 @@
  API_EXPORT(void) ap_update_vhost_given_ip(conn_rec *conn)
  {
      ipaddr_chain *trav;
@@ -2404,7 +2404,7 @@
      if (trav) {
  	/* save the name_chain for later in case this is a name-vhost */
  	conn->vhost_lookup_data = trav->names;
-@@ -959,6 +1200,7 @@
+@@ -960,6 +1201,7 @@
  	return;
      }
  
@@ -2412,9 +2412,9 @@
      /* otherwise we're stuck with just the main server
       * and no name-based vhosts
       */
---- apache_1.3.28.orig/src/main/rfc1413.c	Mon Feb  3 18:13:23 2003
-+++ apache_1.3.28/src/main/rfc1413.c	Fri Jul 25 12:15:05 2003
-@@ -82,6 +82,7 @@
+--- apache_1.3.41/src/main/rfc1413.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/main/rfc1413.c	2009-02-16 19:29:36.623502355 +0200
+@@ -40,6 +40,7 @@
  #include "http_log.h"		/* for aplog_error */
  #include "rfc1413.h"
  #include "http_main.h"		/* set_callback_and_alarm */
@@ -2422,7 +2422,7 @@
  
  /* Local stuff. */
  /* Semi-well-known port */
-@@ -109,12 +110,13 @@
+@@ -100,12 +101,13 @@
  
  /* bind_connect - bind both ends of a socket */
  /* Ambarish fix this. Very broken */
@@ -2440,7 +2440,7 @@
      int i;
      char *cp;
      char buffer[RFC1413_MAXDATA + 1];
-@@ -129,16 +131,47 @@
+@@ -120,16 +122,47 @@
       * addresses from the query socket.
       */
  
@@ -2454,9 +2454,7 @@
 +#else
 +    memcpy(&our_query_sin, our_sin, our_sin->sa_len);
 +    memcpy(&rmt_query_sin, rmt_sin, rmt_sin->sa_len);
- #endif
--    rmt_query_sin = *rmt_sin;
--    rmt_query_sin.sin_port = htons(RFC1413_PORT);
++#endif
 +    switch (our_sin->sa_family) {
 +    case AF_INET:
 +#ifdef MPE
@@ -2478,7 +2476,9 @@
 +      ((struct sockaddr_in6 *)&rmt_query_sin)->sin6_port = htons(RFC1413_PORT);
 +      o_rmt_port = ntohs(((struct sockaddr_in6 *)rmt_sin)->sin6_port);
 +      break;
-+#endif
+ #endif
+-    rmt_query_sin = *rmt_sin;
+-    rmt_query_sin.sin_port = htons(RFC1413_PORT);
 +    default:
 +      /* unsupported AF */
 +      return -1;
@@ -2495,7 +2495,7 @@
  	ap_log_error(APLOG_MARK, APLOG_CRIT, srv,
  		    "bind: rfc1413: Error binding to local port");
  	return -1;
-@@ -149,12 +182,18 @@
+@@ -140,12 +173,18 @@
   * the service
   */
      if (connect(sock, (struct sockaddr *) &rmt_query_sin,
@@ -2518,7 +2518,7 @@
  
      /* send query to server. Handle short write. */
  #ifdef CHARSET_EBCDIC
-@@ -219,9 +258,9 @@
+@@ -210,9 +249,9 @@
      ascii2ebcdic(buffer, buffer, (size_t)i);
  #endif
      if (sscanf(buffer, "%u , %u : USERID :%*[^:]:%512s", &rmt_port, &our_port,
@@ -2530,16 +2530,16 @@
  
      /*
       * Strip trailing carriage return. It is part of the
-@@ -243,7 +282,7 @@
+@@ -234,7 +273,7 @@
  
      result = FROM_UNKNOWN;
  
 -    sock = ap_psocket_ex(conn->pool, AF_INET, SOCK_STREAM, IPPROTO_TCP, 1);
 +    sock = ap_psocket_ex(conn->pool, conn->remote_addr.ss_family, SOCK_STREAM, IPPROTO_TCP, 1);
      if (sock < 0) {
- 	ap_log_error(APLOG_MARK, APLOG_CRIT, srv,
- 		    "socket: rfc1413: error creating socket");
-@@ -256,8 +295,10 @@
+     	ap_log_error(APLOG_MARK, APLOG_CRIT, srv,
+     		    "socket: rfc1413: error creating socket");
+@@ -253,8 +292,10 @@
      if (ap_setjmp(timebuf) == 0) {
  	ap_set_callback_and_alarm(ident_timeout, ap_rfc1413_timeout);
  
@@ -2550,10 +2550,10 @@
 +	}
      }
      ap_set_callback_and_alarm(NULL, 0);
-     ap_pclosesocket(conn->pool, sock);
---- apache_1.3.28.orig/src/main/util.c	Mon Feb  3 18:13:23 2003
-+++ apache_1.3.28/src/main/util.c	Fri Jul 25 11:01:55 2003
-@@ -2017,52 +2017,87 @@
+ #endif
+--- apache_1.3.41/src/main/util.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/main/util.c	2009-02-16 19:29:36.626835968 +0200
+@@ -2044,52 +2044,87 @@
   * Parses a host of the form <address>[:port]
   * :port is permitted if 'port' is not NULL
   */
@@ -2666,7 +2666,7 @@
  }
  
  
-@@ -2090,7 +2125,8 @@
+@@ -2117,7 +2152,8 @@
  #endif
      char str[MAXHOSTNAMELEN];
      char *server_hostname = NULL;
@@ -2676,7 +2676,7 @@
  
  #ifdef BEOS /* BeOS returns zero as an error for gethostname */
      if (gethostname(str, sizeof(str) - 1) == 0) {
-@@ -2103,29 +2139,38 @@
+@@ -2130,29 +2166,38 @@
      }
      else 
      {
@@ -2738,7 +2738,7 @@
      
      return server_hostname;
  }
-@@ -2369,3 +2414,11 @@
+@@ -2396,3 +2441,11 @@
      }
      *dest = 0;
  }
@@ -2750,9 +2750,9 @@
 +#ifdef NEED_GETNAMEINFO
 +#include "getnameinfo.c"
 +#endif
---- apache_1.3.28.orig/src/main/util_script.c	Mon Feb  3 18:13:23 2003
-+++ apache_1.3.28/src/main/util_script.c	Fri Jul 25 11:01:55 2003
-@@ -67,6 +67,7 @@
+--- apache_1.3.41/src/main/util_script.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/main/util_script.c	2009-02-16 19:29:36.626835968 +0200
+@@ -25,6 +25,7 @@
  #include "http_request.h"	/* for sub_req_lookup_uri() */
  #include "util_script.h"
  #include "util_date.h"		/* For parseHTTPdate() */
@@ -2760,7 +2760,7 @@
  
  #ifdef OS2
  #define INCL_DOS
-@@ -203,6 +204,7 @@
+@@ -161,6 +162,7 @@
      array_header *hdrs_arr = ap_table_elts(r->headers_in);
      table_entry *hdrs = (table_entry *) hdrs_arr->elts;
      int i;
@@ -2768,7 +2768,7 @@
  
      /* use a temporary table which we'll overlap onto
       * r->subprocess_env later
-@@ -294,8 +296,16 @@
+@@ -252,8 +254,16 @@
      ap_table_addn(e, "SERVER_ADMIN", s->server_admin);	/* Apache */
      ap_table_addn(e, "SCRIPT_FILENAME", r->filename);	/* Apache */
  
@@ -2787,9 +2787,9 @@
  
      if (c->user) {
  	ap_table_addn(e, "REMOTE_USER", c->user);
---- apache_1.3.28.orig/src/main/util_uri.c	Mon Feb  3 18:13:24 2003
-+++ apache_1.3.28/src/main/util_uri.c	Fri Jul 25 11:01:55 2003
-@@ -424,6 +424,12 @@
+--- apache_1.3.41/src/main/util_uri.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/main/util_uri.c	2009-02-16 19:29:36.626835968 +0200
+@@ -382,6 +382,12 @@
           * the hostname.  If there's a port it is the first colon.
           */
          s = memchr(hostinfo, ':', uri - hostinfo);
@@ -2802,7 +2802,7 @@
          if (s == NULL) {
              /* we expect the common case to have no port */
              uptr->hostname = ap_pstrndup(p, hostinfo, uri - hostinfo);
-@@ -480,7 +486,12 @@
+@@ -438,7 +444,12 @@
      /* We expect hostinfo to point to the first character of
       * the hostname.  There must be a port, separated by a colon
       */
@@ -2816,9 +2816,9 @@
      if (s == NULL) {
          return HTTP_BAD_REQUEST;
      }
---- apache_1.3.28.orig/src/modules/proxy/mod_proxy.c	Fri Jul 25 11:00:49 2003
-+++ apache_1.3.28/src/modules/proxy/mod_proxy.c	Fri Jul 25 11:01:55 2003
-@@ -574,11 +574,31 @@
+--- apache_1.3.41/src/modules/proxy/mod_proxy.c	2009-02-16 19:29:13.444337634 +0200
++++ apache_1.3.41-ipv6/src/modules/proxy/mod_proxy.c	2009-02-16 19:29:36.630169925 +0200
+@@ -582,11 +582,31 @@
      struct proxy_remote *new;
      char *p, *q;
      int port;
@@ -2851,7 +2851,7 @@
      if (q != NULL) {
          if (sscanf(q + 1, "%u", &port) != 1 || port > 65535)
              return "ProxyRemote: Bad syntax for a remote proxy server (bad port number)";
-@@ -589,7 +609,7 @@
+@@ -597,7 +617,7 @@
      *p = '\0';
      if (strchr(f, ':') == NULL)
          ap_str_tolower(f);      /* lowercase scheme */
@@ -2860,7 +2860,7 @@
  
      if (port == -1) {
          int i;
-@@ -602,7 +622,7 @@
+@@ -610,7 +630,7 @@
      new = ap_push_array(conf->proxies);
      new->scheme = f;
      new->protocol = r;
@@ -2869,9 +2869,9 @@
      new->port = port;
      return NULL;
  }
---- apache_1.3.28.orig/src/modules/proxy/mod_proxy.h	Mon Feb  3 18:13:26 2003
-+++ apache_1.3.28/src/modules/proxy/mod_proxy.h	Fri Jul 25 11:01:55 2003
-@@ -310,7 +310,7 @@
+--- apache_1.3.41/src/modules/proxy/mod_proxy.h	2009-02-16 19:29:13.447671388 +0200
++++ apache_1.3.41-ipv6/src/modules/proxy/mod_proxy.h	2009-02-16 19:29:36.630169925 +0200
+@@ -297,7 +297,7 @@
  int ap_proxy_is_domainname(struct dirconn_entry *This, pool *p);
  int ap_proxy_is_hostname(struct dirconn_entry *This, pool *p);
  int ap_proxy_is_word(struct dirconn_entry *This, pool *p);
@@ -2880,9 +2880,9 @@
  int ap_proxy_garbage_init(server_rec *, pool *);
  /* This function is called by ap_table_do() for all header lines */
  int ap_proxy_send_hdr_line(void *p, const char *key, const char *value);
---- apache_1.3.28.orig/src/modules/proxy/proxy_connect.c	Mon Feb  3 18:13:26 2003
-+++ apache_1.3.28/src/modules/proxy/proxy_connect.c	Fri Jul 25 11:27:12 2003
-@@ -113,14 +113,15 @@
+--- apache_1.3.41/src/modules/proxy/proxy_connect.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/modules/proxy/proxy_connect.c	2009-02-16 19:29:36.630169925 +0200
+@@ -71,14 +71,15 @@
                                   const char *proxyhost, int proxyport)
  {
      struct sockaddr_in server;
@@ -2902,7 +2902,7 @@
  
      void *sconf = r->server->module_config;
      proxy_server_conf *conf =
-@@ -128,27 +129,59 @@
+@@ -86,27 +87,59 @@
      struct noproxy_entry *npent = (struct noproxy_entry *) conf->noproxies->elts;
  
      memset(&server, '\0', sizeof(server));
@@ -2972,7 +2972,7 @@
      }
  
      /* Check if it is an allowed port */
-@@ -159,34 +192,42 @@
+@@ -117,34 +150,42 @@
          case DEFAULT_SNEWS_PORT:
              break;
          default:
@@ -3030,7 +3030,7 @@
  
  #ifdef CHECK_FD_SETSIZE
      if (sock >= FD_SETSIZE) {
-@@ -196,19 +237,15 @@
+@@ -154,19 +195,15 @@
                       "found, you probably need to rebuild Apache with a "
                       "larger FD_SETSIZE", sock, FD_SETSIZE);
          ap_pclosesocket(r->pool, sock);
@@ -3053,9 +3053,9 @@
      if (i == -1) {
          ap_pclosesocket(r->pool, sock);
          return ap_proxyerror(r, HTTP_INTERNAL_SERVER_ERROR, ap_pstrcat(r->pool,
---- apache_1.3.28.orig/src/modules/proxy/proxy_ftp.c	Mon Feb  3 18:13:26 2003
-+++ apache_1.3.28/src/modules/proxy/proxy_ftp.c	Fri Jul 25 11:18:38 2003
-@@ -62,6 +62,7 @@
+--- apache_1.3.41/src/modules/proxy/proxy_ftp.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/modules/proxy/proxy_ftp.c	2009-02-16 19:29:36.633508156 +0200
+@@ -20,6 +20,7 @@
  #include "http_main.h"
  #include "http_log.h"
  #include "http_core.h"
@@ -3063,9 +3063,9 @@
  
  #define AUTODETECT_PWD
  
-@@ -555,8 +556,10 @@
+@@ -514,8 +515,10 @@
      const char *err;
-     int port, i, j, len, rc, nocache = 0;
+     int destport, i, j, len, rc, nocache = 0;
      int csd = 0, sock = -1, dsock = -1;
 -    struct sockaddr_in server;
 -    struct hostent server_hp;
@@ -3076,7 +3076,7 @@
      struct in_addr destaddr;
      table *resp_hdrs;
      BUFF *ctrl = NULL;
-@@ -577,11 +580,18 @@
+@@ -538,11 +541,18 @@
      unsigned int presult, h0, h1, h2, h3, p0, p1;
      unsigned int paddr;
      unsigned short pport;
@@ -3096,7 +3096,7 @@
  /* stuff for responses */
      char resp[MAX_STRING_LEN];
      char *size = NULL;
-@@ -658,62 +668,50 @@
+@@ -636,62 +646,50 @@
      if (parms != NULL)
          *(parms++) = '\0';
  
@@ -3193,7 +3193,7 @@
      if (i == -1) {
          return ftp_cleanup_and_return(r, ctrl, data, sock, dsock,
                        ap_proxyerror(r, HTTP_BAD_GATEWAY, ap_pstrcat(r->pool,
-@@ -944,7 +942,7 @@
+@@ -922,7 +920,7 @@
      }
  
  /* try to set up PASV data connection first */
@@ -3202,7 +3202,7 @@
      if (dsock == -1) {
          return ftp_cleanup_and_return(r, ctrl, data, sock, dsock,
                                  ap_proxyerror(r, HTTP_INTERNAL_SERVER_ERROR,
-@@ -961,11 +959,22 @@
+@@ -939,11 +937,22 @@
      }
  #endif
  
@@ -3227,7 +3227,7 @@
      /* 421 Service not available, closing control connection. */
      /* 500 Syntax error, command unrecognized. */
      /* 501 Syntax error in parameters or arguments. */
-@@ -976,7 +985,7 @@
+@@ -954,7 +963,7 @@
      if (i == -1 || i == 421) {
          return ftp_cleanup_and_return(r, ctrl, data, sock, dsock,
                                  ap_proxyerror(r, HTTP_INTERNAL_SERVER_ERROR,
@@ -3236,7 +3236,7 @@
      }
      else {
          pasv[i - 1] = '\0';
-@@ -1004,10 +1013,14 @@
+@@ -982,10 +991,14 @@
              pport = (p1 << 8) + p0;
              ap_log_error(APLOG_MARK, APLOG_DEBUG | APLOG_NOERRNO, r->server, "FTP: contacting host %d.%d.%d.%d:%d",
                           h3, h2, h1, h0, pport);
@@ -3255,7 +3255,7 @@
  
              if (i == -1) {
                  return ftp_cleanup_and_return(r, ctrl, data, sock, dsock,
-@@ -1017,6 +1030,64 @@
+@@ -995,6 +1008,64 @@
                                                     strerror(errno), NULL)));
              }
              pasvmode = 1;
@@ -3320,7 +3320,7 @@
          }
          else {
              ap_pclosesocket(p, dsock);  /* and try the regular way */
-@@ -1025,14 +1096,14 @@
+@@ -1003,14 +1074,14 @@
      }
  
      if (!pasvmode) {            /* set up data connection */
@@ -3337,7 +3337,7 @@
          if (dsock == -1) {
              return ftp_cleanup_and_return(r, ctrl, data, sock, dsock,
                                  ap_proxyerror(r, HTTP_INTERNAL_SERVER_ERROR,
-@@ -1048,13 +1119,28 @@
+@@ -1026,13 +1097,28 @@
  #endif                          /* _OSD_POSIX */
          }
  
@@ -3370,7 +3370,7 @@
          }
          listen(dsock, 2);       /* only need a short queue */
      }
-@@ -1308,7 +1394,7 @@
+@@ -1286,7 +1372,7 @@
  
      if (!pasvmode) {            /* wait for connection */
          ap_hard_timeout("proxy ftp data connect", r);
@@ -3379,9 +3379,9 @@
          do
              csd = accept(dsock, (struct sockaddr *)&server, &clen);
          while (csd == -1 && errno == EINTR);
---- apache_1.3.34/src/modules/proxy/proxy_http.c.orig	2005-10-18 09:56:15.000000000 +0200
-+++ apache_1.3.34/src/modules/proxy/proxy_http.c	2005-10-18 10:15:06.000000000 +0200
-@@ -113,9 +113,8 @@
+--- apache_1.3.41/src/modules/proxy/proxy_http.c	2009-02-16 19:29:13.447671388 +0200
++++ apache_1.3.41-ipv6/src/modules/proxy/proxy_http.c	2009-02-16 19:29:36.633508156 +0200
+@@ -114,9 +114,8 @@
      table *req_hdrs, *resp_hdrs;
      array_header *reqhdrs_arr;
      table_entry *reqhdrs_elts;
@@ -3393,7 +3393,7 @@
      BUFF *f;
      char buffer[HUGE_STRING_LEN];
      char portstr[32];
-@@ -141,9 +140,6 @@
+@@ -142,9 +141,6 @@
      if (conf->cache.root == NULL)
          nocache = 1;
  
@@ -3403,7 +3403,7 @@
      /* We break the URL into host, port, path-search */
  
      urlptr = strstr(url, "://");
-@@ -151,6 +147,8 @@
+@@ -152,6 +148,8 @@
          return HTTP_BAD_REQUEST;
      urlptr += 3;
      destport = DEFAULT_HTTP_PORT;
@@ -3412,7 +3412,7 @@
  #ifdef EAPI
      ap_hook_use("ap::mod_proxy::http::handler::set_destport", 
                  AP_HOOK_SIG2(int,ptr), 
-@@ -169,7 +167,20 @@
+@@ -170,7 +168,20 @@
          urlptr = strp;
          desthost = q;
      }
@@ -3434,7 +3434,7 @@
      strp2 = strchr(desthost, ':');
      if (strp2 != NULL) {
          *(strp2++) = '\0';
-@@ -179,46 +190,71 @@
+@@ -180,46 +191,71 @@
          }
      }
  
@@ -3530,7 +3530,7 @@
  
  #if !defined(TPF) && !defined(BEOS)
      if (conf->recv_buffer_size) {
-@@ -231,38 +267,13 @@
+@@ -232,38 +268,13 @@
      }
  #endif
  
@@ -3572,7 +3572,7 @@
      if (i == -1) {
          if (proxyhost != NULL)
              return DECLINED;    /* try again another way */
-@@ -591,17 +602,30 @@
+@@ -595,17 +606,30 @@
          ap_table_set(resp_hdrs, "Content-Location", proxy_location_reverse_map(r, urlstr));
  
  /* check if NoCache directive on this host */
@@ -3610,9 +3610,9 @@
          /*
           * update the cache file, possibly even fulfilling the request if it
           * turns out a conditional allowed us to serve the object from the
---- apache_1.3.28.orig/src/modules/proxy/proxy_util.c	Mon Feb  3 18:13:26 2003
-+++ apache_1.3.28/src/modules/proxy/proxy_util.c	Fri Jul 25 11:01:55 2003
-@@ -64,6 +64,7 @@
+--- apache_1.3.41/src/modules/proxy/proxy_util.c	2009-02-16 19:29:13.451004562 +0200
++++ apache_1.3.41-ipv6/src/modules/proxy/proxy_util.c	2009-02-16 19:29:36.636835944 +0200
+@@ -22,6 +22,7 @@
  #include "http_log.h"
  #include "util_uri.h"
  #include "util_date.h"          /* get ap_checkmask() decl. */
@@ -3620,7 +3620,7 @@
  
  static int proxy_match_ipaddr(struct dirconn_entry *This, request_rec *r);
  static int proxy_match_domainname(struct dirconn_entry *This, request_rec *r);
-@@ -219,6 +220,7 @@
+@@ -177,6 +178,7 @@
      int i;
      char *strp, *host, *url = *urlp;
      char *user = NULL, *password = NULL;
@@ -3628,7 +3628,7 @@
  
      if (url[0] != '/' || url[1] != '/')
          return "Malformed URL";
-@@ -257,11 +259,22 @@
+@@ -215,11 +217,22 @@
          *passwordp = password;
      }
  
@@ -3656,7 +3656,7 @@
              if (!ap_isdigit(strp[i]))
                  break;
  
-@@ -280,17 +293,29 @@
+@@ -238,17 +251,29 @@
          return "Missing host in URL";
  /* check hostname syntax */
      for (i = 0; host[i] != '\0'; i++)
@@ -3688,9 +3688,9 @@
      }
 +#endif
  
- /*    if (strchr(host,'.') == NULL && domain != NULL)
-    host = pstrcat(p, host, domain, NULL);
-@@ -1359,22 +1384,46 @@
+     *urlp = url;
+     *hostp = host;
+@@ -1401,22 +1426,46 @@
      return host != NULL && strstr(host, This->name) != NULL;
  }
  
@@ -3740,9 +3740,9 @@
      }
      ap_kill_timeout(r);
  
---- apache_1.3.31/src/modules/standard/mod_access.c.orig	Sun Mar  7 22:47:14 2004
-+++ apache_1.3.31/src/modules/standard/mod_access.c	Sat May 15 00:05:40 2004
-@@ -31,7 +31,10 @@
+--- apache_1.3.41/src/modules/standard/mod_access.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/modules/standard/mod_access.c	2009-02-16 19:29:36.636835944 +0200
+@@ -32,7 +32,10 @@
      T_ALL,
      T_IP,
      T_HOST,
@@ -3754,7 +3754,7 @@
  };
  
  typedef struct {
-@@ -42,6 +45,12 @@
+@@ -43,6 +46,12 @@
  	    struct in_addr net;
  	    struct in_addr mask;
  	} ip;
@@ -3767,7 +3767,7 @@
      } x;
      enum allowdeny_type type;
  } allowdeny;
-@@ -124,94 +133,242 @@
+@@ -125,94 +134,242 @@
  
      }
      else if ((s = strchr(where, '/'))) {
@@ -3785,14 +3785,18 @@
  
 -	if (!is_ip(where)
 -	    || (a->x.ip.net.s_addr = ap_inet_addr(where)) == INADDR_NONE) {
+-	    a->type = T_FAIL;
+-	    return "syntax error in network portion of network/netmask";
 +	justdigits = 0;
 +	for (p = s; *p; p++) {
 +	    if (!isdigit(*p))
 +		break;
-+	}
+ 	}
 +	if (!*p)
 +	    justdigits++;
-+
+ 
+-	/* is_ip just tests if it matches [\d.]+ */
+-	if (!is_ip(s)) {
 +	memset(&hints, 0, sizeof(hints));
 +	hints.ai_family = PF_UNSPEC;
 +	hints.ai_socktype = SOCK_STREAM;	/*dummy*/
@@ -3805,16 +3809,8 @@
 +	    if (resnet)
 +		freeaddrinfo(resnet);
  	    a->type = T_FAIL;
- 	    return "syntax error in network portion of network/netmask";
- 	}
--
--	/* is_ip just tests if it matches [\d.]+ */
--	if (!is_ip(s)) {
-+	if (resnet->ai_next) {
-+	    freeaddrinfo(resnet);
- 	    a->type = T_FAIL;
 -	    return "syntax error in mask portion of network/netmask";
-+	    return "network/netmask resolved to multiple addresses";
++	    return "syntax error in network portion of network/netmask";
  	}
 -	/* is it in /a.b.c.d form? */
 -	if (strchr(s, '.')) {
@@ -3823,9 +3819,24 @@
 -		a->type = T_FAIL;
 -		return "syntax error in mask portion of network/netmask";
 -	    }
++	if (resnet->ai_next) {
++	    freeaddrinfo(resnet);
++	    a->type = T_FAIL;
++	    return "network/netmask resolved to multiple addresses";
+ 	}
+-	else {
+-	    int i;
 +	memcpy(&net, resnet->ai_addr, resnet->ai_addrlen);
 +	freeaddrinfo(resnet);
-+
+ 
+-	    /* assume it's in /nnn form */
+-	    i = atoi(s);
+-	    if (i > 32 || i <= 0) {
+-		a->type = T_FAIL;
+-		return "invalid mask in network/netmask";
+-	    }
+-	    mask.s_addr = 0xFFFFFFFFUL << (32 - i);
+-	    mask.s_addr = htonl(mask.s_addr);
 +	switch (net.ss_family) {
 +	case AF_INET:
 +	    a->type = T_IP;
@@ -3842,31 +3853,6 @@
 +	    a->type = T_FAIL;
 +	    return "unknown address family for network";
  	}
--	else {
--	    int i;
- 
--	    /* assume it's in /nnn form */
--	    i = atoi(s);
--	    if (i > 32 || i <= 0) {
-+	if (!justdigits) {
-+	    memset(&hints, 0, sizeof(hints));
-+	    hints.ai_family = PF_UNSPEC;
-+	    hints.ai_socktype = SOCK_STREAM;	/*dummy*/ 
-+#ifdef AI_NUMERICHOST
-+	    hints.ai_flags = AI_NUMERICHOST;	/*don't resolve*/
-+#endif
-+	    resmask = NULL;
-+	    error = getaddrinfo(s, NULL, &hints, &resmask);
-+	    if (error || !resmask) {
-+		if (resmask)
-+		    freeaddrinfo(resmask);
- 		a->type = T_FAIL;
--		return "invalid mask in network/netmask";
-+		return "syntax error in mask portion of network/netmask";
- 	    }
--	    mask.s_addr = 0xFFFFFFFFUL << (32 - i);
--	    mask.s_addr = htonl(mask.s_addr);
--	}
 -	a->x.ip.mask = mask;
 -        a->x.ip.net.s_addr  = (a->x.ip.net.s_addr & mask.s_addr);   /* pjr - This fixes PR 4770 */
 -    }
@@ -3885,8 +3871,19 @@
 -	while (*s) {
 -	    t = s;
 -	    if (!ap_isdigit(*t)) {
-+	    if (resmask->ai_next) {
-+		freeaddrinfo(resmask);
++
++	if (!justdigits) {
++	    memset(&hints, 0, sizeof(hints));
++	    hints.ai_family = PF_UNSPEC;
++	    hints.ai_socktype = SOCK_STREAM;	/*dummy*/ 
++#ifdef AI_NUMERICHOST
++	    hints.ai_flags = AI_NUMERICHOST;	/*don't resolve*/
++#endif
++	    resmask = NULL;
++	    error = getaddrinfo(s, NULL, &hints, &resmask);
++	    if (error || !resmask) {
++		if (resmask)
++		    freeaddrinfo(resmask);
  		a->type = T_FAIL;
 -		return "invalid ip address";
 -	    }
@@ -3895,20 +3892,28 @@
 -	    }
 -	    if (*t == '.') {
 -		*t++ = 0;
-+		return "network/netmask resolved to multiple addresses";
++		return "syntax error in mask portion of network/netmask";
  	    }
 -	    else if (*t) {
++	    if (resmask->ai_next) {
++		freeaddrinfo(resmask);
+ 		a->type = T_FAIL;
+-		return "invalid ip address";
++		return "network/netmask resolved to multiple addresses";
+ 	    }
+-	    if (shift < 0) {
 +	    memcpy(&mask, resmask->ai_addr, resmask->ai_addrlen);
 +	    freeaddrinfo(resmask);
 +
 +	    if (net.ss_family != mask.ss_family) {
  		a->type = T_FAIL;
--		return "invalid ip address";
+-		return "invalid ip address, only 4 octets allowed";
 +		return "network/netmask resolved to different address family";
  	    }
--	    if (shift < 0) {
+-	    octet = atoi(s);
+-	    if (octet < 0 || octet > 255) {
 -		a->type = T_FAIL;
--		return "invalid ip address, only 4 octets allowed";
+-		return "each octet must be between 0 and 255 inclusive";
 +
 +	    switch (a->type) {
 +	    case T_IP:
@@ -3922,11 +3927,7 @@
 +		    sizeof(a->x.ip6.mask6));
 +		break;
 +#endif
- 	    }
--	    octet = atoi(s);
--	    if (octet < 0 || octet > 255) {
--		a->type = T_FAIL;
--		return "each octet must be between 0 and 255 inclusive";
++	    }
 +	} else {
 +	    int mask;
 +	    mask = atoi(s);
@@ -4076,7 +4077,7 @@
  
      return NULL;
  }
-@@ -275,13 +432,63 @@
+@@ -276,13 +433,63 @@
  	    return 1;
  
  	case T_IP:
@@ -4144,9 +4145,41 @@
  	case T_HOST:
  	    if (!gothost) {
  		remotehost = ap_get_remote_host(r->connection, r->per_dir_config,
---- apache_1.3.28.orig/src/modules/standard/mod_unique_id.c	Mon Feb  3 18:13:30 2003
-+++ apache_1.3.28/src/modules/standard/mod_unique_id.c	Fri Jul 25 11:01:55 2003
-@@ -67,10 +67,22 @@
+--- apache_1.3.41/src/modules/standard/mod_rewrite.c	2009-02-16 19:29:13.437671008 +0200
++++ apache_1.3.41-ipv6/src/modules/standard/mod_rewrite.c	2009-02-16 19:29:36.646836083 +0200
+@@ -49,6 +49,7 @@
+ 
+ 
+ #include "mod_rewrite.h"
++#include "sa_len.h"
+ 
+ #ifndef NO_WRITEV
+ #ifndef NETWARE
+@@ -3667,8 +3668,19 @@
+         result = r->connection->remote_ip;
+     }
+     else if (strcasecmp(var, "REMOTE_PORT") == 0) {
+-        return ap_psprintf(r->pool, "%d",
+-                           ntohs(r->connection->remote_addr.sin_port));
++	char servbuf[NI_MAXSERV];
++	servbuf[0] = '\0';
++	if (!getnameinfo((struct sockaddr *)&r->connection->remote_addr,
++#ifndef HAVE_SOCKADDR_LEN
++		     SA_LEN((struct sockaddr *)&r->connection->remote_addr),
++#else
++		     r->connection->remote_addr.ss_len,
++#endif
++		     NULL, 0, servbuf, sizeof(servbuf), NI_NUMERICSERV)) {
++		return ap_pstrdup(r->pool, servbuf);
++	} else {
++		return ap_pstrdup(r->pool, "");
++	}
+     }
+     else if (strcasecmp(var, "REMOTE_HOST") == 0) {
+         result = (char *)ap_get_remote_host(r->connection,
+--- apache_1.3.41/src/modules/standard/mod_unique_id.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/modules/standard/mod_unique_id.c	2009-02-16 19:29:36.640187389 +0200
+@@ -25,10 +25,22 @@
  #include "http_config.h"
  #include "http_log.h"
  #include "multithread.h"
@@ -4170,7 +4203,7 @@
      unsigned int pid;
  #ifdef MULTITHREAD
      unsigned int tid;
-@@ -142,7 +154,7 @@
+@@ -100,7 +112,7 @@
   * this shouldn't be a problem till year 2106.
   */
  
@@ -4179,7 +4212,7 @@
  
  #ifdef WIN32
  
-@@ -221,7 +233,8 @@
+@@ -179,7 +191,8 @@
  #define MAXHOSTNAMELEN 256
  #endif
      char str[MAXHOSTNAMELEN + 1];
@@ -4189,7 +4222,7 @@
  #ifndef NO_GETTIMEOFDAY
      struct timeval tv;
  #endif
-@@ -232,8 +245,8 @@
+@@ -190,8 +203,8 @@
       */
      unique_id_rec_offset[0] = XtOffsetOf(unique_id_rec, stamp);
      unique_id_rec_size[0] = sizeof(cur_unique_id->stamp);
@@ -4200,7 +4233,7 @@
      unique_id_rec_offset[2] = XtOffsetOf(unique_id_rec, pid);
      unique_id_rec_size[2] = sizeof(cur_unique_id->pid);
  #ifdef MULTITHREAD
-@@ -269,17 +282,44 @@
+@@ -227,17 +240,44 @@
      }
      str[sizeof(str) - 1] = '\0';
  
@@ -4250,7 +4283,7 @@
  
      /*
       * If the server is pummelled with restart requests we could possibly end
-@@ -336,7 +376,23 @@
+@@ -294,7 +334,23 @@
  		     "oh no! pids are greater than 32-bits!  I'm broken!");
      }
  
@@ -4275,9 +4308,20 @@
  
      /*
       * If we use 0 as the initial counter we have a little less protection
---- apache_1.3.28.orig/src/support/ab.c	Sun Jul  6 19:52:27 2003
-+++ apache_1.3.28/src/support/ab.c	Fri Jul 25 11:01:55 2003
-@@ -158,6 +158,8 @@
+--- apache_1.3.41/src/modules/standard/mod_usertrack.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/modules/standard/mod_usertrack.c	2009-02-16 19:29:36.643502311 +0200
+@@ -122,7 +122,7 @@
+     long reqtime = (long) r->request_time;
+     long clocktime;
+ 
+-    unsigned long ipaddr = ntohl(r->connection->remote_addr.sin_addr.s_addr);
++    unsigned long ipaddr = ntohl(((struct sockaddr_in*)&r->connection->remote_addr)->sin_addr.s_addr);
+     const char *rname = ap_get_remote_host(r->connection, r->per_dir_config,
+ 					   REMOTE_NAME);
+     dcfg = ap_get_module_config(r->per_dir_config, &usertrack_module);
+--- apache_1.3.41/src/support/ab.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/support/ab.c	2009-02-16 19:29:36.643502311 +0200
+@@ -116,6 +116,8 @@
  #include <sys/uio.h>
  #endif
  
@@ -4286,7 +4330,7 @@
  #endif				/* NO_APACHE_INCLUDES */
  
  #ifdef	USE_SSL
-@@ -246,7 +248,7 @@
+@@ -204,7 +206,7 @@
  char servername[1024];		/* name that server reports */
  char hostname[1024];		/* host name */
  char proxyhost[1024];		/* proxy host name */
@@ -4295,7 +4339,7 @@
  int isproxy = 0;
  char path[1024];		/* path name */
  char postfile[1024];		/* name of file containing post data */
-@@ -262,7 +264,7 @@
+@@ -220,7 +222,7 @@
       auth[1024],		/* optional (basic/uuencoded)
  				 * authentification */
       hdrs[4096];		/* optional arbitrary headers */
@@ -4304,7 +4348,7 @@
  
  int use_html = 0;		/* use html in the report */
  char *tablestring;
-@@ -299,7 +301,7 @@
+@@ -257,7 +259,7 @@
  struct data *stats;		/* date for each request */
  
  fd_set readbits, writebits;	/* bits for select */
@@ -4313,7 +4357,7 @@
  
  #ifndef BEOS
  #define ab_close(s) close(s)
-@@ -525,7 +527,7 @@
+@@ -483,7 +485,7 @@
      printf("\r                                                                           \r");
      printf("Server Software:        %s\n", servername);
      printf("Server Hostname:        %s\n", hostname);
@@ -4322,7 +4366,7 @@
      printf("\n");
      printf("Document Path:          %s\n", path);
      printf("Document Length:        %d bytes\n", doclen);
-@@ -878,7 +880,7 @@
+@@ -836,7 +838,7 @@
      c->cbx = 0;
      c->gotheader = 0;
  
@@ -4331,7 +4375,7 @@
      if (c->fd < 0) {
  	what = "SOCKET";
  	goto _bad;
-@@ -895,7 +897,12 @@
+@@ -853,7 +855,12 @@
  
  again:
      gettimeofday(&c->start, 0);
@@ -4345,7 +4389,7 @@
  	if (errno != EINPROGRESS) {
  	    what = "CONNECT";
  	    goto _bad;
-@@ -1189,7 +1196,7 @@
+@@ -1147,7 +1154,7 @@
      struct timeval timeout, now;
      fd_set sel_read, sel_except, sel_write;
      long i;
@@ -4354,7 +4398,7 @@
      char * connecthost;
      char * url_on_request;
  
-@@ -1232,17 +1239,21 @@
+@@ -1190,17 +1197,21 @@
      }
      {
  	/* get server information */
@@ -4387,7 +4431,7 @@
      }
  
      con = malloc(concurrency * sizeof(struct connection));
-@@ -1430,7 +1441,7 @@
+@@ -1388,7 +1399,7 @@
      if (strlen(purl) > 8 && strncmp(purl, "https://", 8) == 0) {
  	purl += 8;
  	ssl = 1;
@@ -4396,7 +4440,7 @@
      }
  #else
      if (strlen(purl) > 8 && strncmp(purl, "https://", 8) == 0) {
-@@ -1451,15 +1462,15 @@
+@@ -1409,15 +1420,15 @@
      *cp = '\0';
      strcpy(hostname, h);
      if (p != NULL)
@@ -4416,7 +4460,7 @@
     } else {
  	colonport[0] = '\0';
     }
-@@ -1622,7 +1633,7 @@
+@@ -1589,7 +1600,7 @@
  		if ((p = strchr(optarg, ':'))) {
  		    *p = '\0';
  		    p++;
@@ -4425,7 +4469,7 @@
  		};
  		strcpy(proxyhost, optarg);
  		isproxy = 1;
-@@ -1705,3 +1716,7 @@
+@@ -1672,3 +1683,7 @@
  
      exit(0);
  }
@@ -4433,9 +4477,9 @@
 +#ifdef NEED_GETADDRINFO
 +#include "../main/getaddrinfo.c"
 +#endif
---- apache_1.3.28.orig/src/support/logresolve.c	Wed May 23 00:52:21 2001
-+++ apache_1.3.28/src/support/logresolve.c	Fri Jul 25 11:01:55 2003
-@@ -54,7 +54,9 @@
+--- apache_1.3.41/src/support/logresolve.c	2006-07-12 11:16:05.000000000 +0300
++++ apache_1.3.41-ipv6/src/support/logresolve.c	2009-02-16 19:29:36.643502311 +0200
+@@ -70,7 +70,9 @@
  #endif /* BEOS */
  #endif /* !MPE && !WIN32*/
  
@@ -4446,7 +4490,7 @@
  static int getline(char *s, int n);
  static void stats(FILE *output);
  
-@@ -91,7 +93,7 @@
+@@ -107,7 +109,7 @@
   */
  
  struct nsrec {
@@ -4455,7 +4499,7 @@
      char *hostname;
      int noname;
      struct nsrec *next;
-@@ -122,17 +124,48 @@
+@@ -138,17 +140,48 @@
   * IP numbers with their IP number as hostname, setting noname flag
   */
  
@@ -4509,7 +4553,7 @@
  
      if (*current == NULL) {
  	cachesize++;
-@@ -145,45 +178,55 @@
+@@ -161,45 +194,55 @@
  	*current = new;
  	new->next = NULL;
  
@@ -4602,7 +4646,7 @@
  	    }
  	}
  	new->hostname = name;
-@@ -211,6 +254,7 @@
+@@ -227,6 +270,7 @@
      char *ipstring;
      struct nsrec *current;
      char *errstring[MAX_ERR + 3];
@@ -4610,7 +4654,7 @@
  
      for (i = 0; i < MAX_ERR + 3; i++)
  	errstring[i] = "Unknown error";
-@@ -242,7 +286,14 @@
+@@ -258,7 +302,14 @@
  
      for (i = 0; i < BUCKETS; i++)
  	for (current = nscache[i]; current != NULL; current = current->next) {
@@ -4626,7 +4670,7 @@
  	    if (current->noname == 0)
  		fprintf(output, "  %3d  %15s - %s\n", i, ipstring,
  			current->hostname);
-@@ -276,9 +327,10 @@
+@@ -292,9 +343,10 @@
  
  int main (int argc, char *argv[])
  {
@@ -4638,7 +4682,7 @@
  
  #ifdef WIN32
      WSADATA wsaData;
-@@ -322,8 +374,10 @@
+@@ -338,8 +390,10 @@
  	bar = strchr(line, ' ');
  	if (bar != NULL)
  	    *bar = '\0';
@@ -4651,7 +4695,7 @@
  	    if (bar != NULL)
  		*bar = ' ';
  	    puts(line);
-@@ -333,11 +387,12 @@
+@@ -349,11 +403,12 @@
  
  	resolves++;
  
@@ -4665,7 +4709,7 @@
      }
  
  #ifdef WIN32
-@@ -358,3 +413,11 @@
+@@ -374,3 +429,11 @@
  
      return (0);
  }
@@ -4677,46 +4721,3 @@
 +#ifdef NEED_GETNAMEINFO
 +#include "../main/getnameinfo.c"
 +#endif
---- apache_1.3.28/src/modules/standard/mod_usertrack.c.orig	Mon Feb  3 18:13:30 2003
-+++ apache_1.3.28/src/modules/standard/mod_usertrack.c	Fri Jul 25 13:13:43 2003
-@@ -162,7 +162,7 @@
-     long reqtime = (long) r->request_time;
-     long clocktime;
- 
--    unsigned long ipaddr = ntohl(r->connection->remote_addr.sin_addr.s_addr);
-+    unsigned long ipaddr = ntohl(((struct sockaddr_in*)&r->connection->remote_addr)->sin_addr.s_addr);
-     const char *rname = ap_get_remote_host(r->connection, r->per_dir_config,
- 					   REMOTE_NAME);
-     dcfg = ap_get_module_config(r->per_dir_config, &usertrack_module);
---- apache_1.3.31/src/modules/standard/mod_rewrite.c.orig	Wed May 12 14:57:09 2004
-+++ apache_1.3.31/src/modules/standard/mod_rewrite.c	Wed May 12 15:40:04 2004
-@@ -48,6 +48,7 @@
- 
- 
- #include "mod_rewrite.h"
-+#include "sa_len.h"
- 
- #ifndef NO_WRITEV
- #ifndef NETWARE
-@@ -3651,8 +3652,19 @@
-         result = r->connection->remote_ip;
-     }
-     else if (strcasecmp(var, "REMOTE_PORT") == 0) {
--        return ap_psprintf(r->pool, "%d",
--                           ntohs(r->connection->remote_addr.sin_port));
-+	char servbuf[NI_MAXSERV];
-+	servbuf[0] = '\0';
-+	if (!getnameinfo((struct sockaddr *)&r->connection->remote_addr,
-+#ifndef HAVE_SOCKADDR_LEN
-+		     SA_LEN((struct sockaddr *)&r->connection->remote_addr),
-+#else
-+		     r->connection->remote_addr.ss_len,
-+#endif
-+		     NULL, 0, servbuf, sizeof(servbuf), NI_NUMERICSERV)) {
-+		return ap_pstrdup(r->pool, servbuf);
-+	} else {
-+		return ap_pstrdup(r->pool, "");
-+	}
-     }
-     else if (strcasecmp(var, "REMOTE_HOST") == 0) {
-         result = (char *)ap_get_remote_host(r->connection,
