@@ -30,7 +30,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.41
-Release:	14
+Release:	15
 License:	Apache v2.0
 Group:		Networking/Daemons/HTTP
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -248,7 +248,6 @@ Requires:	/etc/mime.types
 Requires:	mailcap
 Requires:	psmisc >= 20.1
 Requires:	rc-scripts
-Requires:	webapps
 Provides:	%{name}(EAPI) = %{version}-%{release}
 %{?with_ipv6:Provides:	apache1(ipv6)}
 %{?with_lingerd:Provides:	apache1(lingerd)}
