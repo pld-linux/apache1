@@ -30,7 +30,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.41
-Release:	15
+Release:	16
 License:	Apache v2.0
 Group:		Networking/Daemons/HTTP
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1915,7 +1915,7 @@ fi
 %doc conf/mime.types conf/apache.conf.dist
 %{?with_lingerd:%doc lingerd}
 %attr(754,root,root) /etc/rc.d/init.d/apache
-%attr(750,root,root) %dir %{_sysconfdir}
+%attr(751,root,root) %dir %{_sysconfdir}
 %{_sysconfdir}/modules
 %{_sysconfdir}/logs
 %attr(750,root,root) %dir %{_sysconfdir}/conf.d
