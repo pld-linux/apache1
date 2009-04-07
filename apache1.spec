@@ -30,7 +30,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.41
-Release:	17
+Release:	18
 License:	Apache v2.0
 Group:		Networking/Daemons/HTTP
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1112,6 +1112,7 @@ Summary(pl.UTF-8):	Moduł do ,,przepisywania'' adresów URL w locie
 Group:		Networking/Daemons/HTTP
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_rewrite) = %{version}-%{release}
+Provides:	webserver(rewrite)
 Obsoletes:	apache-mod_rewrite < 2.0.0
 
 %description mod_rewrite
