@@ -34,8 +34,36 @@ if is_no "${IPV6_NETWORKING}"; then
 fi
 
 configtest() {
-	/usr/sbin/apache -t > /dev/null 2>&1
-	RETVAL=$?
+	/usr/sbin/apache -t
+}
+
+# wrapper for configtest
+checkconfig() {
+	local details=${1:-0}
+
+	if [ $details = 1 ]; then
+		# run config test and display report (status action)
+		show "Checking %s configuration" "Apache 1.3 Web Server"; busy
+		local out
+		out=`configtest 2>&1`
+		RETVAL=$?
+		if [ $RETVAL = 0 ]; then
+			ok
+		else
+			fail
+		fi
+		[ "$out" ] && echo >&2 "$out"
+	else
+		# run config test and abort with nice message if failed
+		# (for actions checking status before action).
+		configtest >/dev/null 2>&1
+		RETVAL=$?
+		if [ $RETVAL != 0 ]; then
+			show "Checking %s configuration" "Apache 1.3 Web Server"; fail
+			nls 'Configuration test failed. See details with %s "checkconfig"' $0
+			exit $RETVAL
+		fi
+	fi
 }
 
 start() {
@@ -50,14 +78,17 @@ start() {
 			msg_already_running "Apache Lingerd"
 		fi
 	fi
-	if [ ! -f /var/lock/subsys/apache ]; then
-		msg_starting "Apache 1.3 Web Server"
-		daemon /usr/sbin/apache $HTTPD_OPTS
-		RETVAL=$?
-  		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/apache
-	else
+
+	if [ -f /var/lock/subsys/apache ]; then
 		msg_already_running "Apache 1.3 Web Server"
+		return
 	fi
+
+	checkconfig
+	msg_starting "Apache 1.3 Web Server"
+	daemon /usr/sbin/apache $HTTPD_OPTS
+	RETVAL=$?
+	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/apache
 }
 
 stop() {
@@ -80,35 +111,31 @@ stop() {
 	fi
 }
 
-restart() {
-	configtest
-	if [ $RETVAL -eq 0 ]; then
-		stop
-		start
-	else
-		fail
-		echo >&2 "Configuration file syntax test failed. Run $0 configtest to see errors."
-	fi
-}
-
 reload() {
 	local sig=${1:-HUP}
 	local retnr=${2:-7}
-	if [ -f /var/lock/subsys/apache ]; then
-		msg_reloading "Apache 1.3 Web Server"
-
-		configtest
-		if [ $RETVAL -eq 0 ]; then
-			killproc --pidfile /var/run/apache.pid apache -$sig
-			RETVAL=$?
-		else
-			fail
-			echo >&2 "Configuration file syntax test failed. Run $0 configtest to see errors."
-		fi
-	else
+	if [ ! -f /var/lock/subsys/apache ]; then
 		msg_not_running "Apache 1.3 Web Server"
 		RETVAL=$retnr
+		return
 	fi
+
+	checkconfig
+	msg_reloading "Apache 1.3 Web Server"
+	killproc --pidfile /var/run/apache.pid apache -$sig
+	RETVAL=$?
+}
+
+condrestart() {
+	if [ ! -f /var/lock/subsys/apache ]; then
+		msg_not_running "Apache 1.3 Web Server"
+		RETVAL=$1
+		return
+	fi
+
+	checkconfig
+	stop
+	start
 }
 
 RETVAL=0
@@ -121,26 +148,24 @@ case "$1" in
   	stop
 	;;
   restart)
-	restart
+	checkconfig
+	stop
+	start
 	;;
   try-restart)
-  	if [ -f /var/lock/subsys/apache ]; then
-		restart
-	else
-		msg_not_running "Apache 1.3 Web Server"
-	fi
-	;;
-  force-reload)
-	reload HUP 7
+	condrestart 0
 	;;
   reload|graceful)
 	reload USR1 7
 	;;
+  force-reload)
+	reload HUP 7
+	;;
   flush-logs)
 	reload USR1 0
 	;;
-  configtest)
-	/usr/sbin/apache -t
+  checkconfig|configtest)
+	checkconfig 1
 	;;
   status)
 	status apache
@@ -148,7 +173,7 @@ case "$1" in
 	/usr/sbin/apache -S
 	;;
   *)
-	msg_usage "$0 {start|stop|restart|try-restart|reload|force-reload|graceful|configtest|status}"
+	msg_usage "$0 {start|stop|restart|try-restart|reload|graceful|force-reload|checkconfig|status}"
 	exit 3
 	;;
 esac
