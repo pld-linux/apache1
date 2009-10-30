@@ -30,7 +30,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.41
-Release:	19
+Release:	20
 License:	Apache v2.0
 Group:		Networking/Daemons/HTTP
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -990,6 +990,7 @@ Summary(pl.UTF-8):	Określanie typów dokumentów przy użyciu rozszerzeń plik�
 Group:		Networking/Daemons/HTTP
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_mime) = %{version}-%{release}
+Provides:	webserver(mime)
 
 %description mod_mime
 This module is used to determine various bits of "meta information"
