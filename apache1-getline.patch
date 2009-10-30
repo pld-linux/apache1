@@ -1,0 +1,78 @@
+--- apache_1.3.41/src/support/logresolve.c~	2009-10-30 17:25:18.000000000 +0200
++++ apache_1.3.41/src/support/logresolve.c	2009-10-30 17:26:43.170695467 +0200
+@@ -73,7 +73,7 @@
+ #include "sa_len.h"
+ 
+ static void cgethost(struct sockaddr *sa, char *string, int check);
+-static int getline(char *s, int n);
++static int ap_getline(char *s, int n);
+ static void stats(FILE *output);
+ 
+ 
+@@ -329,7 +329,7 @@
+  * gets a line from stdin
+  */
+ 
+-static int getline (char *s, int n)
++static int ap_getline (char *s, int n)
+ {
+     char *cp;
+ 
+@@ -378,7 +378,7 @@
+     for (i = 0; i < MAX_ERR + 2; i++)
+ 	errors[i] = 0;
+ 
+-    while (getline(line, MAXLINE)) {
++    while (ap_getline(line, MAXLINE)) {
+ 	if (line[0] == '\0')
+ 	    continue;
+ 	entries++;
+--- apache_1.3.41/src/support/htdigest.c~	2009-10-30 17:25:18.000000000 +0200
++++ apache_1.3.41/src/support/htdigest.c	2009-10-30 17:26:59.554860724 +0200
+@@ -71,7 +71,7 @@
+     while ((line[y++] = line[x++]));
+ }
+ 
+-static int getline(char *s, int n, FILE *f)
++static int ap_getline(char *s, int n, FILE *f)
+ {
+     register int i = 0;
+ 
+@@ -159,7 +159,7 @@
+ {
+     static char line[MAX_STRING_LEN];
+ 
+-    while (!(getline(line, MAX_STRING_LEN, source))) {  
++    while (!(ap_getline(line, MAX_STRING_LEN, source))) {  
+ 	putline(target, line);
+     }
+ }
+@@ -222,7 +222,7 @@
+     ap_cpystrn(realm, argv[2], sizeof(realm));
+ 
+     found = 0;
+-    while (!(getline(line, MAX_STRING_LEN, f))) {
++    while (!(ap_getline(line, MAX_STRING_LEN, f))) {
+ 	if (found || (line[0] == '#') || (!line[0])) {
+ 	    putline(tfp, line);
+ 	    continue;
+--- apache_1.3.41/src/support/htpasswd.c~	2009-10-30 17:25:18.000000000 +0200
++++ apache_1.3.41/src/support/htpasswd.c	2009-10-30 17:27:11.887151384 +0200
+@@ -98,7 +98,7 @@
+  * Get a line of input from the user, not including any terminating
+  * newline.
+  */
+-static int getline(char *s, int n, FILE *f)
++static int ap_getline(char *s, int n, FILE *f)
+ {
+     register int i = 0;
+ 
+@@ -553,7 +553,7 @@
+ 	char scratch[MAX_STRING_LEN];
+ 
+ 	fpw = fopen(pwfilename, "r");
+-	while (! (getline(line, sizeof(line), fpw))) {
++	while (! (ap_getline(line, sizeof(line), fpw))) {
+ 	    char *colon;
+ 
+ 	    if ((line[0] == '#') || (line[0] == '\0')) {

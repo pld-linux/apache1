@@ -108,6 +108,7 @@ Patch39:	%{name}-security_htdigest_local_buffer_overflow.patch
 Patch40:	%{name}-security_htpasswd_user_buffer_overflow.patch
 Patch41:	%{name}-security_check_forensic_tempfiles.patch
 Patch42:	%{name}-lingerd.patch
+Patch43:	%{name}-getline.patch
 URL:		http://httpd.apache.org/
 BuildRequires:	bash
 BuildRequires:	db-devel >= 4.1
@@ -1342,13 +1343,13 @@ Dwa programy testowe/przykładowe cgi: test-cgi and print-env.
 %patch39 -p2
 %patch40 -p2
 %patch41 -p2
-
 %if %{with lingerd}
 mkdir -p lingerd
 cp -a lingerd-*/{README,TUNING,LICENSE,TODO,ChangeLog} lingerd
 cp -a lingerd-*/{apache-1.3/ap_lingerd.c,li_config.h} src/main
 %patch42 -p1
 %endif
+%patch43 -p1
 
 # make manual link with full path
 %{__sed} -i -e 's,href="manual/,href="/manual/,i' htdocs/index.html.*
