@@ -30,7 +30,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.41
-Release:	22
+Release:	23
 License:	Apache v2.0
 Group:		Networking/Daemons/HTTP
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -1400,7 +1400,7 @@ rm -f src/modules/standard/mod_rewrite.so
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig} \
-	$RPM_BUILD_ROOT%{_sysconfdir}/{webapps.d,conf.d} \
+	$RPM_BUILD_ROOT%{_sysconfdir}/{webapps.d,conf.d,vhosts.d} \
 	$RPM_BUILD_ROOT%{httpdir}/html \
 	$RPM_BUILD_ROOT%{_libexecdir} \
 	$RPM_BUILD_ROOT/var/{log/{apache,archive/apache},run/apache}
@@ -1923,6 +1923,7 @@ fi
 %{_sysconfdir}/logs
 %attr(750,root,root) %dir %{_sysconfdir}/conf.d
 %attr(750,root,root) %dir %{_sysconfdir}/webapps.d
+%attr(750,root,root) %dir %{_sysconfdir}/vhosts.d
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/apache.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/conf.d/*_common.conf
 %attr(640,root,root) %config(noreplace) %verify(not md5 mtime size) /etc/sysconfig/apache
