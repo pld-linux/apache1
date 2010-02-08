@@ -1,5 +1,7 @@
 # TODO
 # - add -D_FILE_OFFSET_BITS=64 somewhere to get >2GB logfiles support
+# - 1.3.42 is last formal release, patches _may_ be available in the fugture in
+#   http://www.apache.org/dist/httpd/patches/
 #
 # Conditional build:
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
@@ -29,12 +31,12 @@ Summary(tr.UTF-8):	Lider WWW tarayıcı
 Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
-Version:	1.3.41
-Release:	24
+Version:	1.3.42
+Release:	1
 License:	Apache v2.0
 Group:		Networking/Daemons/HTTP
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
-# Source0-md5:	f7f00b635243f03a787ca9f4d4c85651
+# Source0-md5:	b76695ec68f9f8b512c9415fc69c1019
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
 Source3:	%{name}.sysconfig

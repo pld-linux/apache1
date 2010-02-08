@@ -4478,8 +4478,8 @@
 +#ifdef NEED_GETADDRINFO
 +#include "../main/getaddrinfo.c"
 +#endif
---- apache_1.3.41/src/support/logresolve.c	2006-07-12 11:16:05.000000000 +0300
-+++ apache_1.3.41-ipv6/src/support/logresolve.c	2009-02-16 19:29:36.643502311 +0200
+--- apache_1.3.42/src/support/logresolve.c~	2010-02-08 08:03:29.000000000 +0200
++++ apache_1.3.42/src/support/logresolve.c	2008-10-06 17:29:12.000000000 +0300
 @@ -70,7 +70,9 @@
  #endif /* BEOS */
  #endif /* !MPE && !WIN32*/
@@ -4567,7 +4567,7 @@
  
 -	hostdata = gethostbyaddr((const char *) &ipnum, sizeof(struct in_addr),
 -				 AF_INET);
--	if (hostdata == NULL) {
+-	if (hostdata == NULL || !hostdata->h_name || !*hostdata->h_name) {
 -	    if (h_errno > MAX_ERR)
 -		errors[UNKNOWN_ERR]++;
 -	    else
