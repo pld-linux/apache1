@@ -7,7 +7,7 @@
 %bcond_with	rewrite_ldap	# enable ldap map support for mod_rewrite (alpha)
 %bcond_without	ipv6		# disable IPv6 support
 %bcond_without	lingerd		# don't build lingerd support
-#
+
 %include	/usr/lib/rpm/macros.perl
 Summary:	The most widely used Web server on the Internet
 Summary(cs.UTF-8):	Nejrozšířenější WWW server v Internetu
@@ -32,7 +32,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.42
-Release:	2
+Release:	3
 License:	Apache v2.0
 Group:		Networking/Daemons/HTTP
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
