@@ -1,24 +1,20 @@
---- apache_1.3.27/src/modules/standard/mod_auth_db.c.orig	Fri Feb 14 23:27:47 2003
-+++ apache_1.3.27/src/modules/standard/mod_auth_db.c	Fri Feb 14 23:32:14 2003
-@@ -107,6 +107,9 @@
+--- apache_1.3.42/src/modules/standard/mod_auth_db.c.orig	2011-02-09 16:58:54.748693904 +0100
++++ apache_1.3.42/src/modules/standard/mod_auth_db.c	2011-02-09 17:34:00.304686361 +0100
+@@ -63,7 +63,7 @@
+ #if (DB_VERSION_MAJOR == 3)
+ #define DB3
  #endif
- #if (DB_VERSION_MAJOR == 4)
+-#if (DB_VERSION_MAJOR == 4)
++#if (DB_VERSION_MAJOR == 4) || (DB_VERSION_MAJOR == 5)
  #define DB4
-+#if (DB_VERSION_MINOR >= 1)
-+#define DB4_1
-+#endif
  #endif
  #endif
+@@ -130,7 +130,7 @@
  
-@@ -170,7 +173,10 @@
-     q.data = user;
-     q.size = strlen(q.data);
- 
--#if defined(DB3) || defined(DB4)
-+#if defined(DB4_1)
-+    if (   db_create(&f, NULL, 0) != 0
-+	|| f->open(f, NULL, auth_dbpwfile, NULL, DB_HASH, DB_RDONLY, 0664) != 0) {
-+#elif defined(DB3) || defined(DB4)
+ #if defined(DB3) || defined(DB4)
      if (   db_create(&f, NULL, 0) != 0 
+-#if DB_VERSION_MAJOR == 4 && DB_VERSION_MINOR > 0
++#if (DB_VERSION_MAJOR > 4) || (DB_VERSION_MAJOR == 4 && DB_VERSION_MINOR > 0)
+         || f->open(f, NULL, auth_dbpwfile, NULL, DB_HASH, DB_RDONLY, 0664) != 0) {
+ #else
          || f->open(f, auth_dbpwfile, NULL, DB_HASH, DB_RDONLY, 0664) != 0) {
- #elif defined(DB2)
