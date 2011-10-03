@@ -1916,7 +1916,7 @@ fi
 
 %files base
 %defattr(644,root,root,755)
-%doc ABOUT_APACHE src/CHANGES README
+%doc ABOUT_APACHE src/CHANGES README %{?with_ipv6:README.v6}
 %doc conf/mime.types conf/apache.conf.dist
 %{?with_lingerd:%doc lingerd}
 %attr(754,root,root) /etc/rc.d/init.d/apache
