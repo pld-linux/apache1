@@ -32,7 +32,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.42
-Release:	4
+Release:	5
 License:	Apache v2.0
 Group:		Networking/Daemons/HTTP
 Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -65,6 +65,7 @@ Source22:	%{name}-mod_setenvif.conf
 Source23:	%{name}-mod_vhost_alias.conf
 Source24:	%{name}-errordocs.conf
 Source25:	%{name}-manual.conf
+Source26:	%{name}.tmpfiles
 Patch0:		%{name}-PLD.patch
 Patch1:		%{name}-suexec.patch
 Patch2:		%{name}-errordocs.patch
@@ -1405,7 +1406,8 @@ install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig} \
 	$RPM_BUILD_ROOT%{_sysconfdir}/{webapps.d,conf.d,vhosts.d} \
 	$RPM_BUILD_ROOT%{httpdir}/html \
 	$RPM_BUILD_ROOT%{_libexecdir} \
-	$RPM_BUILD_ROOT/var/{log/{apache,archive/apache},run/apache}
+	$RPM_BUILD_ROOT/var/{log/{apache,archive/apache},run/apache} \
+	$RPM_BUILD_ROOT/usr/lib/tmpfiles.d
 
 %{__make} -j1 install-quiet \
 	root=$RPM_BUILD_ROOT
@@ -1488,6 +1490,8 @@ ln -s ../..%{_libexecdir} $RPM_BUILD_ROOT%{_sysconfdir}/modules
 ln -s ../../var/log/apache $RPM_BUILD_ROOT%{_sysconfdir}/logs
 
 ln -sf %{_bindir}/htpasswd $RPM_BUILD_ROOT%{_sbindir}
+
+install %{SOURCE26} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
 
 # Not packaged.
 rm -f $RPM_BUILD_ROOT%{_sysconfdir}/*.default
@@ -1937,6 +1941,7 @@ fi
 %endif
 %attr(755,root,root) %{_bindir}/checkgid
 %attr(755,root,root) %{_sbindir}/apache
+/usr/lib/tmpfiles.d/%{name}.conf
 %dir %attr(1773,root,http) /var/run/apache
 %{_mandir}/man8/apache.8*
 %lang(hu) %{_mandir}/hu/man8/apache.8*
