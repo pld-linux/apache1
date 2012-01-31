@@ -1,0 +1,5 @@
+- removed mod_include-segv patch (this bug is fixed in apache 1.3.22)
+- removed lang(en) from *.html.html and main index.html.en (treat them as
+  "C locale"), fixed some other lang() marks
+- apxs-quiet patch: by default successful apxs -e operations are quiet
+  (without commands echo), can be turned off by new -v (like "verbose") option
