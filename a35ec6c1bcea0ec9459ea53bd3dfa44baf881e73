@@ -1,0 +1,5 @@
+- updated and simplified db3 patch
+- fixed V6 patch
+- Obsoletes: indexhtml (old RH package)
+- added %{_datadir} directory to %files
+- updated manual files (which are partially localized now)
