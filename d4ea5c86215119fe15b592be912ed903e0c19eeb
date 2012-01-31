@@ -1,0 +1,4 @@
+- added include/remove per modules configuration files on install/remove
+  subpackages mod_proxy, mod_status and mod_vhost_alias,
+- added %config(noreplace) %verify(not size mtime md5) for mod_proxy.conf
+  and mod_status.conf.
