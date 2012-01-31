@@ -1,0 +1,4 @@
+- removed /var/lib/apache directory (no longer used)
+- corrected/completed some descriptions
+- "Correct", not "Corect"! - please check this in %pre in other specs
+- release 3
