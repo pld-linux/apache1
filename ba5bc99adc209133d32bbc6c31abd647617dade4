@@ -1,0 +1,3 @@
+- new EAPI patch (updated for mos_ssl 2.6.2),
+- removed phhttpd patch and commented out IPV6 support,
+- added mod_define subpackage.
