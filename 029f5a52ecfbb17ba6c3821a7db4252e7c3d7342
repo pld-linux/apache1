@@ -1,0 +1,1 @@
+- add configdir_skip_backups patch (skip *~, *.rpm{new,save,orig files in config directory); release 2
