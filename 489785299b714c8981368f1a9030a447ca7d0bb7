@@ -1,0 +1,3 @@
+- added mod_mmap_static subpackage,
+- removed completly mod_example,
+- more work on others parts.
