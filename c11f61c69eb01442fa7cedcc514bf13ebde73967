@@ -1,0 +1,3 @@
+- release 2,
+- added "Listen 80" in default configuration for allow run correctly
+  without addtional modyfication when mod_ssl is used.
