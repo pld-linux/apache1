@@ -1,0 +1,2 @@
+- turned off 64 bit offset support (it should be on for all shared libs,
+  what is not good idea, I think)
