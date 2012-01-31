@@ -1,0 +1,2 @@
+- turned on 64 bit ofsset support, it is necessary to work with mod_perl
+  (our Perl is built with this).
