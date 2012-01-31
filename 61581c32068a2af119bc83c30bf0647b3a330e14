@@ -1,0 +1,3 @@
+- release 6,
+- added apxs_force_rm_cp patch with fix apxs (use "cp -f" and "rm -f"
+  instead pure cp, rm).
