@@ -1,0 +1,5 @@
+- start work on rel 5,
+- added (de)registering each apache modules in %post, %preun,
+- list all modules documentation in %files,
+- start separating firs two modules (mod_proxy and mod_vhost_alias),
+- added missing %{_sysconfdir}/magic to %files.
