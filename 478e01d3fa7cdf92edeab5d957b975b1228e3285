@@ -1,0 +1,4 @@
+- release 3,
+- added modules_symbols patch with correcting all modules symbols for proper
+  work modules (de)rejestration with apxs nad also corrected modules name in
+  calling apxs in %post/%preun.
