@@ -1,0 +1,4 @@
+- updated eapi patch from mod_ssl 2.8.31-1.3.41
+- changed errordocs patch and config to use MultiViews; some unification with apache 2.x
+- dropped additional icons tarball (inconsistent icons with unclear licensing)
+- release 4
