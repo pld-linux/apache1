@@ -1,0 +1,1 @@
+- fixed bcond_apache_disable_ipv6 condition handling
