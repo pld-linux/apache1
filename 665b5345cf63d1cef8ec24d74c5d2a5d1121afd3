@@ -1,0 +1,4 @@
+- release 9,
+- added EAPI support and mod_defines,
+- added apxs patch (from rawhide),
+- added default config files set in separated Sources#.
