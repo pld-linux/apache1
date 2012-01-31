@@ -1,0 +1,4 @@
+- added phhttpd patch (from rawhide) and EAPI (based on mod_ssl 2.5.0),
+- removed doc package and removed many files (~ 1/3) from doc not related to
+  latest version apache and to Linux,
+- added mod_expires subpackage.
