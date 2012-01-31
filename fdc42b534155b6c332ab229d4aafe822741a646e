@@ -1,0 +1,4 @@
+- added missing docs
+- removed non-exesting KEYS.gz from docs
+- added mod_auth_digest module (with Obsoletes: mod_digest) for new MD5 auth method
+- release 3
