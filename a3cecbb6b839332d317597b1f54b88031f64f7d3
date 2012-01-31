@@ -1,0 +1,2 @@
+- removed "-M http" from useradd parameters and redirect all useradd
+  messages to stderr.
