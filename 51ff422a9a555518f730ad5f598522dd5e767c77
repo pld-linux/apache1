@@ -1,0 +1,2 @@
+- merged two patches from Caldera (rewrite and man) - rewrite patch fix
+  security bug in mod_rewrite.
