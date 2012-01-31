@@ -1,0 +1,2 @@
+- removed mm_conf patch and added second correction for EAPI: EAPI_MM=SYSTEM
+  patch which enables use on compile system wide mm library.
