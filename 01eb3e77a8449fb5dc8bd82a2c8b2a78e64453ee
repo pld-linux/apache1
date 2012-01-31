@@ -1,0 +1,2 @@
+- fix building mod_rewrite module
+- added conditional build of ldap map support for mod_rewrite
