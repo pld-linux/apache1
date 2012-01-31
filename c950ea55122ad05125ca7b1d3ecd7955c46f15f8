@@ -1,0 +1,3 @@
+- fixed Group in suexec,
+- make spec %{debug} friendly,
+- adapterized.
