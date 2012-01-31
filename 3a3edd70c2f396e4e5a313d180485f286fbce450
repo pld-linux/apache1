@@ -1,0 +1,4 @@
+- manually updated mod_ssl-eapi patch (there is no new mod_ssl yet)
+- updated PLD and ipv6 patches
+- few updates in httpd.conf
+- updated file list - builds now
