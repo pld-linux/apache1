@@ -1,0 +1,1 @@
+- added restart httpd on install/upgrade packages with apache modules.
