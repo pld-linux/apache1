@@ -1,0 +1,5 @@
+- release 16,
+- do not build mod_auth_dbm.so,
+- do not {un,}register mod_auth_dbm in %post/%postun mod_auth_db,
+- add %triggerpostun -- apache-mod_auth_db <= 1.3.20-2 for mod_auth_db
+  subpackage with unregister bogus mod_auth_dbm module.
