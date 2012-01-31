@@ -1,0 +1,3 @@
+- file owners fixed (semi-automatically)
+  (no special user (like http/news) should own his home directory nor
+  files it doesn't create)
