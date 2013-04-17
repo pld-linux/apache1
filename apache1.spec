@@ -35,7 +35,7 @@ Version:	1.3.42
 Release:	10
 License:	Apache v2.0
 Group:		Networking/Daemons/HTTP
-Source0:	http://www.apache.org/dist/httpd/apache_%{version}.tar.gz
+Source0:	http://archive.apache.org/dist/httpd/apache_%{version}.tar.gz
 # Source0-md5:	b76695ec68f9f8b512c9415fc69c1019
 Source1:	%{name}.init
 Source2:	%{name}.logrotate
@@ -121,7 +121,7 @@ BuildRequires:	mm-devel >= 1.3.0
 BuildRequires:	perl-base
 BuildRequires:	rpm-build >= 4.4.0
 BuildRequires:	rpm-perlprov
-BuildRequires:	rpmbuild(macros) >= 1.268
+BuildRequires:	rpmbuild(macros) >= 1.647
 Requires:	%{name}-mod_access = %{version}-%{release}
 Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	%{name}-mod_dir = %{version}-%{release}
@@ -1409,14 +1409,14 @@ install -d $RPM_BUILD_ROOT/etc/{logrotate.d,rc.d/init.d,sysconfig} \
 	$RPM_BUILD_ROOT%{httpdir}/html \
 	$RPM_BUILD_ROOT%{_libexecdir} \
 	$RPM_BUILD_ROOT/var/{log/{apache,archive/apache},run/apache} \
-	$RPM_BUILD_ROOT/usr/lib/tmpfiles.d
+	$RPM_BUILD_ROOT%{systemdtmpfilesdir}
 
 %{__make} -j1 install-quiet \
 	root=$RPM_BUILD_ROOT
 
-install %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/apache1
+cp -p %{SOURCE2} $RPM_BUILD_ROOT/etc/logrotate.d/apache1
 sed -e 's,/usr/lib,%{_libdir},g' %{SOURCE1} > $RPM_BUILD_ROOT/etc/rc.d/init.d/apache
-install %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/apache
+cp -p %{SOURCE3} $RPM_BUILD_ROOT/etc/sysconfig/apache
 bzip2 -dc %{SOURCE5} | tar xf - -C $RPM_BUILD_ROOT%{_mandir}
 mv $RPM_BUILD_ROOT%{_mandir}/hu/man8/{httpd,apache}.8
 mv $RPM_BUILD_ROOT%{_mandir}/pl/man8/{httpd,apache}.8
@@ -1473,8 +1473,8 @@ echo "LoadModule digest_module	modules/mod_digest.so" > $CFG/74_mod_digest.conf
 echo "LoadModule log_forensic_module	modules/mod_log_forensic.so" > $CFG/75_mod_log_forensic.conf
 echo "LoadModule mmap_static_module	modules/mod_mmap_static.so" > $CFG/76_mod_mmap_static.conf
 cp -a %{SOURCE13} $CFG/77_mod_info.conf
-cp -a %{SOURCE24}	$CFG/80_errordocs.conf
-cp -a %{SOURCE17}	$CFG/80_mod_alias.conf
+cp -a %{SOURCE24} $CFG/80_errordocs.conf
+cp -a %{SOURCE17} $CFG/80_mod_alias.conf
 # cgi_test: create config file with ScriptAlias
 cat << 'EOF' > $CFG/09_cgi_test.conf
 ScriptAlias /cgi-bin/printenv %{cgibindir}/printenv
@@ -1493,7 +1493,7 @@ ln -s ../../var/log/apache $RPM_BUILD_ROOT%{_sysconfdir}/logs
 
 ln -sf %{_bindir}/htpasswd $RPM_BUILD_ROOT%{_sbindir}
 
-install %{SOURCE26} $RPM_BUILD_ROOT/usr/lib/tmpfiles.d/%{name}.conf
+cp -p %{SOURCE26} $RPM_BUILD_ROOT%{systemdtmpfilesdir}/%{name}.conf
 
 # Not packaged.
 rm -f $RPM_BUILD_ROOT%{_sysconfdir}/*.default
@@ -1943,7 +1943,7 @@ fi
 %endif
 %attr(755,root,root) %{_bindir}/checkgid
 %attr(755,root,root) %{_sbindir}/apache
-/usr/lib/tmpfiles.d/%{name}.conf
+%{systemdtmpfilesdir}/%{name}.conf
 %dir %attr(1773,root,http) /var/run/apache
 %{_mandir}/man8/apache.8*
 %lang(hu) %{_mandir}/hu/man8/apache.8*
