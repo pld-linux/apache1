@@ -32,7 +32,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.42
-Release:	10
+Release:	11
 License:	Apache v2.0
 Group:		Networking/Daemons/HTTP
 Source0:	http://archive.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -841,6 +841,7 @@ Summary(pl.UTF-8):	Moduł pozwalający na modyfikację nagłówków HTTP
 Group:		Networking/Daemons/HTTP
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_headers) = %{version}-%{release}
+Provides:	webserver(headers)
 Obsoletes:	apache-mod_headers < 2.0.0
 
 %description mod_headers
@@ -1512,7 +1513,7 @@ rm $RPM_BUILD_ROOT%{manualdir}/{mpeix,netware,new_features_1_[0-2],readme-tpf,su
 rm $RPM_BUILD_ROOT%{manualdir}/{win_{compiling,service}.html*,windows.html*}
 
 %if %{with lingerd}
-install lingerd-*/lingerd $RPM_BUILD_ROOT%{_libexecdir}
+install -p lingerd-*/lingerd $RPM_BUILD_ROOT%{_libexecdir}
 install -d $RPM_BUILD_ROOT%{_localstatedir}/run/lingerd
 %endif
 
