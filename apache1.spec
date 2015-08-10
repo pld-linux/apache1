@@ -342,6 +342,9 @@ Requires:	%{name}-mod_dir = %{version}-%{release}
 Provides:	apache1-index
 Obsoletes:	apache1-index < 1.3.39-7.9
 Obsoletes:	indexhtml
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description defaultindex
 Apache index.html* files.
@@ -358,6 +361,9 @@ Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	%{name}-mod_negotiation = %{version}-%{release}
 Provides:	apache1-doc
 Obsoletes:	apache1-doc < 1.3.39-7.9
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description manual
 Apache 1.3.x manual.
@@ -372,6 +378,9 @@ Group:		Applications/WWW
 Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	%{name}-mod_include = %{version}-%{release}
 Requires:	%{name}-mod_negotiation = %{version}-%{release}
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description errordocs
 Apache 1.3.x HTTP error documents. Currently in English and Polish
@@ -1296,6 +1305,9 @@ Summary(pl.UTF-8):	Programy testowe/przykładowe cgi
 Group:		Networking/Utilities
 Requires:	%{name}-base = %{version}-%{release}
 Requires:	filesystem >= 2.0-1
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description cgi_test
 Two cgi test/demo programs: test-cgi and print-env.
