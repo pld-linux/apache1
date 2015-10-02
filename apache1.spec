@@ -32,7 +32,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.42
-Release:	13
+Release:	14
 License:	Apache v2.0
 Group:		Networking/Daemons/HTTP
 Source0:	http://archive.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -113,6 +113,7 @@ Patch41:	%{name}-security_check_forensic_tempfiles.patch
 Patch42:	%{name}-lingerd.patch
 Patch43:	%{name}-getline.patch
 Patch44:	%{name}-format-security.patch
+Patch45:	apache-std.patch
 URL:		http://httpd.apache.org/
 BuildRequires:	bash
 BuildRequires:	db-devel >= 4.1
@@ -1368,6 +1369,7 @@ cp -a lingerd-*/{apache-1.3/ap_lingerd.c,li_config.h} src/main
 %endif
 %patch43 -p1
 %patch44 -p1
+%patch45 -p0
 
 # make manual link with full path
 %{__sed} -i -e 's,href="manual/,href="/manual/,i' htdocs/index.html.*
