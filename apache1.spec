@@ -8,7 +8,6 @@
 %bcond_without	ipv6		# disable IPv6 support
 %bcond_without	lingerd		# don't build lingerd support
 
-%include	/usr/lib/rpm/macros.perl
 Summary:	The most widely used Web server on the Internet
 Summary(cs.UTF-8):	Nejrozšířenější WWW server v Internetu
 Summary(da.UTF-8):	Den mest brugte web-tjener på Internet
