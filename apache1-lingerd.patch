@@ -34,16 +34,18 @@
  	$(CC) -c $(INCLUDES) $(CFLAGS) $<
 --- apache_1.3.39/src/main/http_main.c~	2007-10-23 01:51:50.000000000 +0300
 +++ apache_1.3.39/src/main/http_main.c	2007-10-23 01:52:32.306586698 +0300
-@@ -102,6 +102,8 @@
+@@ -102,6 +102,10 @@
  #include "http_vhost.h"
  #include "util_script.h"	/* to force util_script.c linking */
  #include "util_uri.h"
 +#define  IN_APACHE
 +#include "li_config.h"
++void lingerd_connect(void);
++int lingerd_sendfd(int);
  #include "scoreboard.h"
  #include "multithread.h"
  #include <sys/stat.h>
-@@ -1575,6 +1576,19 @@
+@@ -1575,6 +1578,19 @@
  	return;
      }
  
@@ -63,7 +65,7 @@
      /* Set up to wait for readable data on socket... */
  
      FD_ZERO(&lfds);
-@@ -4484,6 +4484,8 @@
+@@ -4484,6 +4486,8 @@
      ap_server_config_defines   = ap_make_array(pcommands, 1, sizeof(char *));
      pid_table                  = ap_make_table(pglobal, HARD_SERVER_LIMIT);
  

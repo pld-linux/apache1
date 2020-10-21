@@ -113,6 +113,7 @@ Patch42:	%{name}-lingerd.patch
 Patch43:	%{name}-getline.patch
 Patch44:	%{name}-format-security.patch
 Patch45:	apache-std.patch
+Patch46:	%{name}-strsignal.patch
 URL:		http://httpd.apache.org/
 BuildRequires:	bash
 BuildRequires:	db-devel >= 4.1
@@ -1363,12 +1364,13 @@ Dwa programy testowe/przykładowe cgi: test-cgi and print-env.
 %if %{with lingerd}
 mkdir -p lingerd
 cp -a lingerd-*/{README,TUNING,LICENSE,TODO,ChangeLog} lingerd
-cp -a lingerd-*/{apache-1.3/ap_lingerd.c,li_config.h} src/main
+cp -a lingerd-*/{apache-1.3/ap_lingerd.c,li_config.h,lingerd.h} src/main
 %patch42 -p1
 %endif
 %patch43 -p1
 %patch44 -p1
 %patch45 -p0
+%patch46 -p1
 
 # make manual link with full path
 %{__sed} -i -e 's,href="manual/,href="/manual/,i' htdocs/index.html.*

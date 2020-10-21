@@ -1,0 +1,20 @@
+--- apache_1.3.42/src/main/http_main.c.orig	2020-10-21 06:15:09.769289887 +0200
++++ apache_1.3.42/src/main/http_main.c	2020-10-21 20:49:16.125163593 +0200
+@@ -5494,7 +5494,7 @@
+ 			     "child pid %d exit signal %s (%d), "
+ 			     "possible coredump in %s",
+ 			     pid, (WTERMSIG(status) >= NumSIG) ? "" : 
+-			     SYS_SIGLIST[WTERMSIG(status)], WTERMSIG(status),
++			     strsignal(WTERMSIG(status)), WTERMSIG(status),
+ 			     ap_coredump_dir);
+ 	    }
+ 	    else {
+@@ -5502,7 +5502,7 @@
+ 		ap_log_error(APLOG_MARK, APLOG_NOERRNO|APLOG_NOTICE,
+ 			     server_conf,
+ 			     "child pid %d exit signal %s (%d)", pid,
+-			     SYS_SIGLIST[WTERMSIG(status)], WTERMSIG(status));
++			     strsignal(WTERMSIG(status)), WTERMSIG(status));
+ #ifdef WCOREDUMP
+ 	    }
+ #endif
