@@ -14,9 +14,10 @@
 #  instead of the regular apache-1.3/aplinger.diff.
 #
 
---- apache_1.3.39/src/main/Makefile.tmpl.org	Sat Dec  2 16:09:32 2000
-+++ apache_1.3.39/src/main/Makefile.tmpl	Sat Dec  2 16:23:34 2000
-@@ -5,13 +5,13 @@
+diff -urNp -x '*.orig' apache_1.3.42.org/src/main/Makefile.tmpl apache_1.3.42/src/main/Makefile.tmpl
+--- apache_1.3.42.org/src/main/Makefile.tmpl	2004-11-24 20:10:19.000000000 +0100
++++ apache_1.3.42/src/main/Makefile.tmpl	2023-02-02 22:44:19.209834916 +0100
+@@ -5,13 +5,13 @@ INCLUDES=$(INCLUDES1) $(INCLUDES0) $(EXT
  LDFLAGS=$(LDFLAGS1) $(EXTRA_LDFLAGS)
  
  LIB=  libmain.a
@@ -32,9 +33,10 @@
  
  .c.o:
  	$(CC) -c $(INCLUDES) $(CFLAGS) $<
---- apache_1.3.39/src/main/http_main.c~	2007-10-23 01:51:50.000000000 +0300
-+++ apache_1.3.39/src/main/http_main.c	2007-10-23 01:52:32.306586698 +0300
-@@ -102,6 +102,10 @@
+diff -urNp -x '*.orig' apache_1.3.42.org/src/main/http_main.c apache_1.3.42/src/main/http_main.c
+--- apache_1.3.42.org/src/main/http_main.c	2023-02-02 22:44:18.889834915 +0100
++++ apache_1.3.42/src/main/http_main.c	2023-02-02 22:44:19.213168249 +0100
+@@ -60,6 +60,10 @@ int ap_main(int argc, char *argv[]);
  #include "http_vhost.h"
  #include "util_script.h"	/* to force util_script.c linking */
  #include "util_uri.h"
@@ -45,7 +47,7 @@
  #include "scoreboard.h"
  #include "multithread.h"
  #include <sys/stat.h>
-@@ -1575,6 +1578,19 @@
+@@ -1993,6 +1997,19 @@ static void lingering_close(request_rec
  	return;
      }
  
@@ -65,9 +67,9 @@
      /* Set up to wait for readable data on socket... */
  
      FD_ZERO(&lfds);
-@@ -4484,6 +4486,8 @@
+@@ -4538,6 +4555,8 @@ static void common_init(void)
+     ap_server_post_read_config = ap_make_array(pcommands, 1, sizeof(char *));
      ap_server_config_defines   = ap_make_array(pcommands, 1, sizeof(char *));
-     pid_table                  = ap_make_table(pglobal, HARD_SERVER_LIMIT);
  
 +    lingerd_connect();
 +

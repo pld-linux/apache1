@@ -1,14 +1,15 @@
---- apache_1.3.22/src/support/apxs.pl.orig	Fri Dec  7 20:32:18 2001
-+++ apache_1.3.22/src/support/apxs.pl	Fri Dec  7 21:47:25 2001
-@@ -111,6 +111,7 @@
+diff -urNp -x '*.orig' apache_1.3.42.org/src/support/apxs.pl apache_1.3.42/src/support/apxs.pl
+--- apache_1.3.42.org/src/support/apxs.pl	2023-02-02 22:42:09.429834914 +0100
++++ apache_1.3.42/src/support/apxs.pl	2023-02-02 22:42:09.649834915 +0100
+@@ -68,6 +68,7 @@ my $opt_i = 0;
  my $opt_a = 0;
  my $opt_A = 0;
  my $opt_q = 0;
 +my $opt_v = 0;
  
- #   this subroutine is derived from Perl's getopts.pl with the enhancement of
- #   the "+" metacharater at the format string to allow a list to be build by
-@@ -190,7 +191,7 @@
+ #   default for DSO file extension 
+ my $dso_ext = "so";
+@@ -153,7 +154,7 @@ sub usage {
  
  #   option handling
  my $rc;
@@ -17,7 +18,7 @@
  &usage if ($rc == 0);
  &usage if ($#ARGV == -1 and not $opt_g);
  &usage if (not $opt_q and not ($opt_g and $opt_n) and not $opt_i and not $opt_c and not $opt_e);
-@@ -247,7 +248,9 @@
+@@ -210,7 +211,9 @@ sub execute_cmds {
      my ($cmd, $rc);
  
      foreach $cmd (@cmds) {

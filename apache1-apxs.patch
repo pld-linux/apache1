@@ -1,14 +1,15 @@
---- apache_1.3.11/src/support/apxs.pl.apxs	Thu Dec 16 17:10:30 1999
-+++ apache_1.3.11/src/support/apxs.pl	Tue Jan 25 01:19:16 2000
+diff -urNp -x '*.orig' apache_1.3.42.org/src/support/apxs.pl apache_1.3.42/src/support/apxs.pl
+--- apache_1.3.42.org/src/support/apxs.pl	2006-07-12 10:16:05.000000000 +0200
++++ apache_1.3.42/src/support/apxs.pl	2023-02-02 22:41:54.629834912 +0100
 @@ -1,4 +1,4 @@
 -#!/usr/local/bin/perl
 +#!/usr/bin/perl
  #
- # Copyright 1999-2004 The Apache Software Foundation
- #
-@@ -220,15 +220,14 @@
- ##  Initial DSO support check
+ # Licensed to the Apache Software Foundation (ASF) under one or more
+ # contributor license agreements.  See the NOTICE file distributed with
+@@ -188,15 +188,14 @@ if (@opt_S) {
  ##
+ if ($^O ne "MSWin32") {
  if (not -x "$CFG_SBINDIR/$CFG_TARGET") {
 -    print STDERR "apxs:Error: $CFG_SBINDIR/$CFG_TARGET not found or not executable\n";
 -    exit(1);
@@ -27,5 +28,5 @@
 +    print STDERR "apxs:Warning: binary `$CFG_SBINDIR/$CFG_TARGET'.\n";
 +    print STDERR "apxs:Warning: Continuing anyway...\n"; }
  }
+ }
  
- ##

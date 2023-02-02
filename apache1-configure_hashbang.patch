@@ -1,22 +1,22 @@
-diff -Naurd build-tree.orig/apache_1.3.34/configure build-tree/apache_1.3.34/configure
---- build-tree.orig/apache_1.3.34/configure	2004-02-20 23:40:50.000000000 +0100
-+++ build-tree/apache_1.3.34/configure	2004-05-15 00:06:13.000000000 +0200
+diff -urNp -x '*.orig' apache_1.3.42.org/configure apache_1.3.42/configure
+--- apache_1.3.42.org/configure	2023-02-02 22:43:53.016501583 +0100
++++ apache_1.3.42/configure	2023-02-02 22:43:53.329834916 +0100
 @@ -1,4 +1,4 @@
 -#!/bin/sh
 +#!/bin/bash
  #
- # Copyright 1999-2004 The Apache Software Foundation
- #
-diff -Naurd build-tree.orig/apache_1.3.34/src/Configure build-tree/apache_1.3.34/src/Configure
---- build-tree.orig/apache_1.3.34/src/Configure	2004-04-09 19:01:50.000000000 +0200
-+++ build-tree/apache_1.3.34/src/Configure	2004-05-15 00:06:57.000000000 +0200
+ # Licensed to the Apache Software Foundation (ASF) under one or more
+ # contributor license agreements.  See the NOTICE file distributed with
+diff -urNp -x '*.orig' apache_1.3.42.org/src/Configure apache_1.3.42/src/Configure
+--- apache_1.3.42.org/src/Configure	2023-02-02 22:43:53.066501583 +0100
++++ apache_1.3.42/src/Configure	2023-02-02 22:43:53.329834916 +0100
 @@ -1,4 +1,4 @@
 -#!/bin/sh
 +#!/bin/bash
  #
- # Copyright 1999-2004 The Apache Software Foundation
- #
-@@ -208,7 +208,7 @@
+ # Licensed to the Apache Software Foundation (ASF) under one or more
+ # contributor license agreements.  See the NOTICE file distributed with
+@@ -210,7 +210,7 @@ fi
  ##
  DBM_LIB="-ldbm"
  DB_LIB="-ldb"
@@ -25,12 +25,12 @@ diff -Naurd build-tree.orig/apache_1.3.34/src/Configure build-tree/apache_1.3.34
  SUBTARGET="target_static"
  SHLIB_SUFFIX_NAME=""
  SHLIB_SUFFIX_LIST=""
-diff -Naurd build-tree.orig/apache_1.3.34/src/helpers/TestCompile build-tree/apache_1.3.34/src/helpers/TestCompile
---- build-tree.orig/apache_1.3.34/src/helpers/TestCompile	2004-02-16 23:23:09.000000000 +0100
-+++ build-tree/apache_1.3.34/src/helpers/TestCompile	2004-05-15 00:07:11.000000000 +0200
+diff -urNp -x '*.orig' apache_1.3.42.org/src/helpers/TestCompile apache_1.3.42/src/helpers/TestCompile
+--- apache_1.3.42.org/src/helpers/TestCompile	2006-07-12 10:16:05.000000000 +0200
++++ apache_1.3.42/src/helpers/TestCompile	2023-02-02 22:43:53.333168250 +0100
 @@ -1,4 +1,4 @@
 -#!/bin/sh
 +#!/bin/bash
  #
- # Copyright 1999-2004 The Apache Software Foundation
- #
+ # Licensed to the Apache Software Foundation (ASF) under one or more
+ # contributor license agreements.  See the NOTICE file distributed with

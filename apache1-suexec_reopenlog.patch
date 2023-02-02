@@ -1,9 +1,9 @@
-diff -Naurd build-tree.orig/apache_1.3.34/src/support/suexec.c build-tree/apache_1.3.34/src/support/suexec.c
---- build-tree.orig/apache_1.3.34/src/support/suexec.c	2004-08-23 23:36:55.000000000 +0200
-+++ build-tree/apache_1.3.34/src/support/suexec.c	2004-08-23 23:40:35.000000000 +0200
+diff -urNp -x '*.orig' apache_1.3.42.org/src/support/suexec.c apache_1.3.42/src/support/suexec.c
+--- apache_1.3.42.org/src/support/suexec.c	2006-07-12 10:16:05.000000000 +0200
++++ apache_1.3.42/src/support/suexec.c	2023-02-02 22:42:51.499834914 +0100
 @@ -49,6 +49,10 @@
+ 
  #include <stdarg.h>
- #include <strings.h>
  
 +/* for fcntl(fileno(log), F_SETFD, FD_CLOEXEC); */
 +#include <unistd.h>
@@ -12,7 +12,7 @@ diff -Naurd build-tree.orig/apache_1.3.34/src/support/suexec.c build-tree/apache
  #include "suexec.h"
  
  /*
-@@ -151,6 +155,8 @@
+@@ -148,6 +152,8 @@ static void err_output(const char *fmt,
  	    perror("fopen");
  	    exit(1);
  	}
@@ -21,7 +21,7 @@ diff -Naurd build-tree.orig/apache_1.3.34/src/support/suexec.c build-tree/apache
      }
  
      time(&timevar);
-@@ -823,20 +829,6 @@
+@@ -568,20 +574,6 @@ int main(int argc, char *argv[])
      umask(SUEXEC_UMASK);
  #endif /* SUEXEC_UMASK */
  

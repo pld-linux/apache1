@@ -31,7 +31,7 @@ Summary(uk.UTF-8):	Найпопулярніший Web-Server
 Summary(zh_CN.UTF-8):	Internet 上应用最广泛的 Web 服务程序。
 Name:		apache1
 Version:	1.3.42
-Release:	14
+Release:	15
 License:	Apache v2.0
 Group:		Networking/Daemons/HTTP
 Source0:	http://archive.apache.org/dist/httpd/apache_%{version}.tar.gz
@@ -249,7 +249,7 @@ Requires(pre):	/usr/sbin/groupadd
 Requires(pre):	/usr/sbin/useradd
 Requires(pre):	/usr/sbin/usermod
 Requires(pre):	textutils
-Requires(triggerpostun):	sed >= 4.0
+Requires(postun):	sed >= 4.0
 Requires:	/etc/mime.types
 Requires:	mailcap
 Requires:	psmisc >= 20.1
@@ -640,7 +640,7 @@ przeglądarki i umożliwienie użytkownikom współdzielenia URL-i.
 Summary:	Apache module with user authentication which uses Berkeley DB files
 Summary(pl.UTF-8):	Moduł Apache'a z mechanizmem uwierzytelniania używającym plików Berkeley DB
 Group:		Networking/Daemons/HTTP
-Requires(triggerpostun):	sed >= 4.0
+Requires(postun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_auth_db) = %{version}-%{release}
 Obsoletes:	apache-mod_auth_db < 2.0.0
@@ -674,7 +674,7 @@ Authentication.
 Summary:	Apache module - display index of files
 Summary(pl.UTF-8):	Moduł apache do wyświetlania indeksu plików
 Group:		Networking/Daemons/HTTP
-Requires(triggerpostun):	sed >= 4.0
+Requires(postun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Requires:	%{name}-mod_alias = %{version}-%{release}
 Requires:	apache-icons
@@ -1098,7 +1098,7 @@ dostępnych dokumentów. Są dwie różne implementacje.
 Summary:	Apache module with Web proxy
 Summary(pl.UTF-8):	Moduł dodający obsługę serwera proxy
 Group:		Networking/Daemons/HTTP
-Requires(triggerpostun):	sed >= 4.0
+Requires(postun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_proxy) = %{version}-%{release}
 Obsoletes:	apache-mod_proxy < 2.0.0
@@ -1185,7 +1185,7 @@ dla tej strategii.
 Summary:	Server status report module for apache
 Summary(pl.UTF-8):	Moduł dostarczający informacje statystyczne o serwerze
 Group:		Networking/Daemons/HTTP
-Requires(triggerpostun):	sed >= 4.0
+Requires(postun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_status) = %{version}-%{release}
 Obsoletes:	apache-mod_status < 2.0.0
@@ -1261,7 +1261,7 @@ wiele plików logów.
 Summary:	Apache module for dynamically configured mass virtual hosting
 Summary(pl.UTF-8):	Moduł dodający obsługę hostów wirtualnych
 Group:		Networking/Daemons/HTTP
-Requires(triggerpostun):	sed >= 4.0
+Requires(postun):	sed >= 4.0
 Requires:	%{name}(EAPI) = %{version}-%{release}
 Provides:	apache(mod_vhost_alias) = %{version}-%{release}
 Obsoletes:	apache-mod_vhost_alias < 2.0.0
@@ -1337,16 +1337,16 @@ Dwa programy testowe/przykładowe cgi: test-cgi and print-env.
 %patch24 -p1
 %patch25 -p1
 
-%patch26 -p2
+%patch26 -p1
 %patch27 -p2
-%patch28 -p2
+%patch28 -p1
 %patch29 -p2
-%patch30 -p2
+%patch30 -p1
 %patch31 -p2
 %patch32 -p2
-%patch33 -p2
+%patch33 -p1
 %patch34 -p2
-%patch35 -p2
+%patch35 -p1
 %patch36 -p2
 %patch37 -p2
 %patch38 -p2

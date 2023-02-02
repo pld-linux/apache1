@@ -1,6 +1,7 @@
---- build-tree-apache/apache_1.3.34/src/modules/standard/mod_autoindex.c	Wed Mar 13 22:05:33 2002
-+++ build-tree-apache/apache_1.3.34/src/modules/standard/mod_autoindex.c	Wed Apr 24 17:17:05 2002
-@@ -101,6 +101,7 @@
+diff -urNp -x '*.orig' apache_1.3.42.org/src/modules/standard/mod_autoindex.c apache_1.3.42/src/modules/standard/mod_autoindex.c
+--- apache_1.3.42.org/src/modules/standard/mod_autoindex.c	2023-02-02 22:43:12.489834914 +0100
++++ apache_1.3.42/src/modules/standard/mod_autoindex.c	2023-02-02 22:43:12.716501580 +0100
+@@ -59,6 +59,7 @@ module MODULE_VAR_EXPORT autoindex_modul
  #define TRACK_MODIFIED 1024
  #define SORT_NOCASE 2048
  #define STUDLY_INDEXING 4096
@@ -8,9 +9,9 @@
  
  #define K_PAD 1
  #define K_NOPAD 0
-@@ -463,6 +464,9 @@
+@@ -421,6 +422,9 @@ static const char *add_opts(cmd_parms *c
  	else if (!strcasecmp(w, "IgnoreCase")) {
- 		option = SORT_NOCASE;
+ 	    option = SORT_NOCASE;
  	}
 +	else if (!strcasecmp(w, "Indexes")) {
 +            option = INDEXOPT_INDEXES;
@@ -18,7 +19,7 @@
  	else if (!strcasecmp(w, "None")) {
  	    if (action != '\0') {
  		return "Cannot combine '+' or '-' with 'None' keyword";
-@@ -2012,7 +2016,7 @@
+@@ -1970,7 +1974,7 @@ static int index_directory(request_rec *
  static int handle_autoindex(request_rec *r)
  {
      autoindex_config_rec *d;
@@ -27,7 +28,7 @@
  
      d = (autoindex_config_rec *) ap_get_module_config(r->per_dir_config,
  						      &autoindex_module);
-@@ -2023,8 +2027,12 @@
+@@ -1981,8 +1985,12 @@ static int handle_autoindex(request_rec
      }
  
      /* OK, nothing easy.  Trot out the heavy artillery... */
