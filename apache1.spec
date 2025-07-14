@@ -1310,59 +1310,59 @@ Dwa programy testowe/przykładowe cgi: test-cgi and print-env.
 
 %prep
 %setup -q -n apache_%{version} %{?with_lingerd:-a4}
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p0
-%patch5 -p0
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
+%patch -P0 -p1
+%patch -P1 -p1
+%patch -P2 -p1
+%patch -P3 -p1
+%patch -P4 -p0
+%patch -P5 -p0
+%patch -P6 -p1
+%patch -P7 -p1
+%patch -P8 -p1
 %{?with_ipv6:%patch9 -p1}
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
+%patch -P10 -p1
+%patch -P11 -p1
+%patch -P12 -p1
 %{?with_rewrite_ldap:%patch13 -p1}
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
+%patch -P14 -p1
+%patch -P15 -p1
+%patch -P16 -p1
+%patch -P17 -p1
+%patch -P18 -p1
 %{!?with_ipv6:%patch19 -p1}
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
-%patch24 -p1
-%patch25 -p1
+%patch -P20 -p1
+%patch -P21 -p1
+%patch -P22 -p1
+%patch -P23 -p1
+%patch -P24 -p1
+%patch -P25 -p1
 
-%patch26 -p1
-%patch27 -p2
-%patch28 -p1
-%patch29 -p2
-%patch30 -p1
-%patch31 -p2
-%patch32 -p2
-%patch33 -p1
-%patch34 -p2
-%patch35 -p1
-%patch36 -p2
-%patch37 -p2
-%patch38 -p2
-%patch39 -p2
-%patch40 -p2
-%patch41 -p2
+%patch -P26 -p1
+%patch -P27 -p2
+%patch -P28 -p1
+%patch -P29 -p2
+%patch -P30 -p1
+%patch -P31 -p2
+%patch -P32 -p2
+%patch -P33 -p1
+%patch -P34 -p2
+%patch -P35 -p1
+%patch -P36 -p2
+%patch -P37 -p2
+%patch -P38 -p2
+%patch -P39 -p2
+%patch -P40 -p2
+%patch -P41 -p2
 %if %{with lingerd}
 mkdir -p lingerd
 cp -a lingerd-*/{README,TUNING,LICENSE,TODO,ChangeLog} lingerd
 cp -a lingerd-*/{apache-1.3/ap_lingerd.c,li_config.h,lingerd.h} src/main
-%patch42 -p1
+%patch -P42 -p1
 %endif
-%patch43 -p1
-%patch44 -p1
-%patch45 -p0
-%patch46 -p1
+%patch -P43 -p1
+%patch -P44 -p1
+%patch -P45 -p0
+%patch -P46 -p1
 
 # make manual link with full path
 %{__sed} -i -e 's,href="manual/,href="/manual/,i' htdocs/index.html.*
